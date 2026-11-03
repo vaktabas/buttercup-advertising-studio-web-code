@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <mask id="aiCut">
+      <rect width="64" height="64" fill="#fff"/>
+      <text x="32" y="42" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="800" font-size="27" letter-spacing="0.5" fill="#000">AI</text>
+    </mask>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#F2F0EC" fill-opacity="0.88" mask="url(#aiCut)"/>
+</svg>
+

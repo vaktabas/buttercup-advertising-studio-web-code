@@ -217,14 +217,46 @@
         padding-top: 2rem;
     }
 
-    .footer-logo { grid-column: 1; grid-row: 1; font-size: 1.5rem; }
-    .footer-nav { grid-column: 1; grid-row: 2; }
-    .footer-nav-link { font-size: 2rem; }
-    .footer-socials { grid-column: 2; grid-row: 2; }
-    .footer-socials-title { font-size: 0.95rem; margin-bottom: 0.75rem; }
-    .social-link { font-size: 0.9rem; padding: 0.4rem 0; }
-    .social-link .social-arrow { width: 1rem; height: 1rem; }
-    .footer-contact { grid-column: 1 / span 2; grid-row: 3; font-size: clamp(1.85rem, 7vw, 3.2rem); }
+    .footer-logo {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: 1.5rem;
+    }
+
+    .footer-nav {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .footer-nav-link {
+        font-size: 2rem;
+    }
+
+    .footer-socials {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .footer-socials-title {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .social-link {
+        font-size: 0.9rem;
+        padding: 0.4rem 0;
+    }
+
+    .social-link .social-arrow {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .footer-contact {
+        grid-column: 1 / span 2;
+        grid-row: 3;
+        font-size: clamp(1.85rem, 7vw, 3.2rem);
+    }
 
     .footer-legal {
         grid-template-columns: 1fr 1fr;
@@ -240,5 +272,8 @@
         gap: 0.9rem;
     }
 
-    .footer-powered { grid-column: 2; grid-row: 1; }
+    .footer-powered {
+        grid-column: 2;
+        grid-row: 1;
+    }
 }

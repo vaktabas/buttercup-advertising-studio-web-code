@@ -8,13 +8,15 @@
 <link rel="icon" href="images/6969620a1df46fba83dc3ed1_Frame-2085666323-1-.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=35">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=38">
 <link rel="stylesheet" href="css/swiper-bundle.min.css">
 <link rel="stylesheet" href="css/lenis.css">
-<link rel="stylesheet" href="css/extra.css?v=115">
-<link rel="stylesheet" href="css/loader.css?v=6">
-<link rel="stylesheet" href="css/ai-assistant.css?v=115">
+<link rel="stylesheet" href="css/extra.css?v=128">
+<link rel="stylesheet" href="css/loader.css?v=8">
+<link rel="stylesheet" href="css/ai-assistant.css?v=117">
+<link rel="preload" as="image" href="images/gravity/portrait.jpg" fetchpriority="high">
+<link rel="stylesheet" href="css/gravity-home.css?v=6">
 </head>
 <body data-page="index">
 <div class="w-embed"><style>
@@ -293,294 +295,329 @@ margin: 0rem !important;
 
 
 
-/* Hide native OS mouse arrow so only custom round cursor is visible */
+/* Hide native OS mouse arrow inside web 2 zone so custom round cursor is visible there */
 @media (pointer: fine) {
-    html, body, body *, a, button, input, textarea, select, [role="button"] {
+    html.in-web2-zone #web2Rest, html.in-web2-zone #web2Rest * {
         cursor: none !important;
     }
 }
-html.custom-cursor-active, html.custom-cursor-active body, html.custom-cursor-active body * {
+html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-web2-zone #web2Rest * {
     cursor: none !important;
 }
 
-</style></div><div class="wrapper"><div data-animation="over-right" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav"><div class="container is-full"><div class="navbar-wrapper"><a href="index.html" aria-current="page" class="navbar-brand w-nav-brand w--current"><div>Buttercup Advertising Studio<br/></div></a><nav role="navigation" class="nav-menu-wrapper w-nav-menu"><div class="menu-button w-nav-button"><div class="nav-open"><div class="nav-open-elem"></div><div class="nav-open-elem is-vertical"></div></div></div><a href="#" class="navbar-brand hide-desktop w-nav-brand"><div>Buttercup Advertising Studio<br/></div></a><div class="nav-link-group"><a href="index.html" aria-current="page" class="nav-links w-inline-block w--current"><div>Home</div><div class="underline-overflow"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a><a href="pages/case-studies/index.html" class="nav-links w-inline-block"><div>Case Studies</div><div class="underline-overflow"><div class="underline is-casestudies w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a><a href="pages/blogs/index.html" class="nav-links w-inline-block"><div>Blogs</div><div class="underline-overflow"><div class="underline is-blog w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a><a href="pages/about/index.html" class="nav-links w-inline-block"><div>About</div><div class="underline-overflow"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a><div class="nav-dropdown-wrapper nav-services-wrapper">
-<a href="javascript:void(0)" class="nav-links w-inline-block nav-dropdown-trigger"><div>Services</div><div class="dropdown-chevron w-embed"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="underline-overflow"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a>
-<div class="industry-dropdown-popup services-popup">
-  <div class="industry-popup-inner">
-    <div class="industry-popup-left">
-      <div>
-        <div class="industry-popup-header">
-          <span class="industry-popup-tag">EXPLORE SERVICES</span>
-        </div>
-        <a href="pages/services/brand-strategy/index.html" class="industry-cat-card" data-category="brand-strategy">
-          <div class="industry-cat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-            </svg>
-          </div>
-          <div class="industry-cat-content">
-            <div class="industry-cat-title">
-              <span>Brand Strategy</span>
-              <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </div>
-            <div class="industry-cat-desc">Architecture, Positioning, Voice, Naming, Story, Slogan &amp; Rebranding</div>
-          </div>
-        </a>
-        <div class="industry-popup-divider"></div>
-        <a href="pages/services/visual-identity/index.html" class="industry-cat-card" data-category="visual-identity">
-          <div class="industry-cat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
-          <div class="industry-cat-content">
-            <div class="industry-cat-title">
-              <span>Visual Identity Design</span>
-              <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </div>
-            <div class="industry-cat-desc">Logo, Guidelines, Packaging, Brochures, Publications, Decks &amp; Events</div>
-          </div>
-        </a>
-        <div class="industry-popup-divider"></div>
-        <a href="pages/services/marketing-communication/index.html" class="industry-cat-card" data-category="marketing-comm">
-          <div class="industry-cat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-              <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-            </svg>
-          </div>
-          <div class="industry-cat-content">
-            <div class="industry-cat-title">
-              <span>Marketing Communication &amp; Campaigns</span>
-              <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </div>
-            <div class="industry-cat-desc">Content Strategy, Copy &amp; Design, Print &amp; Outdoor, Digital Ads &amp; Shoots</div>
-          </div>
-        </a>
-      </div>
-      <div class="industry-popup-stats">
-        <div class="industry-stat-pill"><strong>3</strong> Core Pillars</div>
-        <div class="industry-stat-pill"><strong>20+</strong> Capabilities</div>
-      </div>
+</style></div>
+<div id="gravityHome">
+<div class="om-tiefe" aria-hidden="true"></div>
+<div class="om-bg" id="bg"><canvas class="om-bg-tiefe" id="bgTiefe" aria-hidden="true"></canvas></div>
+<header class="stage" id="stage">
+  <div class="scene" id="scene">
+   <div class="om-mark" id="mark">
+    <div class="om-lockup" id="lockup">
+
+      <h1 class="om-name">gorden koschel</h1>
+
+      <p class="om-role">visual strategist &amp; <span class="om-rolle-zwei">creative visualizer</span></p>
     </div>
-    <div class="industry-popup-right">
-      <div class="industry-video-card">
-        <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
-        <div class="industry-video-overlay">
-          <div class="video-live-badge"><span class="live-dot"></span> STUDIO REEL</div>
-          <div class="video-caption-text">Human Intelligence Driven Brand Creation</div>
-        </div>
-      </div>
-    </div>
+
+    <p class="om-claim" id="claim">strategy · concept · design</p>
+   </div>
   </div>
-  <div class="industry-subpopup services-subpopup" id="services-subpopup">
-    <div class="subpopup-panel" id="subpopup-brand-strategy">
-      <div class="subpopup-header">
-        <div class="subpopup-badge">01 BRAND STRATEGY</div>
-        <div class="subpopup-title">Core Capabilities</div>
-      </div>
-      <div class="subpopup-divider"></div>
-      <ul class="subpopup-list">
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-architecture" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Architecture</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#positioning" class="subpopup-link"><span class="subpopup-dot"></span><span>Positioning</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#personality-voice" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Personality &amp; Voice</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#naming" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Naming</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-story" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Story</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#slogan-taglines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Slogan &amp; Taglines</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#repositioning-rebranding" class="subpopup-link"><span class="subpopup-dot"></span><span>Repositioning &amp; Rebranding</span></a></li>
-      </ul>
-      <div class="subpopup-footer">
-        <span>7 Strategic Capabilities</span>
-        <a href="pages/services/brand-strategy/index.html" class="subpopup-cta">Explore Page →</a>
-      </div>
-    </div>
-    <div class="subpopup-panel" id="subpopup-visual-identity">
-      <div class="subpopup-header">
-        <div class="subpopup-badge">02 VISUAL IDENTITY</div>
-        <div class="subpopup-title">Design Deliverables</div>
-      </div>
-      <div class="subpopup-divider"></div>
-      <ul class="subpopup-list">
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#logo-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Logo Design</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brand-guidelines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Guidelines</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#packaging-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Packaging Design</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brochures-catalogues" class="subpopup-link"><span class="subpopup-dot"></span><span>Brochure &amp; Catalogue Design</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#corporate-magazines" class="subpopup-link"><span class="subpopup-dot"></span><span>Corporate Magazine &amp; Publication</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#pitch-decks" class="subpopup-link"><span class="subpopup-dot"></span><span>Presentations &amp; Pitch Decks</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#exhibition-events" class="subpopup-link"><span class="subpopup-dot"></span><span>Trade Exhibition &amp; Event Design</span></a></li>
-      </ul>
-      <div class="subpopup-footer">
-        <span>7 Design Deliverables</span>
-        <a href="pages/services/visual-identity/index.html" class="subpopup-cta">Explore Page →</a>
-      </div>
-    </div>
-    <div class="subpopup-panel" id="subpopup-marketing-comm">
-      <div class="subpopup-header">
-        <div class="subpopup-badge">03 MARKETING CAMPAIGNS</div>
-        <div class="subpopup-title">Communication &amp; Media</div>
-      </div>
-      <div class="subpopup-divider"></div>
-      <ul class="subpopup-list">
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#content-strategy" class="subpopup-link"><span class="subpopup-dot"></span><span>Content Strategy</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#copy-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Concept, Copy &amp; Design</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#print-outdoor" class="subpopup-link"><span class="subpopup-dot"></span><span>Print, Outdoor &amp; BTL Creatives</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#digital-social" class="subpopup-link"><span class="subpopup-dot"></span><span>Digital &amp; Social Media Creatives</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#paid-campaigns" class="subpopup-link"><span class="subpopup-dot"></span><span>Paid Campaigns</span></a></li>
-        <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#brand-shoots" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Photography &amp; Shoots</span></a></li>
-      </ul>
-      <div class="subpopup-footer">
-        <span>6 Campaign Services</span>
-        <a href="pages/services/marketing-communication/index.html" class="subpopup-cta">Explore Page →</a>
-      </div>
-    </div>
+
+  <svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+      <defs>
+
+      </defs>
+
+      <ellipse id="guide-small" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0"></ellipse>
+      <ellipse id="guide-ring"  fill="none" stroke="var(--accent)" stroke-width="1" opacity="0"></ellipse>
+      <circle id="focus-small" r="5" fill="var(--accent)" opacity="0"></circle>
+      <circle id="focus-ring"  r="5" fill="var(--accent)" opacity="0"></circle>
+      <text font-size="16" font-family="monospace" fill="var(--accent)" opacity="0" id="coord-small">
+        <tspan id="coord-small-xy">0, 0</tspan>
+        <tspan id="coord-small-a">a 0.0</tspan>
+      </text>
+      <text font-size="16" font-family="monospace" fill="var(--accent)" opacity="0" id="coord-ring">
+        <tspan id="coord-ring-xy">0, 0</tspan>
+        <tspan id="coord-ring-a">a 0.0</tspan>
+      </text>
+      <circle id="attractor" r="9" fill="var(--accent)" opacity="0"></circle>
+
+      <circle id="mass" fill="var(--accent)"></circle>
+      <circle id="small" fill="var(--fg)" opacity="0"></circle>
+      <circle id="ring" fill="none" stroke="var(--fg)" opacity="0"></circle>
+  </svg>
+
+  <a class="om-brand-heim" href="#" aria-label="Zum Seitenanfang">
+    <svg class="om-brand" id="brand" width="150" height="40" viewBox="0 0 150 40" aria-label="gravity.">
+      <text id="brandText" x="0" y="28">gravıty</text>
+      <circle id="brandDot" r="2.6"></circle>
+    </svg>
+  </a>
+
+  <div class="om-hint" id="hint">click to gravitize</div>
+</header>
+
+<nav class="om-nav" id="nav">
+  <a href="mailto:losgehts@gravity-design.de?subject=Chemistry-Meeting">Kontakt</a>
+</nav>
+
+<svg class="om-bold-curve" id="boldCurve" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
+  <path id="boldCurvePath" d="M0,0 Q500,-140 1000,0 L1000,160 L0,160 Z" fill="var(--accent)"></path>
+</svg>
+<div class="orbit-layer" id="orbitBack" aria-hidden="true">
+  <div class="orbit-stage">
+    <div class="orbit-world" id="orbitWorldBack"></div>
   </div>
 </div>
-</div><div class="nav-dropdown-wrapper">
-<a href="javascript:void(0)" class="nav-links w-inline-block nav-dropdown-trigger"><div>Industry</div><div class="dropdown-chevron w-embed"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="underline-overflow"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></a>
-<div class="industry-dropdown-popup">
-  <div class="industry-popup-inner">
-    <div class="industry-popup-left">
-      <div>
-        <div class="industry-popup-header">
-          <span class="industry-popup-tag">EXPLORE INDUSTRIES</span>
-        </div>
-        <a href="pages/industries/product-base/index.html" class="industry-cat-card" data-category="product">
-          <div class="industry-cat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-          </div>
-          <div class="industry-cat-content">
-            <div class="industry-cat-title">
-              <span>Product Base</span>
-              <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </div>
-            <div class="industry-cat-desc">Food &amp; Beverages, Apparels, Cosmetics, Pharmaceuticals, FMCG &amp; 50+ categories</div>
-          </div>
-        </a>
-        <div class="industry-popup-divider"></div>
-        <a href="pages/industries/service-base/index.html" class="industry-cat-card" data-category="service">
-          <div class="industry-cat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          </div>
-          <div class="industry-cat-content">
-            <div class="industry-cat-title">
-              <span>Service Base</span>
-              <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </div>
-            <div class="industry-cat-desc">IT, Real Estate, Hospitality, Finance, Consulting, Infrastructure &amp; 30+ sectors</div>
-          </div>
-        </a>
-      </div>
-      <div class="industry-popup-stats">
-        <div class="industry-stat-pill"><strong>50+</strong> Product Categories</div>
-        <div class="industry-stat-pill"><strong>30+</strong> Service Sectors</div>
-      </div>
-    </div>
-    <div class="industry-popup-right">
-      <div class="industry-video-card">
-        <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
-        <div class="industry-video-overlay">
-          <div class="video-live-badge"><span class="live-dot"></span> SHOWCASE REEL</div>
-          <div class="video-caption-text">Original Brand Identities Across Industries</div>
-        </div>
-          </div>
+<div class="orbit-layer" id="orbitFront" aria-hidden="true">
+  <div class="orbit-stage">
+    <div class="orbit-world" id="orbitWorldFront"></div>
   </div>
-  <div class="industry-subpopup" id="industry-subpopup">
-    <div class="subpopup-panel" id="subpopup-product">
-      <div class="subpopup-header">
-        <div class="subpopup-badge">PRODUCT BASE</div>
-        <div class="subpopup-title">Industries &amp; Categories</div>
-      </div>
-      <div class="subpopup-divider"></div>
-      <ul class="subpopup-list">
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Food and Beverages</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Apparels</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Cosmetics</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Lifestyle &amp; Wellness Products</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Textiles</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Jewellery</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Lubricants</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Pharmaceuticals</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Medical Devices</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Electrical Appliances</span></a></li>
-      </ul>
-      <div class="subpopup-footer">
-        <span>50+ Products Categories</span>
-        <span class="subpopup-cta">Explore →</span>
-      </div>
-    </div>
-    <div class="subpopup-panel" id="subpopup-service">
-      <div class="subpopup-header">
-        <div class="subpopup-badge">SERVICE BASE</div>
-        <div class="subpopup-title">Industries &amp; Sectors</div>
-      </div>
-      <div class="subpopup-divider"></div>
-      <ul class="subpopup-list">
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Management Consulting</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Information Technology (IT)</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Manufacturing &amp; Automation</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Finance and Insurance</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Real Estate &amp; Infrastructure</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Hospitality &amp; Restaurants</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Healthcare &amp; Hospitals</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Education &amp; Social Organizations</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Tourism, Wellness &amp; Beauty</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Retail &amp; Lifestyle Clubs</span></a></li>
-        <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Green Energy &amp; Agriculture</span></a></li>
-      </ul>
-      <div class="subpopup-footer">
-        <span>30+ Services Sectors</span>
-        <span class="subpopup-cta">Explore →</span>
-      </div>
-    </div>
-  </div> </div>
 </div>
-</div><a href="pages/contact/index.html" class="nav-links hide-desktop w-inline-block"><div>let&#x27;s talk</div><div class="underline-overflow"><div class="underline is-footer w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div><div class="cta-arrow w-embed"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.125 6V15.75C19.125 16.0484 19.0064 16.3345 18.7955 16.5455C18.5845 16.7565 18.2983 16.875 18 16.875C17.7016 16.875 17.4154 16.7565 17.2045 16.5455C16.9935 16.3345 16.875 16.0484 16.875 15.75V8.71875L6.7959 18.7959C6.58455 19.0073 6.29791 19.126 5.99902 19.126C5.70014 19.126 5.41349 19.0073 5.20215 18.7959C4.9908 18.5846 4.87207 18.2979 4.87207 17.9991C4.87207 17.7002 4.9908 17.4135 5.20215 17.2022L15.2812 7.125H8.24996C7.95159 7.125 7.66544 7.00647 7.45446 6.7955C7.24349 6.58452 7.12496 6.29837 7.12496 6C7.12496 5.70163 7.24349 5.41548 7.45446 5.2045C7.66544 4.99353 7.95159 4.875 8.24996 4.875H18C18.2983 4.875 18.5845 4.99353 18.7955 5.2045C19.0064 5.41548 19.125 5.70163 19.125 6Z" fill="currentColor"/>
-</svg></div></a><div class="nav-social-links"><div class="text-2x_base is-medium">Social:</div><div class="spacer-tiny"></div><a href="https://www.instagram.com/buttercupadvertisingstudio/" target="_blank" rel="noopener noreferrer" class="footer-nav-links">instagram</a><a href="https://www.linkedin.com/company/buttercup-advertising-studio/?originalSubdomain=in" target="_blank" rel="noopener noreferrer" class="footer-nav-links">linkedIn</a></div></div></nav><div class="nav-link-group hide-tablet"><a href="pages/contact/index.html" class="nav-links w-inline-block"><div>let&#x27;s talk</div><div class="underline-overflow"><div class="underline is-footer w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div><div class="button-arrow_wrapper"><div class="button-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path></svg></div><div class="button-arrow _2nd w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path></svg></div></div></a></div><div class="menu-button w-nav-button"><div class="nav-open"><div class="nav-open-elem"></div><div class="nav-open-elem is-vertical"></div></div></div></div></div></div><section class="section is-hero"><div class="w-layout-blockcontainer container is-x_large w-container"><div class="hero-content"><h1 class="heading-x_large">We create Original Brand Identities<br/>using Human Intelligence</h1><div class="hero-video-wrp"><div class="icon-embed-custom w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1400 780" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img">
-<text x="50%" y="570" text-anchor="middle" font-family="'Instrument Serif', Georgia, serif" font-size="820" font-weight="400" fill="currentColor" letter-spacing="70">BAS</text>
-</svg></div><div class="hero-video"><img src="images/hero-iconic-brand.jpg?v=85" alt="High fashion editorial model in black designer suit against crimson red backdrop with typography: WE TRANSFORM BRANDS INTO ICONS" class="video-thumnail"/></div></div></div></div></section><section class="section is-about-section"><img src="images/about-brand-story.jpg?v=85" alt="Fashion editorial model against crimson red background with typography: BRAND STORY" class="about-img"/><img src="images/about-distinct-identity.jpg?v=85" alt="Fashion editorial model against crimson red background with typography: DISTINCT IDENTITY" class="about-img is-2nd"/><img src="images/about-heart-share.jpg?v=85" alt="Fashion editorial model in tailored suit against crimson red background with typography: HEART SHARE" class="about-img is-3rd"/><img src="images/about-iconic-brand.jpg?v=85" alt="Fashion editorial model against crimson red background with typography: ICONIC BRAND" class="about-img is-4th"/><div class="about-sticky-elem"><div class="w-layout-blockcontainer container relative w-container"><h2 class="heading-x_large is-about">Delivered More ROI with a Signature Brand Story, Distinct Positioning and Strategic Differentiation</h2><h2 class="heading-x_large is-about-2nd">We help you to capture Heart Share first!<br/>Market Share follows</h2></div></div></section><section id="services" class="section"><div class="w-layout-blockcontainer container is-full w-container"><div class="service-header-sticky"><h3 class="heading-x_large">our services</h3><div class="spacer-3x_medium"></div></div><div class="service-group"><div class="w-layout-grid service-elements _1st"><img src="images/695d1b641a5751a34029d353_Dramatic-Side-Profile-5-2.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Brand Strategy" class="service-img"/><div id="w-node-c056ad9a-5808-f11c-a57e-26562ccbe469-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">01</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/brand-strategy/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Brand Strategy <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base is-medium">Brand Architecture</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Positioning</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Personality &amp; Voice</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Naming</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Story</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Slogan &amp; Taglines</div></div><div class="tool-text_wrapper btm"><div class="text-x_base is-medium">Repositioning &amp; Rebranding</div></div></div></div></div><div class="w-layout-grid service-elements _2nd"><img src="images/695d1b642e0a3f22f4ad64ff_Dramatic-Side-Profile-5-1.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Visual Identity" class="service-img"/><div id="w-node-bcea1442-8fc2-1b1a-9d5e-ee871ac7fc5e-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">02</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/visual-identity/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Visual Identity Design <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base">Logo Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Brand Guidelines</div></div><div class="tool-text_wrapper"><div class="text-x_base">Packaging Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Brochure &amp; Catalogue Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Corporate Magazine &amp; Publication Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Presentations &amp; Pitch Decks</div></div><div class="tool-text_wrapper btm"><div class="text-x_base">Trade Exhibition &amp; Event Design</div></div></div></div></div><div class="w-layout-grid service-elements _3rd"><img src="images/695d1b648cf8ee8a1eb89900_Dramatic-Side-Profile-5.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Marketing Campaigns" class="service-img"/><div id="w-node-c3cd16a5-a34e-8aaa-16f0-02b8b63b887d-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">03</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/marketing-communication/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Marketing Communication &amp; Campaigns <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base">Content Strategy</div></div><div class="tool-text_wrapper"><div class="text-x_base">Concept, Copy &amp; Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Print, Outdoor &amp; BTL Creatives</div></div><div class="tool-text_wrapper"><div class="text-x_base">Digital &amp; Social Media Creatives</div></div><div class="tool-text_wrapper"><div class="text-x_base">Paid Campaigns</div></div><div class="tool-text_wrapper btm"><div class="text-x_base">Brand Photography &amp; Shoots</div></div></div></div></div></div></div></section><section class="section is-full"><div class="w-layout-blockcontainer container is-full w-container"><div class="padding-base"><h4 class="heading-3x_large">(Case)</h4><h4 class="heading-3x_large is-right">study</h4></div><div class="spacer-base"></div><div data-current="List" data-easing="ease" data-duration-in="300" data-duration-out="100" class="grid-list-tabs w-tabs"><div class="grid-list-tabs-menu w-tab-menu"><a data-w-tab="List" class="grid-list-view w-inline-block w-tab-link w--current"><div class="list-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg></div></a><a data-w-tab="Grid" class="grid-list-view w-inline-block w-tab-link"><div class="grid-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path></svg></div></a></div><div class="home-tabs w-tab-content"><div data-w-tab="List" class="tab-pane-list w-tab-pane w--tab-active"><div data-wf--projects--variant="base" class="projects"><div cursor-hover-in="true" class="works-wrapper"><div class="works-sticky-wrp"><div class="w-layout-grid works-elements header"><div class="text-x_base">Brand</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base">Industry</div><div class="text-x_base is-right">Year</div></div><div class="w-dyn-list"><div role="list" class="w-dyn-items"><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/eon-studio.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Grabz</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">FMCG</div><div class="text-x_base is-snug is-right">2022</div></div><img src="images/696122fb3dbedd55acef8a93_Focused-Laptop-User-1.avif?v=85" alt="Grabz" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/cinder-ash.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Parishram</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Gifting</div><div class="text-x_base is-snug is-right">2024</div></div><img src="images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85" alt="Parishram" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/studio-verra.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Vilasa Ambrosia</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Luxury</div><div class="text-x_base is-snug is-right">2023</div></div><img src="images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85" alt="Vilasa Ambrosia" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/atlas-bloom.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Tastycrafts</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Bakery</div><div class="text-x_base is-snug is-right">2020-26</div></div><img src="images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85" alt="Tastycrafts" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/form-theory.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Youra</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Unicotine</div><div class="text-x_base is-snug is-right">2019</div></div><img src="images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85" alt="Youra" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/kindred-haus.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">YMCA</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Lifestyle</div><div class="text-x_base is-snug is-right">2018-26</div></div><img src="images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85" alt="YMCA" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/noir-supply-co.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Vardhman</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Textiles</div><div class="text-x_base is-snug is-right">2019-26</div></div><img src="images/695e4a26a5c9556e865cabb6_Portrait-with-Red-Background-1-.avif?v=85" alt="Vardhman" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/velvet-orbit.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Aegis</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Medical</div><div class="text-x_base is-snug is-right">2024</div></div><img src="images/695e4a3687ebcd95e93aeff9_Green-Butterfly-Close-Up-1-.avif?v=85" alt="Aegis" class="work-img"/></a></div></div></div></div></div></div></div><div data-w-tab="Grid" class="w-tab-pane"><div class="project-clw_wrapper w-dyn-list"><div role="list" class="projects-cl_list w-dyn-items"><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/eon-studio.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/696122fb3dbedd55acef8a93_Focused-Laptop-User-1.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Grabz</div><div class="project-industry_text">FMCG</div></div><div class="text-x_base">February 2, 2022</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/cinder-ash.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Parishram</div><div class="project-industry_text">Gifting</div></div><div class="text-x_base">February 2, 2024</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/studio-verra.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Vilasa Ambrosia</div><div class="project-industry_text">Luxury</div></div><div class="text-x_base">July 22, 2023</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/atlas-bloom.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Tastycrafts</div><div class="project-industry_text">Bakery</div></div><div class="text-x_base">2020-26</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/form-theory.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Youra</div><div class="project-industry_text">Unicotine</div></div><div class="text-x_base">January 2, 2019</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/kindred-haus.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">YMCA</div><div class="project-industry_text">Lifestyle</div></div><div class="text-x_base">2018-26</div></div></a></div></div></div></div></div></div></div></section><section class="section is-full"><div class="w-layout-blockcontainer container is-full w-container"><div class="padding-base"><h2 class="heading-3x_large">( Review )</h2></div><div class="spacer-base"></div></div><div class="w-layout-blockcontainer container testimonial-container w-container"><section zts-name="testimonials" class="zts-testimonials"><div class="zts-testimonials-swiper"><div zts-wrapper="true" class="zts-testimonials-wrapper"><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent designs and prompt service. Being a Canadian company, this was a risk for us to outsource our branding to an overseas company. However, it was worth it. Cheers!! “</div><div class="testimonial-person_wrapper"><img alt="World Near Me logo" src="images/reviewlogo/World-near-me.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">World Near Me</div><div class="testimonial-person_job">Canadian Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Buttercup Advertising Studio professional service is what makes the difference between ordinary and extraordinary. “</div><div class="testimonial-person_wrapper"><img alt="Michael Alexander logo" src="images/reviewlogo/Michael-Alexander.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Michael Alexander</div><div class="testimonial-person_job">Global Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Always latest and unique. “</div><div class="testimonial-person_wrapper"><img alt="Roots India logo" src="images/reviewlogo/Roots-India.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Roots India</div><div class="testimonial-person_job">Fashion &amp; Lifestyle Brand</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ I am launching a new brand in the healthy snacks category and I am happy with the service received here. Fruitful brainstorming sessions and I am impressed with the Brand Strategy. Sneha Vakta and her team built the entire brand including Positioning, Brand Name, Slogan, Logo, and Packaging. I would recommend Buttercup to anyone who wants to create a brand with a strong purpose. “</div><div class="testimonial-person_wrapper"><img alt="Dimple Ganatra logo" src="images/reviewlogo/DIMPLE-GANATRA.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Dimple Ganatra</div><div class="testimonial-person_job">Healthy Snacks Brand</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Sneha Vakta and her team in Buttercup Advertising Studio have been working as our Brand Consulting partner for quite some time and their services in Brand Strategy and Design have benefited us a lot. They have been successful in creating and implementing fresh concepts for our brand. I would recommend Buttercup to any business owner who wants to build a strong, profitable brand. “</div><div class="testimonial-person_wrapper"><img alt="Devansh Shah logo" src="images/reviewlogo/Devansh-Shah.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Devansh Shah</div><div class="testimonial-person_job">Brand Consulting Partner</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Absolute delight to work with. Highly competent team committed to meeting the demand satisfactorily. Well thought-out approach to display corporate branding ideas at their best. A praiseworthy quality is they offer zero resistance to changes. Highly recommendable in every form. “</div><div class="testimonial-person_wrapper"><img alt="Hardeep Kaur logo" src="images/reviewlogo/Hardeep-Kaur.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Hardeep Kaur</div><div class="testimonial-person_job">Corporate Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ We are happy with the services of Buttercup Advertising Studio. Sneha Vakta and her team have been very professional in their approach. They have created a new Brand Identity for our company and I am very satisfied. “</div><div class="testimonial-person_wrapper"><img alt="Yogesh Joshi logo" src="images/reviewlogo/Yogesh-Joshi.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Yogesh Joshi</div><div class="testimonial-person_job">Director, Rapid Organic</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ It was an amazing experience working with the team. We reached out to them for logo designing and the design options that we received were phenomenal. They were always reachable and guiding us throughout the process based on our business requirements. Kudos to Sneha, Rishabh, and the team! “</div><div class="testimonial-person_wrapper"><img alt="Pawan Soni logo" src="images/reviewlogo/Pawan-Soni.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Pawan Soni</div><div class="testimonial-person_job">Brand Identity Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ They provide top notch service for my company graphic design needs. In the first session they understood my business model, unique selling points, targeted audience, and competition. They delivered designs exceeding my expectations. I highly recommend their service. All the best to Sneha Vakta and Buttercup team! “</div><div class="testimonial-person_wrapper"><img alt="Chirag Shah logo" src="images/reviewlogo/Chirag-Shah.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Chirag Shah</div><div class="testimonial-person_job">Graphic Design &amp; Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ We are happy with the services of Buttercup Advertising Studio. Sneha Vakta and her team have been very professional in their approach. They have created a new Brand Identity for our Academy and I am very satisfied. “</div><div class="testimonial-person_wrapper"><img alt="Himanshu Acharya logo" src="images/reviewlogo/Himanshu-Acharya.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Himanshu Acharya</div><div class="testimonial-person_job">Academy Founder</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ I have been using the services of Buttercup since some time now. The design concepts for different products ranging from websites to brochures and business cards provided by them are truly unique. Really innovative design, timely delivery, and reasonable price. 5 out of 5 stars! “</div><div class="testimonial-person_wrapper"><img alt="Mitul Choksi logo" src="images/reviewlogo/Mitul-Choksi.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Mitul Choksi</div><div class="testimonial-person_job">Creative Design Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent experience of professionalism until the end of the project and also committed to provide help regarding the project. They understand their client&#x27;s mind and requirements very well, and try their level best to provide the best. A special thanks to Mr. Banerjee &amp; Ms. Vakta. “</div><div class="testimonial-person_wrapper"><img alt="Ishan Enterprise logo" src="images/reviewlogo/ISHAN-ENTERPRISE.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Ishan Enterprise</div><div class="testimonial-person_job">Corporate Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent services provided for Animation and Social Media Marketing content. Prompt communication and high quality delivery throughout the engagement. “</div><div class="testimonial-person_wrapper"><img alt="Ravisinh Solanki logo" src="images/reviewlogo/Ravisinh-Solanki.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Ravisinh Solanki</div><div class="testimonial-person_job">Motion &amp; Social Media Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ The timely work, follow-up, flexibility in working, and giving priority to client tastes and preferences — Sneha and Rishab have catered beyond expectations! Would definitely suggest them and look forward to future projects with them. “</div><div class="testimonial-person_wrapper"><img alt="Kishore Jain logo" src="images/reviewlogo/Kishore-Jain.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Kishore Jain</div><div class="testimonial-person_job">Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Had a wonderful experience working with Sneha and her team. Truly impressed by adherence to timelines, inventiveness, eagerness to address concerns, and most importantly their professionalism. “</div><div class="testimonial-person_wrapper"><img alt="Mainak Mittra logo" src="images/reviewlogo/Mainak-Mittra.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Mainak Mittra</div><div class="testimonial-person_job">Creative Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Buttercup did an amazing job creating the perfect design for our product. They were great at both communication as well as listening to our needs and vision. We recommend Buttercup for an amazing job. Thank you Buttercup! “</div><div class="testimonial-person_wrapper"><img alt="Farid Hemmat logo" src="images/reviewlogo/Farid-Hemmat.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Farid Hemmat</div><div class="testimonial-person_job">Product Design Client</div></div></div></div></div></div></div><div class="zts-testimonials-navigation"><div style="user-select:none" class="zts-testimonials-navigation-prev-button"><div class="testimonial-arrow_icon w-embed"><svg width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<div class="om-karte-bu om-bu" id="karteBu" aria-hidden="true"></div>
+
+<div class="om-karte-aufl" id="karteAufl" aria-hidden="true"></div>
+
+<div class="om-film-tasten-fest" id="filmTasten"></div>
+
+<button class="om-galerie-schalter" id="galerieSchalter" type="button"
+        aria-pressed="false" aria-label="Zur Reihenansicht wechseln">
+
+  <svg class="zeichen-reihe" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6 10V14M18 10V14M2 8.2L2 15.8C2 16.9201 2 17.4802 2.21799 17.908C2.40973 18.2843 2.71569 18.5903 3.09202 18.782C3.51984 19 4.07989 19 5.2 19L18.8 19C19.9201 19 20.4802 19 20.908 18.782C21.2843 18.5903 21.5903 18.2843 21.782 17.908C22 17.4802 22 16.9201 22 15.8V8.2C22 7.0799 22 6.51984 21.782 6.09202C21.5903 5.7157 21.2843 5.40974 20.908 5.21799C20.4802 5 19.9201 5 18.8 5L5.2 5C4.0799 5 3.51984 5 3.09202 5.21799C2.7157 5.40973 2.40973 5.71569 2.21799 6.09202C2 6.51984 2 7.07989 2 8.2ZM14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5C13.3807 9.5 14.5 10.6193 14.5 12Z"></path>
+  </svg>
+  <svg class="zeichen-orbit" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M17.1153 15.3582C16.8446 15.6642 16.5606 15.9665 16.2635 16.2635C11.9678 20.5593 6.58585 22.1422 4.2427 19.7991C2.6363 18.1926 2.8752 15.158 4.56847 12.0242M6.88967 8.72526C7.17138 8.40495 7.46772 8.08875 7.77824 7.77824C12.074 3.48247 17.4559 1.89956 19.7991 4.2427C21.4066 5.85021 21.1662 8.88795 19.4698 12.024M16.2635 7.77824C20.5593 12.074 22.1422 17.4559 19.7991 19.7991C17.4559 22.1422 12.074 20.5593 7.77824 16.2635C3.48247 11.9678 1.89956 6.58585 4.2427 4.2427C6.58585 1.89956 11.9678 3.48247 16.2635 7.77824ZM13.0001 12C13.0001 12.5523 12.5523 13 12.0001 13C11.4478 13 11.0001 12.5523 11.0001 12C11.0001 11.4477 11.4478 11 12.0001 11C12.5523 11 13.0001 11.4477 13.0001 12Z"></path>
+  </svg>
+</button>
+
+<div class="om-galerie" id="galerie" aria-hidden="true"></div>
+
+<div class="om-bold-scroll" id="boldScroll">
+  <section class="om-bold" id="boldSection">
+    <div class="mf-ring-feld" id="mfRing" aria-hidden="true">
+      <div class="mf-ring"></div>
+      <div class="mf-ring-kreisel"><div class="mf-ring-bahn"><i class="mf-punkt"></i></div></div>
+    </div>
+    <div class="mf-label">Manifest</div>
+    <div class="om-manifesto">
+
+      <div class="mf-line"><span>Agentur</span><span>ohne</span><span><span class="mf-strike">Agentur</span>.</span></div>
+
+      <div class="mf-line">
+        <span class="mf-paar"><span>35</span><span>Jahre</span></span>
+        <span>Erfahrung.</span>
+      </div>
+
+      <div class="mf-line mf-line--stapel">
+        <span class="mf-phrase">Kein Overhead.</span>
+        <div class="mf-stapel">
+          <p class="mf-copy">Gute Ideen sind am Anfang oft fragil. Zu viele Abstimmungen, Kompromisse und Prozesse können ihnen genau das nehmen, was sie stark macht: ihren Mut und ihr Momentum.</p>
+          <p class="mf-copy">Strategie gibt einer Idee Halt. Erfahrung zeigt, was funktioniert. Und Intuition sagt manchmal: genau so – auch wenn das Naheliegende in eine andere Richtung zeigt. So wird aus einer mutigen Idee eine mit echter Anziehungskraft. Eine, die trägt.</p>
+          <p class="mf-copy">Nicht der Anspruch hat sich verändert, sondern die Mittel. Was früher ein großes Team und ein großes Budget brauchte, entsteht heute in kleiner Besetzung. Das verschiebt die Grenze des Möglichen. Nach oben.</p>
+        </div>
+      </div>
+
+      <div class="mf-line mf-line--ende">
+        <span class="mf-phrase mf-schluss">Just <span class="om-bold-underline">bold</span> ideas.</span>
+
+        <span class="mf-anhang">
+          <span class="mf-strich" aria-hidden="true"></span>
+          <span class="mf-nachsatz">for brands, reports and digital worlds</span>
+        </span>
+      </div>
+    </div>
+    <div class="orbit-hint" id="orbitHint" aria-hidden="true">
+      <span>Drag</span>
+      <span>to</span>
+      <span>orbit</span>
+    </div>
+  </section>
+</div>
+
+<div class="om-streifen" id="streifen" aria-label="Arbeiten" data-lenis-prevent-horizontal></div>
+
+<div class="om-section-wrap">
+  <div class="om-section-bg"></div>
+
+  <div class="om-constellation" id="constellation" aria-hidden="true">
+    <svg viewBox="-320 -320 640 640" xmlns="http://www.w3.org/2000/svg">
+
+      <circle class="cn-ring" r="130"></circle>
+      <circle class="cn-ring" r="195"></circle>
+      <circle class="cn-ring" r="285"></circle>
+      <circle class="cn-ring" r="355"></circle>
+      <circle class="cn-ring" r="425"></circle>
+      <circle class="cn-ring" r="480"></circle>
+      <circle class="cn-ring" r="540"></circle>
+
+      <g class="cn-plexus"></g>
+
+      <g class="cn-track" style="--dur:13.5s">
+        <circle class="cn-orb cn-guest" id="guestOrb" cx="165" cy="0" r="6"></circle>
+      </g>
+
+      <g class="cn-track" style="--dur:12s">
+        <g transform="translate(130,0)">
+          <g class="cn-icon cn-icon--farbig">
+            <circle class="cn-icon-scheibe" r="25"></circle>
+            <g class="cn-icon-form" transform="scale(1.18) translate(-12,-12)">
+              <path d="M2 12C2 17.5228 6.47715 22 12 22C13.6569 22 15 20.6569 15 19V18.5C15 18.0356 15 17.8034 15.0257 17.6084C15.2029 16.2622 16.2622 15.2029 17.6084 15.0257C17.8034 15 18.0356 15 18.5 15H19C20.6569 15 22 13.6569 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12Z"/>
+              <path d="M7 13C7.55228 13 8 12.5523 8 12C8 11.4477 7.55228 11 7 11C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13Z"/>
+              <path d="M16 9C16.5523 9 17 8.55228 17 8C17 7.44772 16.5523 7 16 7C15.4477 7 15 7.44772 15 8C15 8.55228 15.4477 9 16 9Z"/>
+              <path d="M10 8C10.5523 8 11 7.55228 11 7C11 6.44772 10.5523 6 10 6C9.44772 6 9 6.44772 9 7C9 7.55228 9.44772 8 10 8Z"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:21.6s">
+        <g transform="translate(195,0)">
+          <g class="cn-icon">
+            <circle class="cn-icon-scheibe" r="20"></circle>
+            <g class="cn-icon-form" transform="scale(0.94) translate(-12,-12)">
+              <path d="M9 17L4 22M15 17L20 22M12 2V4M12 22V17M5.2 17H18.8C19.9201 17 20.4802 17 20.908 16.782C21.2843 16.5903 21.5903 16.2843 21.782 15.908C22 15.4802 22 14.9201 22 13.8V7.2C22 6.07989 22 5.51984 21.782 5.09202C21.5903 4.71569 21.2843 4.40973 20.908 4.21799C20.4802 4 19.9201 4 18.8 4H5.2C4.07989 4 3.51984 4 3.09202 4.21799C2.71569 4.40973 2.40973 4.71569 2.21799 5.09202C2 5.51984 2 6.07989 2 7.2V13.8C2 14.9201 2 15.4802 2.21799 15.908C2.40973 16.2843 2.71569 16.5903 3.09202 16.782C3.51984 17 4.0799 17 5.2 17Z"/>
+            </g>
+          </g>
+
+          <g class="cn-track" style="--dur:18s">
+            <circle class="cn-orb cn-orb--moon" cx="38" cy="0" r="3.4"></circle>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:24s">
+        <g transform="translate(285,0)">
+          <g class="cn-icon cn-icon--farbig">
+            <circle class="cn-icon-scheibe" r="18"></circle>
+            <g class="cn-icon-form" transform="scale(0.82) translate(-12,-12)">
+              <path d="M4 7C4 6.06812 4 5.60218 4.15224 5.23463C4.35523 4.74458 4.74458 4.35523 5.23463 4.15224C5.60218 4 6.06812 4 7 4H17C17.9319 4 18.3978 4 18.7654 4.15224C19.2554 4.35523 19.6448 4.74458 19.8478 5.23463C20 5.60218 20 6.06812 20 7M9 20H15M12 4V20"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:27s">
+        <g transform="translate(355,0)">
+          <g class="cn-icon cn-icon--ring">
+            <circle class="cn-icon-kreis" r="26"></circle>
+            <g class="cn-icon-form" transform="scale(1.18) translate(-12,-12)">
+              <path d="M3 9H21M9 9L9 21M7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3Z"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:36s">
+        <g transform="translate(425,0)">
+          <g class="cn-icon cn-icon--ring">
+            <circle class="cn-icon-kreis" r="19"></circle>
+            <g class="cn-icon-form" transform="scale(0.82) translate(-12,-12)">
+              <path d="M9.75 20.7501L11.223 21.5684C11.5066 21.726 11.6484 21.8047 11.7986 21.8356C11.9315 21.863 12.0685 21.863 12.2015 21.8356C12.3516 21.8047 12.4934 21.726 12.777 21.5684L14.25 20.7501M5.25 18.2501L3.82297 17.4573C3.52346 17.2909 3.37368 17.2077 3.26463 17.0893C3.16816 16.9847 3.09515 16.8606 3.05048 16.7254C3 16.5726 3 16.4013 3 16.0586V14.5001M3 9.50009V7.94153C3 7.59889 3 7.42757 3.05048 7.27477C3.09515 7.13959 3.16816 7.01551 3.26463 6.91082C3.37368 6.79248 3.52345 6.70928 3.82297 6.54288L5.25 5.75009M9.75 3.25008L11.223 2.43177C11.5066 2.27421 11.6484 2.19543 11.7986 2.16454C11.9315 2.13721 12.0685 2.13721 12.2015 2.16454C12.3516 2.19543 12.4934 2.27421 12.777 2.43177L14.25 3.25008M18.75 5.75008L20.177 6.54288C20.4766 6.70928 20.6263 6.79248 20.7354 6.91082C20.8318 7.01551 20.9049 7.13959 20.9495 7.27477C21 7.42757 21 7.59889 21 7.94153V9.50008M21 14.5001V16.0586C21 16.4013 21 16.5726 20.9495 16.7254C20.9049 16.8606 20.8318 16.9847 20.7354 17.0893C20.6263 17.2077 20.4766 17.2909 20.177 17.4573L18.75 18.2501M9.75 10.7501L12 12.0001M12 12.0001L14.25 10.7501M12 12.0001V14.5001M3 7.00008L5.25 8.25008M18.75 8.25008L21 7.00008M12 19.5001V22.0001"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:54s">
+        <g transform="translate(480,0)">
+          <g class="cn-icon">
+            <circle class="cn-icon-scheibe" r="25"></circle>
+            <g class="cn-icon-form" transform="scale(1.18) translate(-12,-12)">
+              <path d="M17 17L22 12L17 7M7 7L2 12L7 17M14 3L10 21"/>
+            </g>
+          </g>
+
+          <g class="cn-track" style="--dur:14.4s">
+            <circle class="cn-orb cn-orb--moon" cx="38" cy="0" r="3.1"></circle>
+          </g>
+        </g>
+      </g>
+
+      <g class="cn-track" style="--dur:72s">
+        <g transform="translate(540,0)">
+          <g class="cn-icon cn-icon--ring">
+            <circle class="cn-icon-kreis" r="26"></circle>
+            <g class="cn-icon-form" transform="scale(1.18) translate(-12,-12)">
+              <path d="M16 4C16.93 4 17.395 4 17.7765 4.10222C18.8117 4.37962 19.6204 5.18827 19.8978 6.22354C20 6.60504 20 7.07003 20 8V17.2C20 18.8802 20 19.7202 19.673 20.362C19.3854 20.9265 18.9265 21.3854 18.362 21.673C17.7202 22 16.8802 22 15.2 22H8.8C7.11984 22 6.27976 22 5.63803 21.673C5.07354 21.3854 4.6146 20.9265 4.32698 20.362C4 19.7202 4 18.8802 4 17.2V8C4 7.07003 4 6.60504 4.10222 6.22354C4.37962 5.18827 5.18827 4.37962 6.22354 4.10222C6.60504 4 7.07003 4 8 4M9 15L11 17L15.5 12.5M9.6 6H14.4C14.9601 6 15.2401 6 15.454 5.89101C15.6422 5.79513 15.7951 5.64215 15.891 5.45399C16 5.24008 16 4.96005 16 4.4V3.6C16 3.03995 16 2.75992 15.891 2.54601C15.7951 2.35785 15.6422 2.20487 15.454 2.10899C15.2401 2 14.9601 2 14.4 2H9.6C9.03995 2 8.75992 2 8.54601 2.10899C8.35785 2.20487 8.20487 2.35785 8.10899 2.54601C8 2.75992 8 3.03995 8 3.6V4.4C8 4.96005 8 5.24008 8.10899 5.45399C8.20487 5.64215 8.35785 5.79513 8.54601 5.89101C8.75992 6 9.03995 6 9.6 6Z"/>
+            </g>
+          </g>
+
+          <g class="cn-track" style="--dur:43.2s">
+            <circle class="cn-orb cn-orb--moon" cx="39" cy="0" r="3.4"></circle>
+          </g>
+        </g>
+      </g>
+    </svg>
+
+    <svg class="cn-cases-ebene" viewBox="-320 -320 640 640"
+         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+
+        <path id="cnCasesBahn"
+              d="M0,-240 A240,240 0 1,1 0,240 A240,240 0 1,1 0,-240"></path>
+      </defs>
+      <text class="cn-cases">
+        <textPath href="#cnCasesBahn" startOffset="0">Corporate Reporting<tspan dx="42.5">·</tspan><tspan dx="42.5">Sustainability Reporting</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Corporate Design</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Brand Communication</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Editorial Design</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Digital Experience</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Immersive Experience</tspan><tspan dx="42.5">·</tspan><tspan dx="42.5">Creative Direction</tspan><tspan dx="42.5">·</tspan></textPath>
+        </text>
+    </svg>
+
+  </div>
+
+  <div class="om-kasten-ebene">
+    <div class="om-kasten-raster">
+      <div class="om-kasten" id="sektKasten">
+        <p class="om-section-copy">Die neue Agentur ist hybrid. Mensch und KI, jeder mit seinen Stärken. <span class="om-marke">gravity</span> ist ein offenes System aus Spezialistinnen und Spezialisten. Mit vielen arbeite ich seit Jahrzehnten — eingespielt, nicht zusammengesucht.</p>
+        <p class="om-section-copy">Dazu kommen KI-Agenten. Meine neuen Kollegen. Sie denken mit, sie widersprechen. Das Urteil bleibt bei mir.</p>
+        <p class="om-section-copy">Die Modelle laufen lokal — Ihre Zahlen, Ihre Strategien, Ihre unveröffentlichten Inhalte verlassen mein Haus nicht.</p>
+        <p class="om-section-copy">Manches geht dadurch schneller: Recherche, Daten, Varianten, Korrekturläufe. Manches geht überhaupt erst — begehbare 3D-Welten, KI-Video, Animation, immersive Anwendungen. Dinge, für die es vor kurzem noch eine Agentur mit fünf Zulieferern brauchte — und ein Budget, das die meisten nicht hatten.</p>
+        <p class="om-section-claim"><span class="om-accent">Human experience. Artificial intelligence.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="om-mitte-huelle" id="mitteHuelle">
+    <a class="om-mitte"
+       href="mailto:losgehts@gravity-design.de?subject=Chemistry-Meeting"><span>Ihr Projekt</span></a>
+  </div>
+  <section class="om-section">
+
+  <div class="om-section-inner">
+    <h2 class="om-section-title reveal"><span class="om-accent">agentive</span> by design<span class="om-title-dot" id="titleDot">.</span></h2>
+  </div>
+</section>
+  <div class="om-section-tail" aria-hidden="true"></div>
+</div>
+
+<footer class="om-fuss" id="fuss">
+  <div class="om-fuss-innen">
+    <div class="om-fuss-tick" aria-hidden="true"><i></i></div>
+    <div class="om-fuss-zeile">
+      <p>&copy; <span class="om-marke">gravity</span> 2026<span class="om-fuss-lang"> &mdash; created with passion, experience &amp; AI.</span></p>
+      <p><a href="#fuss">Impressum &amp; Datenschutz</a></p>
+      <p class="om-fuss-sozial">
+        <a href="https://www.linkedin.com/in/gorden-koschel-789812227" target="_blank" rel="noopener" aria-label="gravity bei LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0h3.83v1.64h.05c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.6c0-1.33-.02-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14 2.95V21h-4V9Z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/gkoschel2026/" target="_blank" rel="noopener" aria-label="gravity bei Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<div class="om-drehen" aria-hidden="true">
+  <div class="om-drehen-reif"><i class="om-drehen-punkt"></i><span>Rotate</span></div>
+</div>
+
+
+<div id="awwwards" style="position: fixed; z-index: 32; transform: translateY(-50%); top: 50%; left: 0"><a href="https://www.awwwards.com/sites/gravity-design" target="_blank"><svg width="53.08" height="171.358"><path class="js-color-bg" fill="#FFFFFF" d="M0 0h53.08v171.358H0z"></path><g class="js-color-text" fill="black"><path d="M20.047 153.665v-1.9h3.888v-4.093h-3.888v-1.9h10.231v1.9h-4.59v4.093h4.59v1.9zM29.898 142.236c-.331.565-.784.997-1.359 1.294s-1.222.446-1.944.446c-.721 0-1.369-.149-1.943-.446a3.316 3.316 0 0 1-1.36-1.294c-.331-.564-.497-1.232-.497-2.002s.166-1.438.497-2.002a3.316 3.316 0 0 1 1.36-1.294c.574-.297 1.223-.445 1.943-.445.723 0 1.369.148 1.944.445a3.307 3.307 0 0 1 1.359 1.294c.331.564.497 1.232.497 2.002s-.166 1.438-.497 2.002m-1.703-3.347c-.435-.33-.967-.496-1.601-.496-.633 0-1.166.166-1.601.496-.433.332-.649.78-.649 1.346 0 .564.217 1.013.649 1.345.435.331.968.497 1.601.497.634 0 1.166-.166 1.601-.497.435-.332.649-.78.649-1.345.001-.566-.214-1.014-.649-1.346M22.911 134.852v-1.813h1.186a3.335 3.335 0 0 1-.951-1.009 2.423 2.423 0 0 1-.352-1.271c0-.682.19-1.229.57-1.645.381-.413.932-.621 1.652-.621h5.262v1.812h-4.721c-.419 0-.727.096-.921.285-.195.19-.292.447-.292.769 0 .302.115.58.35.833.234.254.577.458 1.03.613.454.156.993.234 1.616.234h2.938v1.813h-7.367zM29.898 125.136a3.314 3.314 0 0 1-1.359 1.294c-.575.297-1.222.445-1.944.445-.721 0-1.369-.148-1.943-.445a3.322 3.322 0 0 1-1.36-1.294c-.331-.565-.497-1.232-.497-2.002 0-.771.166-1.438.497-2.003a3.313 3.313 0 0 1 1.36-1.293c.574-.297 1.223-.446 1.943-.446.723 0 1.369.149 1.944.446s1.028.728 1.359 1.293.497 1.232.497 2.003c.001.769-.166 1.436-.497 2.002m-1.703-3.347c-.435-.331-.967-.497-1.601-.497-.633 0-1.166.166-1.601.497-.433.331-.649.778-.649 1.345 0 .564.217 1.013.649 1.344.435.332.968.498 1.601.498.634 0 1.166-.166 1.601-.498.435-.331.649-.779.649-1.344.001-.567-.214-1.014-.649-1.345M22.911 117.75v-1.812h1.199c-.419-.265-.742-.586-.972-.966s-.345-.784-.345-1.213c0-.272.05-.569.146-.892l1.682.336a1.429 1.429 0 0 0-.205.76c0 .576.261 1.048.783 1.418.521.37 1.342.557 2.461.557h2.617v1.812h-7.366zM29.812 111.252c-.391.511-.857.851-1.403 1.016l-.776-1.446c.381-.138.68-.329.893-.577.215-.249.321-.544.321-.885a1.2 1.2 0 0 0-.168-.658c-.112-.175-.294-.263-.548-.263-.225 0-.406.105-.548.313-.142.21-.291.534-.446.973-.019.068-.058.17-.117.307-.224.565-.506 1.004-.848 1.315-.34.313-.779.467-1.314.467-.381 0-.727-.102-1.039-.306a2.185 2.185 0 0 1-.744-.84 2.554 2.554 0 0 1-.279-1.207c0-.497.105-.949.314-1.359.211-.408.506-.725.886-.949l.993 1.082c-.43.292-.644.686-.644 1.184a.84.84 0 0 0 .154.504.471.471 0 0 0 .401.212c.176 0 .338-.103.49-.307.15-.205.334-.604.547-1.199.205-.564.474-1.001.805-1.308.332-.308.756-.46 1.271-.46.721 0 1.299.229 1.732.687s.65 1.057.65 1.797c.001.759-.194 1.396-.583 1.907M35.481 17.006l-4.782 14.969h-3.266l-2.584-9.682-2.584 9.682h-3.268l-4.782-14.969h3.713l2.673 10.276 2.525-10.276h3.445l2.524 10.276 2.674-10.276zM37.978 27.163c1.426 0 2.496 1.068 2.496 2.495 0 1.425-1.07 2.495-2.496 2.495-1.425 0-2.494-1.07-2.494-2.495-.001-1.427 1.069-2.495 2.494-2.495"></path></g></svg></a></div>
+</div>
+<div id="web2Rest" class="wrapper"><section id="services" class="section"><div class="w-layout-blockcontainer container is-full w-container"><div class="service-header-sticky"><h3 class="heading-x_large">our services</h3><div class="spacer-3x_medium"></div></div><div class="service-group"><div class="w-layout-grid service-elements _1st"><img src="images/695d1b641a5751a34029d353_Dramatic-Side-Profile-5-2.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Brand Strategy" class="service-img"/><div id="w-node-c056ad9a-5808-f11c-a57e-26562ccbe469-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">01</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/brand-strategy/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Brand Strategy <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base is-medium">Brand Architecture</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Positioning</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Personality &amp; Voice</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Naming</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Story</div></div><div class="tool-text_wrapper"><div class="text-x_base is-medium">Brand Slogan &amp; Taglines</div></div><div class="tool-text_wrapper btm"><div class="text-x_base is-medium">Repositioning &amp; Rebranding</div></div></div></div></div><div class="w-layout-grid service-elements _2nd"><img src="images/695d1b642e0a3f22f4ad64ff_Dramatic-Side-Profile-5-1.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Visual Identity" class="service-img"/><div id="w-node-bcea1442-8fc2-1b1a-9d5e-ee871ac7fc5e-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">02</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/visual-identity/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Visual Identity Design <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base">Logo Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Brand Guidelines</div></div><div class="tool-text_wrapper"><div class="text-x_base">Packaging Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Brochure &amp; Catalogue Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Corporate Magazine &amp; Publication Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Presentations &amp; Pitch Decks</div></div><div class="tool-text_wrapper btm"><div class="text-x_base">Trade Exhibition &amp; Event Design</div></div></div></div></div><div class="w-layout-grid service-elements _3rd"><img src="images/695d1b648cf8ee8a1eb89900_Dramatic-Side-Profile-5.avif?v=90" alt="Model standing in front of crimson red background with large bold white typography Marketing Campaigns" class="service-img"/><div id="w-node-c3cd16a5-a34e-8aaa-16f0-02b8b63b887d-5d08732e" class="service-content-grid"><div class="service-content"><div class="text-medium is-medium">03</div></div><div class="service-content"><div class="text-medium is-medium"><a href="pages/services/marketing-communication/index.html" style="color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">Marketing Communication &amp; Campaigns <span style="font-size:0.85em; opacity:0.7;">→</span></a></div></div><div class="service-content"><div class="tool-text_wrapper top"><div class="text-x_base">Content Strategy</div></div><div class="tool-text_wrapper"><div class="text-x_base">Concept, Copy &amp; Design</div></div><div class="tool-text_wrapper"><div class="text-x_base">Print, Outdoor &amp; BTL Creatives</div></div><div class="tool-text_wrapper"><div class="text-x_base">Digital &amp; Social Media Creatives</div></div><div class="tool-text_wrapper"><div class="text-x_base">Paid Campaigns</div></div><div class="tool-text_wrapper btm"><div class="text-x_base">Brand Photography &amp; Shoots</div></div></div></div></div></div></div></section><section class="section is-full"><div class="w-layout-blockcontainer container is-full w-container"><div class="padding-base"><h4 class="heading-3x_large">(Case)</h4><h4 class="heading-3x_large is-right">study</h4></div><div class="spacer-base"></div><div data-current="List" data-easing="ease" data-duration-in="300" data-duration-out="100" class="grid-list-tabs w-tabs"><div class="grid-list-tabs-menu w-tab-menu"><a data-w-tab="List" class="grid-list-view w-inline-block w-tab-link w--current"><div class="list-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg></div></a><a data-w-tab="Grid" class="grid-list-view w-inline-block w-tab-link"><div class="grid-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path></svg></div></a></div><div class="home-tabs w-tab-content"><div data-w-tab="List" class="tab-pane-list w-tab-pane w--tab-active"><div data-wf--projects--variant="base" class="projects"><div cursor-hover-in="true" class="works-wrapper"><div class="works-sticky-wrp"><div class="w-layout-grid works-elements header"><div class="text-x_base">Brand</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base">Industry</div><div class="text-x_base is-right">Year</div></div><div class="w-dyn-list"><div role="list" class="w-dyn-items"><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/eon-studio.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Grabz</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">FMCG</div><div class="text-x_base is-snug is-right">2022</div></div><img src="images/696122fb3dbedd55acef8a93_Focused-Laptop-User-1.avif?v=85" alt="Grabz" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/cinder-ash.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Parishram</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Gifting</div><div class="text-x_base is-snug is-right">2024</div></div><img src="images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85" alt="Parishram" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/studio-verra.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Vilasa Ambrosia</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Luxury</div><div class="text-x_base is-snug is-right">2023</div></div><img src="images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85" alt="Vilasa Ambrosia" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/atlas-bloom.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Tastycrafts</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Bakery</div><div class="text-x_base is-snug is-right">2020-26</div></div><img src="images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85" alt="Tastycrafts" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/form-theory.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Youra</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Unicotine</div><div class="text-x_base is-snug is-right">2019</div></div><img src="images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85" alt="Youra" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/kindred-haus.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">YMCA</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Lifestyle</div><div class="text-x_base is-snug is-right">2018-26</div></div><img src="images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85" alt="YMCA" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/noir-supply-co.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Vardhman</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Textiles</div><div class="text-x_base is-snug is-right">2019-26</div></div><img src="images/695e4a26a5c9556e865cabb6_Portrait-with-Red-Background-1-.avif?v=85" alt="Vardhman" class="work-img"/></a></div><div role="listitem" class="project-list-item w-dyn-item"><a href="projects/velvet-orbit.html" class="work-elem w-inline-block"><div class="w-layout-grid works-elements"><div class="text-x_base is-snug">Aegis</div><div class="placeholder-div hide-tablet"></div><div class="placeholder-div hide-mobile"></div><div class="text-x_base is-snug">Medical</div><div class="text-x_base is-snug is-right">2024</div></div><img src="images/695e4a3687ebcd95e93aeff9_Green-Butterfly-Close-Up-1-.avif?v=85" alt="Aegis" class="work-img"/></a></div></div></div></div></div></div></div><div data-w-tab="Grid" class="w-tab-pane"><div class="project-clw_wrapper w-dyn-list"><div role="list" class="projects-cl_list w-dyn-items"><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/eon-studio.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/696122fb3dbedd55acef8a93_Focused-Laptop-User-1.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Grabz</div><div class="project-industry_text">FMCG</div></div><div class="text-x_base">February 2, 2022</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/cinder-ash.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Parishram</div><div class="project-industry_text">Gifting</div></div><div class="text-x_base">February 2, 2024</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/studio-verra.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Vilasa Ambrosia</div><div class="project-industry_text">Luxury</div></div><div class="text-x_base">July 22, 2023</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/atlas-bloom.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Tastycrafts</div><div class="project-industry_text">Bakery</div></div><div class="text-x_base">2020-26</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/form-theory.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">Youra</div><div class="project-industry_text">Unicotine</div></div><div class="text-x_base">January 2, 2019</div></div></a></div><div role="listitem" class="project-collection_item w-dyn-item"><a href="projects/kindred-haus.html" class="cards is-projects w-inline-block"><div class="thumbnail-wrapper"><img src="images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85" alt="Project Cms Image." class="thumbnail"/></div><div class="project-content_wrapper"><div class="project-name_wrapper"><div class="text-3x_base is-medium">YMCA</div><div class="project-industry_text">Lifestyle</div></div><div class="text-x_base">2018-26</div></div></a></div></div></div></div></div></div></div></section><section class="section is-full review-section"><div class="w-layout-blockcontainer container is-full w-container"><div class="padding-base"><h2 class="heading-3x_large">( Review )</h2></div><div class="spacer-base"></div></div><div class="w-layout-blockcontainer container testimonial-container w-container"><section zts-name="testimonials" class="zts-testimonials"><div class="zts-testimonials-swiper"><div zts-wrapper="true" class="zts-testimonials-wrapper"><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent designs and prompt service. Being a Canadian company, this was a risk for us to outsource our branding to an overseas company. However, it was worth it. Cheers!! “</div><div class="testimonial-person_wrapper"><img alt="World Near Me logo" src="images/reviewlogo/World-near-me.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">World Near Me</div><div class="testimonial-person_job">Canadian Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Buttercup Advertising Studio professional service is what makes the difference between ordinary and extraordinary. “</div><div class="testimonial-person_wrapper"><img alt="Michael Alexander logo" src="images/reviewlogo/Michael-Alexander.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Michael Alexander</div><div class="testimonial-person_job">Global Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Always latest and unique. “</div><div class="testimonial-person_wrapper"><img alt="Roots India logo" src="images/reviewlogo/Roots-India.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Roots India</div><div class="testimonial-person_job">Fashion &amp; Lifestyle Brand</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ I am launching a new brand in the healthy snacks category and I am happy with the service received here. Fruitful brainstorming sessions and I am impressed with the Brand Strategy. Sneha Vakta and her team built the entire brand including Positioning, Brand Name, Slogan, Logo, and Packaging. I would recommend Buttercup to anyone who wants to create a brand with a strong purpose. “</div><div class="testimonial-person_wrapper"><img alt="Dimple Ganatra logo" src="images/reviewlogo/DIMPLE-GANATRA.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Dimple Ganatra</div><div class="testimonial-person_job">Healthy Snacks Brand</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Sneha Vakta and her team in Buttercup Advertising Studio have been working as our Brand Consulting partner for quite some time and their services in Brand Strategy and Design have benefited us a lot. They have been successful in creating and implementing fresh concepts for our brand. I would recommend Buttercup to any business owner who wants to build a strong, profitable brand. “</div><div class="testimonial-person_wrapper"><img alt="Devansh Shah logo" src="images/reviewlogo/Devansh-Shah.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Devansh Shah</div><div class="testimonial-person_job">Brand Consulting Partner</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Absolute delight to work with. Highly competent team committed to meeting the demand satisfactorily. Well thought-out approach to display corporate branding ideas at their best. A praiseworthy quality is they offer zero resistance to changes. Highly recommendable in every form. “</div><div class="testimonial-person_wrapper"><img alt="Hardeep Kaur logo" src="images/reviewlogo/Hardeep-Kaur.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Hardeep Kaur</div><div class="testimonial-person_job">Corporate Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ We are happy with the services of Buttercup Advertising Studio. Sneha Vakta and her team have been very professional in their approach. They have created a new Brand Identity for our company and I am very satisfied. “</div><div class="testimonial-person_wrapper"><img alt="Yogesh Joshi logo" src="images/reviewlogo/Yogesh-Joshi.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Yogesh Joshi</div><div class="testimonial-person_job">Director, Rapid Organic</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ It was an amazing experience working with the team. We reached out to them for logo designing and the design options that we received were phenomenal. They were always reachable and guiding us throughout the process based on our business requirements. Kudos to Sneha, Rishabh, and the team! “</div><div class="testimonial-person_wrapper"><img alt="Pawan Soni logo" src="images/reviewlogo/Pawan-Soni.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Pawan Soni</div><div class="testimonial-person_job">Brand Identity Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ They provide top notch service for my company graphic design needs. In the first session they understood my business model, unique selling points, targeted audience, and competition. They delivered designs exceeding my expectations. I highly recommend their service. All the best to Sneha Vakta and Buttercup team! “</div><div class="testimonial-person_wrapper"><img alt="Chirag Shah logo" src="images/reviewlogo/Chirag-Shah.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Chirag Shah</div><div class="testimonial-person_job">Graphic Design &amp; Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ We are happy with the services of Buttercup Advertising Studio. Sneha Vakta and her team have been very professional in their approach. They have created a new Brand Identity for our Academy and I am very satisfied. “</div><div class="testimonial-person_wrapper"><img alt="Himanshu Acharya logo" src="images/reviewlogo/Himanshu-Acharya.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Himanshu Acharya</div><div class="testimonial-person_job">Academy Founder</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ I have been using the services of Buttercup since some time now. The design concepts for different products ranging from websites to brochures and business cards provided by them are truly unique. Really innovative design, timely delivery, and reasonable price. 5 out of 5 stars! “</div><div class="testimonial-person_wrapper"><img alt="Mitul Choksi logo" src="images/reviewlogo/Mitul-Choksi.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Mitul Choksi</div><div class="testimonial-person_job">Creative Design Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent experience of professionalism until the end of the project and also committed to provide help regarding the project. They understand their client&#x27;s mind and requirements very well, and try their level best to provide the best. A special thanks to Mr. Banerjee &amp; Ms. Vakta. “</div><div class="testimonial-person_wrapper"><img alt="Ishan Enterprise logo" src="images/reviewlogo/ISHAN-ENTERPRISE.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Ishan Enterprise</div><div class="testimonial-person_job">Corporate Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Excellent services provided for Animation and Social Media Marketing content. Prompt communication and high quality delivery throughout the engagement. “</div><div class="testimonial-person_wrapper"><img alt="Ravisinh Solanki logo" src="images/reviewlogo/Ravisinh-Solanki.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Ravisinh Solanki</div><div class="testimonial-person_job">Motion &amp; Social Media Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ The timely work, follow-up, flexibility in working, and giving priority to client tastes and preferences — Sneha and Rishab have catered beyond expectations! Would definitely suggest them and look forward to future projects with them. “</div><div class="testimonial-person_wrapper"><img alt="Kishore Jain logo" src="images/reviewlogo/Kishore-Jain.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Kishore Jain</div><div class="testimonial-person_job">Branding Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Had a wonderful experience working with Sneha and her team. Truly impressed by adherence to timelines, inventiveness, eagerness to address concerns, and most importantly their professionalism. “</div><div class="testimonial-person_wrapper"><img alt="Mainak Mittra logo" src="images/reviewlogo/Mainak-Mittra.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Mainak Mittra</div><div class="testimonial-person_job">Creative Client</div></div></div></div></div><div class="zts-testimonials-slide"><div class="testimonial-content_wrapper"><div class="heading-2x_medium testimonial">“ Buttercup did an amazing job creating the perfect design for our product. They were great at both communication as well as listening to our needs and vision. We recommend Buttercup for an amazing job. Thank you Buttercup! “</div><div class="testimonial-person_wrapper"><img alt="Farid Hemmat logo" src="images/reviewlogo/Farid-Hemmat.png?v=85" class="testimonial-person_image"/><div class="preson-name-job_wrapper"><div class="text-3x_base is-medium">Farid Hemmat</div><div class="testimonial-person_job">Product Design Client</div></div></div></div></div></div></div><div class="zts-testimonials-navigation"><div style="user-select:none" class="zts-testimonials-navigation-prev-button"><div class="testimonial-arrow_icon w-embed"><svg width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.2925 16.7071L13.2925 25.7071C13.4801 25.8947 13.7346 26.0001 14 26.0001C14.2654 26.0001 14.5199 25.8947 14.7075 25.7071C14.8951 25.5194 15.0006 25.2649 15.0006 24.9996C15.0006 24.7342 14.8951 24.4797 14.7075 24.2921L7.41375 16.9996H27C27.2652 16.9996 27.5196 16.8942 27.7071 16.7067C27.8946 16.5192 28 16.2648 28 15.9996C28 15.7344 27.8946 15.48 27.7071 15.2925C27.5196 15.1049 27.2652 14.9996 27 14.9996H7.41375L14.7075 7.70708C14.8951 7.51944 15.0006 7.26494 15.0006 6.99958C15.0006 6.73422 14.8951 6.47972 14.7075 6.29208C14.5199 6.10444 14.2654 5.99902 14 5.99902C13.7346 5.99902 13.4801 6.10444 13.2925 6.29208L4.2925 15.2921C4.19952 15.385 4.12576 15.4952 4.07544 15.6166C4.02512 15.738 3.99921 15.8682 3.99921 15.9996C3.99921 16.131 4.02512 16.2611 4.07544 16.3825C4.12576 16.5039 4.19952 16.6142 4.2925 16.7071Z" fill="currentColor"/>
 </svg></div></div><div style="user-select:none" class="zts-testimonials-navigation-next-button"><div class="testimonial-arrow_icon rotated w-embed"><svg width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.2925 16.7071L13.2925 25.7071C13.4801 25.8947 13.7346 26.0001 14 26.0001C14.2654 26.0001 14.5199 25.8947 14.7075 25.7071C14.8951 25.5194 15.0006 25.2649 15.0006 24.9996C15.0006 24.7342 14.8951 24.4797 14.7075 24.2921L7.41375 16.9996H27C27.2652 16.9996 27.5196 16.8942 27.7071 16.7067C27.8946 16.5192 28 16.2648 28 15.9996C28 15.7344 27.8946 15.48 27.7071 15.2925C27.5196 15.1049 27.2652 14.9996 27 14.9996H7.41375L14.7075 7.70708C14.8951 7.51944 15.0006 7.26494 15.0006 6.99958C15.0006 6.73422 14.8951 6.47972 14.7075 6.29208C14.5199 6.10444 14.2654 5.99902 14 5.99902C13.7346 5.99902 13.4801 6.10444 13.2925 6.29208L4.2925 15.2921C4.19952 15.385 4.12576 15.4952 4.07544 15.6166C4.02512 15.738 3.99921 15.8682 3.99921 15.9996C3.99921 16.131 4.02512 16.2611 4.07544 16.3825C4.12576 16.5039 4.19952 16.6142 4.2925 16.7071Z" fill="currentColor"/>
@@ -594,31 +631,385 @@ html.custom-cursor-active, html.custom-cursor-active body, html.custom-cursor-ac
 <path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
 </svg></div></div></div></div></a></div><div role="listitem" class="w-dyn-item"><a href="pages/blogs/index.html?blog=creative-web-development-notes" class="cards w-inline-block"><div class="thumbnail-wrapper"><img src="images/695d1ca821cda09e08908a69_Contemplative-Window-View-2.avif?v=85" alt="IS IT NECESSARY TO HIRE A PROFESSIONAL BRANDING AGENCY" class="thumbnail"/></div><div class="blog-content_wrapper"><div class="text-3x_base is-medium">IS IT NECESSARY TO HIRE A PROFESSIONAL BRANDING AGENCY</div><div class="text-2x_base">teams helping established corporations enhance their</div><div class="spacer-small"></div><div class="read-more"><p>Read More..</p><div class="button-arrow_wrapper"><div class="button-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path></svg></div><div class="button-arrow _2nd w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path></svg></div></div><div class="underline-overflow"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="black"/>
-</svg></div></div></div></div></a></div></div></div></div></section><section class="section is-footer"><div class="w-layout-blockcontainer container is-full w-container"><div class="footer-links-grid"><div class="spacer-medium"></div><a href="index.html" aria-current="page" class="footer-logo w-nav-brand w--current"><div>Buttercup Advertising Studio<br/></div></a><div class="footer-links-group"><a href="index.html" aria-current="page" class="footer-nav-links is-simple w-inline-block w--current"><div>Home</div><div class="main-button-underline"></div></a><a href="pages/work/index.html" class="footer-nav-links is-simple w-inline-block"><div>case studies</div><div class="main-button-underline"></div></a><a href="pages/about/index.html" class="footer-nav-links is-simple w-inline-block"><div>about</div><div class="main-button-underline"></div></a><a href="index.html#services" class="footer-nav-links is-simple w-inline-block"><div>services</div><div class="main-button-underline"></div></a><a href="pages/blogs/index.html" class="footer-nav-links is-simple w-inline-block"><div>industry</div><div class="main-button-underline"></div></a></div><div class="hide-tablet"></div><div class="footer-links-group"><div class="footer-link_header">Socials</div><div class="spacer-small"></div><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/buttercupadvertisingstudio/" class="footer-nav-links social w-inline-block"><div>instagram</div><div class="social-arrow_icon w-embed"><svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.75 4V10.5C12.75 10.6989 12.671 10.8897 12.5303 11.0303C12.3896 11.171 12.1989 11.25 12 11.25C11.8011 11.25 11.6103 11.171 11.4696 11.0303C11.329 10.8897 11.25 10.6989 11.25 10.5V5.8125L4.5306 12.5306C4.3897 12.6715 4.19861 12.7507 3.99935 12.7507C3.80009 12.7507 3.60899 12.6715 3.4681 12.5306C3.3272 12.3897 3.24805 12.1986 3.24805 11.9994C3.24805 11.8001 3.3272 11.609 3.4681 11.4681L10.1875 4.75H5.49997C5.30106 4.75 5.11029 4.67098 4.96964 4.53033C4.82899 4.38968 4.74997 4.19891 4.74997 4C4.74997 3.80109 4.82899 3.61032 4.96964 3.46967C5.11029 3.32902 5.30106 3.25 5.49997 3.25H12C12.1989 3.25 12.3896 3.32902 12.5303 3.46967C12.671 3.61032 12.75 3.80109 12.75 4Z" fill="currentColor"/>
-</svg></div></a><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/buttercup-advertising-studio/?originalSubdomain=in" class="footer-nav-links social w-inline-block"><div>linkedIn</div><div class="social-arrow_icon w-embed"><svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.75 4V10.5C12.75 10.6989 12.671 10.8897 12.5303 11.0303C12.3896 11.171 12.1989 11.25 12 11.25C11.8011 11.25 11.6103 11.171 11.4696 11.0303C11.329 10.8897 11.25 10.6989 11.25 10.5V5.8125L4.5306 12.5306C4.3897 12.6715 4.19861 12.7507 3.99935 12.7507C3.80009 12.7507 3.60899 12.6715 3.4681 12.5306C3.3272 12.3897 3.24805 12.1986 3.24805 11.9994C3.24805 11.8001 3.3272 11.609 3.4681 11.4681L10.1875 4.75H5.49997C5.30106 4.75 5.11029 4.67098 4.96964 4.53033C4.82899 4.38968 4.74997 4.19891 4.74997 4C4.74997 3.80109 4.82899 3.61032 4.96964 3.46967C5.11029 3.32902 5.30106 3.25 5.49997 3.25H12C12.1989 3.25 12.3896 3.32902 12.5303 3.46967C12.671 3.61032 12.75 3.80109 12.75 4Z" fill="currentColor"/>
-</svg></div></a></div><div class="hide-tablet"></div><div></div><a href="pages/contact/index.html" class="contact_footer-link w-inline-block"><div><span class="is-font-inter">let&#x27;s  </span><em class="logo-serif_text">talk</em><br/></div><div class="main-button-underline"></div></a></div><div class="footer-bottom-brand-wrap" aria-label="buttercup"><div class="footer-bottom-brand-text">buttercup</div></div><div class="legal-wrp"><div class="text-x_base">@ 2026 built by <a href="index.html" class="branding-links">Buttercup Advertising Studio</a></div><div class="footer-links-group horizontal"><a href="utilities/style-guide.html" class="footer-nav-links utility w-inline-block"><div>style guide</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a><a href="utilities/change-log.html" class="footer-nav-links utility w-inline-block"><div>change log</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a><a href="utilities/instruction.html" class="footer-nav-links utility w-inline-block"><div>instruction</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a><a href="utilities/licenses.html" class="footer-nav-links utility w-inline-block"><div>licenses</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a><a href="pages/404/index.html" class="footer-nav-links utility w-inline-block"><div>404</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a><a href="pages/401/index.html" class="footer-nav-links utility w-inline-block"><div>Password</div><div class="underline-overflow is-footer"><div class="underline w-embed"><svg width="100%" height="100%" viewBox="0 0 59 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.210938 3.10356C0.210938 3.10356 2.1078 2.21728 5.96094 3.10356C8.81533 3.76012 12.8267 4.61351 15.7109 4.10356C17.7549 3.74218 17.6566 0.307055 19.7109 0.603563C21.4927 0.860725 21.046 3.41894 22.7109 4.10356C25.2263 5.13786 26.8819 0.199262 29.2109 1.60356C29.9204 2.03132 30.7109 3.10356 30.7109 3.10356C32.7807 4.23608 34.0018 -0.224864 36.2109 0.603563C37.5037 1.08836 37.4796 2.47896 38.7109 3.10356C41.2042 4.36828 43.0069 0.89336 45.7109 1.60356C47.4926 2.07151 47.8752 3.95102 49.7109 4.10356C51.1276 4.22128 51.7896 3.08143 53.2109 3.10356C55.1338 3.1335 57.7109 5.10356 57.7109 5.10356" stroke="currentColor"/>
-</svg></div></div></a></div></div></div></section><div class="project-cursor-wrp"><div class="view-project-follow-cursor"><div class="view-project-cursor"><div>coming <br/>soon</div></div></div></div></div>
+</svg></div></div></div></div></a></div></div></div></div></section><section class="section is-footer fy-footer">
+  <div class="fy-footer-inner">
+    <div class="fy-footer-top">
+      <div class="fy-footer-cta">
+        <h2 class="fy-footer-heading">Let’s get to work</h2>
+        <a href="pages/contact/index.html" class="fy-talk-btn"><span>REQUEST A FREE CALL</span></a>
+      </div>
+      <div class="fy-footer-cols">
+        <div class="fy-footer-row">
+          <div class="fy-footer-col">
+            <p class="fy-col-label">EXPLORE</p>
+            <div class="fy-col-links fy-dim">
+              <a href="pages/about/index.html" class="fy-col-link">About</a>
+              <a href="pages/case-studies/index.html" class="fy-col-link">Case Studies</a>
+              <a href="pages/contact/index.html" class="fy-col-link">Contact</a>
+              <a href="pages/blogs/index.html" class="fy-col-link">Blogs</a>
+            </div>
+          </div>
+          <div class="fy-footer-col">
+            <p class="fy-col-label">SERVICES</p>
+            <div class="fy-col-links fy-dim">
+              <a href="pages/services/brand-strategy/index.html" class="fy-col-link">Brand Strategy</a>
+              <a href="pages/services/visual-identity/index.html" class="fy-col-link">Visual Identity</a>
+              <a href="pages/services/marketing-communication/index.html" class="fy-col-link">Marketing Campaigns</a>
+              <a href="pages/industries/product-base/index.html" class="fy-col-link">Industries</a>
+            </div>
+          </div>
+        </div>
+        <div class="fy-footer-row">
+          <div class="fy-footer-col">
+            <p class="fy-col-label">CONNECT</p>
+            <div class="fy-col-links fy-dim">
+              <a href="https://www.linkedin.com/company/buttercup-advertising-studio/?originalSubdomain=in" target="_blank" rel="noopener noreferrer" class="fy-col-link">LinkedIn</a>
+              <a href="https://www.instagram.com/buttercupadvertisingstudio/" target="_blank" rel="noopener noreferrer" class="fy-col-link">Instagram</a>
+            </div>
+          </div>
+          <div class="fy-footer-col">
+            <p class="fy-col-label">SAY HELLO</p>
+            <div class="fy-col-links fy-dim">
+              <a href="mailto:info@buttercup.in" class="fy-col-link">info@buttercup.in</a>
+              <a href="tel:+919925034404" class="fy-col-link">+91 99250 34404</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fy-footer-bottom">
+      <div class="fy-legal-row">
+        <p class="fy-copyright">&copy; BUTTERCUP 2026</p>
+        <a href="utilities/licenses.html" class="fy-privacy-link">PRIVACY POLICY</a>
+      </div>
+      <div class="fy-wm-wrap" aria-label="BUTTERCUP"><svg class="fy-wm-svg" viewBox="0 0 1471 143" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><g id="fyButtercupGlyphs"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.52 2H117.32C138.38 2 153.42 16.5 153.42 36C153.42 50.8 144.39 63.2 130.86 68.2C147.2 72.8 158.43 86.2 158.43 104.5C158.43 125.5 142.39 141 119.83 141H7.52A7.52 7.5 0 0 1 0 133.5V9.5A7.52 7.5 0 0 1 7.52 2ZM 64.17 33H86.23A12.03 12 0 0 1 86.23 57H64.17A4.01 4 0 0 1 60.16 53V37A4.01 4 0 0 1 64.17 33ZM 64.17 84H89.24A13.04 13 0 0 1 89.24 110H64.17A4.01 4 0 0 1 60.16 106V88A4.01 4 0 0 1 64.17 84 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M177.98 2H224.11A7.52 7.5 0 0 1 231.63 9.5V87A19.05 19 0 0 0 269.73 87V9.5A7.52 7.5 0 0 1 277.25 2H323.38A7.52 7.5 0 0 1 330.9 9.5V85C330.9 120 304.33 143 250.68 143C197.04 143 170.46 120 170.46 85V9.5A7.52 7.5 0 0 1 177.98 2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M348.45 2H479.8A7.52 7.5 0 0 1 487.33 9.5V30.5A7.52 7.5 0 0 1 479.8 38H448.72A4.01 4 0 0 0 444.71 42V133.5A7.52 7.5 0 0 1 437.19 141H391.06A7.52 7.5 0 0 1 383.54 133.5V42A4.01 4 0 0 0 379.53 38H348.45A7.52 7.5 0 0 1 340.93 30.5V9.5A7.52 7.5 0 0 1 348.45 2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M503.87 2H635.23A7.52 7.5 0 0 1 642.75 9.5V30.5A7.52 7.5 0 0 1 635.23 38H604.14A4.01 4 0 0 0 600.13 42V133.5A7.52 7.5 0 0 1 592.61 141H546.49A7.52 7.5 0 0 1 538.97 133.5V42A4.01 4 0 0 0 534.95 38H503.87A7.52 7.5 0 0 1 496.35 30.5V9.5A7.52 7.5 0 0 1 503.87 2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M661.3 2H782.63A7.52 7.5 0 0 1 790.15 9.5V29.5A7.52 7.5 0 0 1 782.63 37H718.96A4.01 4 0 0 0 714.94 41V50A4.01 4 0 0 0 718.96 54H773.6A7.52 7.5 0 0 1 781.12 61.5V80.5A7.52 7.5 0 0 1 773.6 88H718.96A4.01 4 0 0 0 714.94 92V102A4.01 4 0 0 0 718.96 106H784.63A7.52 7.5 0 0 1 792.15 113.5V133.5A7.52 7.5 0 0 1 784.63 141H661.3A7.52 7.5 0 0 1 653.78 133.5V9.5A7.52 7.5 0 0 1 661.3 2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M811.71 2H924.51C947.08 2 964.62 19.1 964.62 41.9C964.62 59.4 953.99 73.8 938.55 79.2C936.15 80 935.14 82.9 936.35 85.2L960.21 128.4C963.22 133.9 959.61 141 953.79 141H896.94C894.13 141 891.62 139.2 890.32 136.5L874.58 102.2C872.87 98.3 865.35 99.7 865.35 104V133.5A7.52 7.5 0 0 1 857.83 141H811.71A7.52 7.5 0 0 1 804.19 133.5V9.5A7.52 7.5 0 0 1 811.71 2ZM 869.36 34.2H891.93A13.04 13 0 0 1 891.93 60.2H869.36A4.01 4 0 0 1 865.35 56.2V38.2A4.01 4 0 0 1 869.36 34.2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M1056.87 0H1071.91C1106.01 0 1130.07 20 1132.08 49.5A7.52 7.5 0 0 1 1124.56 57.5H1080.44A7.52 7.5 0 0 1 1072.92 50.5C1071.41 41 1064.9 36 1054.87 36C1042.84 36 1035.82 45.5 1035.82 71.5C1035.82 97.5 1042.84 107 1054.87 107C1064.9 107 1071.41 102 1072.92 92.5A7.52 7.5 0 0 1 1080.44 85.5H1124.56A7.52 7.5 0 0 1 1132.08 93.5C1130.07 123 1106.01 143 1071.91 143H1056.87C1004.73 143 975.65 113.5 975.65 71.5C975.65 29.5 1004.73 0 1056.87 0 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M1151.63 2H1197.76A7.52 7.5 0 0 1 1205.28 9.5V87A19.05 19 0 0 0 1243.38 87V9.5A7.52 7.5 0 0 1 1250.9 2H1297.03A7.52 7.5 0 0 1 1304.55 9.5V85C1304.55 120 1277.98 143 1224.33 143C1170.68 143 1144.11 120 1144.11 85V9.5A7.52 7.5 0 0 1 1151.63 2 Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M1324.1 2H1425.88C1451.45 2 1471 20.5 1471 45C1471 69.5 1451.45 88 1425.88 88H1381.76A4.01 4 0 0 0 1377.75 92V133.5A7.52 7.5 0 0 1 1370.23 141H1324.1A7.52 7.5 0 0 1 1316.58 133.5V9.5A7.52 7.5 0 0 1 1324.1 2ZM 1381.76 33H1403.82A12.03 12 0 0 1 1403.82 57H1381.76A4.01 4 0 0 1 1377.75 53V37A4.01 4 0 0 1 1381.76 33 Z"/></g><mask id="fyButtercupMask"><rect width="1471" height="143" fill="#000"/><use href="#fyButtercupGlyphs" fill="#fff"/></mask><linearGradient id="fyButtercupShimmer" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0"/><stop offset="15%" stop-color="#ffffff" stop-opacity="0.02"/><stop offset="35%" stop-color="#ffffff" stop-opacity="0.11"/><stop offset="50%" stop-color="#ffffff" stop-opacity="0.19"/><stop offset="65%" stop-color="#ffffff" stop-opacity="0.11"/><stop offset="85%" stop-color="#ffffff" stop-opacity="0.02"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient></defs><use href="#fyButtercupGlyphs" fill="#232323"/><g mask="url(#fyButtercupMask)"><rect class="fy-wm-beam" x="-1100" y="0" width="1100" height="143" fill="url(#fyButtercupShimmer)"/></g></svg></div>
+    </div>
+  </div>
+</section><div class="project-cursor-wrp"><div class="view-project-follow-cursor"><div class="view-project-cursor"><div>coming <br/>soon</div></div></div></div></div>
+<script src="js/gravity-hero.js?v=3"></script>
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/SplitText.min.js"></script>
 <script src="js/vendor/lenis.min.js"></script>
 <script src="js/vendor/swiper-bundle.min.js"></script>
 <script src="js/vendor/ztstestimonials.js"></script>
-<script src="js/main.js?v=75"></script>
+<script src="js/gravity-app.js?v=3"></script>
+<script src="js/main.js?v=78"></script>
 <script src="js/ai-assistant.js?v=115"></script>
 <script src="js/loader.js?v=6"></script>
+
+<!-- Apple-Style Floating Right Navigation Dock -->
+<nav class="apple-dock" aria-label="Quick Navigation">
+  <a href="#gravityHome" class="apple-dock-item" data-action="scroll-top" aria-label="Home">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+    <span class="apple-dock-label">Home</span>
+  </a>
+  <a href="pages/case-studies/index.html" class="apple-dock-item" aria-label="Case Studies">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg>
+    <span class="apple-dock-label">Case Studies</span>
+  </a>
+  <a href="pages/blogs/index.html" class="apple-dock-item" aria-label="Blogs">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM8 7h8M8 11h6"/></svg>
+    <span class="apple-dock-label">Blogs</span>
+  </a>
+  <a href="pages/about/index.html" class="apple-dock-item" aria-label="About">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+    <span class="apple-dock-label">About</span>
+  </a>
+
+  <div class="apple-dock-wrapper nav-dropdown-wrapper">
+    <a href="#services" class="apple-dock-item nav-dropdown-trigger" data-action="scroll-services" aria-label="Services">
+      <svg viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-4.4 4 1.3 5.8-4.9-2.8-4.9 2.8 1.3-5.8L4 10l5.6-2.4L12 2z"/></svg>
+      <span class="apple-dock-label">Services</span>
+    </a>
+    <div class="industry-dropdown-popup services-popup dock-popup">
+      <div class="industry-popup-inner">
+        <div class="industry-popup-left">
+          <div>
+            <div class="industry-popup-header">
+              <span class="industry-popup-tag">EXPLORE SERVICES</span>
+            </div>
+            <a href="pages/services/brand-strategy/index.html" class="industry-cat-card" data-category="brand-strategy">
+              <div class="industry-cat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+              <div class="industry-cat-content">
+                <div class="industry-cat-title">
+                  <span>Brand Strategy</span>
+                  <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+                <div class="industry-cat-desc">Architecture, Positioning, Voice, Naming, Story, Slogan &amp; Rebranding</div>
+              </div>
+            </a>
+            <div class="industry-popup-divider"></div>
+            <a href="pages/services/visual-identity/index.html" class="industry-cat-card" data-category="visual-identity">
+              <div class="industry-cat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="industry-cat-content">
+                <div class="industry-cat-title">
+                  <span>Visual Identity Design</span>
+                  <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+                <div class="industry-cat-desc">Logo, Guidelines, Packaging, Brochures, Publications, Decks &amp; Events</div>
+              </div>
+            </a>
+            <div class="industry-popup-divider"></div>
+            <a href="pages/services/marketing-communication/index.html" class="industry-cat-card" data-category="marketing-comm">
+              <div class="industry-cat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                  <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                </svg>
+              </div>
+              <div class="industry-cat-content">
+                <div class="industry-cat-title">
+                  <span>Marketing Communication &amp; Campaigns</span>
+                  <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+                <div class="industry-cat-desc">Content Strategy, Copy &amp; Design, Print &amp; Outdoor, Digital Ads &amp; Shoots</div>
+              </div>
+            </a>
+          </div>
+          <div class="industry-popup-stats">
+            <div class="industry-stat-pill"><strong>3</strong> Core Pillars</div>
+            <div class="industry-stat-pill"><strong>20+</strong> Capabilities</div>
+          </div>
+        </div>
+        <div class="industry-popup-right">
+          <div class="industry-video-card">
+            <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
+            <div class="industry-video-overlay">
+              <div class="video-live-badge"><span class="live-dot"></span> STUDIO REEL</div>
+              <div class="video-caption-text">Human Intelligence Driven Brand Creation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="industry-subpopup services-subpopup" id="services-subpopup">
+        <div class="subpopup-panel" id="subpopup-brand-strategy" data-panel="brand-strategy">
+          <div class="subpopup-header">
+            <div class="subpopup-badge">01 BRAND STRATEGY</div>
+            <div class="subpopup-title">Core Capabilities</div>
+          </div>
+          <div class="subpopup-divider"></div>
+          <ul class="subpopup-list">
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-architecture" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Architecture</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#positioning" class="subpopup-link"><span class="subpopup-dot"></span><span>Positioning</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#personality-voice" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Personality &amp; Voice</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#naming" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Naming</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-story" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Story</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#slogan-taglines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Slogan &amp; Taglines</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#repositioning-rebranding" class="subpopup-link"><span class="subpopup-dot"></span><span>Repositioning &amp; Rebranding</span></a></li>
+          </ul>
+          <div class="subpopup-footer">
+            <span>7 Strategic Capabilities</span>
+            <a href="pages/services/brand-strategy/index.html" class="subpopup-cta">Explore Page →</a>
+          </div>
+        </div>
+        <div class="subpopup-panel" id="subpopup-visual-identity" data-panel="visual-identity">
+          <div class="subpopup-header">
+            <div class="subpopup-badge">02 VISUAL IDENTITY</div>
+            <div class="subpopup-title">Design Deliverables</div>
+          </div>
+          <div class="subpopup-divider"></div>
+          <ul class="subpopup-list">
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#logo-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Logo Design</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brand-guidelines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Guidelines</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#packaging-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Packaging Design</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brochures-catalogues" class="subpopup-link"><span class="subpopup-dot"></span><span>Brochure &amp; Catalogue Design</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#corporate-magazines" class="subpopup-link"><span class="subpopup-dot"></span><span>Corporate Magazine &amp; Publication</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#pitch-decks" class="subpopup-link"><span class="subpopup-dot"></span><span>Presentations &amp; Pitch Decks</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#exhibition-events" class="subpopup-link"><span class="subpopup-dot"></span><span>Trade Exhibition &amp; Event Design</span></a></li>
+          </ul>
+          <div class="subpopup-footer">
+            <span>7 Design Deliverables</span>
+            <a href="pages/services/visual-identity/index.html" class="subpopup-cta">Explore Page →</a>
+          </div>
+        </div>
+        <div class="subpopup-panel" id="subpopup-marketing-comm" data-panel="marketing-comm">
+          <div class="subpopup-header">
+            <div class="subpopup-badge">03 MARKETING CAMPAIGNS</div>
+            <div class="subpopup-title">Communication &amp; Media</div>
+          </div>
+          <div class="subpopup-divider"></div>
+          <ul class="subpopup-list">
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#content-strategy" class="subpopup-link"><span class="subpopup-dot"></span><span>Content Strategy</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#copy-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Concept, Copy &amp; Design</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#print-outdoor" class="subpopup-link"><span class="subpopup-dot"></span><span>Print, Outdoor &amp; BTL Creatives</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#digital-social" class="subpopup-link"><span class="subpopup-dot"></span><span>Digital &amp; Social Media Creatives</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#paid-campaigns" class="subpopup-link"><span class="subpopup-dot"></span><span>Paid Campaigns</span></a></li>
+            <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#brand-shoots" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Photography &amp; Shoots</span></a></li>
+          </ul>
+          <div class="subpopup-footer">
+            <span>6 Campaign Services</span>
+            <a href="pages/services/marketing-communication/index.html" class="subpopup-cta">Explore Page →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="apple-dock-wrapper nav-dropdown-wrapper">
+    <a href="pages/industries/product-base/index.html" class="apple-dock-item nav-dropdown-trigger" aria-label="Industries">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      <span class="apple-dock-label">Industries</span>
+    </a>
+    <div class="industry-dropdown-popup dock-popup">
+      <div class="industry-popup-inner">
+        <div class="industry-popup-left">
+          <div>
+            <div class="industry-popup-header">
+              <span class="industry-popup-tag">EXPLORE INDUSTRIES</span>
+            </div>
+            <a href="pages/industries/product-base/index.html" class="industry-cat-card" data-category="product">
+              <div class="industry-cat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <div class="industry-cat-content">
+                <div class="industry-cat-title">
+                  <span>Product Base</span>
+                  <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+                <div class="industry-cat-desc">Food &amp; Beverages, Apparels, Cosmetics, Pharmaceuticals, FMCG &amp; 50+ categories</div>
+              </div>
+            </a>
+            <div class="industry-popup-divider"></div>
+            <a href="pages/industries/service-base/index.html" class="industry-cat-card" data-category="service">
+              <div class="industry-cat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="industry-cat-content">
+                <div class="industry-cat-title">
+                  <span>Service Base</span>
+                  <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+                <div class="industry-cat-desc">IT, Real Estate, Hospitality, Finance, Consulting, Infrastructure &amp; 30+ sectors</div>
+              </div>
+            </a>
+          </div>
+          <div class="industry-popup-stats">
+            <div class="industry-stat-pill"><strong>50+</strong> Product Categories</div>
+            <div class="industry-stat-pill"><strong>30+</strong> Service Sectors</div>
+          </div>
+        </div>
+        <div class="industry-popup-right">
+          <div class="industry-video-card">
+            <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
+            <div class="industry-video-overlay">
+              <div class="video-live-badge"><span class="live-dot"></span> SHOWCASE REEL</div>
+              <div class="video-caption-text">Original Brand Identities Across Industries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="industry-subpopup" id="industry-subpopup">
+        <div class="subpopup-panel" id="subpopup-product" data-panel="product">
+          <div class="subpopup-header">
+            <div class="subpopup-badge">PRODUCT BASE</div>
+            <div class="subpopup-title">Industries &amp; Categories</div>
+          </div>
+          <div class="subpopup-divider"></div>
+          <ul class="subpopup-list">
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Food and Beverages</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Apparels</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Cosmetics</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Lifestyle &amp; Wellness Products</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Textiles</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Jewellery</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Lubricants</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Pharmaceuticals</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Medical Devices</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Electrical Appliances</span></a></li>
+          </ul>
+          <div class="subpopup-footer">
+            <span>50+ Products Categories</span>
+            <a href="pages/industries/product-base/index.html" class="subpopup-cta">Explore →</a>
+          </div>
+        </div>
+        <div class="subpopup-panel" id="subpopup-service" data-panel="service">
+          <div class="subpopup-header">
+            <div class="subpopup-badge">SERVICE BASE</div>
+            <div class="subpopup-title">Industries &amp; Sectors</div>
+          </div>
+          <div class="subpopup-divider"></div>
+          <ul class="subpopup-list">
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Management Consulting</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Information Technology (IT)</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Manufacturing &amp; Automation</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Finance and Insurance</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Real Estate &amp; Infrastructure</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Hospitality &amp; Restaurants</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Healthcare &amp; Hospitals</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Education &amp; Social Organizations</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Tourism, Wellness &amp; Beauty</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Retail &amp; Lifestyle Clubs</span></a></li>
+            <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Green Energy &amp; Agriculture</span></a></li>
+          </ul>
+          <div class="subpopup-footer">
+            <span>30+ Services Sectors</span>
+            <a href="pages/industries/service-base/index.html" class="subpopup-cta">Explore →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="apple-dock-divider" aria-hidden="true"></div>
+  <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request A Free Call">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    <span class="apple-dock-label">Request A Free Call</span>
+  </a>
+</nav>
+<script>
+(function(){
+  document.querySelectorAll('.apple-dock-item[data-action]').forEach(function(item){
+    item.addEventListener('click', function(e){
+      var action = item.getAttribute('data-action');
+      if (action === 'scroll-top'){
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (action === 'scroll-services'){
+        e.preventDefault();
+        var s = document.getElementById('services');
+        if (s) { s.scrollIntoView({ behavior: 'smooth' }); }
+      }
+    });
+  });
+  if (window.setupDropdownWrapper) {
+    document.querySelectorAll('.apple-dock .nav-dropdown-wrapper').forEach(window.setupDropdownWrapper);
+  }
+})();
+</script>
 </body>
 </html>

@@ -542,8 +542,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   // 7. INDUSTRY & SERVICES DROPDOWN MEGA POPUPS
   // =========================================================================
-  const dropdownWrappers = document.querySelectorAll(".nav-dropdown-wrapper");
-  dropdownWrappers.forEach(wrapper => {
+  function setupDropdownWrapper(wrapper) {
+    window.setupDropdownWrapper = setupDropdownWrapper;
+    if (wrapper.__dropdownInitialized) return;
+    wrapper.__dropdownInitialized = true;
+
     let timer = null;
     let subTimer = null;
     const video = wrapper.querySelector(".industry-video");
@@ -680,7 +683,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         e.stopPropagation();
         const wasOpen = wrapper.classList.contains("is-open");
-        dropdownWrappers.forEach(other => {
+        document.querySelectorAll(".nav-dropdown-wrapper").forEach(other => {
           if (other !== wrapper) {
             other.classList.remove("is-open", "is-mobile-open");
           }
@@ -694,11 +697,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
-  });
+  }
+
+  const dropdownWrappers = document.querySelectorAll(".nav-dropdown-wrapper");
+  dropdownWrappers.forEach(setupDropdownWrapper);
 
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".nav-dropdown-wrapper")) {
-      dropdownWrappers.forEach(w => w.classList.remove("is-open", "is-mobile-open"));
+      document.querySelectorAll(".nav-dropdown-wrapper").forEach(w => w.classList.remove("is-open", "is-mobile-open"));
     }
   });
 
@@ -1331,6 +1337,338 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initCaseStudyComingSoon();
+
+  // =========================================================================
+  // APPLE-STYLE FLOATING RIGHT NAVIGATION DOCK (Auto-injected for resilience)
+  // =========================================================================
+  function initAppleDock() {
+    const isHome = document.body.getAttribute('data-page') === 'index' || !!document.getElementById('gravityHome');
+    if (!isHome) return;
+
+    const dockHTML = `
+      <a href="#gravityHome" class="apple-dock-item" data-action="scroll-top" aria-label="Home">
+        <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+        <span class="apple-dock-label">Home</span>
+      </a>
+      <a href="pages/case-studies/index.html" class="apple-dock-item" aria-label="Case Studies">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg>
+        <span class="apple-dock-label">Case Studies</span>
+      </a>
+      <a href="pages/blogs/index.html" class="apple-dock-item" aria-label="Blogs">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM8 7h8M8 11h6"/></svg>
+        <span class="apple-dock-label">Blogs</span>
+      </a>
+      <a href="pages/about/index.html" class="apple-dock-item" aria-label="About">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        <span class="apple-dock-label">About</span>
+      </a>
+
+      <div class="apple-dock-wrapper nav-dropdown-wrapper">
+        <a href="#services" class="apple-dock-item nav-dropdown-trigger" data-action="scroll-services" aria-label="Services">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-4.4 4 1.3 5.8-4.9-2.8-4.9 2.8 1.3-5.8L4 10l5.6-2.4L12 2z"/></svg>
+          <span class="apple-dock-label">Services</span>
+        </a>
+        <div class="industry-dropdown-popup services-popup dock-popup">
+          <div class="industry-popup-inner">
+            <div class="industry-popup-left">
+              <div>
+                <div class="industry-popup-header">
+                  <span class="industry-popup-tag">EXPLORE SERVICES</span>
+                </div>
+                <a href="pages/services/brand-strategy/index.html" class="industry-cat-card" data-category="brand-strategy">
+                  <div class="industry-cat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                  </div>
+                  <div class="industry-cat-content">
+                    <div class="industry-cat-title">
+                      <span>Brand Strategy</span>
+                      <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                    <div class="industry-cat-desc">Architecture, Positioning, Voice, Naming, Story, Slogan &amp; Rebranding</div>
+                  </div>
+                </a>
+                <div class="industry-popup-divider"></div>
+                <a href="pages/services/visual-identity/index.html" class="industry-cat-card" data-category="visual-identity">
+                  <div class="industry-cat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                  </div>
+                  <div class="industry-cat-content">
+                    <div class="industry-cat-title">
+                      <span>Visual Identity Design</span>
+                      <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                    <div class="industry-cat-desc">Logo, Guidelines, Packaging, Brochures, Publications, Decks &amp; Events</div>
+                  </div>
+                </a>
+                <div class="industry-popup-divider"></div>
+                <a href="pages/services/marketing-communication/index.html" class="industry-cat-card" data-category="marketing-comm">
+                  <div class="industry-cat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                      <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                    </svg>
+                  </div>
+                  <div class="industry-cat-content">
+                    <div class="industry-cat-title">
+                      <span>Marketing Communication &amp; Campaigns</span>
+                      <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                    <div class="industry-cat-desc">Content Strategy, Copy &amp; Design, Print &amp; Outdoor, Digital Ads &amp; Shoots</div>
+                  </div>
+                </a>
+              </div>
+              <div class="industry-popup-stats">
+                <div class="industry-stat-pill"><strong>3</strong> Core Pillars</div>
+                <div class="industry-stat-pill"><strong>20+</strong> Capabilities</div>
+              </div>
+            </div>
+            <div class="industry-popup-right">
+              <div class="industry-video-card">
+                <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
+                <div class="industry-video-overlay">
+                  <div class="video-live-badge"><span class="live-dot"></span> STUDIO REEL</div>
+                  <div class="video-caption-text">Human Intelligence Driven Brand Creation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="industry-subpopup services-subpopup" id="services-subpopup">
+            <div class="subpopup-panel" id="subpopup-brand-strategy" data-panel="brand-strategy">
+              <div class="subpopup-header">
+                <div class="subpopup-badge">01 BRAND STRATEGY</div>
+                <div class="subpopup-title">Core Capabilities</div>
+              </div>
+              <div class="subpopup-divider"></div>
+              <ul class="subpopup-list">
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-architecture" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Architecture</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#positioning" class="subpopup-link"><span class="subpopup-dot"></span><span>Positioning</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#personality-voice" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Personality &amp; Voice</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#naming" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Naming</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#brand-story" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Story</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#slogan-taglines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Slogan &amp; Taglines</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/brand-strategy/index.html#repositioning-rebranding" class="subpopup-link"><span class="subpopup-dot"></span><span>Repositioning &amp; Rebranding</span></a></li>
+              </ul>
+              <div class="subpopup-footer">
+                <span>7 Strategic Capabilities</span>
+                <a href="pages/services/brand-strategy/index.html" class="subpopup-cta">Explore Page →</a>
+              </div>
+            </div>
+            <div class="subpopup-panel" id="subpopup-visual-identity" data-panel="visual-identity">
+              <div class="subpopup-header">
+                <div class="subpopup-badge">02 VISUAL IDENTITY</div>
+                <div class="subpopup-title">Design Deliverables</div>
+              </div>
+              <div class="subpopup-divider"></div>
+              <ul class="subpopup-list">
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#logo-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Logo Design</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brand-guidelines" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Guidelines</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#packaging-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Packaging Design</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#brochures-catalogues" class="subpopup-link"><span class="subpopup-dot"></span><span>Brochure &amp; Catalogue Design</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#corporate-magazines" class="subpopup-link"><span class="subpopup-dot"></span><span>Corporate Magazine &amp; Publication</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#pitch-decks" class="subpopup-link"><span class="subpopup-dot"></span><span>Presentations &amp; Pitch Decks</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/visual-identity/index.html#exhibition-events" class="subpopup-link"><span class="subpopup-dot"></span><span>Trade Exhibition &amp; Event Design</span></a></li>
+              </ul>
+              <div class="subpopup-footer">
+                <span>7 Design Deliverables</span>
+                <a href="pages/services/visual-identity/index.html" class="subpopup-cta">Explore Page →</a>
+              </div>
+            </div>
+            <div class="subpopup-panel" id="subpopup-marketing-comm" data-panel="marketing-comm">
+              <div class="subpopup-header">
+                <div class="subpopup-badge">03 MARKETING CAMPAIGNS</div>
+                <div class="subpopup-title">Communication &amp; Media</div>
+              </div>
+              <div class="subpopup-divider"></div>
+              <ul class="subpopup-list">
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#content-strategy" class="subpopup-link"><span class="subpopup-dot"></span><span>Content Strategy</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#copy-design" class="subpopup-link"><span class="subpopup-dot"></span><span>Concept, Copy &amp; Design</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#print-outdoor" class="subpopup-link"><span class="subpopup-dot"></span><span>Print, Outdoor &amp; BTL Creatives</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#digital-social" class="subpopup-link"><span class="subpopup-dot"></span><span>Digital &amp; Social Media Creatives</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#paid-campaigns" class="subpopup-link"><span class="subpopup-dot"></span><span>Paid Campaigns</span></a></li>
+                <li class="subpopup-item"><a href="pages/services/marketing-communication/index.html#brand-shoots" class="subpopup-link"><span class="subpopup-dot"></span><span>Brand Photography &amp; Shoots</span></a></li>
+              </ul>
+              <div class="subpopup-footer">
+                <span>6 Campaign Services</span>
+                <a href="pages/services/marketing-communication/index.html" class="subpopup-cta">Explore Page →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="apple-dock-wrapper nav-dropdown-wrapper">
+        <a href="pages/industries/product-base/index.html" class="apple-dock-item nav-dropdown-trigger" aria-label="Industries">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span class="apple-dock-label">Industries</span>
+        </a>
+        <div class="industry-dropdown-popup dock-popup">
+          <div class="industry-popup-inner">
+            <div class="industry-popup-left">
+              <div>
+                <div class="industry-popup-header">
+                  <span class="industry-popup-tag">EXPLORE INDUSTRIES</span>
+                </div>
+                <a href="pages/industries/product-base/index.html" class="industry-cat-card" data-category="product">
+                  <div class="industry-cat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                  </div>
+                  <div class="industry-cat-content">
+                    <div class="industry-cat-title">
+                      <span>Product Base</span>
+                      <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                    <div class="industry-cat-desc">Food &amp; Beverages, Apparels, Cosmetics, Pharmaceuticals, FMCG &amp; 50+ categories</div>
+                  </div>
+                </a>
+                <div class="industry-popup-divider"></div>
+                <a href="pages/industries/service-base/index.html" class="industry-cat-card" data-category="service">
+                  <div class="industry-cat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                  </div>
+                  <div class="industry-cat-content">
+                    <div class="industry-cat-title">
+                      <span>Service Base</span>
+                      <svg class="cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                    <div class="industry-cat-desc">IT, Real Estate, Hospitality, Finance, Consulting, Infrastructure &amp; 30+ sectors</div>
+                  </div>
+                </a>
+              </div>
+              <div class="industry-popup-stats">
+                <div class="industry-stat-pill"><strong>50+</strong> Product Categories</div>
+                <div class="industry-stat-pill"><strong>30+</strong> Service Sectors</div>
+              </div>
+            </div>
+            <div class="industry-popup-right">
+              <div class="industry-video-card">
+                <video class="industry-video" src="rings.mp4" autoplay loop muted playsinline preload="auto"></video>
+                <div class="industry-video-overlay">
+                  <div class="video-live-badge"><span class="live-dot"></span> SHOWCASE REEL</div>
+                  <div class="video-caption-text">Original Brand Identities Across Industries</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="industry-subpopup" id="industry-subpopup">
+            <div class="subpopup-panel" id="subpopup-product" data-panel="product">
+              <div class="subpopup-header">
+                <div class="subpopup-badge">PRODUCT BASE</div>
+                <div class="subpopup-title">Industries &amp; Categories</div>
+              </div>
+              <div class="subpopup-divider"></div>
+              <ul class="subpopup-list">
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Food and Beverages</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Apparels</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Cosmetics</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Lifestyle &amp; Wellness Products</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Textiles</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Jewellery</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Lubricants</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Pharmaceuticals</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Medical Devices</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/product-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Electrical Appliances</span></a></li>
+              </ul>
+              <div class="subpopup-footer">
+                <span>50+ Products Categories</span>
+                <a href="pages/industries/product-base/index.html" class="subpopup-cta">Explore →</a>
+              </div>
+            </div>
+            <div class="subpopup-panel" id="subpopup-service" data-panel="service">
+              <div class="subpopup-header">
+                <div class="subpopup-badge">SERVICE BASE</div>
+                <div class="subpopup-title">Industries &amp; Sectors</div>
+              </div>
+              <div class="subpopup-divider"></div>
+              <ul class="subpopup-list">
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Management Consulting</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Information Technology (IT)</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Industrial Manufacturing &amp; Automation</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Finance and Insurance</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Real Estate &amp; Infrastructure</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Hospitality &amp; Restaurants</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Healthcare &amp; Hospitals</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Education &amp; Social Organizations</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Tourism, Wellness &amp; Beauty</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Retail &amp; Lifestyle Clubs</span></a></li>
+                <li class="subpopup-item"><a href="pages/industries/service-base/index.html" class="subpopup-link"><span class="subpopup-dot"></span><span>Green Energy &amp; Agriculture</span></a></li>
+              </ul>
+              <div class="subpopup-footer">
+                <span>30+ Services Sectors</span>
+                <a href="pages/industries/service-base/index.html" class="subpopup-cta">Explore →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="apple-dock-divider" aria-hidden="true"></div>
+      <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request A Free Call">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="apple-dock-label">Request A Free Call</span>
+      </a>
+    `;
+
+    let dock = document.querySelector('.apple-dock');
+    if (!dock) {
+      dock = document.createElement('nav');
+      dock.className = 'apple-dock';
+      dock.setAttribute('aria-label', 'Quick Navigation');
+      dock.innerHTML = dockHTML;
+      document.body.appendChild(dock);
+    } else if (!dock.querySelector('.dock-popup')) {
+      dock.innerHTML = dockHTML;
+    }
+
+    dock.querySelectorAll('.nav-dropdown-wrapper').forEach(setupDropdownWrapper);
+
+    dock.querySelectorAll('.apple-dock-item[data-action]').forEach(item => {
+      item.addEventListener('click', e => {
+        const action = item.getAttribute('data-action');
+        if (action === 'scroll-top') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (action === 'scroll-services') {
+          const s = document.getElementById('services');
+          if (s) {
+            e.preventDefault();
+            s.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  }
+
+  initAppleDock();
 
   // =========================================================================
   // BUTTERCUP PAGE LOADER BOOTSTRAP (Blogs, About Us, Services, Industry)
