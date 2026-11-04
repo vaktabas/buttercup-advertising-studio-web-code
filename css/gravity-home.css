@@ -73,7 +73,7 @@
   :where(#gravityHome) figcaption{ text-align:start; margin-top:0; }
   :where(#gravityHome) img{ max-width:none; }
   :where(#gravityHome) a{color:var(--fg);text-decoration:none;}
-  #mass, #small, #ring{ transition:fill .4s ease, stroke .4s ease; }
+  #mass, #small, #ring{ transition:fill .4s ease; }
 
   .om-tiefe{
     position:fixed; inset:0; z-index:0;
@@ -180,7 +180,8 @@
   .om-name{ font-size:20px; font-weight:700; letter-spacing:0.14em; margin:0; }
 
   .om-claim{
-    position:absolute; left:1120px; top:646px; white-space:nowrap; margin:0;
+    /* sits under the horizontal BAS mark, left-aligned with the B */
+    position:absolute; left:726px; top:712px; white-space:nowrap; margin:0;
     font-size:20px; font-weight:700; letter-spacing:0.06em;
     color:var(--accent);
     opacity:0; transform:translateY(calc(-50% + 18px));
@@ -1059,7 +1060,7 @@
 
     .om-name, .om-role{ font-size:48px; }
 
-    .om-claim{ top:985px; font-size:28px; letter-spacing:0.04em; }
+    .om-claim{ top:760px; font-size:28px; letter-spacing:0.04em; }
 
     .om-lockup{ top:1108px; }
 
@@ -2092,7 +2093,7 @@
   html.brand-on-light #brandDot{ fill:var(--bg); }
   html.mass-on-light #mass{ fill:var(--bg); }
   html.mass-on-light #small{ fill:var(--bg); }
-  html.mass-on-light #ring{ stroke:var(--bg); }
+  html.mass-on-light #ring{ fill:var(--bg); }
 
 
   /* ===== Merge Seam & Zone Handoff (#gravityHome -> #web2Rest) ===== */

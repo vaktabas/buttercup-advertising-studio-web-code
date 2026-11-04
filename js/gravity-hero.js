@@ -7,17 +7,26 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   var CX = 960, CY = 536;
   var MARK_SCALE = 0.7;
 
-  var massR   = 121.5 * SC;
-  var smallR  = 48.7  * SC;
-  var ringOut = 127.5 * SC;
-  var ringIn  = 54    * SC;
-  var ringR   = (ringOut + ringIn) / 2;
-  var ringSW  = ringOut - ringIn;
+  // BAS shapes (see #shapeMaskA/B/S in index.html). Source artwork is 445px
+  // tall; BAS.png composes them as B | A | S with A in the middle.
+  var SHAPE_H = 240;
+  var SHAPE_K = SHAPE_H / 445;
+  var aHalfW = 485 * SHAPE_K / 2, aHalfH = SHAPE_H / 2;   // A — triangle (centre)
+  var bHalf  = 445 * SHAPE_K / 2;                         // B — squircle (orbits)
+  var sHalf  = 446 * SHAPE_K / 2;                         // S — circle (orbits)
 
-  var smallD = 185.6 * SC;
-  var smallA = Math.atan2(-111.5, 149);
-  var ringD  = 264 * SC;
-  var ringA  = Math.atan2(264, -1);
+  var massR   = aHalfH;
+  var smallR  = bHalf;
+  var ringOut = sHalf;
+
+  // Rest offsets measured from BAS.png (centres relative to the A).
+  var smallDX = -212 * SHAPE_K, smallDY = 0.5 * SHAPE_K;
+  var ringDX  = 241.5 * SHAPE_K, ringDY = 0;
+
+  var smallD = Math.hypot(smallDX, smallDY);
+  var smallA = Math.atan2(smallDY, smallDX);
+  var ringD  = Math.hypot(ringDX, ringDY);
+  var ringA  = Math.atan2(ringDY, ringDX);
 
   var smallHome = { x: CX + smallD * Math.cos(smallA), y: CY + smallD * Math.sin(smallA) };
   var ringHome  = { x: CX + ringD  * Math.cos(ringA),  y: CY + ringD  * Math.sin(ringA)  };
@@ -46,12 +55,12 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   var elHint = document.getElementById('hint');
   var elBg = document.getElementById('bg');
 
-  elMass.setAttribute('r', massR);
-  elSmall.setAttribute('r', smallR);
-  elRing.setAttribute('r', ringR);
-  elRing.setAttribute('stroke-width', ringSW);
   elSmall.style.opacity = 1;
   elRing.style.opacity = 1;
+
+  function placeShape(el, x, y){
+    attr(el, 'transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ')');
+  }
 
   function ueberdeckung(){
     if (window.innerHeight <= window.innerWidth) return 1.12;
@@ -524,23 +533,23 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   var RAMP_SEC = 0.5;
   var RADIAL_POW = 1.25;
   var DECAY_POW = 2.2;
-  var SPEED_FLOOR = 0.35;
+  var SPEED_FLOOR = 0.15;
 
-  var MIN_LOOPS = 2.2;
+  var MIN_LOOPS = 1.0;
 
   var TAU_SHAPE = 0.35;
   var MAX_SHAPE_RATE = 700;
 
   var TAU_ANGLE = 0.5;
-  var E_HOME_ENGAGE = 0.1;
-  var HOME_ENGAGE_ANGLE = 1.2;
+  var E_HOME_ENGAGE = 0.25;
+  var HOME_ENGAGE_ANGLE = 2.0;
 
-  var SPRING_K = 160, SPRING_D = 16;
+  var SPRING_K = 180, SPRING_D = 20;
 
-  var GATE_TIME = 0.5;
+  var GATE_TIME = 0.25;
 
-  var EPS_ANGLE_TIGHT = 0.01, EPS_VEL = 0.05;
-  var EPS_SHAPE = 5;
+  var EPS_ANGLE_TIGHT = 0.04, EPS_VEL = 0.08;
+  var EPS_SHAPE = 8;
   var WAKE_THRESH = 0.05;
 
   function attr(el, name, wert){
@@ -586,8 +595,10 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     return deckel * Math.tanh(schritt / deckel);
   }
 
-  var CORE_MIN_D_SMALL = massR + smallR + 6;
-  var CORE_MIN_D_RING = massR + ringOut + 6;
+  // The BAS shapes overlap at rest, so the closest approach is the rest
+  // distance itself — satellites swing out on their orbit, never into the A.
+  var CORE_MIN_D_SMALL = smallD;
+  var CORE_MIN_D_RING = ringD;
 
   function makeSat(homeR, homeA, dirSign, apoOffset, reachMax, coreMinD){
     return {
@@ -667,12 +678,22 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
       focusY: CY + (sat.curApo - sat.curPeri) * Math.sin(sat.curApoAng)
     } : null;
 
+    var crossed = (sat.prevErr !== undefined && ((sat.prevErr < 0 && signedErr >= 0) || (sat.prevErr > 0 && signedErr <= 0)));
+    sat.prevErr = signedErr;
     if (
-      homingWeight > 0.999 && Math.abs(signedErr) < EPS_ANGLE_TIGHT && Math.abs(sat.thetaVel) < EPS_VEL &&
-      Math.abs(sat.curApo - sat.homeR) < EPS_SHAPE && Math.abs(sat.curPeri - sat.homeR) < EPS_SHAPE &&
+      homingWeight > 0.6 &&
+      (Math.abs(signedErr) < 0.18 || crossed) &&
+      Math.abs(sat.curApo - sat.homeR) < 25 &&
       env < WAKE_THRESH
     ) {
-      sat.resting = true; sat.thetaVel = 0; sat.guide = null;
+      sat.resting = true;
+      sat.thetaVel = 0;
+      sat.guide = null;
+      sat.theta = sat.homeA;
+      sat.curApo = sat.homeR;
+      sat.curPeri = sat.homeR;
+      sat.x = CX + sat.homeR * Math.cos(sat.homeA);
+      sat.y = CY + sat.homeR * Math.sin(sat.homeA);
     }
   }
 
@@ -745,8 +766,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
   var currentAnim = null;
 
-  var logoLeft = Math.min(CX - massR, smallHome.x - smallR, ringHome.x - ringOut);
-  var logoRight = Math.max(CX + massR, smallHome.x + smallR, ringHome.x + ringOut);
+  var logoLeft = Math.min(CX - aHalfW, smallHome.x - smallR, ringHome.x - ringOut);
+  var logoRight = Math.max(CX + aHalfW, smallHome.x + smallR, ringHome.x + ringOut);
   var logoTop = Math.min(CY - massR, smallHome.y - smallR, ringHome.y - ringOut);
   var logoW = logoRight - logoLeft;
 
@@ -912,8 +933,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     sat.curPeri = periStart;
     sat.curApoAng = sat.theta;
   }
-  setupIntro(small, 4.0, 1500, 500);
-  setupIntro(ring, 4.6, 1650, 600);
+  setupIntro(small, 3.2, 520, 200);
+  setupIntro(ring, 3.8, 600, 240);
 
   var revealed = false;
   var lastFrame = performance.now();
@@ -947,11 +968,14 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     var dySum = (small.y - smallHome.y) + (ring.y - ringHome.y);
     var recoilX = Math.max(-16, Math.min(16, -dxSum * 0.045));
     var recoilY = Math.max(-16, Math.min(16, -dySum * 0.045));
-    elMass.setAttribute('transform', 'translate(' + recoilX + ' ' + recoilY + ')');
-
-    elSmall.setAttribute('cx', small.x); elSmall.setAttribute('cy', small.y);
-    elRing.setAttribute('cx', ring.x); elRing.setAttribute('cy', ring.y);
-    elMass.setAttribute('cx', CX); elMass.setAttribute('cy', CY);
+    if (small.resting && ring.resting) {
+      recoilX = 0;
+      recoilY = 0;
+    }
+    placeShape(elMass, CX + recoilX, CY + recoilY);
+    placeShape(elSmall, small.x, small.y);
+    placeShape(elRing, ring.x, ring.y);
+    elSvg.classList.toggle('is-bas-rest', small.resting && ring.resting);
 
     zeichneBahn(small, elGuideSmall, elFocusSmall, elCoordSmall, elCoordSmallXY, elCoordSmallA);
     zeichneBahn(ring, elGuideRing, elFocusRing, elCoordRing, elCoordRingXY, elCoordRingA);
@@ -961,9 +985,11 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     requestAnimationFrame(frame);
   }
 
-  elMass.setAttribute('cx', CX); elMass.setAttribute('cy', CY);
+  placeShape(elMass, CX, CY);
   stepSat(small, 0.016, 0, 0, 0, ring.x, ring.y);
   stepSat(ring, 0.016, 0, 0, 0, small.x, small.y);
   resolveCoreDistance(small); resolveCoreDistance(ring);
+  placeShape(elSmall, small.x, small.y);
+  placeShape(elRing, ring.x, ring.y);
   requestAnimationFrame(frame);
 })();
