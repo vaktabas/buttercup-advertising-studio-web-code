@@ -1702,10 +1702,10 @@
     width:auto; max-width:115px; height:26px; object-fit:contain; overflow:visible;
     margin:0 !important;
     opacity:0; transform:translateY(18px);
-    transition:opacity 1s ease .15s, transform 1s ease .15s;
+    transition:opacity 1s ease .15s, transform 1s ease .15s, filter 0.35s ease !important;
     user-select:none;
     pointer-events:auto;
-    z-index:50;
+    z-index:100000 !important;
   }
   .om-brand.is-da, .om-lockup.is-da{ opacity:1; transform:translateY(0); }
 
@@ -2089,11 +2089,40 @@
   html.brand-on-accent #brandDot{ fill:var(--logo-on-accent); }
   html.mass-on-accent #mass{ fill:var(--logo-on-accent); }
 
+  /* Invert top-left brand logo text to solid black on light/white background */
+  html.brand-on-light .om-brand,
+  html.mass-on-light .om-brand,
+  html.in-web2-full:not(.brand-on-dark) .om-brand,
+  html.in-web2-zone:not(.brand-on-dark) .om-brand {
+    filter: brightness(0) !important;
+  }
+
+  /* When on dark background or dark footer, logo text stays crisp white */
+  html.brand-on-dark .om-brand {
+    filter: none !important;
+  }
+
   html.brand-on-light #brandText,
   html.brand-on-light #brandDot{ fill:var(--bg); }
   html.mass-on-light #mass{ fill:var(--bg); }
   html.mass-on-light #small{ fill:var(--bg); }
   html.mass-on-light #ring{ fill:var(--bg); }
+
+  /* Docked BAS shapes: solid black on light/white, crisp white on dark/footer */
+  html.logo-gedockt.mass-on-light #mass,
+  html.logo-gedockt.mass-on-light #small,
+  html.logo-gedockt.mass-on-light #ring,
+  html.in-web2-full:not(.brand-on-dark) #mass,
+  html.in-web2-full:not(.brand-on-dark) #small,
+  html.in-web2-full:not(.brand-on-dark) #ring {
+    fill: #000000 !important;
+  }
+
+  html.logo-gedockt.brand-on-dark #mass,
+  html.logo-gedockt.brand-on-dark #small,
+  html.logo-gedockt.brand-on-dark #ring {
+    fill: #ffffff !important;
+  }
 
 
   /* ===== Merge Seam & Zone Handoff (#gravityHome -> #web2Rest) ===== */
@@ -2177,7 +2206,7 @@
     visibility:hidden !important;
   }
 
-  /* Once web 2 covers 100% of viewport, silence offscreen Gravity fixed layers */
+  /* Once web 2 covers 100% of viewport, silence offscreen Gravity fixed layers (KEEP brand logo & BAS svg visible) */
   html.in-web2-full #gravityHome .om-tiefe,
   html.in-web2-full #gravityHome .orbit-layer,
   html.in-web2-full #gravityHome .om-galerie,
@@ -2189,8 +2218,6 @@
   html.in-web2-full #gravityHome .om-film-tasten-fest,
   html.in-web2-full #gravityHome .om-galerie-schalter,
   html.in-web2-full #gravityHome nav.om-nav,
-  html.in-web2-full #gravityHome .om-brand,
-  html.in-web2-full #gravityHome #svg,
   html.in-web2-full #gravityHome #awwwards,
   html.in-web2-full #gravityHome .om-fuss,
   html.in-web2-full .om-flydot{
@@ -2198,8 +2225,37 @@
     pointer-events:none !important;
   }
 
+  /* Pinned top-left branding (Text + BAS shapes) stays visible down to the footer */
+  html.logo-gedockt #stage,
+  html.in-web2-full #stage,
+  html.in-web2-zone #stage {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+    z-index: 99999 !important;
+    pointer-events: none !important;
+  }
+
   html.logo-gedockt #gravityHome .om-brand.is-da,
-  html.logo-gedockt #gravityHome nav.om-nav.is-da,
-  html.logo-gedockt #gravityHome #svg{
+  html.in-web2-full #gravityHome .om-brand,
+  html.in-web2-zone #gravityHome .om-brand {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 100000 !important;
+  }
+
+  html.logo-gedockt #gravityHome #svg,
+  html.in-web2-full #gravityHome #svg,
+  html.in-web2-zone #gravityHome #svg {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    z-index: 100000 !important;
+  }
+
+  html.logo-gedockt #gravityHome nav.om-nav.is-da{
     opacity:var(--gh-chrome, 1);
   }

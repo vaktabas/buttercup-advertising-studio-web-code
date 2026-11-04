@@ -401,13 +401,23 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     var dunkelRect = dunkelSec ? dunkelSec.getBoundingClientRect() : null;
     var web2Rect = web2El ? web2El.getBoundingClientRect() : null;
 
+    var footerSec = document.querySelector('.section.is-footer.fy-footer') ||
+                    document.querySelector('.fy-footer') ||
+                    document.getElementById('fuss') ||
+                    document.getElementById('contact');
+    var footerRect = footerSec ? footerSec.getBoundingClientRect() : null;
+
     var woelbSec = document.querySelector('.om-kontakt-woelbung');
     var woelbRect = woelbSec ? woelbSec.getBoundingClientRect() : null;
     if (woelbRect && !woelbRect.height) woelbRect = null;
     function overLight(rc){
-      if (!rc || (!rc.width && !rc.height)) return false;
-      var lx = (rc.left + rc.right) / 2, ly = (rc.top + rc.bottom) / 2;
+      var lx = 113, ly = 55;
+      if (rc && (rc.width || rc.height)){
+        lx = (rc.left + rc.right) / 2;
+        ly = (rc.top + rc.bottom) / 2;
+      }
 
+      if (footerRect && ly >= footerRect.top && ly <= footerRect.bottom) return false;
       if (dunkelRect && ly > dunkelRect.top && ly < dunkelRect.bottom) return false;
       if (woelbRect && ly > woelbRect.top && ly < woelbRect.bottom) return false;
       if (lightRect && ly > lightRect.top && ly < lightRect.bottom) return true;
@@ -423,10 +433,11 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     }
 
     var root = document.documentElement;
-    root.classList.toggle('brand-on-light',
-      overLight(elBrandMark ? elBrandMark.getBoundingClientRect() : null));
-    root.classList.toggle('mass-on-light',
-      overLight(elMassMark ? elMassMark.getBoundingClientRect() : null));
+    var isBrandLight = overLight(elBrandMark ? elBrandMark.getBoundingClientRect() : null);
+    var isMassLight = overLight(elMassMark ? elMassMark.getBoundingClientRect() : null);
+    root.classList.toggle('brand-on-light', isBrandLight);
+    root.classList.toggle('mass-on-light', isMassLight);
+    root.classList.toggle('brand-on-dark', !isBrandLight);
     root.classList.toggle('brand-on-accent',
       overAccent(elBrandMark ? elBrandMark.getBoundingClientRect() : null));
     root.classList.toggle('mass-on-accent',
@@ -992,4 +1003,12 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   placeShape(elSmall, small.x, small.y);
   placeShape(elRing, ring.x, ring.y);
   requestAnimationFrame(frame);
+
+  var elBrandLink = document.querySelector('.om-brand-heim');
+  if (elBrandLink){
+    elBrandLink.addEventListener('click', function(e){
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();
