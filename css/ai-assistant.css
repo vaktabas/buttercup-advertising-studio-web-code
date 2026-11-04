@@ -117,7 +117,7 @@
   padding: 0.65rem 1.15rem;
   border-radius: 9999px;
   border: 1px solid rgba(168, 85, 247, 0.45);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.76rem;
   font-weight: 500;
   letter-spacing: 0.035em;
@@ -428,7 +428,7 @@
   color: #22123d;
   padding: 1.15rem 1.5rem;
   border-radius: 1.25rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
   line-height: 1.55;
@@ -480,7 +480,7 @@
 }
 
 .em-ai-searching-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
   color: #7b5ea7;
@@ -503,7 +503,7 @@
   color: #ffffff;
   padding: 0.85rem 1.4rem;
   border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
   box-shadow: 0 6px 20px rgba(144, 71, 255, 0.35);
@@ -523,7 +523,7 @@
   border: 1px solid rgba(144, 71, 255, 0.2);
   border-radius: 9999px;
   padding: 0.52rem 1.1rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   color: #40206e;
@@ -592,7 +592,7 @@
   border: none;
   outline: none;
   background: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.95rem;
   color: #1e0d3b;
 }

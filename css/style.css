@@ -1,8 +1,8 @@
 :root {
     --bg-main: #ffffff;
     --text-main: #000000;
-    --font-heading: 'Instrument Serif', Georgia, serif;
-    --font-body: 'TASA Orbiter', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
