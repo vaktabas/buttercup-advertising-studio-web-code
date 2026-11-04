@@ -841,6 +841,14 @@ document.addEventListener("DOMContentLoaded", () => {
         cursorRing.classList.toggle("is-hovering", isHovering);
         cursorDot.classList.toggle("is-hovering", isHovering);
       }
+      const isOverDockOrPopup = !!(e.target && e.target.closest && e.target.closest('.apple-dock, .industry-dropdown-popup, .industry-subpopup, .services-popup'));
+      if (isOverDockOrPopup) {
+        cursorDot.style.display = 'none';
+        cursorRing.style.display = 'none';
+      } else {
+        cursorDot.style.display = '';
+        cursorRing.style.display = '';
+      }
     }, { passive: true });
   }
 

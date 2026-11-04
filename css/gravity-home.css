@@ -2096,9 +2096,15 @@
     color:var(--_colors---neutral--black, #000000);
   }
 
-  /* Restore authentic OS + Orbit cursors inside #gravityHome (override extra.css cursor:none) */
+  /* Restore authentic OS + Orbit cursors inside #gravityHome & Apple Dock & Popups (override extra.css cursor:none) */
   html.custom-cursor-active #gravityHome,
-  html.custom-cursor-active #gravityHome *{
+  html.custom-cursor-active #gravityHome *,
+  html.custom-cursor-active .apple-dock,
+  html.custom-cursor-active .apple-dock *,
+  html.custom-cursor-active .industry-dropdown-popup,
+  html.custom-cursor-active .industry-dropdown-popup *,
+  html.custom-cursor-active .industry-subpopup,
+  html.custom-cursor-active .industry-subpopup *{
     cursor:default !important;
   }
   html.custom-cursor-active #gravityHome #orbitFront{
@@ -2113,7 +2119,21 @@
   html.custom-cursor-active #gravityHome #orbitFront.is-hover,
   html.custom-cursor-active #gravityHome #orbitFront.is-schalter,
   html.custom-cursor-active body.is-kontakt-nah #gravityHome,
-  html.custom-cursor-active body.is-kontakt-nah #gravityHome #orbitFront{
+  html.custom-cursor-active body.is-kontakt-nah #gravityHome #orbitFront,
+  html.custom-cursor-active .apple-dock a,
+  html.custom-cursor-active .apple-dock a *,
+  html.custom-cursor-active .apple-dock button,
+  html.custom-cursor-active .apple-dock button *,
+  html.custom-cursor-active .apple-dock-item,
+  html.custom-cursor-active .apple-dock-item *,
+  html.custom-cursor-active .industry-dropdown-popup a,
+  html.custom-cursor-active .industry-dropdown-popup a *,
+  html.custom-cursor-active .industry-dropdown-popup button,
+  html.custom-cursor-active .industry-dropdown-popup button *,
+  html.custom-cursor-active .industry-dropdown-popup [data-category],
+  html.custom-cursor-active .industry-dropdown-popup [data-category] *,
+  html.custom-cursor-active .industry-subpopup a,
+  html.custom-cursor-active .industry-subpopup a *{
     cursor:pointer !important;
   }
   html.custom-cursor-active #gravityHome #orbitFront.is-dragging{

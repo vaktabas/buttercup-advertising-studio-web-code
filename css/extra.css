@@ -4203,4 +4203,50 @@ body.cs-modal-active .project-cursor-wrp {
     }
 }
 
+/* ==========================================================================
+   RESTORE VISIBLE NATIVE MOUSE CURSOR OVER APPLE DOCK & DROPDOWN POPUPS
+   ========================================================================== */
+.apple-dock,
+.apple-dock *,
+.apple-dock-label,
+.industry-dropdown-popup,
+.industry-dropdown-popup *,
+.industry-subpopup,
+.industry-subpopup *,
+.services-popup,
+.services-popup * {
+    cursor: default !important;
+}
+
+.apple-dock a,
+.apple-dock a *,
+.apple-dock button,
+.apple-dock button *,
+.apple-dock-item,
+.apple-dock-item *,
+.industry-dropdown-popup a,
+.industry-dropdown-popup a *,
+.industry-dropdown-popup button,
+.industry-dropdown-popup button *,
+.industry-dropdown-popup [data-category],
+.industry-dropdown-popup [data-category] *,
+.industry-subpopup a,
+.industry-subpopup a *,
+.subpopup-link,
+.subpopup-link * {
+    cursor: pointer !important;
+}
+
+/* Hide floating purple custom cursor when hovering over Apple Dock or popups */
+body:has(.apple-dock:hover) .custom-cursor-dot,
+body:has(.apple-dock:hover) .custom-cursor-ring,
+body:has(.industry-dropdown-popup:hover) .custom-cursor-dot,
+body:has(.industry-dropdown-popup:hover) .custom-cursor-ring,
+body:has(.industry-subpopup:hover) .custom-cursor-dot,
+body:has(.industry-subpopup:hover) .custom-cursor-ring {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 
