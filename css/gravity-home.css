@@ -34,8 +34,8 @@
 
     --kasten-luft:clamp(26px, 3vw, 52px);
 
-    --nav-oben:46px;
-    --brand-oben:36px;
+    --nav-oben:42px;
+    --brand-oben:42px;
 
     --orbit-mitte:50%;
 
@@ -134,6 +134,7 @@
   nav.om-nav{
     position:fixed; top:var(--nav-oben); right:var(--rand); z-index:32;
     display:flex; align-items:center; gap:52px;
+    height:26px; line-height:26px; margin:0 !important;
     font-size:18px; letter-spacing:0.06em;
 
     --nav-farbe:color-mix(in srgb, var(--fg) 76%, var(--bg));
@@ -152,7 +153,10 @@
     --nav-farbe:color-mix(in srgb, var(--logo-on-accent) 80%, var(--accent));
     --nav-farbe-an:var(--logo-on-accent);
   }
-  nav.om-nav a{ color:inherit; transition:color .3s ease; }
+  nav.om-nav a{
+    color:inherit; transition:color .3s ease;
+    display:inline-flex; align-items:center; height:26px; line-height:1;
+  }
 
   nav.om-nav a:hover, nav.om-nav a.is-nah{ color:var(--nav-farbe-an); }
 
@@ -1684,7 +1688,8 @@
 
   .om-brand{
     position:fixed; inset:auto; top:var(--brand-oben); left:var(--rand);
-    width:auto; max-width:115px; height:clamp(20px, 1.7vw, 26px); object-fit:contain; overflow:visible;
+    width:auto; max-width:115px; height:26px; object-fit:contain; overflow:visible;
+    margin:0 !important;
     opacity:0; transform:translateY(18px);
     transition:opacity 1s ease .15s, transform 1s ease .15s;
     user-select:none;
