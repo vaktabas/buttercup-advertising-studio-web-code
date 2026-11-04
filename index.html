@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="css/loader.css?v=9">
 <link rel="stylesheet" href="css/ai-assistant.css?v=118">
 <link rel="preload" as="image" href="images/gravity/portrait.jpg" fetchpriority="high">
-<link rel="stylesheet" href="css/gravity-home.css?v=21">
+<link rel="stylesheet" href="css/gravity-home.css?v=22">
 </head>
 <body data-page="index">
 <div class="w-embed"><style>
@@ -325,15 +325,15 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
 
   <svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
       <defs>
-        <!-- BAS shape masks: 1.png (B), 2.png (A), 3.png (S) -->
-        <mask id="shapeMaskA" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-          <image href="images/gravity/2.png" xlink:href="images/gravity/2.png" x="-130.8" y="-120" width="261.6" height="240"></image>
+        <!-- BAS shape masks: 1.png (B), 2.png (A), 3.png (S) with generous bounds to prevent clipping -->
+        <mask id="shapeMaskA" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-300" y="-300" width="600" height="600">
+          <image href="images/gravity/2.png" xlink:href="images/gravity/2.png" x="-146.97" y="-136.18" width="293.93" height="272.36"></image>
         </mask>
-        <mask id="shapeMaskB" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-          <image href="images/gravity/1.png" xlink:href="images/gravity/1.png" x="-120" y="-120.25" width="240" height="240.5"></image>
+        <mask id="shapeMaskB" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-300" y="-300" width="600" height="600">
+          <image href="images/gravity/1.png" xlink:href="images/gravity/1.png" x="-136.18" y="-136.45" width="272.36" height="272.90"></image>
         </mask>
-        <mask id="shapeMaskS" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-          <image href="images/gravity/3.png" xlink:href="images/gravity/3.png" x="-120.25" y="-120" width="240.5" height="240"></image>
+        <mask id="shapeMaskS" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-300" y="-300" width="600" height="600">
+          <image href="images/gravity/3.png" xlink:href="images/gravity/3.png" x="-136.45" y="-136.18" width="272.90" height="272.36"></image>
         </mask>
       </defs>
 
@@ -352,9 +352,9 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
       <circle id="attractor" r="9" fill="var(--accent)" opacity="0"></circle>
 
       <!-- A (centre, triangle) · B (squircle, orbits) · S (circle, orbits) -->
-      <g id="mass" fill="var(--accent)"><rect x="-130.8" y="-120" width="261.6" height="240" mask="url(#shapeMaskA)"></rect></g>
-      <g id="small" fill="var(--fg)"><rect x="-120" y="-120.25" width="240" height="240.5" mask="url(#shapeMaskB)"></rect></g>
-      <g id="ring" fill="var(--fg)"><rect x="-120.25" y="-120" width="240.5" height="240" mask="url(#shapeMaskS)"></rect></g>
+      <g id="mass" fill="var(--accent)"><rect x="-300" y="-300" width="600" height="600" mask="url(#shapeMaskA)"></rect></g>
+      <g id="small" fill="var(--fg)"><rect x="-300" y="-300" width="600" height="600" mask="url(#shapeMaskB)"></rect></g>
+      <g id="ring" fill="var(--fg)"><rect x="-300" y="-300" width="600" height="600" mask="url(#shapeMaskS)"></rect></g>
   </svg>
 
   <a class="om-brand-heim" href="#" aria-label="Buttercup Advertising Studio">
@@ -694,7 +694,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
     </div>
   </div>
 </section><div class="project-cursor-wrp"><div class="view-project-follow-cursor"><div class="view-project-cursor"><div>coming <br/>soon</div></div></div></div></div>
-<script src="js/gravity-hero.js?v=9"></script>
+<script src="js/gravity-hero.js?v=10"></script>
 <script src="js/vendor/gsap.min.js"></script>
 <script src="js/vendor/ScrollTrigger.min.js"></script>
 <script src="js/vendor/SplitText.min.js"></script>
