@@ -2225,10 +2225,8 @@
     pointer-events:none !important;
   }
 
-  /* Pinned top-left branding (Text + BAS shapes) stays visible down to the footer */
-  html.logo-gedockt #stage,
-  html.in-web2-full #stage,
-  html.in-web2-zone #stage {
+  /* When docked, header (brand logo + BAS shapes + nav) stays pinned in gravity, and scrolls up seamlessly as our services approaches */
+  html.logo-gedockt #stage {
     position: fixed !important;
     inset: 0 !important;
     width: 100% !important;
@@ -2236,26 +2234,41 @@
     overflow: visible !important;
     z-index: 99999 !important;
     pointer-events: none !important;
+    transform: translate3d(0, var(--header-shift, 0px), 0) !important;
+    will-change: transform;
   }
 
-  html.logo-gedockt #gravityHome .om-brand.is-da,
-  html.in-web2-full #gravityHome .om-brand,
-  html.in-web2-zone #gravityHome .om-brand {
+  html.logo-gedockt #gravityHome .om-brand.is-da {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
     z-index: 100000 !important;
   }
 
-  html.logo-gedockt #gravityHome #svg,
-  html.in-web2-full #gravityHome #svg,
-  html.in-web2-zone #gravityHome #svg {
+  html.logo-gedockt #gravityHome #svg {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: none !important;
     z-index: 100000 !important;
   }
 
-  html.logo-gedockt #gravityHome nav.om-nav.is-da{
-    opacity:var(--gh-chrome, 1);
+  /* Right-side nav: "Talk with AI Assistant" scrolls up with the page in 1:1 sync with the logo */
+  nav.om-nav.is-da {
+    transform: translate3d(0, var(--header-shift, 0px), 0) !important;
+    will-change: transform;
+  }
+
+  html.logo-gedockt #gravityHome nav.om-nav.is-da {
+    opacity: 1 !important;
+    transition: color .4s ease !important;
+  }
+
+  /* Once our services section takes over, silence off-screen header elements */
+  html.header-scrolled-away #stage,
+  html.header-scrolled-away nav.om-nav,
+  html.in-web2-full #gravityHome .om-brand,
+  html.in-web2-full #gravityHome #svg,
+  html.in-web2-full #gravityHome nav.om-nav {
+    visibility: hidden !important;
+    pointer-events: none !important;
   }

@@ -447,6 +447,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     root.classList.toggle('nav-on-light', overLight(navRect));
     root.classList.toggle('nav-on-accent', overAccent(navRect));
 
+    updateHeaderShift();
+
     var growT = clamp01((progress - TEXT_GROW_START) / (1 - TEXT_GROW_START));
     var eased = growT * growT * growT;
     var scaleVal = (1 + eased * TEXT_GROW_MAX).toFixed(3);
@@ -927,6 +929,15 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     elHint.style.opacity = (docked || transitioning || hintDismissed) ? 0 : 0.55;
   }
 
+  function updateHeaderShift(){
+    if (!web2El) return;
+    var wr = web2El.getBoundingClientRect();
+    var H_START = 180;
+    var shift = wr.top < H_START ? Math.max(-260, Math.round(wr.top - H_START)) : 0;
+    document.documentElement.style.setProperty('--header-shift', shift + 'px');
+    document.documentElement.classList.toggle('header-scrolled-away', shift <= -220);
+  }
+
   function checkScrollState(){
     var y = window.scrollY;
 
@@ -934,6 +945,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
     if (!docked && !transitioning && y > DOCK_THRESHOLD) { dockLogo(); }
     else if (docked && !transitioning && y < UNDOCK_THRESHOLD) { undockLogo(); }
+
+    updateHeaderShift();
   }
   window.addEventListener('scroll', checkScrollState, { passive: true });
 
