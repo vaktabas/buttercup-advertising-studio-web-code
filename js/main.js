@@ -1355,25 +1355,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const dockHTML = `
       <a href="#gravityHome" class="apple-dock-item" data-action="scroll-top" aria-label="Home">
-        <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+        <img class="apple-dock-icon" src="images/dock/finder.png" alt="Home" />
         <span class="apple-dock-label">Home</span>
       </a>
       <a href="pages/case-studies/index.html" class="apple-dock-item" aria-label="Case Studies">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg>
+        <img class="apple-dock-icon" src="images/dock/figma.png" alt="Case Studies" />
         <span class="apple-dock-label">Case Studies</span>
       </a>
       <a href="pages/blogs/index.html" class="apple-dock-item" aria-label="Blogs">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM8 7h8M8 11h6"/></svg>
+        <img class="apple-dock-icon" src="images/dock/notes.png" alt="Blogs" />
         <span class="apple-dock-label">Blogs</span>
       </a>
       <a href="pages/about/index.html" class="apple-dock-item" aria-label="About">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        <img class="apple-dock-icon" src="images/dock/contacts.png" alt="About" />
         <span class="apple-dock-label">About</span>
       </a>
 
       <div class="apple-dock-wrapper nav-dropdown-wrapper">
         <a href="#services" class="apple-dock-item nav-dropdown-trigger" data-action="scroll-services" aria-label="Services">
-          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 10l-4.4 4 1.3 5.8-4.9-2.8-4.9 2.8 1.3-5.8L4 10l5.6-2.4L12 2z"/></svg>
+          <img class="apple-dock-icon" src="images/dock/appstore.png" alt="Services" />
           <span class="apple-dock-label">Services</span>
         </a>
         <div class="industry-dropdown-popup services-popup dock-popup">
@@ -1522,7 +1522,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="apple-dock-wrapper nav-dropdown-wrapper">
         <a href="pages/industries/product-base/index.html" class="apple-dock-item nav-dropdown-trigger" aria-label="Industries">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <img class="apple-dock-icon" src="images/dock/apps.png" alt="Industries" />
           <span class="apple-dock-label">Industries</span>
         </a>
         <div class="industry-dropdown-popup dock-popup">
@@ -1641,7 +1641,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="apple-dock-divider" aria-hidden="true"></div>
       <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request A Free Call">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <img class="apple-dock-icon" src="images/dock/whatsapp.png" alt="Request A Free Call" />
         <span class="apple-dock-label">Request A Free Call</span>
       </a>
     `;
