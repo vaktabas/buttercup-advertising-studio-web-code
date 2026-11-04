@@ -1094,6 +1094,18 @@
     if (aiBubble) aiBubble.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
     if (aiCloseBtn) aiCloseBtn.addEventListener('click', closeAiModal);
 
+    window.openButtercupAi = openAiModal;
+    window.openAiModal = openAiModal;
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target && e.target.closest && e.target.closest('[data-action="open-ai"], #openAiAssistantBtn');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        openAiModal();
+      }
+    });
+
     // ESC key closes modal
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && isModalOpen) {
