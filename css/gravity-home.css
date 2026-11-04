@@ -171,7 +171,7 @@
 
   .om-claim{
     position:absolute; left:1120px; top:646px; white-space:nowrap; margin:0;
-    font-size:35px; font-weight:700; letter-spacing:0.06em;
+    font-size:20px; font-weight:700; letter-spacing:0.06em;
     color:var(--accent);
     opacity:0; transform:translateY(calc(-50% + 18px));
     transition:opacity 1s ease .3s, transform 1s ease .3s;
@@ -1041,7 +1041,7 @@
 
     .om-name, .om-role{ font-size:30px; }
 
-    .om-claim{ font-size:48px; }
+    .om-claim{ font-size:26px; }
   }
 
   @media (max-width: 640px){
@@ -1049,7 +1049,7 @@
 
     .om-name, .om-role{ font-size:48px; }
 
-    .om-claim{ top:985px; font-size:60px; letter-spacing:0.04em; }
+    .om-claim{ top:985px; font-size:28px; letter-spacing:0.04em; }
 
     .om-lockup{ top:1108px; }
 
@@ -1058,7 +1058,7 @@
 
   @media (pointer: coarse) and (orientation: landscape){
     .om-name, .om-role{ font-size:27px; }
-    .om-claim{ font-size:46px; }
+    .om-claim{ font-size:24px; }
   }
   @media (max-width: 860px){
     .om-constellation{ height:min(85vh, 700px, 88vw); }
