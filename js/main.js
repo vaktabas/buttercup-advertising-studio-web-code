@@ -1355,25 +1355,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const dockHTML = `
       <a href="#gravityHome" class="apple-dock-item" data-action="scroll-top" aria-label="Home">
-        <img class="apple-dock-icon" src="images/dock/finder.png" alt="Home" />
+        <img class="apple-dock-icon" src="images/dock/home.png" alt="Home" />
         <span class="apple-dock-label">Home</span>
       </a>
       <a href="pages/case-studies/index.html" class="apple-dock-item" aria-label="Case Studies">
-        <img class="apple-dock-icon" src="images/dock/figma.png" alt="Case Studies" />
+        <img class="apple-dock-icon" src="images/dock/cases.png" alt="Case Studies" />
         <span class="apple-dock-label">Case Studies</span>
       </a>
       <a href="pages/blogs/index.html" class="apple-dock-item" aria-label="Blogs">
-        <img class="apple-dock-icon" src="images/dock/notes.png" alt="Blogs" />
+        <img class="apple-dock-icon" src="images/dock/blogs.png" alt="Blogs" />
         <span class="apple-dock-label">Blogs</span>
       </a>
       <a href="pages/about/index.html" class="apple-dock-item" aria-label="About">
-        <img class="apple-dock-icon" src="images/dock/contacts.png" alt="About" />
+        <img class="apple-dock-icon" src="images/dock/about.png" alt="About" />
         <span class="apple-dock-label">About</span>
       </a>
 
       <div class="apple-dock-wrapper nav-dropdown-wrapper">
         <a href="#services" class="apple-dock-item nav-dropdown-trigger" data-action="scroll-services" aria-label="Services">
-          <img class="apple-dock-icon" src="images/dock/appstore.png" alt="Services" />
+          <img class="apple-dock-icon" src="images/dock/services.png" alt="Services" />
           <span class="apple-dock-label">Services</span>
         </a>
         <div class="industry-dropdown-popup services-popup dock-popup">
@@ -1522,7 +1522,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="apple-dock-wrapper nav-dropdown-wrapper">
         <a href="pages/industries/product-base/index.html" class="apple-dock-item nav-dropdown-trigger" aria-label="Industries">
-          <img class="apple-dock-icon" src="images/dock/apps.png" alt="Industries" />
+          <img class="apple-dock-icon" src="images/dock/industries.png" alt="Industries" />
           <span class="apple-dock-label">Industries</span>
         </a>
         <div class="industry-dropdown-popup dock-popup">
@@ -1641,7 +1641,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="apple-dock-divider" aria-hidden="true"></div>
       <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request A Free Call">
-        <img class="apple-dock-icon" src="images/dock/whatsapp.png" alt="Request A Free Call" />
+        <img class="apple-dock-icon" src="images/dock/call.png" alt="Request A Free Call" />
         <span class="apple-dock-label">Request A Free Call</span>
       </a>
     `;

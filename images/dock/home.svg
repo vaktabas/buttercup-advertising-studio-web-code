@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient (Electric Sky Blue to Royal Azure) -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <!-- Top Gloss Sheen -->
+    <linearGradient id="topGloss" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Inner Rim Stroke -->
+    <linearGradient id="innerRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Bottom Rim Shadow -->
+    <linearGradient id="bottomShadow" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#01365c" stop-opacity="0.45"/>
+      <stop offset="25%" stop-color="#01365c" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filters -->
+    <filter id="squircleShadow" x="-20%" y="-20%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#024570" flood-opacity="0.38"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#001828" flood-opacity="0.2"/>
+    </filter>
+
+    <filter id="contactShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#012b48" flood-opacity="0.48"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#011b2e" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- House 3D Gradients -->
+    <!-- Roof Left/Main Slope -->
+    <linearGradient id="roofMain" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- Roof Right Shaded Slope -->
+    <linearGradient id="roofShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+
+    <!-- Roof Under Eaves Shadow -->
+    <linearGradient id="eaveShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Front Wall (Pearl Ceramic) -->
+    <linearGradient id="wallFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="85%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- Right Side Wall (Subtle 3D Depth) -->
+    <linearGradient id="wallSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+
+    <!-- Glowing Warm Entrance Door -->
+    <linearGradient id="doorGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb703"/>
+      <stop offset="60%" stop-color="#fb8500"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <!-- Chimney Gradient -->
+    <linearGradient id="chimneyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="65%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Apple Base Squircle (440x440 on 512x512) -->
+  <g filter="url(#squircleShadow)">
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#bgGrad)"/>
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#bottomShadow)"/>
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#topGloss)"/>
+    <!-- Crisp Inner Bevel Rim -->
+    <rect x="36.5" y="36.5" width="439" height="439" rx="99.5" ry="99.5" fill="none" stroke="url(#innerRim)" stroke-width="1.5"/>
+  </g>
+
+  <!-- 2. Modern 3D Ceramic House with Apple Depth -->
+  <g filter="url(#contactShadow)">
+    <!-- Chimney Behind Roof -->
+    <rect x="316" y="162" width="34" height="64" rx="4" fill="url(#chimneyGrad)"/>
+    <!-- Chimney Top Cap -->
+    <rect x="312" y="156" width="42" height="10" rx="3" fill="#f8fafc"/>
+
+    <!-- Main Front Wall -->
+    <rect x="168" y="248" width="176" height="152" rx="10" fill="url(#wallFront)"/>
+
+    <!-- Subtle Ground Step / Foundation Plinth -->
+    <rect x="154" y="394" width="204" height="14" rx="6" fill="#e2e8f0"/>
+    <rect x="154" y="394" width="204" height="4" rx="2" fill="#ffffff" opacity="0.8"/>
+
+    <!-- Eave Shadow Under Roof -->
+    <path d="M168 248 L344 248 L344 266 L168 266 Z" fill="url(#eaveShadow)"/>
+
+    <!-- Modern Pitch Roof Overhang (3D Prism) -->
+    <!-- Main Left-Facing Slope -->
+    <path d="M256 138 L142 242 L172 248 L256 166 L340 248 L370 242 Z" fill="url(#roofMain)"/>
+    <!-- Roof Rim/Fascia Thickness -->
+    <path d="M142 242 L144 249 L256 148 L368 249 L370 242 L256 138 Z" fill="#ffffff"/>
+    <!-- Roof Right Shaded Slope Accent -->
+    <path d="M256 138 L370 242 L340 248 L256 166 Z" fill="url(#roofShade)" opacity="0.35"/>
+    <!-- Roof Crest Highlight -->
+    <line x1="256" y1="138" x2="256" y2="166" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Arched Glowing Entrance Door -->
+    <path d="M228 322 A28 28 0 0 1 284 322 L284 394 L228 394 Z" fill="url(#doorGlow)"/>
+    <!-- Door Frame Inset -->
+    <path d="M228 322 A28 28 0 0 1 284 322 L284 394 L228 394 Z" fill="none" stroke="#d97706" stroke-width="2" opacity="0.4"/>
+    <!-- Door Inner Light Beam -->
+    <path d="M236 326 A20 20 0 0 1 276 326 L276 394 L236 394 Z" fill="#fef08a" opacity="0.3"/>
+    <!-- Door Knob / Metallic Accent -->
+    <circle cx="274" cy="360" r="3.5" fill="#ffffff"/>
+
+    <!-- Circular Attic Window with Cross Frame -->
+    <circle cx="256" cy="216" r="18" fill="#38bdf8" opacity="0.25"/>
+    <circle cx="256" cy="216" r="18" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+    <line x1="256" y1="198" x2="256" y2="234" stroke="#ffffff" stroke-width="2"/>
+    <line x1="238" y1="216" x2="274" y2="216" stroke="#ffffff" stroke-width="2"/>
+  </g>
+</svg>
