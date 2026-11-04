@@ -1683,9 +1683,13 @@
   }
 
   .om-brand{
-    position:fixed; inset:auto; top:var(--brand-oben); left:var(--rand); width:150px; height:40px; overflow:visible;
+    position:fixed; inset:auto; top:var(--brand-oben); left:var(--rand);
+    width:auto; max-width:175px; height:clamp(32px, 2.6vw, 44px); object-fit:contain; overflow:visible;
     opacity:0; transform:translateY(18px);
     transition:opacity 1s ease .15s, transform 1s ease .15s;
+    user-select:none;
+    pointer-events:auto;
+    z-index:50;
   }
   .om-brand.is-da, .om-lockup.is-da{ opacity:1; transform:translateY(0); }
 

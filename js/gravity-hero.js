@@ -765,7 +765,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         ty: ruhe.ty + dockScrollY
       };
     }
-    var textBox = document.getElementById('brandText').getBBox();
+    var elBrandText = document.getElementById('brandText');
+    var textBox = (elBrandText && typeof elBrandText.getBBox === 'function') ? elBrandText.getBBox() : { x: 0, y: 0, width: 145, height: 42 };
     var textLeft = brandDockLinks() + textBox.x;
     var textBottom = brandDockOben() + textBox.y + textBox.height;
     var targetScale = (textBox.width / logoW) * DOCK_MARGIN;
