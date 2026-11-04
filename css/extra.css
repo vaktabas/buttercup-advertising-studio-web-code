@@ -3587,7 +3587,8 @@ body.cs-modal-active .project-cursor-wrp {
     position: relative !important;
     width: 100% !important;
     min-height: 100vh !important;
-    background-color: #0b2b27 !important;
+    background-color: #000000 !important;
+    background: #000000 !important;
     color: #ffffff !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -3604,40 +3605,14 @@ body.cs-modal-active .project-cursor-wrp {
     display: none !important;
 }
 
-/* Background Atmospheric Fluid Video */
-.rwl-bg-wrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.rwl-bg-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-}
-
-.rwl-bg-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(13, 84, 80, 0.15) 0%, rgba(8, 40, 36, 0.55) 100%);
-    pointer-events: none;
-}
-
-/* Floating 3D Sculpture Centerpiece Layer */
+/* Floating 3D Sculpture Centerpiece Layer (Full HD 1080p WebGL) */
 .rwl-sculpture-wrap {
     position: absolute;
     top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(340px, 46vw, 680px);
-    height: clamp(340px, 46vw, 680px);
+    width: clamp(380px, 48vw, 720px);
+    height: clamp(380px, 48vw, 720px);
     z-index: 5;
     pointer-events: none;
     display: flex;
@@ -3650,7 +3625,8 @@ body.cs-modal-active .project-cursor-wrp {
     height: 100%;
     object-fit: contain;
     display: block;
-    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+    /* Rocket Web Labs signature hue-rotate & saturation for electric blue/lime-green & hot pink caution tape */
+    filter: hue-rotate(-132deg) saturate(3.8) drop-shadow(0 30px 70px rgba(0, 0, 0, 0.9));
 }
 
 .rwl-hidden-video {
@@ -3662,7 +3638,7 @@ body.cs-modal-active .project-cursor-wrp {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 11%;
+    bottom: 8%;
     width: 100%;
     display: flex;
     overflow: hidden;
@@ -3678,7 +3654,7 @@ body.cs-modal-active .project-cursor-wrp {
     flex-shrink: 0;
     white-space: nowrap;
     will-change: transform;
-    animation: rwlMarquee 38s linear infinite;
+    animation: rwlMarquee 36s linear infinite;
 }
 
 @keyframes rwlMarquee {
@@ -3688,8 +3664,8 @@ body.cs-modal-active .project-cursor-wrp {
 
 .rwl-marquee-text {
     font-family: 'Nohemi', sans-serif;
-    font-size: clamp(80px, 15vw, 240px);
-    font-weight: 400;
+    font-size: clamp(90px, 15vw, 240px);
+    font-weight: 500;
     line-height: 0.9;
     letter-spacing: -0.04em;
     text-transform: none;
@@ -3738,11 +3714,12 @@ body.cs-modal-active .project-cursor-wrp {
     align-items: flex-start;
 }
 
+/* 8-Dot Pixel Mark (4x2 Grid) */
 .rwl-pixel-mark {
     display: grid;
-    grid-template-columns: repeat(2, 7px);
+    grid-template-columns: repeat(4, 7px);
     grid-template-rows: repeat(2, 7px);
-    gap: 3px;
+    gap: 4px;
     margin-bottom: 22px;
 }
 
@@ -3751,10 +3728,6 @@ body.cs-modal-active .project-cursor-wrp {
     height: 7px;
     border-radius: 1px;
 }
-.rwl-pixel.p-coral  { background-color: #ff7d75; }
-.rwl-pixel.p-cyan   { background-color: #2ee6d6; }
-.rwl-pixel.p-mint   { background-color: #6ee7b7; }
-.rwl-pixel.p-yellow { background-color: #e8ff2e; }
 
 .rwl-mono-info {
     margin-bottom: 26px;
@@ -3764,16 +3737,16 @@ body.cs-modal-active .project-cursor-wrp {
     font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
     font-size: 12px;
     line-height: 1.6;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #c9ede6;
+    color: #c0c4cc;
     margin: 0 0 5px 0;
 }
 
 .rwl-mono-line.is-title {
     color: #ffffff;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
 }
 
 .rwl-mono-link {
@@ -3783,7 +3756,8 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-mono-link:hover {
-    color: #ff7d75;
+    color: #ffffff;
+    text-decoration: underline;
 }
 
 /* White Pill CTA Button */
@@ -3792,7 +3766,7 @@ body.cs-modal-active .project-cursor-wrp {
     align-items: center;
     gap: 12px;
     background-color: #ffffff;
-    color: #0b1f1a;
+    color: #000000;
     font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 700;
@@ -3801,7 +3775,7 @@ body.cs-modal-active .project-cursor-wrp {
     padding: 13px 26px;
     border-radius: 9999px;
     text-decoration: none;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
                 background-color 0.25s ease,
                 color 0.25s ease,
@@ -3837,7 +3811,7 @@ body.cs-modal-active .project-cursor-wrp {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.04em;
-    color: #ff7d75;
+    color: #ffffff;
     margin: 0 0 16px 0;
     text-transform: capitalize;
 }
@@ -3856,7 +3830,7 @@ body.cs-modal-active .project-cursor-wrp {
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     transition: color 0.2s ease, transform 0.2s ease;
     display: inline-block;
@@ -3919,7 +3893,7 @@ body.cs-modal-active .project-cursor-wrp {
     height: 44px;
     border-radius: 50%;
     background-color: #e8ff2e;
-    color: #0b1f1a;
+    color: #000000;
     border: none;
     outline: none;
     display: flex;
@@ -3954,12 +3928,12 @@ body.cs-modal-active .project-cursor-wrp {
         gap: 32px;
     }
     .rwl-sculpture-wrap {
-        width: clamp(260px, 44vw, 420px);
-        height: clamp(260px, 44vw, 420px);
+        width: clamp(280px, 46vw, 460px);
+        height: clamp(280px, 46vw, 460px);
         top: 50%;
     }
     .rwl-marquee-wrap {
-        bottom: 14%;
+        bottom: 12%;
     }
 }
 
@@ -3978,12 +3952,12 @@ body.cs-modal-active .project-cursor-wrp {
         justify-content: space-between;
     }
     .rwl-sculpture-wrap {
-        width: 240px;
-        height: 240px;
+        width: 250px;
+        height: 250px;
         top: 52%;
     }
     .rwl-marquee-wrap {
-        bottom: 16%;
+        bottom: 14%;
     }
 }
 

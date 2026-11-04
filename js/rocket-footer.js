@@ -12,10 +12,15 @@
     var video = document.getElementById('rwlSculptureVideo');
     if (!canvas || !video) return;
 
+    // Full HD / Retina resolution backing buffer
+    canvas.width = 1440;
+    canvas.height = 1440;
+
     var gl = canvas.getContext('webgl', {
       alpha: true,
       premultipliedAlpha: false,
-      antialias: true
+      antialias: true,
+      powerPreference: 'high-performance'
     });
     if (!gl) return;
 
