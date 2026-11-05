@@ -135,7 +135,8 @@
     position:fixed; top:var(--nav-oben); right:var(--rand); z-index:32;
     display:flex; align-items:center; gap:52px;
     height:26px; line-height:26px; margin:0 !important;
-    font-size:18px; letter-spacing:0.06em;
+    font-size:14px; letter-spacing:0.04em;
+    font-weight:450;
 
     --nav-farbe:color-mix(in srgb, var(--fg) 76%, var(--bg));
     --nav-farbe-an:var(--fg);
@@ -159,6 +160,12 @@
   }
 
   nav.om-nav a:hover, nav.om-nav a.is-nah{ color:var(--nav-farbe-an); }
+
+  .om-nav-ai-link{
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    font-weight: 450;
+  }
 
   .om-nav-ai-spark{
     display:inline-block; margin-right:8px; font-size:14px; line-height:1;
