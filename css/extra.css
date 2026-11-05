@@ -4419,21 +4419,53 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   margin: 0;
   pointer-events: none;
   will-change: transform;
-  font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+  font-size: clamp(2rem, 4.4vw, 4.2rem);
   font-weight: 500;
   color: #111111;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(20px, 8vw, 140px);
+  padding: 0 clamp(20px, 5.5vw, 95px);
   box-sizing: border-box;
 }
 
 .good-fit-cards .headline-left,
 .good-fit-cards .headline-right {
   display: inline-block;
+  white-space: nowrap;
   will-change: transform;
+}
+
+.good-fit-cards .headline-sep {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 1200px) {
+  .good-fit-cards .tl-section-headline-one {
+    font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 860px) {
+  .good-fit-cards .tl-section-headline-one {
+    font-size: 2.2rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    top: 14%;
+    transform: translate(-50%, 0);
+  }
+  .good-fit-cards .headline-left,
+  .good-fit-cards .headline-right {
+    white-space: normal;
+    text-align: center;
+  }
+  .good-fit-cards .headline-sep {
+    display: none;
+  }
 }
 
 .tl-scroll-card-inner {
