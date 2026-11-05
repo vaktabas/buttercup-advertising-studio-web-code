@@ -4367,3 +4367,23 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
 }
 
 
+
+/* ==========================================================================
+   Interactive WebGL Fluid Cursor Animation (Tequila.ae style)
+   ========================================================================== */
+.fluid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    pointer-events: none;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .fluid-bg {
+        opacity: 0.85;
+    }
+}

@@ -1691,4 +1691,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(s);
   }
 
+  // =========================================================================
+  // INTERACTIVE WEBGL FLUID CURSOR ANIMATION (Tequila.ae style)
+  // =========================================================================
+  if (!window.__btrFluidInitialized) {
+    window.__btrFluidInitialized = true;
+    const scripts = document.querySelectorAll('script[src*="main.js"]');
+    const mainSrc = scripts.length > 0 ? scripts[scripts.length - 1].getAttribute('src') : 'js/main.js';
+    const fluidSrc = mainSrc.replace(/main\.js(\?.*)?$/, 'fluidbg.js?v=1');
+    const s = document.createElement('script');
+    s.src = fluidSrc;
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+
 });
