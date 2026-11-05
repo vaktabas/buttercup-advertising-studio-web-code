@@ -10,7 +10,11 @@
   function setupSculpture() {
     var canvas = document.getElementById('rwlSculptureCanvas');
     var video = document.getElementById('rwlSculptureVideo');
-    if (!canvas || !video) return;
+    var bgVideo = document.getElementById('rwlBgLightVideo');
+    if (!canvas || !video) {
+      if (bgVideo) bgVideo.play().catch(function() {});
+      return;
+    }
 
     // Full HD / Retina resolution backing buffer
     canvas.width = 1440;
@@ -97,8 +101,10 @@
           isVisible = entry.isIntersecting;
           if (isVisible) {
             video.play().catch(function() {});
+            if (bgVideo) bgVideo.play().catch(function() {});
           } else {
             video.pause();
+            if (bgVideo) bgVideo.pause();
           }
         });
       }, { threshold: 0.02 });
@@ -106,6 +112,7 @@
     } else {
       isVisible = true;
       video.play().catch(function() {});
+      if (bgVideo) bgVideo.play().catch(function() {});
     }
 
     function renderLoop() {

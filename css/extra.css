@@ -3605,6 +3605,26 @@ body.cs-modal-active .project-cursor-wrp {
     display: none !important;
 }
 
+/* Ambient Moving Light Background Video Layer */
+.rwl-bg-light-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.rwl-bg-light-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0.92;
+}
+
 /* Floating 3D Sculpture Centerpiece Layer (Full HD 1080p WebGL) */
 .rwl-sculpture-wrap {
     position: absolute;
