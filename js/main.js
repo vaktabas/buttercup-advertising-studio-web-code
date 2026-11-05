@@ -1416,13 +1416,26 @@ document.addEventListener("DOMContentLoaded", () => {
       };
     }
 
+    // Expose openModal and closeModal globally
+    window.openComingSoonModal = openModal;
+    window.closeComingSoonModal = closeModal;
+
     // 4. Delegated Click Interceptor across the whole document
     document.addEventListener("click", (e) => {
+      // Don't intercept clicks inside editor toolbar, badges or modals
+      if (e.target.closest('#buttercupEditorBar, .btr-card-lock-badge, .btr-img-edit-badge, #btrPasswordModal, #btrTextFormatBar, #btrImageModal, #btrCaseStudiesModal')) {
+        return;
+      }
+
       const info = getProjectInfo(e.target);
-      if (info) {
-        e.preventDefault();
-        e.stopPropagation();
-        openModal(info.title, info.category);
+      if (info && info.link) {
+        // Check if project is locked
+        const isLocked = window.isCaseStudyLocked ? window.isCaseStudyLocked(info.link, info.title) : false;
+        if (isLocked) {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal(info.title, info.category);
+        }
       }
     }, true);
 

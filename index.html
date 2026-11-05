@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="css/ai-assistant.css?v=118">
 <link rel="preload" as="image" href="images/gravity/portrait.jpg" fetchpriority="high">
 <link rel="stylesheet" href="css/gravity-home.css?v=26">
+<link rel="stylesheet" href="css/editor.css?v=1">
 </head>
 <body data-page="index">
 <div class="w-embed"><style>
@@ -636,7 +637,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
       <div class="tl-scroll-card-inner">
 
         <!-- Card 1: Grabz -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="grabz" data-locked="false">
           <a href="projects/eon-studio.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/696122fb3dbedd55acef8a93_Focused-Laptop-User-1.avif?v=85" alt="Grabz" loading="lazy">
@@ -650,7 +651,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 2: Parishram -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="parishram" data-locked="false">
           <a href="projects/cinder-ash.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85" alt="Parishram" loading="lazy">
@@ -664,7 +665,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 3: Vilasa Ambrosia -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="vilasa-ambrosia" data-locked="false">
           <a href="projects/studio-verra.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85" alt="Vilasa Ambrosia" loading="lazy">
@@ -678,7 +679,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 4: Tastycrafts -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="tastycrafts" data-locked="false">
           <a href="projects/atlas-bloom.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85" alt="Tastycrafts" loading="lazy">
@@ -692,7 +693,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 5: Youra -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="youra" data-locked="false">
           <a href="projects/form-theory.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85" alt="Youra" loading="lazy">
@@ -706,7 +707,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 6: YMCA -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="ymca" data-locked="false">
           <a href="projects/kindred-haus.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85" alt="YMCA" loading="lazy">
@@ -720,7 +721,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 7: Vardhman -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="vardhman" data-locked="false">
           <a href="projects/noir-supply-co.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/695e4a26a5c9556e865cabb6_Portrait-with-Red-Background-1-.avif?v=85" alt="Vardhman" loading="lazy">
@@ -734,7 +735,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
         </div>
 
         <!-- Card 8: Aegis -->
-        <div class="tl-single-scroll-card">
+        <div class="tl-single-scroll-card" data-project-id="aegis" data-locked="false">
           <a href="projects/velvet-orbit.html" class="scroll-card-link">
             <div class="scroll-card-img">
               <img src="images/695e4a3687ebcd95e93aeff9_Green-Butterfly-Close-Up-1-.avif?v=85" alt="Aegis" loading="lazy">
@@ -869,6 +870,15 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
       <div class="rwl-bottom-left">
         <p class="rwl-legal-text">2026© BUTTERCUP ADVERTISING STUDIO. ALL RIGHTS RESERVED.</p>
       </div>
+      <div class="rwl-bottom-right">
+        <button type="button" class="rwl-password-btn" id="rwlPasswordBtn" aria-label="Editor Access">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Password</span>
+        </button>
+      </div>
     </div>
   </div>
 </footer><div class="project-cursor-wrp"><div class="view-project-follow-cursor"><div class="view-project-cursor"><div>coming <br/>soon</div></div></div></div></div>
@@ -885,6 +895,7 @@ html.custom-cursor-active.in-web2-zone #web2Rest, html.custom-cursor-active.in-w
 <script src="js/fluidbg.js?v=1" defer></script>
 <script src="js/ai-assistant.js?v=116"></script>
 <script src="js/loader.js?v=6"></script>
+<script src="js/editor.js?v=1"></script>
 
 <!-- Apple-Style Floating Right Navigation Dock -->
 <nav class="apple-dock" aria-label="Quick Navigation">

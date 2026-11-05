@@ -1,0 +1,676 @@
+/* ==========================================================================
+   BUTTERCUP STUDIO - VISUAL CMS & LIVE EDITOR STYLES
+   ========================================================================== */
+
+/* 1. FOOTER PASSWORD BUTTON */
+.rwl-bottom-right {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.rwl-password-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 9999px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    outline: none !important;
+}
+
+.rwl-password-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 12px rgba(168, 85, 247, 0.25) !important;
+}
+
+.rwl-password-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+    stroke: currentColor !important;
+    opacity: 0.8 !important;
+    transition: transform 0.2s ease !important;
+}
+
+.rwl-password-btn:hover svg {
+    transform: scale(1.1) !important;
+    opacity: 1 !important;
+}
+
+/* 2. PASSWORD AUTH MODAL */
+.btr-modal-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btr-modal-backdrop.is-active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.btr-auth-card {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    background: linear-gradient(145deg, rgba(26, 26, 32, 0.95), rgba(14, 14, 18, 0.98)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 20px !important;
+    padding: 32px 28px !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(168, 85, 247, 0.15) !important;
+    transform: scale(0.92) translateY(12px) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.btr-modal-backdrop.is-active .btr-auth-card {
+    transform: scale(1) translateY(0) !important;
+}
+
+.btr-auth-card.shake {
+    animation: btrShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+}
+
+@keyframes btrShake {
+    10%, 90% { transform: translate3d(-3px, 0, 0); }
+    20%, 80% { transform: translate3d(5px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+    40%, 60% { transform: translate3d(5px, 0, 0); }
+}
+
+.btr-auth-icon-wrap {
+    width: 56px !important;
+    height: 56px !important;
+    margin: 0 auto 16px !important;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.15)) !important;
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #d8b4fe !important;
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2) !important;
+}
+
+.btr-auth-title {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin: 0 0 6px !important;
+    color: #ffffff !important;
+    letter-spacing: -0.02em !important;
+}
+
+.btr-auth-desc {
+    font-size: 13px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    margin: 0 0 24px !important;
+    line-height: 1.5 !important;
+}
+
+.btr-auth-input-wrap {
+    position: relative !important;
+    margin-bottom: 12px !important;
+}
+
+.btr-auth-input {
+    width: 100% !important;
+    padding: 13px 44px 13px 16px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 12px !important;
+    color: #ffffff !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    outline: none !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+
+.btr-auth-input:focus {
+    border-color: #a855f7 !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25) !important;
+}
+
+.btr-auth-toggle-pwd {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.btr-auth-toggle-pwd:hover {
+    color: #ffffff !important;
+}
+
+.btr-auth-error {
+    min-height: 20px !important;
+    font-size: 12px !important;
+    color: #f87171 !important;
+    margin-bottom: 16px !important;
+    text-align: left !important;
+    display: none !important;
+}
+
+.btr-auth-error.is-visible {
+    display: block !important;
+}
+
+.btr-auth-actions {
+    display: flex !important;
+    gap: 10px !important;
+}
+
+.btr-btn {
+    flex: 1 !important;
+    padding: 12px 18px !important;
+    border-radius: 12px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+}
+
+.btr-btn-primary {
+    background: linear-gradient(135deg, #a855f7, #6366f1) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(168, 85, 247, 0.35) !important;
+}
+
+.btr-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 22px rgba(168, 85, 247, 0.5) !important;
+}
+
+.btr-btn-secondary {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.btr-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #ffffff !important;
+}
+
+.btr-modal-close-x {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    width: 32px !important;
+    height: 32px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.btr-modal-close-x:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* 3. TOP ADMIN / CMS FLOATING TOOLBAR */
+#buttercupEditorBar {
+    position: fixed !important;
+    top: 14px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-100px) !important;
+    z-index: 999990 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+    padding: 8px 14px 8px 18px !important;
+    background: rgba(18, 18, 22, 0.88) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 9999px !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(168, 85, 247, 0.2) !important;
+    color: #ffffff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 12px !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    max-width: 95vw !important;
+    white-space: nowrap !important;
+}
+
+#buttercupEditorBar.is-visible {
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+.btr-bar-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    color: #ffffff !important;
+}
+
+.btr-pulse-live {
+    width: 8px !important;
+    height: 8px !important;
+    background: #10b981 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 10px #10b981 !important;
+    animation: btrPulse 2s infinite !important;
+}
+
+@keyframes btrPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.btr-bar-sep {
+    width: 1px !important;
+    height: 18px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.btr-bar-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.btr-bar-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid transparent !important;
+    outline: none !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.btr-bar-btn:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.btr-bar-btn.is-active {
+    background: rgba(168, 85, 247, 0.25) !important;
+    border-color: rgba(168, 85, 247, 0.5) !important;
+    color: #f3e8ff !important;
+}
+
+.btr-bar-btn-save {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 7px 15px !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35) !important;
+}
+
+.btr-bar-btn-save:hover {
+    background: linear-gradient(135deg, #34d399, #10b981) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5) !important;
+}
+
+.btr-bar-btn-exit {
+    color: rgba(248, 113, 113, 0.85) !important;
+}
+
+.btr-bar-btn-exit:hover {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #ef4444 !important;
+}
+
+/* 4. EDITABLE TEXT HIGHLIGHTS IN EDITOR MODE */
+body.btr-editor-mode [data-btr-editable="true"]:hover {
+    outline: 2px dashed rgba(168, 85, 247, 0.6) !important;
+    outline-offset: 3px !important;
+    cursor: text !important;
+}
+
+body.btr-editor-mode [data-btr-editable="true"]:focus {
+    outline: 2px solid #a855f7 !important;
+    outline-offset: 4px !important;
+    background: rgba(168, 85, 247, 0.08) !important;
+    border-radius: 4px !important;
+}
+
+/* 5. FLOATING RICH TEXT & FONT FORMATTING PILL */
+#btrTextFormatBar {
+    position: fixed !important;
+    z-index: 999995 !important;
+    display: none;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 4px 8px !important;
+    background: rgba(22, 22, 28, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(168, 85, 247, 0.3) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+#btrTextFormatBar.is-visible {
+    display: flex !important;
+}
+
+.btr-fmt-btn {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.15s ease !important;
+}
+
+.btr-fmt-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+
+.btr-fmt-btn.is-active {
+    background: rgba(168, 85, 247, 0.35) !important;
+    color: #e9d5ff !important;
+}
+
+.btr-fmt-select {
+    height: 26px !important;
+    padding: 0 6px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-family: inherit !important;
+    outline: none !important;
+    cursor: pointer !important;
+}
+
+.btr-fmt-select option {
+    background: #18181b !important;
+    color: #ffffff !important;
+}
+
+.btr-fmt-color {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+
+.btr-fmt-color::-webkit-color-swatch-wrapper {
+    padding: 0 !important;
+}
+
+.btr-fmt-color::-webkit-color-swatch {
+    border: none !important;
+    border-radius: 50% !important;
+}
+
+/* 6. IMAGE EDIT BADGE */
+.btr-img-wrap {
+    position: relative !important;
+}
+
+.btr-img-edit-badge {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 100 !important;
+    background: rgba(18, 18, 22, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    display: none !important;
+    align-items: center !important;
+    gap: 5px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+    transition: all 0.2s ease !important;
+}
+
+body.btr-editor-mode .btr-img-wrap:hover .btr-img-edit-badge {
+    display: inline-flex !important;
+}
+
+.btr-img-edit-badge:hover {
+    background: #a855f7 !important;
+    border-color: #c084fc !important;
+    transform: scale(1.05) !important;
+}
+
+/* 7. CASE STUDY LOCK TOGGLE BADGE ON CARDS */
+.btr-card-lock-badge {
+    position: absolute !important;
+    top: 14px !important;
+    left: 14px !important;
+    z-index: 90 !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    text-transform: uppercase !important;
+    display: none;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    border: 1px solid transparent !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.btr-editor-mode .btr-card-lock-badge {
+    display: inline-flex !important;
+}
+
+.btr-card-lock-badge.is-unlocked {
+    background: rgba(16, 185, 129, 0.2) !important;
+    border-color: rgba(16, 185, 129, 0.45) !important;
+    color: #6ee7b7 !important;
+}
+
+.btr-card-lock-badge.is-unlocked:hover {
+    background: rgba(16, 185, 129, 0.35) !important;
+    transform: scale(1.04) !important;
+}
+
+.btr-card-lock-badge.is-locked {
+    background: rgba(239, 68, 68, 0.22) !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    color: #fca5a5 !important;
+}
+
+.btr-card-lock-badge.is-locked:hover {
+    background: rgba(239, 68, 68, 0.35) !important;
+    transform: scale(1.04) !important;
+}
+
+/* Locked card indicator in visitor mode */
+.tl-single-scroll-card[data-locked="true"] .scroll-card-cta::after {
+    content: " (COMING SOON)" !important;
+    opacity: 0.75;
+    font-size: 0.85em;
+}
+
+/* 8. TOAST NOTIFICATION */
+#btrToast {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 999999 !important;
+    padding: 12px 20px !important;
+    background: rgba(18, 18, 22, 0.94) !important;
+    border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    border-radius: 12px !important;
+    color: #ffffff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.2) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    transform: translateY(100px) !important;
+    opacity: 0 !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    pointer-events: none !important;
+}
+
+#btrToast.is-visible {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+/* 9. MODAL FOR CASE STUDIES LOCK MANAGER */
+.btr-cs-manager-list {
+    max-height: 380px !important;
+    overflow-y: auto !important;
+    margin: 16px 0 !important;
+    padding-right: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: left !important;
+}
+
+.btr-cs-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 14px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+}
+
+.btr-cs-info h4 {
+    margin: 0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+.btr-cs-info p {
+    margin: 2px 0 0 !important;
+    font-size: 11px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Toggle Switch */
+.btr-switch {
+    position: relative !important;
+    display: inline-block !important;
+    width: 44px !important;
+    height: 24px !important;
+}
+
+.btr-switch input {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.btr-slider {
+    position: absolute !important;
+    cursor: pointer !important;
+    inset: 0 !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    transition: .3s !important;
+    border-radius: 24px !important;
+}
+
+.btr-slider:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 18px !important;
+    width: 18px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+    background-color: white !important;
+    transition: .3s !important;
+    border-radius: 50% !important;
+}
+
+input:checked + .btr-slider {
+    background-color: #ef4444 !important;
+}
+
+input:checked + .btr-slider:before {
+    transform: translateX(20px) !important;
+}
