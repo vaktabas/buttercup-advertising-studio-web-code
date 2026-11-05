@@ -294,6 +294,107 @@ document.addEventListener("DOMContentLoaded", () => {
       if (marqueeTracks.length) {
         gsap.to(marqueeTracks, { x: "-100%", duration: 36, repeat: -1, ease: "none" });
       }
+
+      // -----------------------------------------------------------------
+      // I. 3D STACKING SCROLL CARDS (71Three style)
+      // -----------------------------------------------------------------
+      const cardWrap = $(".tl-scroll-card-animation");
+      const scrollCards = $$(".tl-single-scroll-card");
+      const cardHeadline = $(".tl-scroll-card-animation .tl-section-headline-one");
+      const totalScrollCards = scrollCards.length;
+
+      if (cardWrap && totalScrollCards > 0 && hasST) {
+        scrollCards.forEach((card, index) => {
+          gsap.set(card, {
+            transformPerspective: 1000,
+            x: 0,
+            y: 1000,
+            z: 750,
+            rotateX: 90,
+            scale: 1,
+            zIndex: index + 1
+          });
+        });
+
+        const cardDuration = 1.5;
+        const cardStagger = 2;
+        const enterPhaseEndTime = (totalScrollCards - 1) * cardStagger + cardDuration;
+
+        const exitPhaseStartTime = enterPhaseEndTime + 0.3;
+        const exitStagger = 0.15;
+        const exitDuration = 1.2;
+        const totalTimelineDuration = exitPhaseStartTime + (totalScrollCards * exitStagger) + exitDuration;
+
+        const SCROLL_VH_PER_SECOND = 28;
+        const scrollDistanceVh = Math.round(totalTimelineDuration * SCROLL_VH_PER_SECOND);
+
+        const masterTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: cardWrap,
+            start: "top top",
+            end: `+=${scrollDistanceVh}%`,
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true
+          }
+        });
+
+        if (cardHeadline) {
+          masterTL.to(cardHeadline, {
+            scale: 0.75,
+            duration: exitPhaseStartTime,
+            ease: "none"
+          }, 0);
+        }
+
+        scrollCards.forEach((card, index) => {
+          const cardStartTime = index * cardStagger;
+
+          masterTL.to(card, {
+            x: 0,
+            y: 0,
+            z: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: cardDuration,
+            ease: "power2.out"
+          }, cardStartTime);
+
+          if (index > 0) {
+            for (let i = 0; i < index; i++) {
+              masterTL.to(scrollCards[i], {
+                y: -35 * (index - i),
+                duration: cardDuration,
+                ease: "power2.out"
+              }, cardStartTime);
+            }
+          }
+        });
+
+        const fadeOutDuration = exitDuration * 1.5;
+
+        masterTL.to(scrollCards, {
+          y: "-50vh",
+          duration: fadeOutDuration,
+          ease: "power2.inOut",
+          stagger: exitStagger
+        }, exitPhaseStartTime);
+
+        masterTL.to(cardWrap, {
+          opacity: 0,
+          duration: fadeOutDuration,
+          ease: "power2.inOut"
+        }, exitPhaseStartTime);
+
+        if (cardHeadline) {
+          masterTL.to(cardHeadline, {
+            y: "-50vh",
+            duration: fadeOutDuration,
+            ease: "power2.inOut"
+          }, exitPhaseStartTime);
+        }
+      }
     };
 
     const start = () => {
