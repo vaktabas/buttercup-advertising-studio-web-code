@@ -3714,19 +3714,32 @@ body.cs-modal-active .project-cursor-wrp {
     align-items: flex-start;
 }
 
-/* 8-Dot Pixel Mark (4x2 Grid) */
-.rwl-pixel-mark {
-    display: grid;
-    grid-template-columns: repeat(4, 7px);
-    grid-template-rows: repeat(2, 7px);
-    gap: 4px;
+/* BAS Brand Mark Logo (bas.png) */
+.rwl-brand-mark {
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 22px;
 }
 
-.rwl-pixel {
-    width: 7px;
-    height: 7px;
-    border-radius: 1px;
+.rwl-brand-logo-link {
+    display: inline-block;
+    text-decoration: none;
+    line-height: 0;
+}
+
+.rwl-brand-logo-img {
+    width: clamp(60px, 4.8vw, 78px);
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.rwl-brand-logo-link:hover .rwl-brand-logo-img {
+    opacity: 1;
+    transform: scale(1.04);
 }
 
 .rwl-mono-info {
