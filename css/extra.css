@@ -4525,16 +4525,15 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
-  color: #a855f7;
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-weight: 600;
-  opacity: 0.85;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .scroll-card-link:hover .scroll-card-cta {
-  opacity: 1;
+  color: #ffffff;
   transform: translateX(4px);
 }
 
