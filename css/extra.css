@@ -3663,9 +3663,9 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-marquee-text {
-    font-family: 'Nohemi', sans-serif;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: clamp(90px, 15vw, 240px);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 0.9;
     letter-spacing: -0.04em;
     text-transform: none;
@@ -3675,7 +3675,7 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-marquee-sep {
-    font-family: 'Nohemi', sans-serif;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: clamp(36px, 6vw, 90px);
     color: #FFFFFF;
     opacity: 0.8;
@@ -3747,10 +3747,10 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-mono-line {
-    font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
-    font-size: 12px;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13px;
     line-height: 1.6;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #c0c4cc;
     margin: 0 0 5px 0;
@@ -3758,8 +3758,8 @@ body.cs-modal-active .project-cursor-wrp {
 
 .rwl-mono-line.is-title {
     color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 0.09em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
 }
 
 .rwl-mono-link {
@@ -3780,10 +3780,10 @@ body.cs-modal-active .project-cursor-wrp {
     gap: 12px;
     background-color: #ffffff;
     color: #000000;
-    font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
-    font-size: 12px;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 13px 26px;
     border-radius: 9999px;
@@ -3826,9 +3826,9 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-col-title {
-    font-family: 'Nohemi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     font-size: clamp(22px, 1.8vw, 28px) !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     line-height: 1.15 !important;
     letter-spacing: -0.02em !important;
     color: #ffffff !important;
@@ -3846,11 +3846,11 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-link {
-    font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace !important;
-    font-size: 13px !important;
-    font-weight: 400 !important;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
     line-height: 1.45 !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
     color: #ffffff !important;
     opacity: 0.95;
@@ -3879,9 +3879,9 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-legal-text {
-    font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.65);
     margin: 0;
@@ -3894,9 +3894,9 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 .rwl-legal-link {
-    font-family: 'PPSupplyMono', ui-monospace, 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
