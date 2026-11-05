@@ -3832,10 +3832,10 @@ body.cs-modal-active .project-cursor-wrp {
     transform: translateX(4px);
 }
 
-/* Right Nav 4 Columns */
+/* Right Nav 3 Columns */
 .rwl-nav-cols {
     display: grid;
-    grid-template-columns: repeat(4, minmax(130px, auto));
+    grid-template-columns: repeat(3, minmax(130px, auto));
     gap: clamp(32px, 4.2vw, 76px);
     align-items: start;
 }
