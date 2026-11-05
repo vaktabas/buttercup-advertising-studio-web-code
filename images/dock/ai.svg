@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient: Apple Intelligence Cyber Violet to Neon Magenta -->
+    <linearGradient id="aiBgGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="35%" stop-color="#7c3aed"/>
+      <stop offset="70%" stop-color="#c026d3"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+
+    <!-- Top Gloss Sheen -->
+    <linearGradient id="aiTopGloss" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Inner Rim Stroke -->
+    <linearGradient id="aiInnerRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#3b0764" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Bottom Rim Shadow -->
+    <linearGradient id="aiBottomShadow" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#2e1065" stop-opacity="0.55"/>
+      <stop offset="25%" stop-color="#2e1065" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- 3D Metallic Letter Gradient -->
+    <linearGradient id="aiTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#f8fafc"/>
+      <stop offset="55%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+
+    <!-- Letter Side Bevel Gradient -->
+    <linearGradient id="aiTextBevel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#64748b" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Sparkle Glow Gradient -->
+    <radialGradient id="sparkleGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#f0abfc" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="aiSquircleShadow" x="-20%" y="-20%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#4c1d95" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1e1b4b" flood-opacity="0.25"/>
+    </filter>
+
+    <filter id="aiTextShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1e1b4b" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- 1. Apple Base Squircle (440x440 on 512x512) -->
+  <g filter="url(#aiSquircleShadow)">
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#aiBgGrad)"/>
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#aiBottomShadow)"/>
+    <rect x="36" y="36" width="440" height="440" rx="100" ry="100" fill="url(#aiTopGloss)"/>
+    <!-- Crisp Inner Bevel Rim -->
+    <rect x="36.5" y="36.5" width="439" height="439" rx="99.5" ry="99.5" fill="none" stroke="url(#aiInnerRim)" stroke-width="1.5"/>
+  </g>
+
+  <!-- 2. Ambient Neural Glow Behind AI Letters -->
+  <circle cx="256" cy="256" r="130" fill="url(#sparkleGlow)" opacity="0.35"/>
+
+  <!-- 3. Prominent 3D Embossed "AI" Typography -->
+  <g filter="url(#aiTextShadow)">
+    <!-- 3D Letter Extrusion Layer (depth) -->
+    <text x="256" y="326"
+          font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif"
+          font-size="210"
+          font-weight="900"
+          letter-spacing="-0.04em"
+          text-anchor="middle"
+          fill="#475569">AI</text>
+    <text x="256" y="323"
+          font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif"
+          font-size="210"
+          font-weight="900"
+          letter-spacing="-0.04em"
+          text-anchor="middle"
+          fill="#64748b">AI</text>
+    <text x="256" y="320"
+          font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif"
+          font-size="210"
+          font-weight="900"
+          letter-spacing="-0.04em"
+          text-anchor="middle"
+          fill="url(#aiTextGrad)">AI</text>
+  </g>
+
+  <!-- 4. Futuristic AI Sparkles / Stars -->
+  <!-- Top Right Sparkle -->
+  <g transform="translate(362, 140)">
+    <path d="M0 -22 Q0 0 22 0 Q0 0 0 22 Q0 0 -22 0 Q0 0 0 -22 Z" fill="#ffffff" filter="url(#aiTextShadow)"/>
+    <circle cx="0" cy="0" r="4" fill="#ffffff"/>
+  </g>
+  <!-- Bottom Left Mini Sparkle -->
+  <g transform="translate(142, 360)">
+    <path d="M0 -12 Q0 0 12 0 Q0 0 0 12 Q0 0 -12 0 Q0 0 0 -12 Z" fill="#ffffff" opacity="0.9"/>
+  </g>
+</svg>

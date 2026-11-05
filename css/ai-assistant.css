@@ -2,20 +2,12 @@
    BUTTERCUP STUDIO - UNIVERSAL 3D IRIDESCENT AI ASSISTANT & PARTICLE SYSTEM
    ========================================================================== */
 
-/* Outer Widget Wrapper (Anchored bottom-right across the entire website) */
+/* Outer Widget Wrapper (Anchored bottom-right across the entire website) - HIDDEN per user request */
 .btr-ai-orb-widget {
-  position: fixed;
-  bottom: 2rem;
-  right: 2.5rem;
-  width: 66px;
-  height: 66px;
-  z-index: 99998;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none; /* Only the inner button and bubble receive clicks */
-  user-select: none;
-  will-change: transform;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Ambient Siri Resonance & Diamond Stardust Canvas (Centered symmetrically) */

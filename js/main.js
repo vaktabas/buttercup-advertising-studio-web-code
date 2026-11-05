@@ -1740,6 +1740,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
 
+      <a href="#ai-assistant" class="apple-dock-item is-ai" data-action="open-ai" aria-label="AI Assistant">
+        <img class="apple-dock-icon" src="images/dock/ai.png" alt="AI Assistant" />
+        <span class="apple-dock-label">AI Assistant</span>
+      </a>
+
       <div class="apple-dock-divider" aria-hidden="true"></div>
       <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request A Free Call">
         <img class="apple-dock-icon" src="images/dock/call.png" alt="Request A Free Call" />
@@ -1771,6 +1776,11 @@ document.addEventListener("DOMContentLoaded", () => {
           if (s) {
             e.preventDefault();
             s.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else if (action === 'open-ai') {
+          e.preventDefault();
+          if (typeof window.openButtercupAi === 'function') {
+            window.openButtercupAi();
           }
         }
       });

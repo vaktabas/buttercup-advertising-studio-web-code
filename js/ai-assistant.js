@@ -992,24 +992,10 @@
       ctx.restore();
     }
 
-    // Mini Butterfly (Bottom Right Trigger Button)
+    // Mini Butterfly (Bottom Right Trigger Button - Disabled per user request)
     const orbCanvas = document.getElementById('orb-canvas');
     if (orbCanvas) {
-      const orbCtx = orbCanvas.getContext('2d');
-      const miniParticles = createButterflyParticles(5, 80, 80);
-      let miniTime = 0;
-
-      function drawMiniOrb() {
-        if (document.hidden) {
-          requestAnimationFrame(drawMiniOrb);
-          return;
-        }
-        miniTime += isHoveringOrb ? 0.034 : 0.022;
-        drawButterfly(orbCtx, orbCanvas.width, orbCanvas.height, miniTime, miniParticles, isAiSpeaking, isAiListening, isAiThinking, isHoveringOrb);
-        requestAnimationFrame(drawMiniOrb);
-      }
-
-      requestAnimationFrame(drawMiniOrb);
+      // Disabled since trigger widget is replaced by Apple dock item
     }
 
     // Large Holographic Butterfly (Inside Modal Overlay)
