@@ -319,14 +319,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardDuration = 1.5;
         const cardStagger = 2;
         const enterPhaseEndTime = (totalScrollCards - 1) * cardStagger + cardDuration;
+        const holdDuration = 0.5;
+        const totalTimelineDuration = enterPhaseEndTime + holdDuration;
 
-        const exitPhaseStartTime = enterPhaseEndTime + 0.3;
-        const exitStagger = 0.15;
-        const exitDuration = 1.2;
-        const totalTimelineDuration = exitPhaseStartTime + (totalScrollCards * exitStagger) + exitDuration;
-
-        const SCROLL_VH_PER_SECOND = 28;
-        const scrollDistanceVh = Math.round(totalTimelineDuration * SCROLL_VH_PER_SECOND);
+        // Smooth scroll pin distance (~44vh per card + slight hold, total ~350vh)
+        const scrollDistanceVh = Math.round((totalScrollCards - 1) * 44 + 40);
 
         const masterTL = gsap.timeline({
           scrollTrigger: {
@@ -343,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cardHeadline) {
           masterTL.to(cardHeadline, {
             scale: 0.75,
-            duration: exitPhaseStartTime,
+            duration: enterPhaseEndTime,
             ease: "none"
           }, 0);
         }
@@ -372,28 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
-        const fadeOutDuration = exitDuration * 1.5;
-
-        masterTL.to(scrollCards, {
-          y: "-50vh",
-          duration: fadeOutDuration,
-          ease: "power2.inOut",
-          stagger: exitStagger
-        }, exitPhaseStartTime);
-
-        masterTL.to(cardWrap, {
-          opacity: 0,
-          duration: fadeOutDuration,
-          ease: "power2.inOut"
-        }, exitPhaseStartTime);
-
-        if (cardHeadline) {
-          masterTL.to(cardHeadline, {
-            y: "-50vh",
-            duration: fadeOutDuration,
-            ease: "power2.inOut"
-          }, exitPhaseStartTime);
-        }
+        // Small hold so the final card rests cleanly before unpinning directly into reviews
+        masterTL.to({}, { duration: holdDuration }, enterPhaseEndTime);
       }
     };
 

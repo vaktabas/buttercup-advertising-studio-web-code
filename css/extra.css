@@ -4388,7 +4388,8 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
    Case Study 3D Stacking Scroll Cards (71Three style)
    ========================================================================== */
 .good-fit-cards {
-  padding: 0 0 3rem;
+  padding: 0;
+  margin: 0;
   position: relative;
   overflow: hidden;
   width: 100%;
