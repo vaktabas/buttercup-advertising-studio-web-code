@@ -93,7 +93,11 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     var OPTISCH_HOCH = 0.045;
     offY = rect.height * (0.5 - OPTISCH_HOCH) - CY * scale;
     scene.style.transform = 'translate(' + offX + 'px,' + offY + 'px) scale(' + scale + ')';
-    if (!docked) { elSvg.style.transform = svgRestTransform(); }
+    if (!docked) {
+      elSvg.style.transform = svgRestTransform();
+    } else if (!transitioning) {
+      elSvg.style.transform = transformStr(dockedSvgParts());
+    }
 
     if (elLockup) {
       if (rect.height > rect.width) {
@@ -782,7 +786,9 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   var logoLeft = Math.min(CX - aHalfW, smallHome.x - smallR, ringHome.x - ringOut);
   var logoRight = Math.max(CX + aHalfW, smallHome.x + smallR, ringHome.x + ringOut);
   var logoTop = Math.min(CY - massR, smallHome.y - smallR, ringHome.y - ringOut);
+  var logoBottom = Math.max(CY + massR, smallHome.y + smallR, ringHome.y + ringOut);
   var logoW = logoRight - logoLeft;
+  var logoH = logoBottom - logoTop;
 
   var dockScrollY = 0;
 
@@ -799,15 +805,14 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         ty: ruhe.ty + dockScrollY
       };
     }
-    var elBrandText = document.getElementById('brandText');
-    var textBox = (elBrandText && typeof elBrandText.getBBox === 'function') ? elBrandText.getBBox() : { x: 0, y: 0, width: 145, height: 42 };
-    var textLeft = brandDockLinks() + textBox.x;
-    var textBottom = brandDockOben() + textBox.y + textBox.height;
-    var targetScale = (textBox.width / logoW) * DOCK_MARGIN;
+    var targetH = 26;
+    var targetScale = targetH / logoH;
+    var dockLeft = brandDockLinks();
+    var dockTop = brandDockOben();
     return {
       scale: targetScale,
-      tx: textLeft - targetScale * logoLeft,
-      ty: (textBottom + DOCK_GAP) - targetScale * logoTop + dockScrollY
+      tx: dockLeft - targetScale * logoLeft,
+      ty: dockTop - targetScale * logoTop + dockScrollY
     };
   }
 
@@ -1022,6 +1027,14 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     elBrandLink.addEventListener('click', function (e) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (elSvg) {
+    elSvg.addEventListener('click', function (e) {
+      if (docked) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
 })();

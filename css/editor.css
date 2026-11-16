@@ -674,3 +674,4 @@ input:checked + .btr-slider {
 input:checked + .btr-slider:before {
     transform: translateX(20px) !important;
 }
+

@@ -979,8 +979,44 @@
   .cn-icon--farbig{ opacity:.85; }
   .cn-icon--farbig .cn-icon-scheibe{ fill:var(--accent); transition:fill .3s ease; }
 
+  .cn-triangles{ pointer-events:none; }
+  .cn-triangles path{
+    vector-effect:non-scaling-stroke;
+    transition:fill .3s ease;
+  }
+  /* 4 Groups of Progressive Greys for the Triangles */
+  /* Group 1: Research & Consumer Psychology (Halka Grey) */
+  .cn-tri-g1{
+    fill:rgba(16, 16, 16, 0.055);
+    fill:color-mix(in srgb, var(--bg) 6%, transparent);
+  }
+  /* Group 2: Brand Strategy & Brand Positioning (Thoda Dark Grey) */
+  .cn-tri-g2{
+    fill:rgba(16, 16, 16, 0.11);
+    fill:color-mix(in srgb, var(--bg) 12%, transparent);
+  }
+  /* Group 3: Brand Story & Birth of a Brand (Aur Thoda Dark Grey) */
+  .cn-tri-g3{
+    fill:rgba(16, 16, 16, 0.175);
+    fill:color-mix(in srgb, var(--bg) 19%, transparent);
+  }
+  /* Group 4: Creative Direction & Marketing Communication (Sabse Dark Grey) */
+  .cn-tri-g4{
+    fill:rgba(16, 16, 16, 0.25);
+    fill:color-mix(in srgb, var(--bg) 27%, transparent);
+  }
+
+  .cn-spokes{ pointer-events:none; }
+  .cn-spokes line{
+    stroke:var(--bg); stroke-width:1;
+    opacity:.26;
+    stroke-linecap:round;
+    vector-effect:non-scaling-stroke;
+    transition:stroke .3s ease, opacity .3s ease;
+  }
+
   .cn-cases{
-    fill:var(--bg); opacity:.38;
+    fill:var(--bg); opacity:.7;
     font-size:13px; letter-spacing:.03em;
   }
   .cn-orb--moon{ opacity:.28; }
@@ -1610,18 +1646,32 @@
     transition:opacity .3s ease, transform .3s ease;
   }
 
+  .om-kasten:not(.is-text) .om-section-copy,
+  .om-kasten:not(.is-text) .om-section-claim{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
   .om-kasten.is-text .om-section-copy{
     opacity:1; transform:none;
+    visibility:visible;
     transition:opacity .9s cubic-bezier(0.22,1,0.36,1) 1.25s,
                transform .9s cubic-bezier(0.22,1,0.36,1) 1.25s;
   }
+  .om-kasten.is-text .om-section-copy.om-lead-copy{
+    font-style:italic;
+    opacity:0.95;
+  }
   .om-kasten.is-text .om-section-claim{
     opacity:1; transform:none;
+    visibility:visible;
     transition:opacity .9s cubic-bezier(0.22,1,0.36,1) 1.4s,
                transform .9s cubic-bezier(0.22,1,0.36,1) 1.4s;
   }
   @media (prefers-reduced-motion: reduce){
-    .om-section-copy, .om-section-claim{
+    .om-kasten.is-text .om-section-copy,
+    .om-kasten.is-text .om-section-claim{
       opacity:1; transform:none; transition:none;
     }
   }
@@ -2245,6 +2295,16 @@
     will-change: transform;
   }
 
+  @media (min-width: 641px) {
+    #gravityHome .om-brand.is-da {
+      transition: transform 1.4s cubic-bezier(0.45, 0, 0.15, 1), opacity 1s ease .15s, filter 0.35s ease !important;
+    }
+    html.logo-gedockt #gravityHome .om-brand.is-da {
+      transform: translate3d(68px, 0, 0) !important;
+      transition: transform 1.8s cubic-bezier(0.45, 0, 0.15, 1) 0.85s, opacity 0.4s ease, filter 0.35s ease !important;
+    }
+  }
+
   html.logo-gedockt #gravityHome .om-brand.is-da {
     opacity: 1 !important;
     visibility: visible !important;
@@ -2255,7 +2315,8 @@
   html.logo-gedockt #gravityHome #svg {
     opacity: 1 !important;
     visibility: visible !important;
-    pointer-events: none !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
     z-index: 100000 !important;
   }
 
