@@ -999,19 +999,25 @@ document.addEventListener("DOMContentLoaded", () => {
       dataObj["_template"] = dataObj["_template"] || "table";
       dataObj["_captcha"] = "false";
 
+      // 15-second timeout using AbortController
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
       try {
-        const response = await fetch("https://formsubmit.co/ajax/vakta.bas@gmail.com", {
+        const response = await fetch("https://formsubmit.co/ajax/41dc1bab7c7d91cea0f244f7d68c70d4", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          body: JSON.stringify(dataObj)
+          body: JSON.stringify(dataObj),
+          signal: controller.signal
         });
 
+        clearTimeout(timeoutId);
         const result = await response.json().catch(() => ({}));
 
-        if (response.ok && (result.success === "true" || result.success === true || (result.message && result.message.includes("Activation")))) {
+        if (result.success === "true" || result.success === true) {
           form.style.display = "none";
           if (successCard) {
             successCard.style.display = "block";
@@ -1021,21 +1027,36 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(result.message || "Failed to submit form");
         }
       } catch (err) {
-        console.warn("Fetch failed, falling back to native submission:", err);
+        clearTimeout(timeoutId);
+        console.warn("Form submission error:", err.message);
+
+        // Always restore button state on any error
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (submitBtn.tagName === "INPUT") {
+            submitBtn.value = originalBtnValue;
+          } else {
+            submitBtn.textContent = originalBtnValue;
+          }
+        }
+
+        // If aborted (timeout), show friendly error
+        if (err.name === "AbortError") {
+          if (errorCard) {
+            errorCard.style.display = "block";
+            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Request timed out. Please check your internet connection and try again, or email us at <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>");
+            errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          return;
+        }
+
+        // Try native form submit as last-resort fallback
         try {
           form.submit();
         } catch (submitErr) {
           if (errorCard) {
             errorCard.style.display = "block";
             errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
-          }
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            if (submitBtn.tagName === "INPUT") {
-              submitBtn.value = originalBtnValue;
-            } else {
-              submitBtn.textContent = originalBtnValue;
-            }
           }
         }
       }
