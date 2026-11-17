@@ -934,7 +934,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     elHint.style.opacity = (docked || transitioning || hintDismissed) ? 0 : 0.55;
   }
 
-  function updateHeaderShift(){
+  function updateHeaderShift() {
     if (!web2El) return;
     var wr = web2El.getBoundingClientRect();
     var H_START = 180;

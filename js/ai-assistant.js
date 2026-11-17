@@ -81,6 +81,109 @@
 
     // 1.3 Full-Screen AI Assistant Modal Overlay
     let overlay = document.getElementById('em-ai-overlay');
+    const overlayMarkup = `
+      <canvas id="em-ai-webgl-canvas" class="em-ai-webgl-canvas"></canvas>
+
+      <div class="em-ai-ui-layer">
+        <!-- Top Bar -->
+        <div class="em-ai-top-bar">
+          <div class="em-ai-logo-wrap">
+            <span class="em-ai-brand-name">Buttercup®</span>
+            <span class="em-ai-star-mark">✦</span>
+          </div>
+          <div class="em-ai-top-right">
+            <a href="#contact" class="em-ai-talk-link" id="emAiTalkLink">Let's talk</a>
+            <button class="em-ai-close-btn" id="em-ai-close" title="Close AI Assistant" aria-label="Close Assistant">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Left Content Area -->
+        <div class="em-ai-content-area">
+          <div class="em-ai-whisper-text">
+            I'm L.I.S.A, Buttercup's Interactive Super Assistant. Basically, I run this place.
+          </div>
+
+          <div class="em-ai-headline-wrap">
+            <h1 class="em-ai-headline" id="em-ai-headline">
+              OMG! You're here! I was just manifesting this. Ask away!
+            </h1>
+            <div class="em-ai-response-details" id="em-ai-response-details" style="display: none;"></div>
+          </div>
+
+          <!-- Suggestion Chips Grid -->
+          <div class="em-ai-chips-grid" id="em-ai-chips">
+            <button type="button" class="em-ai-chip" data-query="Start a project">Start a project</button>
+            <button type="button" class="em-ai-chip" data-query="Join the team">Join the team</button>
+            <button type="button" class="em-ai-chip" data-query="Drop a quick word">Drop a quick word</button>
+            <button type="button" class="em-ai-chip" data-query="Discover our culture">Discover our culture</button>
+          </div>
+
+          <!-- Sleek Custom Prompt Input -->
+          <form class="em-ai-input-form" id="em-ai-form">
+            <div class="em-ai-input-wrapper">
+              <button type="button" class="em-ai-mic-btn" id="em-ai-mic-btn" title="Speak via Microphone" aria-label="Voice Dictation">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+              </button>
+              <input type="text" id="em-ai-input" class="em-ai-input-field" placeholder="Ask me anything about Buttercup..." autocomplete="off" />
+              <button type="submit" class="em-ai-send-btn" id="em-ai-send-btn" title="Send message" aria-label="Send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Write us email line -->
+          <div class="em-ai-write-us">
+            <span>Write us:</span>
+            <a href="mailto:info@buttercupadvertising.com" id="emAiMailLink">info@buttercupadvertising.com</a>
+            <button type="button" class="em-ai-copy-btn" id="emAiCopyBtn" title="Copy email address" aria-label="Copy email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bottom Bar Controls -->
+        <div class="em-ai-bottom-bar">
+          <button class="em-ai-reset-btn" id="em-ai-reset-btn" title="Reset assistant" aria-label="Reset assistant">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+          </button>
+
+          <div class="em-ai-sound-pill" id="em-ai-sound-toggle" title="Toggle voice sound" role="button" tabindex="0" aria-label="Toggle voice sound">
+            <div class="em-ai-sound-icon is-active" id="em-icon-sound-on">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            </div>
+            <div class="em-ai-sound-icon" id="em-icon-sound-off">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.id = 'em-ai-overlay';
@@ -88,77 +191,10 @@
       overlay.setAttribute('aria-hidden', 'true');
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-label', 'Buttercup AI Assistant');
-      overlay.innerHTML = `
-        <div class="em-ai-top-actions">
-          <button class="em-ai-btn-icon" id="em-ai-sound-toggle" title="Toggle AI Voice" aria-label="Toggle Voice Sound">
-            <svg id="em-icon-sound-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-            <svg id="em-icon-sound-off" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
-          </button>
-          <button class="em-ai-btn-icon em-ai-btn-close" id="em-ai-close" title="Close AI Assistant" aria-label="Close Assistant">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div class="em-ai-container">
-          <div class="em-ai-chat-col">
-            <div class="em-ai-messages" id="em-ai-messages">
-              <div class="em-ai-msg em-ai-msg-assistant">
-                <div class="em-ai-bubble-content">
-                  Hey, I'm Buttercup AI! Ask me anything or tap a chip below.
-                </div>
-              </div>
-            </div>
-            <div class="em-ai-chips-wrap" id="em-ai-chips">
-              <button type="button" class="em-ai-chip" data-query="What do you do?">What do you do?</button>
-              <button type="button" class="em-ai-chip" data-query="Show me your projects">Show me your projects</button>
-              <button type="button" class="em-ai-chip" data-query="Services & Capabilities">Services &amp; Capabilities</button>
-              <button type="button" class="em-ai-chip" data-query="How much does a project cost?">How much does a project cost?</button>
-              <button type="button" class="em-ai-chip" data-query="Contact team">Contact team</button>
-            </div>
-            <form class="em-ai-input-bar" id="em-ai-form">
-              <button type="button" class="em-ai-mic-btn" id="em-ai-mic-btn" title="Speak via Microphone" aria-label="Voice Dictation">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                  <line x1="12" y1="19" x2="12" y2="23"></line>
-                  <line x1="8" y1="23" x2="16" y2="23"></line>
-                </svg>
-              </button>
-              <input type="text" id="em-ai-input" class="em-ai-input" placeholder="Ask me anything..." autocomplete="off" />
-              <button type="submit" class="em-ai-send-btn" id="em-ai-send-btn" title="Send message" aria-label="Send">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </button>
-            </form>
-            <div class="em-ai-api-status">
-              <span class="em-ai-api-badge" id="em-ai-api-badge" title="Powered by Google Gemini conversational intelligence">
-                <span class="em-ai-api-dot"></span>
-                <span id="em-ai-status-text">Connected: Buttercup AI Engine</span>
-              </span>
-              <button type="button" class="em-ai-key-btn" id="em-ai-key-btn" title="Configure Google Gemini API Key">
-                <span>Gemini API Key</span>
-              </button>
-            </div>
-          </div>
-          <div class="em-ai-orb-col">
-            <div class="em-ai-large-orb-wrap">
-              <canvas id="em-ai-large-orb" width="560" height="560" class="em-ai-large-canvas"></canvas>
-            </div>
-          </div>
-        </div>
-      `;
+      overlay.innerHTML = overlayMarkup;
       document.body.appendChild(overlay);
+    } else {
+      overlay.innerHTML = overlayMarkup;
     }
   }
 
@@ -320,16 +356,19 @@
     const aiBubble = document.getElementById('em-ai-bubble');
     const aiOverlay = document.getElementById('em-ai-overlay');
     const aiCloseBtn = document.getElementById('em-ai-close');
-    const aiMessages = document.getElementById('em-ai-messages');
+    const aiHeadline = document.getElementById('em-ai-headline');
+    const aiResponseDetails = document.getElementById('em-ai-response-details');
     const aiForm = document.getElementById('em-ai-form');
     const aiInput = document.getElementById('em-ai-input');
     const aiChips = document.getElementById('em-ai-chips');
+    const aiMicBtn = document.getElementById('em-ai-mic-btn');
+    const aiResetBtn = document.getElementById('em-ai-reset-btn');
+    const aiTalkLink = document.getElementById('emAiTalkLink');
+    const aiCopyBtn = document.getElementById('emAiCopyBtn');
     const aiSoundToggle = document.getElementById('em-ai-sound-toggle');
     const iconSoundOn = document.getElementById('em-icon-sound-on');
     const iconSoundOff = document.getElementById('em-icon-sound-off');
-    const micBtn = document.getElementById('em-ai-mic-btn');
-    const keyBtn = document.getElementById('em-ai-key-btn');
-    const statusText = document.getElementById('em-ai-status-text');
+    const webglCanvas = document.getElementById('em-ai-webgl-canvas');
 
     let isModalOpen = false;
     let isAiSoundEnabled = true;
@@ -338,11 +377,50 @@
     let isAiThinking = false;
     let isHoveringOrb = false;
     let geminiApiKey = localStorage.getItem('buttercup_gemini_key') || '';
-    let drawLargeOrb = null;
+    let lisa3D = null;
 
-    if (geminiApiKey && statusText) {
-      statusText.textContent = "Google Gemini: Active";
+    function ensureThreeLoaded(callback) {
+      if (typeof THREE !== 'undefined') {
+        callback();
+        return;
+      }
+      const existing = document.querySelector('script[src*="three.min.js"]');
+      if (existing) {
+        if (window.THREE) {
+          callback();
+        } else {
+          existing.addEventListener('load', callback);
+        }
+        return;
+      }
+      const script = document.createElement('script');
+      let prefix = '';
+      const myScript = document.querySelector('script[src*="ai-assistant.js"]');
+      if (myScript && myScript.src) {
+        const src = myScript.getAttribute('src');
+        const idx = src.indexOf('js/ai-assistant.js');
+        if (idx !== -1) {
+          prefix = src.substring(0, idx);
+        }
+      }
+      script.src = prefix + 'js/vendor/three.min.js';
+      script.onload = () => callback();
+      script.onerror = () => {
+        const cdn = document.createElement('script');
+        cdn.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        cdn.onload = () => callback();
+        document.head.appendChild(cdn);
+      };
+      document.head.appendChild(script);
     }
+
+    // Pre-load Three.js in background so modal opens instantly
+    ensureThreeLoaded(() => {
+      const cv = document.getElementById('em-ai-webgl-canvas');
+      if (cv && !lisa3D) {
+        lisa3D = initLisa3D(cv);
+      }
+    });
 
     // ==========================================================================
     // 3. APPLE INTELLIGENCE / SIRI RESONANCE & DIAMOND STARDUST ENGINE
@@ -992,151 +1070,8 @@
       ctx.restore();
     }
 
-    // Mini Butterfly (Bottom Right Trigger Button - Disabled per user request)
-    const orbCanvas = document.getElementById('orb-canvas');
-    if (orbCanvas) {
-      // Disabled since trigger widget is replaced by Apple dock item
-    }
-
-    // Large Holographic Butterfly (Inside Modal Overlay)
-    const largeOrbCanvas = document.getElementById('em-ai-large-orb');
-    if (largeOrbCanvas) {
-      const lctx = largeOrbCanvas.getContext('2d');
-      const largeParticles = createButterflyParticles(35, 280, 280);
-      let largeTime = 0;
-
-      drawLargeOrb = function() {
-        if (!isModalOpen || document.hidden) {
-          return;
-        }
-        const speed = isAiSpeaking ? 0.038 : (isAiThinking ? 0.032 : (isAiListening ? 0.028 : 0.02));
-        largeTime += speed;
-        drawButterfly(lctx, largeOrbCanvas.width, largeOrbCanvas.height, largeTime, largeParticles, isAiSpeaking, isAiListening, isAiThinking, false);
-
-        if (isModalOpen && !document.hidden) {
-          requestAnimationFrame(drawLargeOrb);
-        }
-      };
-
-      document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && isModalOpen && typeof drawLargeOrb === 'function') {
-          requestAnimationFrame(drawLargeOrb);
-        }
-      });
-    }
-
     // ==========================================================================
-    // 6. MODAL INTERACTION, VOICE ENGINE & CONTROLS
-    // ==========================================================================
-    function updateModalUrl(open) {
-      try {
-        const url = new URL(window.location);
-        if (open) {
-          url.searchParams.set('ai', 'open');
-        } else {
-          url.searchParams.delete('ai');
-          url.searchParams.delete('emi');
-        }
-        window.history.replaceState({}, '', url);
-      } catch (e) {}
-    }
-
-    function openAiModal() {
-      if (!aiOverlay) return;
-      isModalOpen = true;
-      if (aiBubble) aiBubble.classList.remove('is-visible');
-      aiOverlay.classList.add('is-open');
-      aiOverlay.setAttribute('aria-hidden', 'false');
-      document.documentElement.classList.add('em-modal-open');
-      updateModalUrl(true);
-      if (typeof drawLargeOrb === 'function') {
-        requestAnimationFrame(drawLargeOrb);
-      }
-      setTimeout(() => {
-        if (aiInput) aiInput.focus();
-      }, 300);
-
-      // Speak initial welcome if first opening
-      if (aiMessages && aiMessages.children.length === 1 && isAiSoundEnabled) {
-        setTimeout(() => {
-          speakVoice("Hey! I'm Buttercup AI. Ask me anything or tap a chip below.");
-        }, 350);
-      }
-    }
-
-    function closeAiModal() {
-      if (!aiOverlay) return;
-      isModalOpen = false;
-      aiOverlay.classList.remove('is-open');
-      aiOverlay.setAttribute('aria-hidden', 'true');
-      document.documentElement.classList.remove('em-modal-open');
-      stopSpeech();
-      updateModalUrl(false);
-      scheduleNextPop(3000);
-    }
-
-    // Bind open/close triggers
-    if (orbToggle) orbToggle.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
-    if (aiBubble) aiBubble.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
-    if (aiCloseBtn) aiCloseBtn.addEventListener('click', closeAiModal);
-
-    window.openButtercupAi = openAiModal;
-    window.openAiModal = openAiModal;
-
-    document.addEventListener('click', (e) => {
-      const trigger = e.target && e.target.closest && e.target.closest('[data-action="open-ai"], #openAiAssistantBtn');
-      if (trigger) {
-        e.preventDefault();
-        e.stopPropagation();
-        openAiModal();
-      }
-    });
-
-    // ESC key closes modal
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        closeAiModal();
-      }
-    });
-
-    // Check URL on load
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('ai') === 'open' || urlParams.get('emi') === 'open') {
-        openAiModal();
-      }
-    } catch (e) {}
-
-    // Sound Toggle inside AI Modal
-    if (aiSoundToggle) {
-      aiSoundToggle.addEventListener('click', () => {
-        isAiSoundEnabled = !isAiSoundEnabled;
-        if (iconSoundOn) iconSoundOn.style.display = isAiSoundEnabled ? 'block' : 'none';
-        if (iconSoundOff) iconSoundOff.style.display = isAiSoundEnabled ? 'none' : 'block';
-        if (!isAiSoundEnabled) stopSpeech();
-      });
-    }
-
-    // Google Gemini API Key Setting
-    if (keyBtn) {
-      keyBtn.addEventListener('click', () => {
-        const entered = prompt(
-          "Enter your Google Gemini API Key (leaves live Google generative AI connected directly to Buttercup Studio):",
-          geminiApiKey
-        );
-        if (entered !== null) {
-          geminiApiKey = entered.trim();
-          localStorage.setItem('buttercup_gemini_key', geminiApiKey);
-          if (statusText) {
-            statusText.textContent = geminiApiKey ? "Google Gemini: Active" : "Google Gemini: Default Engine";
-          }
-          alert(geminiApiKey ? "Google Gemini Key Saved! Live Google AI connected." : "Using Buttercup Native Studio Knowledge Engine.");
-        }
-      });
-    }
-
-    // ==========================================================================
-    // 7. NATURAL VOICE SYNTHESIS ENGINE
+    // 6. NATURAL VOICE SYNTHESIS ENGINE
     // ==========================================================================
     let preferredVoice = null;
 
@@ -1220,9 +1155,721 @@
       window.speechSynthesis.speak(utterance);
     }
 
+    // ==========================================================================
+    // 7. L.I.S.A. 3D INTERACTIVE RETRO-FUTURISTIC AI CHARACTER ENGINE
+    // ==========================================================================
+    function initLisa3D(canvas) {
+      if (!window.THREE || !canvas) return null;
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance'
+        });
+      } catch (err) {
+        console.warn("Lisa 3D: WebGL context could not be created:", err);
+        return null;
+      }
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+
+      const scene = new THREE.Scene();
+
+      // Camera positioned to view torso and head with character on right/center
+      const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0.18, 0.40, 5.0);
+      camera.lookAt(0.18, 0.38, 0);
+
+      // Studio Lighting
+      const ambientLight = new THREE.AmbientLight(0xfff6ee, 0.95);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xfffaea, 1.55);
+      keyLight.position.set(3.5, 4.0, 3.5);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 1024;
+      keyLight.shadow.mapSize.height = 1024;
+      keyLight.shadow.bias = -0.001;
+      scene.add(keyLight);
+
+      const rimLight = new THREE.DirectionalLight(0xbcd6ff, 2.9);
+      rimLight.position.set(-4.5, 3.2, -2.5);
+      scene.add(rimLight);
+
+      const fillLight = new THREE.DirectionalLight(0xe8d0c0, 0.65);
+      fillLight.position.set(-2.5, 0.5, 3.0);
+      scene.add(fillLight);
+
+      // Procedural Heather Grey Knit Texture
+      const knitCanvas = document.createElement('canvas');
+      knitCanvas.width = 512;
+      knitCanvas.height = 512;
+      const kctx = knitCanvas.getContext('2d');
+      kctx.fillStyle = '#9e94a4';
+      kctx.fillRect(0, 0, 512, 512);
+
+      // Stronger ribbed wool stripes
+      for (let x = 0; x < 512; x += 6) {
+        kctx.fillStyle = (x % 12 === 0) ? 'rgba(30, 22, 35, 0.45)' : 'rgba(240, 235, 245, 0.35)';
+        kctx.fillRect(x, 0, 3.2, 512);
+      }
+      // Wool heather texture
+      for (let i = 0; i < 12000; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        const col = Math.random() > 0.5 ? 'rgba(255,255,255,0.42)' : 'rgba(20,12,25,0.35)';
+        kctx.fillStyle = col;
+        kctx.fillRect(x, y, 1.5, 3.0);
+      }
+      const knitTexture = new THREE.CanvasTexture(knitCanvas);
+      knitTexture.wrapS = THREE.RepeatWrapping;
+      knitTexture.wrapT = THREE.RepeatWrapping;
+      knitTexture.repeat.set(16, 16);
+
+      // CRT Screen with Glowing Circular Eyes
+      const screenCanvas = document.createElement('canvas');
+      screenCanvas.width = 1024;
+      screenCanvas.height = 1024;
+      const sctx = screenCanvas.getContext('2d');
+      const screenTexture = new THREE.CanvasTexture(screenCanvas);
+
+      let eyeGazeX = 0;
+      let eyeGazeY = 0;
+      let eyeBlinkScale = 1.0;
+      let isBlinking = false;
+      let eyePulse = 1.0;
+
+      function renderScreenTexture() {
+        sctx.fillStyle = '#111317';
+        sctx.fillRect(0, 0, 1024, 1024);
+
+        const bgGrad = sctx.createRadialGradient(512, 512, 100, 512, 512, 800);
+        bgGrad.addColorStop(0, '#23262d');
+        bgGrad.addColorStop(0.7, '#14161a');
+        bgGrad.addColorStop(1, '#0e0f12');
+        sctx.fillStyle = bgGrad;
+        sctx.fillRect(0, 0, 1024, 1024);
+
+        sctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+        for (let y = 0; y < 1024; y += 4) {
+          sctx.fillRect(0, y, 1024, 1.5);
+        }
+
+        const eyeRadius = 150 * eyePulse;
+        const eyeSpread = 205;
+        const eyeBaseY = 512;
+
+        const leftEyeX = 512 - eyeSpread + eyeGazeX * 65;
+        const rightEyeX = 512 + eyeSpread + eyeGazeX * 65;
+        const eyeY = eyeBaseY + eyeGazeY * 55;
+
+        function drawGlowingEye(cx, cy) {
+          sctx.save();
+          sctx.translate(cx, cy);
+          sctx.scale(1.0, eyeBlinkScale);
+
+          const outerGlow = sctx.createRadialGradient(0, 0, eyeRadius * 0.35, 0, 0, eyeRadius * 2.2);
+          outerGlow.addColorStop(0, 'rgba(255, 235, 190, 0.65)');
+          outerGlow.addColorStop(0.35, 'rgba(255, 175, 75, 0.42)');
+          outerGlow.addColorStop(0.7, 'rgba(255, 120, 25, 0.18)');
+          outerGlow.addColorStop(1, 'rgba(255, 100, 10, 0)');
+          sctx.fillStyle = outerGlow;
+          sctx.beginPath();
+          sctx.arc(0, 0, eyeRadius * 2.2, 0, Math.PI * 2);
+          sctx.fill();
+
+          const coreGlow = sctx.createRadialGradient(0, 0, 0, 0, 0, eyeRadius);
+          coreGlow.addColorStop(0, '#ffffff');
+          coreGlow.addColorStop(0.7, '#ffffff');
+          coreGlow.addColorStop(0.86, '#fff8e8');
+          coreGlow.addColorStop(0.96, '#ffdc94');
+          coreGlow.addColorStop(1, 'rgba(255, 185, 70, 0)');
+          sctx.fillStyle = coreGlow;
+          sctx.beginPath();
+          sctx.arc(0, 0, eyeRadius, 0, Math.PI * 2);
+          sctx.fill();
+
+          sctx.restore();
+        }
+
+        drawGlowingEye(leftEyeX, eyeY);
+        drawGlowingEye(rightEyeX, eyeY);
+
+        screenTexture.needsUpdate = true;
+      }
+      renderScreenTexture();
+
+      function createRoundedRectShape(w, h, r) {
+        const shape = new THREE.Shape();
+        const x = -w / 2;
+        const y = -h / 2;
+        shape.moveTo(x + r, y);
+        shape.lineTo(x + w - r, y);
+        shape.quadraticCurveTo(x + w, y, x + w, y + r);
+        shape.lineTo(x + w, y + h - r);
+        shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        shape.lineTo(x + r, y + h);
+        shape.quadraticCurveTo(x, y + h, x, y + h - r);
+        shape.lineTo(x, y + r);
+        shape.quadraticCurveTo(x, y, x + r, y);
+        return shape;
+      }
+
+      // Torso & Turtleneck Sweater (Realistic anatomical shoulders)
+      const bodyGroup = new THREE.Group();
+      bodyGroup.position.set(0.86, -0.38, 0);
+      scene.add(bodyGroup);
+
+      const sweaterMaterial = new THREE.MeshStandardMaterial({
+        color: 0x9c94a2,
+        map: knitTexture,
+        roughness: 0.88,
+        metalness: 0.02
+      });
+
+      function createShoulderShape() {
+        const s = new THREE.Shape();
+        s.moveTo(-0.28, 0.22);
+        s.bezierCurveTo(-0.52, 0.18, -0.88, 0.05, -1.35, -0.22);
+        s.bezierCurveTo(-1.50, -0.38, -1.50, -0.75, -1.45, -1.20);
+        s.lineTo(1.45, -1.20);
+        s.bezierCurveTo(1.50, -0.75, 1.50, -0.38, 1.35, -0.22);
+        s.bezierCurveTo(0.88, 0.05, 0.52, 0.18, 0.28, 0.22);
+        s.closePath();
+        return s;
+      }
+
+      const shoulderShape = createShoulderShape();
+      const torsoGeo = new THREE.ExtrudeGeometry(shoulderShape, {
+        depth: 0.45,
+        bevelEnabled: true,
+        bevelThickness: 0.22,
+        bevelSize: 0.18,
+        bevelSegments: 5
+      });
+      torsoGeo.center();
+      const torsoMesh = new THREE.Mesh(torsoGeo, sweaterMaterial);
+      torsoMesh.position.set(0, -0.48, -0.05);
+      torsoMesh.castShadow = true;
+      torsoMesh.receiveShadow = true;
+      bodyGroup.add(torsoMesh);
+
+      // High folded turtleneck collar hugging base of neck
+      const collarRollGeo = new THREE.TorusGeometry(0.26, 0.09, 24, 48);
+      collarRollGeo.rotateX(Math.PI / 2);
+      collarRollGeo.scale(1.0, 0.88, 1.15);
+      const collarRoll = new THREE.Mesh(collarRollGeo, sweaterMaterial);
+      collarRoll.position.set(0, 0.08, 0.02);
+      collarRoll.castShadow = true;
+      bodyGroup.add(collarRoll);
+
+      const collarColGeo = new THREE.CylinderGeometry(0.22, 0.25, 0.32, 32);
+      const collarCol = new THREE.Mesh(collarColGeo, sweaterMaterial);
+      collarCol.position.set(0, 0.32, 0.02);
+      collarCol.castShadow = true;
+      bodyGroup.add(collarCol);
+
+      // Top roll under jaw
+      const topRollGeo = new THREE.TorusGeometry(0.24, 0.08, 24, 48);
+      topRollGeo.rotateX(Math.PI / 2);
+      topRollGeo.scale(1.0, 0.88, 1.15);
+      const topRoll = new THREE.Mesh(topRollGeo, sweaterMaterial);
+      topRoll.position.set(0, 0.48, 0.02);
+      topRoll.castShadow = true;
+      bodyGroup.add(topRoll);
+
+      // Human neck sliver
+      const neckGeo = new THREE.CylinderGeometry(0.18, 0.19, 0.20, 32);
+      const neckMat = new THREE.MeshStandardMaterial({ color: 0xbaa49a, roughness: 0.6 });
+      const neckMesh = new THREE.Mesh(neckGeo, neckMat);
+      neckMesh.position.set(0, 0.52, 0.02);
+      bodyGroup.add(neckMesh);
+
+      // Retro CRT Monitor Head
+      const headGroup = new THREE.Group();
+      headGroup.position.set(0.86, 0.60, 0);
+      scene.add(headGroup);
+
+      const monitorCaseMat = new THREE.MeshStandardMaterial({
+        color: 0xd8d6db,
+        roughness: 0.36,
+        metalness: 0.06
+      });
+
+      const caseW = 1.48;
+      const caseH = 1.35;
+      const caseD = 0.85;
+      const cornerR = 0.12;
+
+      const caseShape = createRoundedRectShape(caseW, caseH, cornerR);
+      const caseGeo = new THREE.ExtrudeGeometry(caseShape, {
+        depth: caseD,
+        bevelEnabled: true,
+        bevelThickness: 0.05,
+        bevelSize: 0.05,
+        bevelSegments: 4
+      });
+      caseGeo.center();
+      const caseMesh = new THREE.Mesh(caseGeo, monitorCaseMat);
+      caseMesh.position.set(0, 0.08, -0.12);
+      caseMesh.castShadow = true;
+      caseMesh.receiveShadow = true;
+      headGroup.add(caseMesh);
+
+      // Rear monitor taper housing (classic CRT bell back)
+      const rearGeo = new THREE.CylinderGeometry(0.48, 0.72, 0.55, 32);
+      rearGeo.rotateX(Math.PI / 2);
+      rearGeo.scale(1.2, 1.0, 1.0);
+      const rearMesh = new THREE.Mesh(rearGeo, monitorCaseMat);
+      rearMesh.position.set(0, 0.12, -0.65);
+      rearMesh.castShadow = true;
+      headGroup.add(rearMesh);
+
+      // CRT Glass Screen (Mounted in front of case at z = 0.50)
+      const screenW = caseW * 0.84;
+      const screenH = caseH * 0.78;
+      const screenR = 0.08;
+
+      const screenGeo = new THREE.PlaneGeometry(screenW, screenH, 16, 16);
+      const pos = screenGeo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const u = pos.getX(i);
+        const v = pos.getY(i);
+        const dist = Math.sqrt(u * u + v * v);
+        pos.setZ(i, -Math.pow(dist, 2) * 0.04);
+      }
+      screenGeo.computeVertexNormals();
+
+      const screenMat = new THREE.MeshBasicMaterial({
+        map: screenTexture,
+        side: THREE.DoubleSide
+      });
+      const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+      screenMesh.position.set(0, 0.08, 0.50);
+      headGroup.add(screenMesh);
+
+      // Rounded Bezel Frame with Cutout Window
+      const bezelShape = createRoundedRectShape(caseW * 0.98, caseH * 0.96, cornerR * 0.9);
+      const screenHole = createRoundedRectShape(screenW * 0.96, screenH * 0.96, screenR);
+      bezelShape.holes.push(screenHole);
+
+      const bezelGeo = new THREE.ExtrudeGeometry(bezelShape, {
+        depth: 0.08,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.03,
+        bevelSegments: 3
+      });
+      bezelGeo.center();
+
+      const bezelMat = new THREE.MeshStandardMaterial({
+        color: 0x2b2e35,
+        roughness: 0.55,
+        metalness: 0.1
+      });
+      const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
+      bezelMesh.position.set(0, 0.08, 0.51);
+      bezelMesh.castShadow = true;
+      headGroup.add(bezelMesh);
+
+      // Front bottom bezel control strip (buttons/knobs)
+      const ctrlMat = new THREE.MeshStandardMaterial({ color: 0x181a1d, roughness: 0.8 });
+      for (let i = 0; i < 6; i++) {
+        const btnGeo = new THREE.CylinderGeometry(0.016, 0.016, 0.04, 16);
+        btnGeo.rotateX(Math.PI / 2);
+        const btn = new THREE.Mesh(btnGeo, ctrlMat);
+        btn.position.set(0.24 + i * 0.052, -0.44, 0.58);
+        headGroup.add(btn);
+      }
+
+      // Side Earcups (Locomotive L.I.S.A. audio headphone pods)
+      const earcupMat = new THREE.MeshStandardMaterial({ color: 0x1b1d22, roughness: 0.45, metalness: 0.2 });
+      const earcupGeo = new THREE.CylinderGeometry(0.20, 0.24, 0.14, 32);
+      earcupGeo.rotateZ(Math.PI / 2);
+
+      const earcupRight = new THREE.Mesh(earcupGeo, earcupMat);
+      earcupRight.position.set(caseW * 0.5 + 0.06, 0.08, -0.10);
+      headGroup.add(earcupRight);
+
+      const earcupLeft = new THREE.Mesh(earcupGeo, earcupMat);
+      earcupLeft.position.set(-caseW * 0.5 - 0.06, 0.08, -0.10);
+      headGroup.add(earcupLeft);
+
+      // Chin jacks for front cables
+      const chinJackGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.09, 16);
+      const chinJackLeft = new THREE.Mesh(chinJackGeo, earcupMat);
+      chinJackLeft.position.set(-0.24, -0.58, 0.28);
+      headGroup.add(chinJackLeft);
+
+      const chinJackRight = new THREE.Mesh(chinJackGeo, earcupMat);
+      chinJackRight.position.set(0.24, -0.58, 0.28);
+      headGroup.add(chinJackRight);
+
+      // Neck joint mounting bracket under monitor
+      const bracketGeo = new THREE.CylinderGeometry(0.22, 0.24, 0.18, 32);
+      const bracketMesh = new THREE.Mesh(bracketGeo, ctrlMat);
+      bracketMesh.position.set(0, -0.62, 0);
+      headGroup.add(bracketMesh);
+
+      // Black Patch Cables
+      const cableMaterial = new THREE.MeshStandardMaterial({
+        color: 0x141416,
+        roughness: 0.65,
+        metalness: 0.12
+      });
+
+      const cablesData = [
+        // Chin cable left into turtleneck collar
+        {
+          localStart: new THREE.Vector3(-0.24, -0.58, 0.28),
+          worldEnd: new THREE.Vector3(0.86 - 0.10, 0.10, 0.24),
+          sag: new THREE.Vector3(-0.06, -0.15, 0.12),
+          mesh: null
+        },
+        // Chin cable right into turtleneck collar
+        {
+          localStart: new THREE.Vector3(0.24, -0.58, 0.28),
+          worldEnd: new THREE.Vector3(0.86 + 0.10, 0.10, 0.24),
+          sag: new THREE.Vector3(0.06, -0.15, 0.12),
+          mesh: null
+        },
+        // Right side loop 1 (top wide arch)
+        {
+          localStart: new THREE.Vector3(caseW * 0.5 + 0.08, 0.16, -0.10),
+          worldEnd: new THREE.Vector3(0.86 + 0.45, -0.15, -0.10),
+          sag: new THREE.Vector3(0.38, 0.08, 0.02),
+          mesh: null
+        },
+        // Right side loop 2 (drooping down)
+        {
+          localStart: new THREE.Vector3(caseW * 0.5 + 0.08, 0.02, -0.12),
+          worldEnd: new THREE.Vector3(0.86 + 0.35, -0.32, -0.15),
+          sag: new THREE.Vector3(0.48, -0.22, 0.04),
+          mesh: null
+        },
+        // Right side loop 3 (sweeping drape)
+        {
+          localStart: new THREE.Vector3(caseW * 0.5 + 0.06, -0.10, -0.08),
+          worldEnd: new THREE.Vector3(0.86 + 0.22, -0.12, -0.18),
+          sag: new THREE.Vector3(0.26, -0.30, -0.05),
+          mesh: null
+        },
+        // Left side loop 1 (top arch)
+        {
+          localStart: new THREE.Vector3(-caseW * 0.5 - 0.08, 0.14, -0.10),
+          worldEnd: new THREE.Vector3(0.86 - 0.42, -0.18, -0.10),
+          sag: new THREE.Vector3(-0.35, 0.05, 0.02),
+          mesh: null
+        },
+        // Left side loop 2 (droop down)
+        {
+          localStart: new THREE.Vector3(-caseW * 0.5 - 0.08, -0.02, -0.08),
+          worldEnd: new THREE.Vector3(0.86 - 0.25, -0.10, -0.18),
+          sag: new THREE.Vector3(-0.42, -0.24, 0.02),
+          mesh: null
+        }
+      ];
+
+      cablesData.forEach(c => {
+        const curve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(0, -0.5, 0),
+          new THREE.Vector3(0, -1, 0)
+        ]);
+        const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.026, 8, false);
+        const tubeMesh = new THREE.Mesh(tubeGeo, cableMaterial);
+        tubeMesh.castShadow = true;
+        scene.add(tubeMesh);
+        c.mesh = tubeMesh;
+      });
+
+      function updateCables(headRotY, headRotX) {
+        cablesData.forEach(c => {
+          const worldStart = c.localStart.clone().applyMatrix4(headGroup.matrixWorld);
+          const worldEnd = c.worldEnd.clone();
+
+          const mid = new THREE.Vector3().addVectors(worldStart, worldEnd).multiplyScalar(0.5);
+          mid.x += c.sag.x;
+          mid.y += c.sag.y;
+          mid.z += c.sag.z;
+
+          const p1 = new THREE.Vector3().lerpVectors(worldStart, mid, 0.45);
+          p1.x += c.sag.x * 0.4;
+          const p2 = new THREE.Vector3().lerpVectors(mid, worldEnd, 0.55);
+          p2.y += c.sag.y * 0.2;
+
+          const curve = new THREE.CatmullRomCurve3([worldStart, p1, mid, p2, worldEnd]);
+          c.mesh.geometry.dispose();
+          c.mesh.geometry = new THREE.TubeGeometry(curve, 32, 0.024, 8, false);
+        });
+      }
+
+      // Cursor Tracking & Animation Loop
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetRotX = 0;
+      let targetRotY = 0;
+      let targetRotZ = 0;
+      let curRotX = 0;
+      let curRotY = 0;
+      let curRotZ = 0;
+      let nodPitch = 0;
+      let isNodding = false;
+
+      function onMouseMove(e) {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = (e.clientY / window.innerHeight) * 2 - 1;
+        mouseX = nx;
+        mouseY = ny;
+        targetRotY = nx * 0.42;
+        targetRotX = -ny * 0.32;
+        targetRotZ = -nx * 0.06;
+      }
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+      // Natural eye blinking timer
+      let blinkInterval = setInterval(() => {
+        if (!isBlinking && Math.random() < 0.65) {
+          isBlinking = true;
+          const blinkStart = performance.now();
+          const blinkDur = 160;
+
+          function runBlink(now) {
+            const progress = (now - blinkStart) / blinkDur;
+            if (progress < 0.5) {
+              eyeBlinkScale = 1.0 - (progress * 2) * 0.95;
+            } else if (progress < 1.0) {
+              eyeBlinkScale = 0.05 + ((progress - 0.5) * 2) * 0.95;
+            } else {
+              eyeBlinkScale = 1.0;
+              isBlinking = false;
+              renderScreenTexture();
+              return;
+            }
+            renderScreenTexture();
+            requestAnimationFrame(runBlink);
+          }
+          requestAnimationFrame(runBlink);
+        }
+      }, 3400);
+
+      const clock = new THREE.Clock();
+      let animId = null;
+
+      function animate() {
+        animId = requestAnimationFrame(animate);
+
+        const time = clock.getElapsedTime();
+
+        curRotX += (targetRotX - curRotX) * 0.065;
+        curRotY += (targetRotY - curRotY) * 0.065;
+        curRotZ += (targetRotZ - curRotZ) * 0.065;
+
+        if (isNodding) {
+          nodPitch = Math.sin(time * 12) * 0.12;
+        } else {
+          nodPitch = 0;
+        }
+
+        const breath = Math.sin(time * 1.6) * 0.016;
+        const subtleSway = Math.sin(time * 0.8) * 0.008;
+
+        headGroup.rotation.x = curRotX + breath * 0.4 + nodPitch;
+        headGroup.rotation.y = curRotY + subtleSway;
+        headGroup.rotation.z = curRotZ;
+        headGroup.position.y = 0.60 + breath;
+
+        bodyGroup.position.y = -0.38 + breath * 0.45;
+
+        eyeGazeX += (mouseX - eyeGazeX) * 0.08;
+        eyeGazeY += (mouseY - eyeGazeY) * 0.08;
+        renderScreenTexture();
+
+        headGroup.updateMatrixWorld();
+        updateCables(curRotY, curRotX);
+
+        renderer.render(scene, camera);
+      }
+
+      function resize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        if (window.innerWidth < 768) {
+          camera.position.set(0.0, 0.45, 5.8);
+          camera.lookAt(0.0, 0.25, 0);
+        } else if (window.innerWidth < 1100) {
+          camera.position.set(0.14, 0.36, 5.2);
+          camera.lookAt(0.14, 0.34, 0);
+        } else {
+          camera.position.set(0.18, 0.40, 5.0);
+          camera.lookAt(0.18, 0.38, 0);
+        }
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
+
+      return {
+        pulseEyes: () => {
+          eyePulse = 1.25;
+          setTimeout(() => { eyePulse = 1.0; }, 420);
+        },
+        nodHead: () => {
+          isNodding = true;
+          setTimeout(() => { isNodding = false; }, 800);
+        },
+        destroy: () => {
+          if (animId) cancelAnimationFrame(animId);
+          if (blinkInterval) clearInterval(blinkInterval);
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('resize', resize);
+          renderer.dispose();
+        }
+      };
+    }
+
+        // ==========================================================================
+    // 6. MODAL INTERACTION & URL STATE
+    // ==========================================================================
+    function updateModalUrl(open) {
+      // URL param tracking disabled — prevents auto-open on page reload
+      try {
+        if (!open) {
+          const url = new URL(window.location);
+          url.searchParams.delete('ai');
+          url.searchParams.delete('emi');
+          window.history.replaceState({}, '', url);
+        }
+      } catch (e) {}
+    }
+
+    function openAiModal() {
+      if (!aiOverlay) return;
+      isModalOpen = true;
+      if (aiBubble) aiBubble.classList.remove('is-visible');
+      aiOverlay.classList.add('is-open');
+      aiOverlay.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('em-modal-open');
+      updateModalUrl(true);
+
+      // Re-activate custom cursor inside modal (it may have de-activated on dock hover)
+      const cursorDot = document.querySelector('.custom-cursor-dot');
+      const cursorRing = document.querySelector('.custom-cursor-ring');
+      if (cursorDot) cursorDot.classList.add('is-active');
+      if (cursorRing) cursorRing.classList.add('is-active');
+
+      ensureThreeLoaded(() => {
+        const cv = document.getElementById('em-ai-webgl-canvas');
+        if (cv && !lisa3D) {
+          lisa3D = initLisa3D(cv);
+        }
+      });
+
+      setTimeout(() => {
+        if (aiInput) aiInput.focus();
+      }, 300);
+
+      // Speak initial welcome if first opening
+      if (isAiSoundEnabled) {
+        setTimeout(() => {
+          speakVoice("OMG! You're here! I was just manifesting this. Ask away!");
+        }, 550);
+      }
+    }
+
+    function closeAiModal() {
+      if (!aiOverlay) return;
+      isModalOpen = false;
+      aiOverlay.classList.remove('is-open');
+      aiOverlay.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('em-modal-open');
+      stopSpeech();
+      updateModalUrl(false);
+      scheduleNextPop(3000);
+    }
+
+    // Bind open/close triggers
+    if (orbToggle) orbToggle.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
+    if (aiBubble) aiBubble.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
+    if (aiCloseBtn) aiCloseBtn.addEventListener('click', closeAiModal);
+
+    window.openButtercupAi = openAiModal;
+    window.openAiModal = openAiModal;
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target && e.target.closest && e.target.closest('[data-action="open-ai"], #openAiAssistantBtn, #dockAiAssistantBtn');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        openAiModal();
+      }
+    });
+
+    // ESC key closes modal
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeAiModal();
+      }
+    });
+
+    // Check URL on load
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('ai') === 'open' || urlParams.get('emi') === 'open') {
+        setTimeout(openAiModal, 150);
+      }
+    } catch (e) {}
+
+    // Sound Toggle inside AI Modal
+    if (aiSoundToggle) {
+      aiSoundToggle.addEventListener('click', () => {
+        isAiSoundEnabled = !isAiSoundEnabled;
+        if (iconSoundOn) iconSoundOn.classList.toggle('is-active', isAiSoundEnabled);
+        if (iconSoundOff) iconSoundOff.classList.toggle('is-active', !isAiSoundEnabled);
+        if (!isAiSoundEnabled) stopSpeech();
+      });
+    }
+
+    // Reset button
+    if (aiResetBtn) {
+      aiResetBtn.addEventListener('click', () => {
+        if (aiHeadline) {
+          aiHeadline.textContent = "OMG! You're here! I was just manifesting this. Ask away!";
+          aiHeadline.style.opacity = '1';
+        }
+        if (aiResponseDetails) {
+          aiResponseDetails.style.display = 'none';
+        }
+        renderChips(["Start a project", "Join the team", "Drop a quick word", "Discover our culture"]);
+        if (lisa3D) {
+          lisa3D.pulseEyes();
+          lisa3D.nodHead();
+        }
+        speakVoice("Reset! Let's start fresh. What would you like to explore?");
+      });
+    }
+
+    // Copy email button
+    if (aiCopyBtn) {
+      aiCopyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('info@buttercupadvertising.com').then(() => {
+          aiCopyBtn.textContent = '✓ Copied';
+          setTimeout(() => { aiCopyBtn.textContent = '⎘'; }, 2000);
+        });
+      });
+    }
+
     // Microphone Voice Input (Speech Recognition)
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognition && micBtn) {
+    if (SpeechRecognition && aiMicBtn) {
       const recognizer = new SpeechRecognition();
       recognizer.continuous = false;
       recognizer.interimResults = false;
@@ -1230,7 +1877,7 @@
 
       recognizer.onstart = () => {
         isAiListening = true;
-        micBtn.classList.add('is-listening');
+        aiMicBtn.classList.add('is-listening');
         if (aiInput) aiInput.placeholder = "Listening... Speak your question";
       };
 
@@ -1242,20 +1889,20 @@
 
       recognizer.onend = recognizer.onerror = () => {
         isAiListening = false;
-        micBtn.classList.remove('is-listening');
+        aiMicBtn.classList.remove('is-listening');
         if (aiInput) aiInput.placeholder = "Ask me anything...";
       };
 
-      micBtn.addEventListener('click', () => {
+      aiMicBtn.addEventListener('click', () => {
         if (isAiListening) {
           recognizer.stop();
         } else {
           try { recognizer.start(); } catch(err) {}
         }
       });
-    } else if (micBtn) {
-      micBtn.style.opacity = '0.5';
-      micBtn.title = "Voice dictation not supported in this browser";
+    } else if (aiMicBtn) {
+      aiMicBtn.style.opacity = '0.5';
+      aiMicBtn.title = "Voice dictation not supported in this browser";
     }
 
     // ==========================================================================
@@ -2072,30 +2719,25 @@
       if (!text) return;
 
       if (aiInput) aiInput.value = '';
-      appendMessage('user', text);
 
-      // Emotion Agency style typing indicator
+      if (lisa3D) {
+        lisa3D.pulseEyes();
+        lisa3D.nodHead();
+      }
+
+      // Manifesting feedback state
       isAiThinking = true;
-      const searchBox = document.createElement('div');
-      searchBox.className = 'em-ai-msg em-ai-msg-assistant';
-      searchBox.innerHTML = `
-        <div class="em-ai-bubble-content em-ai-searching-box">
-          <div class="em-ai-searching-dots">
-            <span class="em-ai-dot"></span>
-            <span class="em-ai-dot"></span>
-            <span class="em-ai-dot"></span>
-          </div>
-          <span class="em-ai-searching-label">Synthesizing studio intelligence...</span>
-        </div>
-      `;
-      if (aiMessages) {
-        aiMessages.appendChild(searchBox);
-        aiMessages.scrollTop = aiMessages.scrollHeight;
+      if (aiHeadline) {
+        aiHeadline.style.opacity = '0.5';
+        aiHeadline.textContent = "Manifesting answer...";
+      }
+      if (aiResponseDetails) {
+        aiResponseDetails.style.display = 'none';
       }
 
       // 1. Try Google Gemini live API first if key configured
       let answerText = await queryGoogleGemini(text);
-      let nextChips = ["Show me your projects", "Brand Strategy", "How much does a project cost?"];
+      let nextChips = ["Start a project", "Join the team", "Explore Case Studies", "Brand Strategy"];
 
       if (!answerText) {
         // 2. Query Native Buttercup Studio Knowledge Engine
@@ -2113,12 +2755,24 @@
 
       // Natural conversational pacing delay
       setTimeout(() => {
-        searchBox.remove();
         isAiThinking = false;
-        appendMessage('assistant', answerText);
+        if (aiHeadline) {
+          aiHeadline.style.opacity = '1';
+          if (answerText.length < 130) {
+            aiHeadline.textContent = answerText;
+            if (aiResponseDetails) aiResponseDetails.style.display = 'none';
+          } else {
+            aiHeadline.textContent = text.length > 55 ? "Here's what you need to know:" : `"${text}"`;
+            if (aiResponseDetails) {
+              aiResponseDetails.textContent = answerText;
+              aiResponseDetails.style.display = 'block';
+            }
+          }
+        }
         renderChips(nextChips);
+        if (lisa3D) lisa3D.pulseEyes();
         speakVoice(answerText);
-      }, 550);
+      }, 420);
     }
 
     if (aiForm) {

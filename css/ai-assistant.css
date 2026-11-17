@@ -259,7 +259,7 @@
 }
 
 /* ==========================================================================
-   FULL-SCREEN AI ASSISTANT MODAL OVERLAY
+   FULL-SCREEN L.I.S.A. 3D AI ASSISTANT OVERLAY
    ========================================================================== */
 
 .em-ai-overlay {
@@ -268,16 +268,16 @@
   width: 100vw;
   height: 100vh;
   z-index: 9999999;
-  background: radial-gradient(circle at 75% 50%, #ffffff 0%, #f6efff 55%, #ede2ff 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: radial-gradient(circle at 62% 44%, #d4d1cc 0%, #b4b1ab 48%, #88857f 100%);
+  display: block;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
   overflow: hidden;
-  color: #1e1035;
+  color: #0a0a0a;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 .em-ai-overlay.is-open {
@@ -286,286 +286,288 @@
   visibility: visible;
 }
 
-/* Restore standard cursor inside AI modal for normal comfortable typing */
-.em-ai-overlay,
-.em-ai-overlay * {
+/* Ensure custom cursor dot/ring always render above AI modal */
+.custom-cursor-dot,
+.custom-cursor-ring {
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+}
+
+/* When AI modal is open — restore native cursor so user can always see it.
+   This overrides the global cursor:none from extra.css (ai-assistant.css loads after extra.css). */
+html.em-modal-open .em-ai-overlay,
+html.em-modal-open .em-ai-overlay * {
   cursor: auto !important;
+}
+html.em-modal-open .em-ai-overlay input,
+html.em-modal-open .em-ai-overlay textarea {
+  cursor: text !important;
+}
+html.em-modal-open .em-ai-overlay button,
+html.em-modal-open .em-ai-overlay a,
+html.em-modal-open .em-ai-overlay [role="button"] {
+  cursor: pointer !important;
+}
+
+.em-ai-overlay * {
   box-sizing: border-box;
 }
 
 .em-ai-overlay input {
   cursor: text !important;
+  user-select: text !important;
 }
 
 .em-ai-overlay button,
 .em-ai-overlay a,
-.em-ai-chip {
+.em-ai-chip,
+.em-ai-sound-pill {
   cursor: pointer !important;
 }
 
-/* Top Right Action Controls */
-.em-ai-top-actions {
+/* 3D WebGL Canvas (Full-screen background behind UI) */
+.em-ai-webgl-canvas {
   position: absolute;
-  top: 2rem;
-  right: 2.8rem;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+/* UI Overlay Layer */
+.em-ai-ui-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
   display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  z-index: 20;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.8rem, 3.5vw, 3rem) clamp(2rem, 4.5vw, 4rem);
 }
 
-.em-ai-btn-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid rgba(144, 71, 255, 0.16);
-  color: #7928ca;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(144, 71, 255, 0.08);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  outline: none;
-}
-
-.em-ai-btn-icon:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 20px rgba(144, 71, 255, 0.18);
-  border-color: #9047ff;
-}
-
-.em-ai-btn-icon.is-speaking {
-  border-color: #9047ff;
-  box-shadow: 0 0 0 4px rgba(144, 71, 255, 0.22), 0 6px 20px rgba(144, 71, 255, 0.28);
-  animation: em-voice-pulse 1.3s infinite ease-in-out;
-}
-
-@keyframes em-voice-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-.em-ai-btn-close {
-  color: #e63946;
-}
-
-.em-ai-btn-close:hover {
-  background: #fff0f3;
-  border-color: #e63946;
-}
-
-/* Two Column Layout Container */
-.em-ai-container {
+/* Top Bar */
+.em-ai-top-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  max-width: 1350px;
-  height: 85vh;
-  gap: 4rem;
-  position: relative;
+  width: 100%;
 }
 
-/* Left Column: Chat Conversation, Suggestion Chips & Input */
-.em-ai-chat-col {
-  flex: 1;
-  max-width: 580px;
+.em-ai-logo-wrap {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #0a0a0a;
+}
+
+.em-ai-star-mark {
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
+
+.em-ai-top-right {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  pointer-events: auto;
+}
+
+.em-ai-talk-link {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: 500;
+  color: #0a0a0a;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.em-ai-talk-link:hover {
+  opacity: 0.6;
+}
+
+.em-ai-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  height: 100%;
+  color: #0a0a0a;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
-/* Messages List */
-.em-ai-messages {
+.em-ai-close-btn:hover {
+  background: rgba(0, 0, 0, 0.14);
+  transform: scale(1.06);
+}
+
+/* Left Content Area */
+.em-ai-content-area {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-height: 48vh;
+  max-width: 470px;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 1rem;
+  pointer-events: auto;
+}
+
+.em-ai-whisper-text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(0.92rem, 1.2vw, 1.1rem);
+  color: #444444;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.em-ai-headline-wrap {
+  margin-bottom: 1.6rem;
+}
+
+.em-ai-headline {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1.85rem, 3.1vw, 3.15rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: #0a0a0a;
+  margin: 0;
+  transition: opacity 0.2s ease;
+}
+
+.em-ai-response-details {
+  margin-top: 0.9rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 1.1rem 1.35rem;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #1f1f1f;
+  max-height: 200px;
   overflow-y: auto;
-  padding-right: 0.6rem;
+  pointer-events: auto;
+  user-select: text;
   scrollbar-width: thin;
 }
 
-.em-ai-messages::-webkit-scrollbar {
+.em-ai-response-details::-webkit-scrollbar {
   width: 4px;
 }
-
-.em-ai-messages::-webkit-scrollbar-thumb {
-  background: rgba(144, 71, 255, 0.25);
+.em-ai-response-details::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
-.em-ai-msg {
-  display: flex;
-  flex-direction: column;
-  animation: em-msg-appear 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes em-msg-appear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Assistant Bubble (White Pill Card) */
-.em-ai-msg-assistant .em-ai-bubble-content {
-  background: #ffffff;
-  color: #22123d;
-  padding: 1.15rem 1.5rem;
-  border-radius: 1.25rem;
-  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: 1.55;
-  box-shadow: 0 6px 24px rgba(100, 50, 180, 0.06);
-  border: 1px solid rgba(144, 71, 255, 0.1);
-  max-width: 92%;
-}
-
-/* Animated Searching Indicator */
-.em-ai-searching-box {
-  background: #ffffff !important;
-  display: inline-flex !important;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.95rem 1.4rem !important;
-  border-radius: 1.25rem !important;
-  border: 1px solid rgba(144, 71, 255, 0.18) !important;
-  box-shadow: 0 6px 24px rgba(144, 71, 255, 0.08) !important;
-  width: fit-content;
-}
-
-.em-ai-searching-dots {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.em-ai-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #9047ff 0%, #ec4899 100%);
-  animation: em-dot-pulse 1.2s infinite ease-in-out both;
-}
-
-.em-ai-dot:nth-child(1) { animation-delay: -0.32s; }
-.em-ai-dot:nth-child(2) { animation-delay: -0.16s; }
-.em-ai-dot:nth-child(3) { animation-delay: 0s; }
-
-@keyframes em-dot-pulse {
-  0%, 80%, 100% {
-    transform: scale(0.6);
-    opacity: 0.35;
-  }
-  40% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-}
-
-.em-ai-searching-label {
-  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #7b5ea7;
-  letter-spacing: 0.01em;
-  animation: em-label-fade 1.5s infinite ease-in-out alternate;
-}
-
-@keyframes em-label-fade {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
-}
-
-/* User Bubble (Purple Pill) */
-.em-ai-msg-user {
-  align-self: flex-end;
-}
-
-.em-ai-msg-user .em-ai-bubble-content {
-  background: linear-gradient(135deg, #9047ff 0%, #a855f7 100%);
-  color: #ffffff;
-  padding: 0.85rem 1.4rem;
-  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  box-shadow: 0 6px 20px rgba(144, 71, 255, 0.35);
-  max-width: 85%;
-}
-
 /* Suggestion Chips */
-.em-ai-chips-wrap {
+.em-ai-chips-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-top: 1.25rem;
+  gap: 0.65rem;
+  margin-bottom: 1.4rem;
+  pointer-events: auto;
 }
 
 .em-ai-chip {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(144, 71, 255, 0.2);
-  border-radius: 9999px;
-  padding: 0.52rem 1.1rem;
-  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.82rem;
+  background: #ffffff;
+  color: #111111;
+  padding: 0.62rem 1.35rem;
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.92rem;
   font-weight: 500;
-  color: #40206e;
-  transition: all 0.22s ease;
-  box-shadow: 0 2px 10px rgba(144, 71, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
   white-space: nowrap;
   outline: none;
 }
 
 .em-ai-chip:hover {
-  background: #ffffff;
-  border-color: #9047ff;
-  color: #9047ff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(144, 71, 255, 0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+  border-color: rgba(0, 0, 0, 0.22);
 }
 
-/* Floating Glow Input Bar */
-.em-ai-input-bar {
+.em-ai-chip:active {
+  transform: translateY(0);
+}
+
+/* Sleek Minimal Chat Input Form */
+.em-ai-input-form {
+  pointer-events: auto;
+  margin-bottom: 1.3rem;
+  width: 100%;
+}
+
+.em-ai-input-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  background: #ffffff;
-  border: 1.5px solid rgba(144, 71, 255, 0.22);
-  border-radius: 9999px;
-  padding: 0.55rem 0.65rem 0.55rem 1.25rem;
-  box-shadow: 0 12px 40px rgba(144, 71, 255, 0.2), 0 0 25px rgba(144, 71, 255, 0.12);
-  margin-top: 1.5rem;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  padding: 0.32rem 0.45rem 0.32rem 0.85rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.em-ai-input-bar:focus-within {
-  border-color: #9047ff;
-  box-shadow: 0 15px 45px rgba(144, 71, 255, 0.3), 0 0 35px rgba(144, 71, 255, 0.2);
+.em-ai-input-wrapper:focus-within {
+  border-color: #0a0a0a;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+  background: #ffffff;
+}
+
+.em-ai-input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.92rem;
+  color: #0a0a0a;
+  padding: 0.35rem 0.5rem;
+}
+
+.em-ai-input-field::placeholder {
+  color: #777777;
 }
 
 .em-ai-mic-btn {
   background: none;
   border: none;
-  color: #7928ca;
-  padding: 0.4rem;
+  color: #555555;
+  padding: 0.35rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: color 0.2s, transform 0.2s;
   outline: none;
+  cursor: pointer;
 }
 
 .em-ai-mic-btn:hover {
-  color: #9047ff;
+  color: #000000;
   transform: scale(1.1);
 }
 
@@ -574,134 +576,147 @@
   animation: em-mic-pulse 1s infinite alternate;
 }
 
-@keyframes em-mic-pulse {
-  0% { transform: scale(1); filter: drop-shadow(0 0 2px #e63946); }
-  100% { transform: scale(1.25); filter: drop-shadow(0 0 12px #e63946); }
-}
-
-.em-ai-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: 'MG12', 'Figtree', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.95rem;
-  color: #1e0d3b;
-}
-
-.em-ai-input::placeholder {
-  color: #a49bb5;
-}
-
 .em-ai-send-btn {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7 0%, #9047ff 100%);
+  background: #000000;
   color: #ffffff;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.22s ease;
+  transition: transform 0.2s, opacity 0.2s;
   outline: none;
+  cursor: pointer;
 }
 
 .em-ai-send-btn:hover {
   transform: scale(1.08);
-  box-shadow: 0 4px 15px rgba(144, 71, 255, 0.45);
+  opacity: 0.88;
 }
 
-/* Google Gemini Status & Config Row */
-.em-ai-api-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.9rem;
-  padding: 0 0.5rem;
-}
-
-.em-ai-api-badge {
+/* Write us row */
+.em-ai-write-us {
+  font-size: 0.88rem;
+  color: #4a4a4a;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.68rem;
-  color: #6d5494;
-  letter-spacing: 0.04em;
+  gap: 0.4rem;
+  pointer-events: auto;
 }
 
-.em-ai-api-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
+.em-ai-write-us a {
+  color: #111111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
 }
 
-.em-ai-key-btn {
+.em-ai-write-us a:hover {
+  opacity: 0.65;
+}
+
+.em-ai-copy-btn {
   background: none;
-  border: 1px solid rgba(144, 71, 255, 0.2);
-  border-radius: 9999px;
-  padding: 0.2rem 0.65rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.65rem;
-  color: #7928ca;
-  transition: all 0.2s ease;
-}
-
-.em-ai-key-btn:hover {
-  background: rgba(144, 71, 255, 0.1);
-  border-color: #9047ff;
-}
-
-/* Right Column: Giant Pulsating 3D Iridescent Fluid AI Orb */
-.em-ai-orb-col {
-  flex: 1;
-  display: flex;
+  border: none;
+  color: #555555;
+  padding: 0.2rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  outline: none;
 }
 
-.em-ai-large-orb-wrap {
-  position: relative;
-  width: 520px;
-  height: 520px;
-  max-width: 44vw;
-  max-height: 44vw;
+.em-ai-copy-btn:hover {
+  color: #000000;
+  transform: scale(1.15);
+}
+
+/* Bottom Bar */
+.em-ai-bottom-bar {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.em-ai-large-canvas {
+  align-items: flex-end;
+  justify-content: space-between;
   width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 20px 60px rgba(168, 85, 247, 0.45)) drop-shadow(0 0 90px rgba(244, 114, 182, 0.35));
-  pointer-events: none;
+  pointer-events: auto;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .em-ai-container {
-    flex-direction: column-reverse;
-    justify-content: center;
-    gap: 1.5rem;
-    height: 90vh;
+.em-ai-reset-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.em-ai-reset-btn:hover {
+  transform: scale(1.08) rotate(-45deg);
+  opacity: 0.9;
+}
+
+.em-ai-sound-pill {
+  background: #000000;
+  color: #ffffff;
+  width: 38px;
+  height: 72px;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.45rem 0;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  outline: none;
+}
+
+.em-ai-sound-pill:hover {
+  transform: scale(1.05);
+}
+
+.em-ai-sound-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+}
+
+.em-ai-sound-icon.is-active {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .em-ai-ui-layer {
+    padding: 1.5rem 1.5rem;
   }
-  .em-ai-chat-col {
+  .em-ai-content-area {
     max-width: 100%;
-    width: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1.2rem;
+    border-radius: 20px;
+    margin-top: auto;
+    margin-bottom: 1rem;
   }
-  .em-ai-large-orb-wrap {
-    width: 220px;
-    height: 220px;
-    max-width: 220px;
-    max-height: 220px;
-  }
-  .em-ai-top-actions {
-    top: 1rem;
-    right: 1.2rem;
+  .em-ai-headline {
+    font-size: 1.65rem;
   }
 }

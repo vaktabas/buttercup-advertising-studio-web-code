@@ -933,7 +933,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // 13. CONTACT FORM SUBMISSION (FormSubmit -> nishitbaleja@gmail.com)
+  // 13. CONTACT FORM SUBMISSION (FormSubmit -> vakta.bas@gmail.com)
   // =========================================================================
   function setupContactForm() {
     const form = document.getElementById("email-form");
@@ -991,8 +991,16 @@ document.addEventListener("DOMContentLoaded", () => {
         dataObj[key] = value;
       });
 
+      // Ensure reply-to is set to customer email for easy one-click replies
+      if (dataObj["Email"] || dataObj["email"]) {
+        dataObj["_replyto"] = dataObj["Email"] || dataObj["email"];
+      }
+      dataObj["_subject"] = dataObj["_subject"] || "New Project Inquiry - Buttercup Advertising Studio";
+      dataObj["_template"] = dataObj["_template"] || "table";
+      dataObj["_captcha"] = "false";
+
       try {
-        const response = await fetch("https://formsubmit.co/ajax/nishitbaleja@gmail.com", {
+        const response = await fetch("https://formsubmit.co/ajax/vakta.bas@gmail.com", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1224,11 +1232,25 @@ document.addEventListener("DOMContentLoaded", () => {
       contactUrl = "../contact/index.html";
     }
 
-    // 1. Update project hover cursor text to 'COMING SOON'
+    // 1. Update project hover cursor text dynamically
     const projectCursorInner = document.querySelectorAll(".view-project-cursor");
     projectCursorInner.forEach((cur) => {
-      cur.innerHTML = "<div>coming<br/>soon</div>";
+      cur.innerHTML = "<div>view<br/>case</div>";
     });
+
+    document.addEventListener("mouseover", (e) => {
+      const pLink = e.target && e.target.closest && e.target.closest('a[href*="projects/"], a.cards.is-projects, a.cards, a.work-elem, .project-grid a, .project-clw_wrapper a, .tl-single-scroll-card');
+      if (pLink) {
+        const href = (pLink.getAttribute ? pLink.getAttribute('href') : '') || '';
+        const pId = pLink.getAttribute ? pLink.getAttribute('data-project-id') : '';
+        const text = (pLink.textContent || '').toLowerCase();
+        const isGrabz = href.includes('eon-studio.html') || href.includes('grabz') || pId === 'grabz' || text.includes('grabz');
+        const cursors = document.querySelectorAll(".view-project-cursor");
+        cursors.forEach((cur) => {
+          cur.innerHTML = isGrabz ? "<div>view<br/>case</div>" : "<div>coming<br/>soon</div>";
+        });
+      }
+    }, { passive: true });
 
     // 2. Inject Modal Dialog into DOM if not present
     let modal = document.getElementById("csComingSoonModal");
@@ -1406,6 +1428,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const info = getProjectInfo(e.target);
       if (info && info.link) {
+        // Grabz is always unlocked
+        const href = (info.link.getAttribute ? info.link.getAttribute('href') : '') || '';
+        const titleLower = (info.title || '').toLowerCase();
+        const isGrabz = titleLower.includes('grabz') || href.includes('eon-studio.html') || href.includes('grabz');
+        if (isGrabz) {
+          return; // Allow native navigation to Grabz case study
+        }
+
         // Check if project is locked
         const isLocked = window.isCaseStudyLocked ? window.isCaseStudyLocked(info.link, info.title) : false;
         if (isLocked) {
@@ -1416,21 +1446,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, true);
 
-    // 5. If user directly visits a /projects/*.html page, inject a top banner and trigger modal
+    // 5. If user directly visits a /projects/*.html page, inject a top banner (skip for unlocked Grabz)
     const isInsideProjectsFolder = window.location.pathname.includes('/projects/');
     if (isInsideProjectsFolder) {
-      const existingBanner = document.querySelector(".project-cs-status-banner");
-      if (!existingBanner) {
-        const banner = document.createElement("div");
-        banner.className = "project-cs-status-banner";
-        const pageHeading = (document.querySelector("h1")?.textContent || "This Case Study").trim();
-        const pageCat = (document.querySelector(".project-header p, .project-detail-row p")?.textContent || "Case Study").trim();
-        banner.innerHTML = `
-          <span class="cs-banner-badge">Coming Soon</span>
-          <span>We are actively curating and mastering the strategic assets for <strong>${pageHeading}</strong>. Full case study will be published soon.</span>
-          <a href="../pages/case-studies/index.html">← Explore All Work</a>
-        `;
-        document.body.prepend(banner);
+      const isGrabz = window.location.pathname.includes('eon-studio.html') || window.location.pathname.includes('grabz');
+      if (!isGrabz) {
+        const existingBanner = document.querySelector(".project-cs-status-banner");
+        if (!existingBanner) {
+          const banner = document.createElement("div");
+          banner.className = "project-cs-status-banner";
+          const pageHeading = (document.querySelector("h1")?.textContent || "This Case Study").trim();
+          const pageCat = (document.querySelector(".project-header p, .project-detail-row p")?.textContent || "Case Study").trim();
+          banner.innerHTML = `
+            <span class="cs-banner-badge">Coming Soon</span>
+            <span>We are actively curating and mastering the strategic assets for <strong>${pageHeading}</strong>. Full case study will be published soon.</span>
+            <a href="../pages/case-studies/index.html">← Explore All Work</a>
+          `;
+          document.body.prepend(banner);
+        }
       }
     }
   }

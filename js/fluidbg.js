@@ -79,6 +79,7 @@
       let gl = canvas.getContext("webgl2", params);
       const isWebGL2 = !!gl;
       if (!isWebGL2) gl = canvas.getContext("webgl", params) || canvas.getContext("experimental-webgl", params);
+      if (!gl) return null;
     
       let halfFloat;
       let supportLinearFiltering;

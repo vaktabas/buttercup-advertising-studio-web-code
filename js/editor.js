@@ -100,9 +100,14 @@
   // Check if a project is locked
   window.isCaseStudyLocked = function (link, title) {
     if (!link) return false;
-    const card = link.closest(".tl-single-scroll-card");
+    if (title && title.trim().toLowerCase().includes('grabz')) return false;
+    const href = (typeof link === 'string') ? link : (link.getAttribute ? (link.getAttribute('href') || '') : '');
+    if (href && (href.includes('eon-studio.html') || href.includes('grabz'))) return false;
+
+    const card = link.closest ? link.closest(".tl-single-scroll-card") : null;
     if (card) {
       const pId = card.getAttribute("data-project-id");
+      if (pId === 'grabz') return false;
       if (pId && customizations.lockedProjects[pId] !== undefined) {
         return !!customizations.lockedProjects[pId];
       }
@@ -112,6 +117,7 @@
     // Check by title or link href
     if (title) {
       const cleanTitle = title.trim().toLowerCase().replace(/\s+/g, "-");
+      if (cleanTitle.includes('grabz')) return false;
       if (customizations.lockedProjects[cleanTitle] !== undefined) {
         return !!customizations.lockedProjects[cleanTitle];
       }
