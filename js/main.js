@@ -1003,8 +1003,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
+      // Add Web3Forms access key
+      dataObj["access_key"] = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
+      dataObj["subject"] = dataObj["_subject"] || "New Project Inquiry - Buttercup Advertising Studio";
+      dataObj["from_name"] = "Buttercup Advertising Studio Website";
+
       try {
-        const response = await fetch("https://formsubmit.co/ajax/41dc1bab7c7d91cea0f244f7d68c70d4", {
+        const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -1017,7 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(timeoutId);
         const result = await response.json().catch(() => ({}));
 
-        if (result.success === "true" || result.success === true) {
+        if (result.success === true) {
           form.style.display = "none";
           if (successCard) {
             successCard.style.display = "block";
