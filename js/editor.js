@@ -15,6 +15,7 @@
   let customizations = {
     texts: {},         // { selector/id: { html, style: { fontSize, fontWeight, fontStyle, fontFamily, color, textTransform } } }
     images: {},        // { selector/id: newSrc }
+    links: {},         // { selector/id: newHref }
     lockedProjects: {} // { projectId: true/false }
   };
 
@@ -128,6 +129,7 @@
         if (remote && typeof remote === "object") {
           if (remote.texts) Object.assign(customizations.texts, remote.texts);
           if (remote.images) Object.assign(customizations.images, remote.images);
+          if (remote.links) Object.assign(customizations.links, remote.links);
           if (remote.lockedProjects) Object.assign(customizations.lockedProjects, remote.lockedProjects);
         }
       }
@@ -143,6 +145,7 @@
         if (local && typeof local === "object") {
           if (local.texts) Object.assign(customizations.texts, local.texts);
           if (local.images) Object.assign(customizations.images, local.images);
+          if (local.links) Object.assign(customizations.links, local.links);
           if (local.lockedProjects) Object.assign(customizations.lockedProjects, local.lockedProjects);
         }
       }
@@ -186,7 +189,20 @@
       });
     }
 
-    // 3. Apply Case Study Locks
+    // 3. Apply Links
+    if (customizations.links) {
+      Object.entries(customizations.links).forEach(([key, newHref]) => {
+        try {
+          const el = document.querySelector(key);
+          if (el) {
+            const a = el.tagName === "A" ? el : el.closest("a");
+            if (a) a.setAttribute("href", newHref);
+          }
+        } catch (e) {}
+      });
+    }
+
+    // 4. Apply Case Study Locks
     applyCaseStudyLocks();
   }
 
@@ -446,6 +462,109 @@
       `;
       document.body.appendChild(toast);
     }
+
+    // G. Floating Link Action Pill
+    if (!document.getElementById("btrLinkActionPill")) {
+      const pill = document.createElement("div");
+      pill.id = "btrLinkActionPill";
+      pill.className = "btr-link-action-pill";
+      pill.innerHTML = `
+        <div class="btr-link-pill-header">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          <span class="btr-link-pill-url" id="btrLinkPillUrl">#</span>
+        </div>
+        <div class="btr-link-pill-btns">
+          <button type="button" class="btr-link-pill-btn" id="btrLinkPillChangeBtn" title="Change where this link points">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>Edit URL</span>
+          </button>
+          <a href="#" target="_blank" class="btr-link-pill-btn btr-link-pill-open" id="btrLinkPillOpenBtn" title="Open this page in new tab">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Open Page ↗</span>
+          </a>
+          <button type="button" class="btr-link-pill-close" id="btrLinkPillCloseBtn" title="Dismiss">×</button>
+        </div>
+      `;
+      document.body.appendChild(pill);
+    }
+  }
+
+  // Helper: check if element is part of editor UI
+  function isEditorElement(el) {
+    if (!el || !el.closest) return false;
+    return !!el.closest(
+      "#buttercupEditorBar, #btrPasswordModal, #btrTextFormatBar, #btrImageModal, #btrCaseStudiesModal, #btrToast, #btrLinkActionPill, .btr-img-edit-badge, .btr-card-lock-badge"
+    );
+  }
+
+  // Floating Link Action Pill logic
+  let currentActionLinkEl = null;
+
+  function showLinkActionPill(linkEl, href) {
+    currentActionLinkEl = linkEl;
+    const pill = document.getElementById("btrLinkActionPill");
+    const urlEl = document.getElementById("btrLinkPillUrl");
+    const openBtn = document.getElementById("btrLinkPillOpenBtn");
+    if (!pill || !urlEl || !openBtn) return;
+
+    const targetA = linkEl.tagName === "A" ? linkEl : (linkEl.querySelector("a") || linkEl.closest("a"));
+    const rawHref = href || (targetA ? targetA.getAttribute("href") : "") || linkEl.getAttribute("data-link") || "#";
+    
+    urlEl.textContent = rawHref;
+    urlEl.title = rawHref;
+    openBtn.href = rawHref;
+
+    const rect = linkEl.getBoundingClientRect();
+    const pillTop = rect.bottom + 8 < window.innerHeight - 50 ? rect.bottom + 8 : Math.max(10, rect.top - 46);
+    const pillLeft = Math.min(window.innerWidth - 320, Math.max(10, rect.left));
+
+    pill.style.top = `${pillTop}px`;
+    pill.style.left = `${pillLeft}px`;
+    pill.classList.add("is-visible");
+  }
+
+  function hideLinkActionPill() {
+    const pill = document.getElementById("btrLinkActionPill");
+    if (pill) pill.classList.remove("is-visible");
+    currentActionLinkEl = null;
+  }
+
+  function initLinkActionPillEvents() {
+    const changeBtn = document.getElementById("btrLinkPillChangeBtn");
+    const closeBtn = document.getElementById("btrLinkPillCloseBtn");
+
+    if (closeBtn) closeBtn.addEventListener("click", hideLinkActionPill);
+
+    if (changeBtn) {
+      changeBtn.addEventListener("click", () => {
+        if (!currentActionLinkEl) return;
+        const targetA = currentActionLinkEl.tagName === "A" ? currentActionLinkEl : (currentActionLinkEl.querySelector("a") || currentActionLinkEl.closest("a"));
+        if (!targetA) return;
+
+        const curHref = targetA.getAttribute("href") || "";
+        const newHref = window.prompt("Enter new link URL:", curHref);
+        if (newHref !== null && newHref.trim() !== "") {
+          pushUndoSnapshot("Change link URL");
+          targetA.setAttribute("href", newHref.trim());
+          const sel = getUniqueSelector(targetA);
+          if (!customizations.links) customizations.links = {};
+          customizations.links[sel] = newHref.trim();
+          showToast("🔗 Link destination updated!");
+          showLinkActionPill(currentActionLinkEl, newHref.trim());
+        }
+      });
+    }
+
+    // Hide pill when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!isEditorMode) return;
+      const pill = document.getElementById("btrLinkActionPill");
+      if (pill && pill.classList.contains("is-visible")) {
+        if (!pill.contains(e.target) && (!currentActionLinkEl || !currentActionLinkEl.contains(e.target))) {
+          hideLinkActionPill();
+        }
+      }
+    });
   }
 
   function showToast(msg) {
@@ -570,6 +689,8 @@
     const fmtBar = document.getElementById("btrTextFormatBar");
     if (fmtBar) fmtBar.classList.remove("is-visible");
 
+    hideLinkActionPill();
+
     // Remove contenteditable
     document.querySelectorAll('[data-btr-editable="true"]').forEach((el) => {
       el.removeAttribute("contenteditable");
@@ -577,7 +698,7 @@
   }
 
   // =========================================================================
-  // 5. TEXT EDITING & FONT STYLING ENGINE
+  // 5. TEXT EDITING & FONT STYLING ENGINE (COMPREHENSIVE COVERAGE)
   // =========================================================================
   function getUniqueSelector(el) {
     if (el.id) return `#${el.id}`;
@@ -608,13 +729,39 @@
   }
 
   function setupEditableText() {
-    const candidates = document.querySelectorAll(
-      "h1, h2, h3, h4, h5, h6, p, .text-3x_base, .text-2x_base, .text-x_base, .text-medium, .heading-x_large, .tl-section-headline-one span, .scroll-card-content h3, .scroll-card-meta, .scroll-card-cta, .rwl-link, .rwl-col-title, .rwl-mono-line, .rwl-quote-btn span, .rwl-marquee-text, .service-content a, .tool-text_wrapper div"
-    );
+    // 1. Broad selector covering all text semantic and presentational tags
+    const textSelectors = [
+      "h1", "h2", "h3", "h4", "h5", "h6",
+      "p", "span", "a", "button", "label", "li",
+      "blockquote", "cite", "figcaption", "strong", "em", "b", "i", "small", "mark",
+      ".text-3x_base", ".text-2x_base", ".text-x_base", ".text-medium", ".heading-x_large",
+      ".tl-section-headline-one span", ".scroll-card-content h3", ".scroll-card-meta",
+      ".scroll-card-cta", ".rwl-link", ".rwl-col-title", ".rwl-mono-line",
+      ".rwl-quote-btn span", ".rwl-marquee-text", ".service-content a", ".tool-text_wrapper div",
+      "[data-brand-word]", ".brand-word", ".manifesto-word", ".manifesto-line",
+      ".review-quote", ".author-name", ".author-role", ".blog-title", ".case-study-title"
+    ].join(", ");
 
-    candidates.forEach((el) => {
-      // Don't make editor controls editable
-      if (el.closest("#buttercupEditorBar, #btrPasswordModal, #btrTextFormatBar, #btrImageModal, #btrCaseStudiesModal, #btrToast")) {
+    const candidates = Array.from(document.querySelectorAll(textSelectors));
+
+    // 2. Also collect any div, section, footer, nav, header with direct text
+    document.querySelectorAll("div, section, header, footer, nav").forEach((box) => {
+      if (isEditorElement(box)) return;
+      for (let i = 0; i < box.childNodes.length; i++) {
+        const n = box.childNodes[i];
+        if (n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0) {
+          candidates.push(box);
+          break;
+        }
+      }
+    });
+
+    const uniqueCandidates = Array.from(new Set(candidates));
+
+    uniqueCandidates.forEach((el) => {
+      if (isEditorElement(el)) return;
+      const tag = el.tagName.toLowerCase();
+      if (["script", "style", "canvas", "svg", "path", "video", "audio", "iframe", "input", "textarea", "select"].includes(tag)) {
         return;
       }
 
@@ -622,20 +769,27 @@
 
       el.addEventListener("click", function (e) {
         if (!isEditorMode) return;
-        // If clicking a link, prevent navigation so user can edit the link text
-        if (el.tagName === "A" || el.closest("a")) {
-          e.preventDefault();
-        }
+        // Stop propagation so clicking a specific inner span or word edits that exact element
+        e.stopPropagation();
 
         activeEditableEl = el;
         el.setAttribute("contenteditable", "true");
         el.focus();
         showFormatBar(el);
+
+        // If clicking a link or inside a link, show the link action pill
+        const link = el.tagName === "A" ? el : el.closest("a");
+        if (link) {
+          const href = link.getAttribute("href");
+          if (href && href !== "#" && !href.startsWith("javascript:")) {
+            showLinkActionPill(link, href);
+          }
+        }
       });
 
       el.addEventListener("focus", function () {
         if (!isEditorMode) return;
-        pushUndoSnapshot("Edit text");
+        pushUndoSnapshot("Edit text (" + el.tagName.toLowerCase() + ")");
       });
 
       el.addEventListener("blur", function () {
@@ -780,33 +934,31 @@
 
   function setupEditableImages() {
     const images = document.querySelectorAll(
-      ".scroll-card-img img, .service-img, .thumbnail, .testimonial-person_image, .rwl-brand-logo-img, img[src]"
+      "img, image, .scroll-card-img img, .service-img, .thumbnail, .testimonial-person_image, .rwl-brand-logo-img, img[src]"
     );
 
     images.forEach((img) => {
-      if (img.closest("#buttercupEditorBar, #btrPasswordModal, #btrImageModal, #btrCaseStudiesModal")) {
-        return;
-      }
+      if (isEditorElement(img)) return;
 
       const parent = img.parentElement;
-      if (!parent.classList.contains("btr-img-wrap")) {
-        parent.classList.add("btr-img-wrap");
+      if (!parent || parent.classList.contains("btr-img-wrap")) return;
 
-        // Attach edit badge
-        const badge = document.createElement("button");
-        badge.type = "button";
-        badge.className = "btr-img-edit-badge";
-        badge.innerHTML = `
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-          <span>Change Image</span>
-        `;
-        badge.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          openImageModal(img);
-        });
-        parent.appendChild(badge);
-      }
+      parent.classList.add("btr-img-wrap");
+
+      // Attach edit badge
+      const badge = document.createElement("button");
+      badge.type = "button";
+      badge.className = "btr-img-edit-badge";
+      badge.innerHTML = `
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+        <span>Change Image</span>
+      `;
+      badge.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openImageModal(img);
+      });
+      parent.appendChild(badge);
     });
   }
 
@@ -1070,6 +1222,28 @@
     if (manageLocksBtn) {
       manageLocksBtn.addEventListener("click", openCaseStudiesModal);
     }
+
+    // Universal Capturing Click Interception in Editor Mode:
+    // Stops ANY link, card, or button from navigating away in editor mode,
+    // allowing inline editing + displaying the "Open Page ↗" pill!
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (!isEditorMode) return;
+        if (isEditorElement(e.target)) return;
+
+        const link = e.target.closest("a, [data-link], .tl-single-scroll-card");
+        if (link && !isEditorElement(link)) {
+          const href = link.getAttribute("href") || (link.querySelector("a")?.getAttribute("href")) || "";
+          if (href && href !== "#" && !href.startsWith("javascript:")) {
+            e.preventDefault();
+            e.stopPropagation();
+            showLinkActionPill(link, href);
+          }
+        }
+      },
+      true
+    );
   }
 
   // =========================================================================
@@ -1082,6 +1256,7 @@
     initImageModalEvents();
     initCaseStudiesModalEvents();
     initTopBarEvents();
+    initLinkActionPillEvents();
 
     loadInitialCustomizations();
 
