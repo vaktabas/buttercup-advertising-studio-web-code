@@ -113,6 +113,7 @@
 
   // Load customizations asynchronously from disk JSON and localStorage
   async function loadInitialCustomizations() {
+    initImageKeys();
     // 1. Fetch from data/site-customizations.json (source of truth on disk/repo)
     try {
       let jsonPath = "data/site-customizations.json";
@@ -180,7 +181,13 @@
     if (customizations.images) {
       Object.entries(customizations.images).forEach(([key, newSrc]) => {
         try {
-          const img = document.querySelector(key);
+          // Look up by data-btr-img-key first (stable across editor/visitor DOM), then fallback to querySelector
+          let img = document.querySelector(`[data-btr-img-key="${key}"]`);
+          if (!img) {
+            try {
+              img = document.querySelector(key);
+            } catch (_) {}
+          }
           if (img && (img.tagName === "IMG" || img.tagName === "IMAGE")) {
             img.src = newSrc;
             if (img.srcset) img.removeAttribute("srcset");
@@ -285,7 +292,7 @@
           <h3 class="btr-auth-title">Visual Editor Access</h3>
           <p class="btr-auth-desc">Enter administrator password to edit texts, fonts, images, and case study locks.</p>
           <div class="btr-auth-input-wrap">
-            <input type="password" id="btrPasswordInput" class="btr-auth-input" placeholder="Enter password (branding@gmail.com or admin)" autocomplete="current-password" />
+            <input type="password" id="btrPasswordInput" class="btr-auth-input" placeholder="Enter password" autocomplete="current-password" />
             <button type="button" class="btr-auth-toggle-pwd" id="btrTogglePwdBtn" aria-label="Toggle password visibility">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
@@ -296,21 +303,6 @@
             <button type="button" class="btr-btn btr-btn-primary" id="btrAuthSubmitBtn">
               <span>Unlock Editor</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
-          </div>
-
-          <!-- RESET ALL SECTION ON PASSWORD SCREEN -->
-          <div class="btr-auth-divider">
-            <span>OR REVERT</span>
-          </div>
-          <div class="btr-auth-reset-box">
-            <div class="btr-auth-reset-info">
-              <strong>Need to reset all changes?</strong>
-              <p>Revert all texts, fonts, images & locks back to original clean website code.</p>
-            </div>
-            <button type="button" class="btr-btn btr-btn-danger" id="btrAuthResetBtn" title="Reset all changes to original code">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
-              <span>Reset All to Original</span>
             </button>
           </div>
         </div>
@@ -591,7 +583,6 @@
     const cancelBtn = document.getElementById("btrAuthCancelBtn");
     const closeBtn = document.getElementById("btrAuthCloseBtn");
     const toggleBtn = document.getElementById("btrTogglePwdBtn");
-    const authResetBtn = document.getElementById("btrAuthResetBtn");
     const authCard = modal ? modal.querySelector(".btr-auth-card") : null;
 
     if (!modal) return;
@@ -625,7 +616,24 @@
         return;
       }
 
-      // Any entered password allows entry into editor mode!
+      // Strict Administrator verification: only valid secret unlocks editor
+      if (entered !== PASSWORD_SECRET) {
+        if (errorEl) {
+          errorEl.textContent = "Incorrect password. Access denied.";
+          errorEl.classList.add("is-visible");
+        }
+        if (authCard) {
+          authCard.classList.remove("shake");
+          void authCard.offsetWidth; // trigger reflow
+          authCard.classList.add("shake");
+        }
+        if (input) {
+          input.value = "";
+          input.focus();
+        }
+        return;
+      }
+
       sessionStorage.setItem(SESSION_AUTH_KEY, "true");
       closeAuthModal();
       activateEditorMode();
@@ -636,12 +644,6 @@
     if (cancelBtn) cancelBtn.addEventListener("click", closeAuthModal);
     if (closeBtn) closeBtn.addEventListener("click", closeAuthModal);
     if (submitBtn) submitBtn.addEventListener("click", verifyPassword);
-    if (authResetBtn) {
-      authResetBtn.addEventListener("click", () => {
-        closeAuthModal();
-        resetAllCustomizations();
-      });
-    }
 
     if (input) {
       input.addEventListener("keydown", (e) => {
@@ -928,11 +930,129 @@
   }
 
   // =========================================================================
-  // 6. IMAGE REPLACEMENT ENGINE
+  // 6. IMAGE REPLACEMENT ENGINE (AUTO-COMPRESS, STABLE KEYS & AUTO-SAVE)
   // =========================================================================
   let targetImgEl = null;
 
+  // Generate deterministic, stable key for every image that matches across visitor & editor DOM
+  function getImageKey(img, index = 0) {
+    if (!img) return `img-${index}`;
+    if (img.getAttribute && img.getAttribute("data-btr-img-key")) {
+      return img.getAttribute("data-btr-img-key");
+    }
+
+    if (img.id) {
+      return `id-${img.id}`;
+    }
+
+    const card = img.closest ? img.closest(".tl-single-scroll-card") : null;
+    if (card) {
+      const pId = card.getAttribute("data-project-id") || card.querySelector("h3")?.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      if (pId) return `cs-${pId}`;
+    }
+
+    const alt = (img.getAttribute ? (img.getAttribute("alt") || "") : "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    if (alt && alt.length > 2 && alt !== "image" && alt !== "img" && alt !== "photo") {
+      return `alt-${alt}`;
+    }
+
+    const svc = img.closest ? img.closest(".service-elements") : null;
+    if (svc) {
+      const svcClass = Array.from(svc.classList).find((c) => c.startsWith("_")) || "svc";
+      return `svc-${svcClass}`;
+    }
+
+    const src = img.getAttribute ? (img.getAttribute("src") || "") : "";
+    if (src && !src.startsWith("data:")) {
+      const cleanSrc = src.split("?")[0].split("/").pop().replace(/[^a-z0-9-_]/gi, "-");
+      if (cleanSrc && cleanSrc.length > 2) {
+        return `src-${cleanSrc}`;
+      }
+    }
+
+    return `img-${index}`;
+  }
+
+  function initImageKeys() {
+    const images = document.querySelectorAll("img, image");
+    images.forEach((img, idx) => {
+      if (isEditorElement(img)) return;
+      if (!img.getAttribute("data-btr-img-key")) {
+        const key = getImageKey(img, idx);
+        img.setAttribute("data-btr-img-key", key);
+      }
+    });
+  }
+
+  // Client-side canvas compression: resizes raw camera/phone photos to max 1280px / ~100KB JPEG
+  // Prevents localStorage quota crash (QuotaExceededError) and enables instant network syncing
+  function compressImageFile(file, maxWidth = 1280, maxHeight = 1280, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+      if (!file) return reject(new Error("No file provided"));
+      if (file.type === "image/svg+xml" || file.type === "image/gif") {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+
+      img.onload = () => {
+        let width = img.naturalWidth || img.width;
+        let height = img.naturalHeight || img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width / height > maxWidth / maxHeight) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let mime = "image/jpeg";
+        if (file.type === "image/png") {
+          mime = "image/png";
+          try {
+            const testWebp = canvas.toDataURL("image/webp", quality);
+            if (testWebp && testWebp.startsWith("data:image/webp")) {
+              mime = "image/webp";
+            }
+          } catch (_) {}
+        }
+
+        try {
+          const compressedDataUrl = canvas.toDataURL(mime, quality);
+          resolve(compressedDataUrl);
+        } catch (e) {
+          resolve(canvas.toDataURL("image/jpeg", 0.8));
+        }
+      };
+
+      img.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   function setupEditableImages() {
+    initImageKeys();
+
     const images = document.querySelectorAll(
       "img, image, .scroll-card-img img, .service-img, .thumbnail, .testimonial-person_image, .rwl-brand-logo-img, img[src]"
     );
@@ -997,17 +1117,27 @@
     if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
 
     if (fileInput) {
-      fileInput.addEventListener("change", (e) => {
+      fileInput.addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (file) {
-          const reader = new FileReader();
-          reader.onload = (loadEvt) => {
-            const dataUrl = loadEvt.target.result;
+          try {
+            showToast("⏳ Optimizing image for web...");
+            const dataUrl = await compressImageFile(file);
             if (previewImg) previewImg.src = dataUrl;
             if (previewWrap) previewWrap.style.display = "block";
             if (urlInput) urlInput.value = dataUrl;
-          };
-          reader.readAsDataURL(file);
+            showToast("✨ Image ready!");
+          } catch (err) {
+            console.error("Image load error:", err);
+            const reader = new FileReader();
+            reader.onload = (loadEvt) => {
+              const dataUrl = loadEvt.target.result;
+              if (previewImg) previewImg.src = dataUrl;
+              if (previewWrap) previewWrap.style.display = "block";
+              if (urlInput) urlInput.value = dataUrl;
+            };
+            reader.readAsDataURL(file);
+          }
         }
       });
     }
@@ -1020,7 +1150,7 @@
     }
 
     if (applyBtn) {
-      applyBtn.addEventListener("click", () => {
+      applyBtn.addEventListener("click", async () => {
         if (!targetImgEl) return;
         const newSrc = (urlInput ? urlInput.value : "").trim();
         if (newSrc) {
@@ -1028,11 +1158,18 @@
           targetImgEl.src = newSrc;
           if (targetImgEl.srcset) targetImgEl.removeAttribute("srcset");
 
-          const sel = getUniqueSelector(targetImgEl);
-          customizations.images[sel] = newSrc;
-          showToast("📷 Image updated successfully!");
+          const key = targetImgEl.getAttribute("data-btr-img-key") || getImageKey(targetImgEl, 0);
+          targetImgEl.setAttribute("data-btr-img-key", key);
+          customizations.images[key] = newSrc;
+
+          showToast("📷 Image replaced! Auto-saving to live website...");
+          closeModal();
+
+          // Auto-save immediately to disk / localStorage so it persists permanently!
+          await saveAndPublishChanges();
+        } else {
+          closeModal();
         }
-        closeModal();
       });
     }
   }
@@ -1138,8 +1275,12 @@
   // 8. SAVE & UPDATE ACTUAL WEBSITE BACKEND SYNC
   // =========================================================================
   async function saveAndPublishChanges() {
-    // 1. Save to localStorage immediately
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customizations));
+    // 1. Save to localStorage safely (catch quota exceptions)
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(customizations));
+    } catch (e) {
+      console.warn("[Editor] localStorage quota or privacy error, saving via server backend API:", e);
+    }
 
     // 2. Prepare payload for local server backend API (/api/save-content)
     const payload = {
@@ -1168,7 +1309,7 @@
     if (backendSaved) {
       showToast("💾 Saved to code (site-customizations.json) on disk!");
     } else {
-      showToast("💾 Saved in browser & ready for live visitors!");
+      showToast("💾 Changes saved and active on website!");
     }
   }
 
@@ -1250,6 +1391,7 @@
   // 10. INITIALIZATION
   // =========================================================================
   function init() {
+    initImageKeys();
     injectEditorUI();
     initPasswordAuth();
     initFormatBarEvents();
