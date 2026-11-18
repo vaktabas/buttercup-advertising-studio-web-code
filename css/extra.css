@@ -595,53 +595,56 @@ html body .navbar .nav-dropdown-wrapper:hover .underline svg path {
 
 /* 12. Client Logos Marquee Styling */
 .marquee-section {
-    padding-top: 40px !important;
-    padding-bottom: 60px !important;
+    padding-top: 55px !important;
+    padding-bottom: 75px !important;
 }
 
 .marquee-track {
-    grid-column-gap: 56px !important;
-    column-gap: 56px !important;
-    padding-left: 28px !important;
-    padding-right: 28px !important;
+    grid-column-gap: 72px !important;
+    column-gap: 72px !important;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
     align-items: center !important;
 }
 
 .marquee-logo-image {
-    height: 36px !important;
-    max-height: 40px !important;
+    height: 60px !important;
+    max-height: 68px !important;
+    max-width: 200px !important;
     width: auto !important;
     object-fit: contain !important;
     flex-shrink: 0 !important;
     display: inline-block !important;
-    opacity: 0.9 !important;
-    transition: opacity 0.25s ease, transform 0.25s ease !important;
+    opacity: 0.92 !important;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .marquee-logo-image:hover {
     opacity: 1 !important;
-    transform: scale(1.06) !important;
+    transform: scale(1.1) !important;
 }
 
 @media screen and (max-width: 991px) {
     .marquee-track {
-        grid-column-gap: 40px !important;
-        column-gap: 40px !important;
+        grid-column-gap: 52px !important;
+        column-gap: 52px !important;
     }
     .marquee-logo-image {
-        height: 30px !important;
-        max-height: 34px !important;
+        height: 48px !important;
+        max-height: 54px !important;
+        max-width: 160px !important;
     }
 }
 
 @media screen and (max-width: 767px) {
     .marquee-track {
-        grid-column-gap: 32px !important;
-        column-gap: 32px !important;
+        grid-column-gap: 40px !important;
+        column-gap: 40px !important;
     }
     .marquee-logo-image {
-        height: 26px !important;
-        max-height: 30px !important;
+        height: 40px !important;
+        max-height: 44px !important;
+        max-width: 130px !important;
     }
 }
 
