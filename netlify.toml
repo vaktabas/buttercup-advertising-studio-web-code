@@ -47,7 +47,43 @@
   force = true
 
 [[redirects]]
+  from = "/casestudies"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/casestudies/*"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case-studies"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case-study"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/casestudy"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/about"
+  to = "/pages/about/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about-us"
   to = "/pages/about/"
   status = 301
   force = true
@@ -59,19 +95,37 @@
   force = true
 
 [[redirects]]
+  from = "/contact-us"
+  to = "/pages/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/work"
   to = "/pages/work/"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/case-studies"
-  to = "/pages/case-studies/"
+  from = "/works"
+  to = "/pages/work/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/pages/work/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/services"
+  to = "/pages/services/brand-strategy/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service"
   to = "/pages/services/brand-strategy/"
   status = 301
   force = true

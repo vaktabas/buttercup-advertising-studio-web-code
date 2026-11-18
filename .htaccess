@@ -15,12 +15,27 @@
   # 3. Blogs listing page
   RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L]
 
-  # 4. Other clean routes
-  RewriteRule ^about/?$ /pages/about/ [R=301,L]
-  RewriteRule ^contact/?$ /pages/contact/ [R=301,L]
-  RewriteRule ^work/?$ /pages/work/ [R=301,L]
+  # 4. Case Studies variations (legacy Google indexed URLs)
+  RewriteRule ^casestudies/?$ /pages/case-studies/ [R=301,L]
+  RewriteRule ^casestudies/(.*)$ /pages/case-studies/ [R=301,L]
   RewriteRule ^case-studies/?$ /pages/case-studies/ [R=301,L]
+  RewriteRule ^case-study/?$ /pages/case-studies/ [R=301,L]
+  RewriteRule ^casestudy/?$ /pages/case-studies/ [R=301,L]
+
+  # 5. About & Contact legacy variations
+  RewriteRule ^about/?$ /pages/about/ [R=301,L]
+  RewriteRule ^about-us/?$ /pages/about/ [R=301,L]
+  RewriteRule ^contact/?$ /pages/contact/ [R=301,L]
+  RewriteRule ^contact-us/?$ /pages/contact/ [R=301,L]
+
+  # 6. Work & Portfolio legacy variations
+  RewriteRule ^work/?$ /pages/work/ [R=301,L]
+  RewriteRule ^works/?$ /pages/work/ [R=301,L]
+  RewriteRule ^portfolio/?$ /pages/work/ [R=301,L]
+
+  # 7. Services & Industries
   RewriteRule ^services/?$ /pages/services/brand-strategy/ [R=301,L]
+  RewriteRule ^service/?$ /pages/services/brand-strategy/ [R=301,L]
   RewriteRule ^industries/?$ /pages/industries/service-base/ [R=301,L]
 
   # Clean URLs without .html

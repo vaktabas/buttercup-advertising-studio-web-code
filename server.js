@@ -32,16 +32,32 @@ const REDIRECT_MAP = {
   '/blog/': 'https://buttercup.in/',
   '/blogs': '/pages/blogs/',
   '/blogs/': '/pages/blogs/',
-  '/about': '/pages/about/',
-  '/about/': '/pages/about/',
-  '/contact': '/pages/contact/',
-  '/contact/': '/pages/contact/',
-  '/work': '/pages/work/',
-  '/work/': '/pages/work/',
+  '/casestudies': '/pages/case-studies/',
+  '/casestudies/': '/pages/case-studies/',
   '/case-studies': '/pages/case-studies/',
   '/case-studies/': '/pages/case-studies/',
+  '/casestudy': '/pages/case-studies/',
+  '/casestudy/': '/pages/case-studies/',
+  '/case-study': '/pages/case-studies/',
+  '/case-study/': '/pages/case-studies/',
+  '/about': '/pages/about/',
+  '/about/': '/pages/about/',
+  '/about-us': '/pages/about/',
+  '/about-us/': '/pages/about/',
+  '/contact': '/pages/contact/',
+  '/contact/': '/pages/contact/',
+  '/contact-us': '/pages/contact/',
+  '/contact-us/': '/pages/contact/',
+  '/work': '/pages/work/',
+  '/work/': '/pages/work/',
+  '/works': '/pages/work/',
+  '/works/': '/pages/work/',
+  '/portfolio': '/pages/work/',
+  '/portfolio/': '/pages/work/',
   '/services': '/pages/services/brand-strategy/',
   '/services/': '/pages/services/brand-strategy/',
+  '/service': '/pages/services/brand-strategy/',
+  '/service/': '/pages/services/brand-strategy/',
   '/industries': '/pages/industries/service-base/',
   '/industries/': '/pages/industries/service-base/'
 };
@@ -80,6 +96,15 @@ const server = http.createServer((req, res) => {
     const target = '/blogs/' + article;
     res.writeHead(301, {
       'Location': target + (parsedUrl.search || ''),
+      'Cache-Control': 'public, max-age=31536000'
+    });
+    return res.end();
+  }
+
+  // Handle /casestudies/<slug> -> /pages/case-studies/
+  if (pathname.startsWith('/casestudies/') && pathname !== '/casestudies/') {
+    res.writeHead(301, {
+      'Location': '/pages/case-studies/' + (parsedUrl.search || ''),
       'Cache-Control': 'public, max-age=31536000'
     });
     return res.end();
