@@ -1,6 +1,13 @@
 # Apache & LiteSpeed High-Traffic Optimization Configuration
 # Buttercup Advertising Studio
 
+# 0. API Rewrites (Hostinger / Apache)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^api/save-content/?$ api/save-content.php [QSA,L]
+  RewriteRule ^api/reset-content/?$ api/reset-content.php [QSA,L]
+</IfModule>
+
 # 1. Enable GZIP & Brotli Compression
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css

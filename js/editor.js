@@ -99,16 +99,49 @@
       localStorage.removeItem(STORAGE_KEY);
     } catch (e) {}
 
-    // Send reset signal to local backend server if present
-    try {
-      const apiPath = window.location.pathname.includes('/web%202/') || window.location.pathname.includes('/web 2/') ? '/web%202/api/reset-content' : '/api/reset-content';
-      await fetch(apiPath, { method: "POST" });
-    } catch (e) {}
+    // Send reset signal to backend server (PHP, Netlify, or local Python)
+    const candidateUrls = getCandidateApiUrls("reset-content");
+    for (const url of candidateUrls) {
+      try {
+        const res = await fetch(url, { method: "POST" });
+        if (res.ok) break;
+      } catch (_) {}
+    }
 
     showToast("🔄 Reset complete! Restoring original website...");
     setTimeout(() => {
       window.location.reload();
     }, 600);
+  }
+
+  // Helper: Get candidate API endpoints for PHP/Hostinger, Python, and Netlify environments
+  function getCandidateApiUrls(action = "save-content") {
+    const urls = [];
+    const p = window.location.pathname || "";
+    let relPrefix = "";
+    if (p.includes('/pages/services/') || p.includes('/pages/industries/')) {
+      relPrefix = "../../../";
+    } else if (p.includes('/pages/') || p.includes('/blogs/') || p.includes('/projects/')) {
+      relPrefix = "../../";
+    }
+
+    // 1. PHP endpoints on live Apache/Hostinger/cPanel server
+    urls.push(`${relPrefix}api/${action}.php`);
+    urls.push(`/api/${action}.php`);
+    urls.push(`/web%202/api/${action}.php`);
+    urls.push(`/web 2/api/${action}.php`);
+
+    // 2. Clean rewrite paths & local Python server
+    urls.push(`${relPrefix}api/${action}`);
+    urls.push(`/api/${action}`);
+    urls.push(`/web%202/api/${action}`);
+    urls.push(`/web 2/api/${action}`);
+
+    // 3. Netlify serverless functions
+    urls.push(`/.netlify/functions/${action}`);
+    urls.push(`${relPrefix}.netlify/functions/${action}`);
+
+    return Array.from(new Set(urls));
   }
 
   // Load customizations asynchronously from disk JSON and localStorage
@@ -797,6 +830,7 @@
       el.addEventListener("blur", function () {
         if (!isEditorMode) return;
         saveElementText(el);
+        triggerAutoSaveDebounced(300);
       });
 
       el.addEventListener("input", function () {
@@ -867,6 +901,7 @@
       pushUndoSnapshot(`Change font ${prop}`);
       activeEditableEl.style[prop] = val;
       saveElementText(activeEditableEl);
+      triggerAutoSaveDebounced(600);
     }
 
     document.getElementById("btrFmtBold")?.addEventListener("click", () => {
@@ -1210,6 +1245,7 @@
     const current = !!customizations.lockedProjects[pId];
     customizations.lockedProjects[pId] = !current;
     applyCaseStudyLocks();
+    triggerAutoSaveDebounced(300);
 
     const title = pId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
     if (!current) {
@@ -1250,6 +1286,7 @@
         pushUndoSnapshot("Toggle case study lock");
         customizations.lockedProjects[pId] = e.target.checked;
         applyCaseStudyLocks();
+        triggerAutoSaveDebounced(300);
       });
 
       listEl.appendChild(item);
@@ -1274,6 +1311,14 @@
   // =========================================================================
   // 8. SAVE & UPDATE ACTUAL WEBSITE BACKEND SYNC
   // =========================================================================
+  let autoSaveTimer = null;
+  function triggerAutoSaveDebounced(delay = 1200) {
+    if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+      saveAndPublishChanges();
+    }, delay);
+  }
+
   async function saveAndPublishChanges() {
     // 1. Save to localStorage safely (catch quota exceptions)
     try {
@@ -1282,34 +1327,40 @@
       console.warn("[Editor] localStorage quota or privacy error, saving via server backend API:", e);
     }
 
-    // 2. Prepare payload for local server backend API (/api/save-content)
+    // 2. Prepare payload for backend API
     const payload = {
       customizations: customizations,
       timestamp: new Date().toISOString()
     };
 
     let backendSaved = false;
-    try {
-      const apiPath = window.location.pathname.includes('/web%202/') || window.location.pathname.includes('/web 2/') ? '/web%202/api/save-content' : '/api/save-content';
-      const res = await fetch(apiPath, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.success) {
-          backendSaved = true;
+    let savedTarget = "";
+    const candidateUrls = getCandidateApiUrls("save-content");
+
+    for (const url of candidateUrls) {
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success) {
+            backendSaved = true;
+            savedTarget = url;
+            break;
+          }
         }
+      } catch (err) {
+        // try next endpoint
       }
-    } catch (e) {
-      // Backend server might not be running or sandboxed
     }
 
     if (backendSaved) {
-      showToast("💾 Saved to code (site-customizations.json) on disk!");
+      showToast("💾 Saved to live website server! Changes are visible to everyone.");
     } else {
-      showToast("💾 Changes saved and active on website!");
+      showToast("💾 Saved to browser! (Server backend not reached on this URL)");
     }
   }
 
