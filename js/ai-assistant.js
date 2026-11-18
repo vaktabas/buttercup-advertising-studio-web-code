@@ -147,7 +147,7 @@
           <!-- Write us email line -->
           <div class="em-ai-write-us">
             <span>Write us:</span>
-            <a href="mailto:info@buttercupadvertising.com" id="emAiMailLink">info@buttercupadvertising.com</a>
+            <a href="mailto:info@buttercup.in" id="emAiMailLink">info@buttercup.in</a>
             <button type="button" class="em-ai-copy-btn" id="emAiCopyBtn" title="Copy email address" aria-label="Copy email">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -1953,7 +1953,7 @@
     // Copy email button
     if (aiCopyBtn) {
       aiCopyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText('info@buttercupadvertising.com').then(() => {
+        navigator.clipboard.writeText('info@buttercup.in').then(() => {
           aiCopyBtn.textContent = '✓ Copied';
           setTimeout(() => { aiCopyBtn.textContent = '⎘'; }, 2000);
         });

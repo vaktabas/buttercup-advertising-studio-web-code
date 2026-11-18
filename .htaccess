@@ -6,7 +6,7 @@
   RewriteEngine On
 
   # Google SEO & Clean URL 301 Permanent Redirects
-  RewriteRule ^blog/?$ /pages/blogs/ [R=301,L]
+  RewriteRule ^blog/?$ / [R=301,L]
   RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L]
   RewriteRule ^blog/(.*)$ /blogs/$1 [R=301,L]
 

@@ -34,7 +34,7 @@
     }
   ],
   "redirects": [
-    { "source": "/blog", "destination": "/pages/blogs/", "permanent": true },
+    { "source": "/blog", "destination": "/", "permanent": true },
     { "source": "/blog/(.*)", "destination": "/blogs/$1", "permanent": true },
     { "source": "/blogs", "destination": "/pages/blogs/", "permanent": true },
     { "source": "/about", "destination": "/pages/about/", "permanent": true },

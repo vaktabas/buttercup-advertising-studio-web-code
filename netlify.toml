@@ -30,7 +30,7 @@
 # Google SEO & Clean URL 301 Permanent Redirects
 [[redirects]]
   from = "/blog"
-  to = "/pages/blogs/"
+  to = "/"
   status = 301
   force = true
 

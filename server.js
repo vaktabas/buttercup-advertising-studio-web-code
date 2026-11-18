@@ -28,8 +28,8 @@ const MIME_TYPES = {
 };
 
 const REDIRECT_MAP = {
-  '/blog': '/pages/blogs/',
-  '/blog/': '/pages/blogs/',
+  '/blog': '/',
+  '/blog/': '/',
   '/blogs': '/pages/blogs/',
   '/blogs/': '/pages/blogs/',
   '/about': '/pages/about/',
