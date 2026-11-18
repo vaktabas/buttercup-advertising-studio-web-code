@@ -84,3 +84,4 @@ exports.handler = async (event, context) => {
 
   return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
 };
+

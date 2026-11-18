@@ -25,3 +25,4 @@ echo json_encode([
     'success' => true,
     'message' => 'All customizations have been reset to clean default code.'
 ]);
+
