@@ -390,32 +390,57 @@ body.mubien-modal-open {
   padding: 4px !important;
   box-sizing: border-box !important;
   position: relative !important;
-  cursor: pointer !important;
+  cursor: grab !important;
   text-decoration: none !important;
   transition: background-color 0.25s ease !important;
   overflow: hidden !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: none !important;
 }
 
 .mubien-contact-slider:hover {
   background: #ceced6 !important;
 }
 
+.mubien-contact-slider.is-dragging {
+  cursor: grabbing !important;
+}
+
+.mubien-contact-track-fill {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 0px;
+  background: linear-gradient(90deg, #111113 0%, #2b2b32 100%) !important;
+  border-radius: 29px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
 .mubien-contact-knob {
   width: 50px !important;
   height: 50px !important;
+  min-width: 50px !important;
   border-radius: 50% !important;
   background: #ffffff !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16) !important;
   color: #111112 !important;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  z-index: 2 !important;
+  z-index: 3 !important;
+  cursor: grab !important;
+  transform: translateX(0px);
+  will-change: transform;
+  touch-action: none !important;
 }
 
-.mubien-contact-slider:hover .mubien-contact-knob {
-  transform: translateX(10px) !important;
+.mubien-contact-knob:active,
+.mubien-contact-slider.is-dragging .mubien-contact-knob {
+  cursor: grabbing !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.26) !important;
 }
 
 .mubien-contact-text {
@@ -428,6 +453,18 @@ body.mubien-modal-open {
   color: #636366 !important;
   letter-spacing: -0.01em !important;
   pointer-events: none !important;
+  z-index: 2 !important;
+  white-space: nowrap !important;
+  transition: opacity 0.15s ease, color 0.2s ease !important;
+}
+
+.mubien-contact-slider.is-unlocked {
+  background: #111113 !important;
+}
+
+.mubien-contact-slider.is-unlocked .mubien-contact-text {
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 /* Analog / Live Clock Widget */
@@ -599,8 +636,6 @@ body.mubien-modal-open {
 .mubien-reel-card,
 .mubien-reel-card *,
 .mubien-reel-play-btn,
-.mubien-contact-slider,
-.mubien-contact-slider *,
 .mubien-drawer-brand-btn,
 .mubien-drawer-brand-btn *,
 .mubien-drawer-close-btn,
@@ -610,5 +645,15 @@ body.mubien-modal-open {
 .mubien-drawer button,
 .mubien-drawer button * {
   cursor: pointer !important;
+}
+
+.mubien-contact-slider,
+.mubien-contact-knob {
+  cursor: grab !important;
+}
+
+.mubien-contact-slider.is-dragging,
+.mubien-contact-slider.is-dragging * {
+  cursor: grabbing !important;
 }
 

@@ -50,7 +50,7 @@
 
       <!-- Top Widgets Grid -->
       <div class="mubien-widget-grid">
-        <!-- Card 1: Work / Case Studies -->
+        <!-- Card 1: Case Studies (Work) -->
         <a href="${resolvePath('pages/case-studies/index.html')}" class="mubien-card">
           <div class="mubien-card-top-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -61,8 +61,8 @@
             </svg>
           </div>
           <div>
-            <h3 class="mubien-card-title">Work</h3>
-            <p class="mubien-card-subtitle">Selected projects</p>
+            <h3 class="mubien-card-title">Case Studies</h3>
+            <p class="mubien-card-subtitle">Selected Work (9 Projects)</p>
           </div>
         </a>
 
@@ -93,16 +93,17 @@
           </div>
         </div>
 
-        <!-- Card 4: Slide To Contact Us -->
-        <a href="${resolvePath('pages/contact/index.html')}" class="mubien-contact-slider" id="mubienContactSlider">
-          <div class="mubien-contact-knob">
+        <!-- Card 4: Slide To Contact Us (Real Interactive Draggable Slider) -->
+        <div class="mubien-contact-slider" id="mubienContactSlider" role="slider" aria-label="Slide to contact us" tabindex="0">
+          <div class="mubien-contact-track-fill" id="mubienSliderFill"></div>
+          <div class="mubien-contact-knob" id="mubienSliderKnob">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
           </div>
-          <span class="mubien-contact-text">Slide to contact us →</span>
-        </a>
+          <span class="mubien-contact-text" id="mubienSliderText">Slide to contact us →</span>
+        </div>
 
         <!-- Card 5: Services -->
         <a href="${resolvePath('pages/services/brand-strategy/index.html')}" class="mubien-card">
@@ -165,25 +166,22 @@
           <p class="mubien-clock-digital" id="mubienClockDigital">--:--</p>
         </div>
 
-        <!-- Card 9: Blogs / Updates -->
+        <!-- Card 9: Blogs & Insights -->
         <a href="${resolvePath('pages/blogs/index.html')}" class="mubien-card is-full-width">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
             <div>
-              <h3 class="mubien-card-title">Updates & Journals</h3>
-              <p class="mubien-card-subtitle">Insights on branding, digital experiences & design</p>
+              <h3 class="mubien-card-title">Blogs & Insights</h3>
+              <p class="mubien-card-subtitle">Design, branding & creative journals</p>
             </div>
             <div style="font-size:18px; color:#121212; font-weight:bold;">→</div>
           </div>
         </a>
       </div>
 
-      <!-- Drawer Bottom Footer Bar -->
+      <!-- Drawer Bottom Footer Bar (Single View - No Swipe Confusion) -->
       <div class="mubien-drawer-footer">
         <a href="${resolvePath('index.html')}" class="mubien-drawer-brand-btn" aria-label="Home">BAS</a>
-        <div class="mubien-drawer-dots" aria-hidden="true">
-          <span class="active"></span>
-          <span></span>
-        </div>
+        <div style="font-size: 11px; font-weight: 600; color: #8e8e93; letter-spacing: 0.04em; text-transform: uppercase;">Buttercup Studio</div>
         <button class="mubien-drawer-close-btn" id="mubienDrawerCloseBtn" aria-label="Close menu">✕</button>
       </div>
     `;
@@ -318,6 +316,143 @@
           videoBtn.click();
         } else {
           window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+      });
+    }
+
+    // 3. Interactive "Slide to contact us" Draggable Slider
+    const contactSlider = drawer.querySelector('#mubienContactSlider');
+    const sliderKnob = drawer.querySelector('#mubienSliderKnob');
+    const sliderFill = drawer.querySelector('#mubienSliderFill');
+    const sliderText = drawer.querySelector('#mubienSliderText');
+
+    if (contactSlider && sliderKnob) {
+      let isDragging = false;
+      let startX = 0;
+      let maxSlide = 0;
+      let isUnlocked = false;
+
+      function calcMaxSlide() {
+        return Math.max(0, contactSlider.clientWidth - sliderKnob.clientWidth - 8);
+      }
+
+      function onStart(clientX) {
+        if (isUnlocked) return;
+        isDragging = true;
+        maxSlide = calcMaxSlide();
+        startX = clientX;
+        contactSlider.classList.add('is-dragging');
+        sliderKnob.style.transition = 'none';
+        if (sliderFill) sliderFill.style.transition = 'none';
+      }
+
+      function onMove(clientX) {
+        if (!isDragging || isUnlocked) return;
+        const deltaX = clientX - startX;
+        const clampedX = Math.max(0, Math.min(deltaX, maxSlide));
+        const progress = maxSlide > 0 ? clampedX / maxSlide : 0;
+
+        sliderKnob.style.transform = `translateX(${clampedX}px)`;
+        if (sliderFill) sliderFill.style.width = `${clampedX + 50}px`;
+        if (sliderText) sliderText.style.opacity = `${Math.max(0, 1 - (progress * 1.6))}`;
+
+        if (progress >= 0.78) {
+          triggerUnlock();
+        }
+      }
+
+      function onEnd() {
+        if (!isDragging || isUnlocked) return;
+        isDragging = false;
+        contactSlider.classList.remove('is-dragging');
+
+        // Smooth spring snap back to start
+        sliderKnob.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+        sliderKnob.style.transform = 'translateX(0px)';
+        if (sliderFill) {
+          sliderFill.style.transition = 'width 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+          sliderFill.style.width = '0px';
+        }
+        if (sliderText) {
+          sliderText.style.transition = 'opacity 0.25s ease';
+          sliderText.style.opacity = '1';
+        }
+      }
+
+      function triggerUnlock() {
+        if (isUnlocked) return;
+        isUnlocked = true;
+        isDragging = false;
+        contactSlider.classList.add('is-unlocked');
+
+        sliderKnob.style.transition = 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+        sliderKnob.style.transform = `translateX(${maxSlide}px)`;
+        if (sliderFill) {
+          sliderFill.style.transition = 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+          sliderFill.style.width = '100%';
+        }
+        if (sliderText) {
+          sliderText.textContent = 'Opening Contact...';
+          sliderText.style.opacity = '1';
+        }
+
+        setTimeout(() => {
+          closeMenu();
+          window.location.href = resolvePath('pages/contact/index.html');
+        }, 280);
+      }
+
+      // Mouse drag listeners
+      sliderKnob.addEventListener('mousedown', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        onStart(e.clientX);
+      });
+
+      contactSlider.addEventListener('mousedown', e => {
+        if (e.target !== sliderKnob && !sliderKnob.contains(e.target)) {
+          e.preventDefault();
+          onStart(e.clientX);
+        }
+      });
+
+      window.addEventListener('mousemove', e => {
+        if (isDragging) {
+          e.preventDefault();
+          onMove(e.clientX);
+        }
+      }, { passive: false });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) onEnd();
+      });
+
+      // Touch drag listeners (mobile & tablet)
+      sliderKnob.addEventListener('touchstart', e => {
+        e.stopPropagation();
+        if (e.touches && e.touches[0]) onStart(e.touches[0].clientX);
+      }, { passive: true });
+
+      contactSlider.addEventListener('touchstart', e => {
+        if (e.touches && e.touches[0]) onStart(e.touches[0].clientX);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', e => {
+        if (isDragging && e.touches && e.touches[0]) onMove(e.touches[0].clientX);
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        if (isDragging) onEnd();
+      });
+
+      // Tap / Click right half to unlock
+      contactSlider.addEventListener('click', e => {
+        if (isUnlocked) return;
+        const rect = contactSlider.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        if (clickX > rect.width * 0.45) {
+          maxSlide = calcMaxSlide();
+          triggerUnlock();
         }
       });
     }
