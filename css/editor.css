@@ -256,6 +256,87 @@
     transform: scale(1.05) !important;
 }
 
+/* Password Modal Reset Section */
+.btr-auth-divider {
+    display: flex !important;
+    align-items: center !important;
+    margin: 22px 0 16px !important;
+    text-align: center !important;
+}
+
+.btr-auth-divider::before,
+.btr-auth-divider::after {
+    content: '' !important;
+    flex: 1 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.btr-auth-divider span {
+    padding: 0 10px !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 10.5px !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+}
+
+.btr-auth-reset-box {
+    background: rgba(239, 68, 68, 0.08) !important;
+    border: 1px dashed rgba(239, 68, 68, 0.35) !important;
+    border-radius: 14px !important;
+    padding: 14px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: left !important;
+}
+
+.btr-auth-reset-info strong {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #fca5a5 !important;
+    margin-bottom: 3px !important;
+}
+
+.btr-auth-reset-info p {
+    font-size: 11.5px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+.btr-btn-danger {
+    background: rgba(239, 68, 68, 0.18) !important;
+    border: 1px solid rgba(239, 68, 68, 0.45) !important;
+    color: #fca5a5 !important;
+    padding: 10px 14px !important;
+    width: 100% !important;
+}
+
+.btr-btn-danger:hover {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Toolbar Reset & Undo Button */
+.btr-bar-btn-reset {
+    color: rgba(252, 165, 165, 0.9) !important;
+}
+
+.btr-bar-btn-reset:hover {
+    background: rgba(239, 68, 68, 0.18) !important;
+    color: #ef4444 !important;
+}
+
+.btr-bar-btn.is-disabled {
+    opacity: 0.35 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
 /* 3. TOP ADMIN / CMS FLOATING TOOLBAR */
 #buttercupEditorBar {
     position: fixed !important;

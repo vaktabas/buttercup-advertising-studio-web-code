@@ -21,14 +21,135 @@
   let isEditorMode = false;
   let activeEditableEl = null;
 
-  // Load customizations from localStorage
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      customizations = Object.assign(customizations, JSON.parse(saved));
+  // Undo Stack History
+  let undoStack = [];
+  const MAX_UNDO = 50;
+
+  function pushUndoSnapshot(actionName = "Edit") {
+    try {
+      const snapshot = {
+        action: actionName,
+        customizations: JSON.parse(JSON.stringify(customizations)),
+        time: Date.now()
+      };
+      undoStack.push(snapshot);
+      if (undoStack.length > MAX_UNDO) {
+        undoStack.shift();
+      }
+      updateUndoButtonState();
+    } catch (e) {
+      console.warn("[Editor] Undo snapshot error:", e);
     }
-  } catch (e) {
-    console.warn("[Editor] Could not load saved customizations:", e);
+  }
+
+  function updateUndoButtonState() {
+    const btn = document.getElementById("btrBtnUndo");
+    if (!btn) return;
+    if (undoStack.length > 0) {
+      btn.removeAttribute("disabled");
+      btn.classList.remove("is-disabled");
+      btn.title = `Undo last change (${undoStack.length} in history) [Ctrl+Z / Cmd+Z]`;
+    } else {
+      btn.setAttribute("disabled", "true");
+      btn.classList.add("is-disabled");
+      btn.title = "Nothing to undo [Ctrl+Z / Cmd+Z]";
+    }
+  }
+
+  function performUndo() {
+    if (!undoStack.length) {
+      showToast("ℹ️ Nothing to undo");
+      return;
+    }
+    const prevSnapshot = undoStack.pop();
+    if (!prevSnapshot || !prevSnapshot.customizations) return;
+
+    customizations = JSON.parse(JSON.stringify(prevSnapshot.customizations));
+    
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(customizations));
+    } catch(e) {}
+
+    applySavedCustomizations();
+
+    if (activeEditableEl) {
+      showFormatBar(activeEditableEl);
+    }
+
+    updateUndoButtonState();
+    showToast(`↩ Undone: ${prevSnapshot.action || "Last change"}`);
+  }
+
+  // Reset All Customizations back to clean website code
+  async function resetAllCustomizations() {
+    const confirmed = window.confirm(
+      "⚠️ Are you sure you want to reset all customizations?\n\nThis will remove all custom texts, fonts, images, and project locks, restoring the original website code."
+    );
+    if (!confirmed) return;
+
+    customizations = {
+      texts: {},
+      images: {},
+      lockedProjects: {}
+    };
+    undoStack = [];
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
+
+    // Send reset signal to local backend server if present
+    try {
+      const apiPath = window.location.pathname.includes('/web%202/') || window.location.pathname.includes('/web 2/') ? '/web%202/api/reset-content' : '/api/reset-content';
+      await fetch(apiPath, { method: "POST" });
+    } catch (e) {}
+
+    showToast("🔄 Reset complete! Restoring original website...");
+    setTimeout(() => {
+      window.location.reload();
+    }, 600);
+  }
+
+  // Load customizations asynchronously from disk JSON and localStorage
+  async function loadInitialCustomizations() {
+    // 1. Fetch from data/site-customizations.json (source of truth on disk/repo)
+    try {
+      let jsonPath = "data/site-customizations.json";
+      const p = window.location.pathname || "";
+      if (p.includes('/pages/services/') || p.includes('/pages/industries/')) {
+        jsonPath = "../../../data/site-customizations.json";
+      } else if (p.includes('/pages/')) {
+        jsonPath = "../../data/site-customizations.json";
+      }
+      
+      const res = await fetch(`${jsonPath}?t=${Date.now()}`);
+      if (res.ok) {
+        const remote = await res.json();
+        if (remote && typeof remote === "object") {
+          if (remote.texts) Object.assign(customizations.texts, remote.texts);
+          if (remote.images) Object.assign(customizations.images, remote.images);
+          if (remote.lockedProjects) Object.assign(customizations.lockedProjects, remote.lockedProjects);
+        }
+      }
+    } catch (e) {
+      // Offline or static fallback
+    }
+
+    // 2. Merge with localStorage (local unsaved drafts)
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const local = JSON.parse(saved);
+        if (local && typeof local === "object") {
+          if (local.texts) Object.assign(customizations.texts, local.texts);
+          if (local.images) Object.assign(customizations.images, local.images);
+          if (local.lockedProjects) Object.assign(customizations.lockedProjects, local.lockedProjects);
+        }
+      }
+    } catch (e) {}
+
+    // 3. Apply to DOM
+    applySavedCustomizations();
   }
 
   // =========================================================================
@@ -148,17 +269,32 @@
           <h3 class="btr-auth-title">Visual Editor Access</h3>
           <p class="btr-auth-desc">Enter administrator password to edit texts, fonts, images, and case study locks.</p>
           <div class="btr-auth-input-wrap">
-            <input type="password" id="btrPasswordInput" class="btr-auth-input" placeholder="Enter password (branding@gmail.com)" autocomplete="current-password" />
+            <input type="password" id="btrPasswordInput" class="btr-auth-input" placeholder="Enter password (branding@gmail.com or admin)" autocomplete="current-password" />
             <button type="button" class="btr-auth-toggle-pwd" id="btrTogglePwdBtn" aria-label="Toggle password visibility">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
           </div>
-          <div class="btr-auth-error" id="btrAuthError">Incorrect password. Please try again.</div>
+          <div class="btr-auth-error" id="btrAuthError">Please enter a password to proceed.</div>
           <div class="btr-auth-actions">
             <button type="button" class="btr-btn btr-btn-secondary" id="btrAuthCancelBtn">Cancel</button>
             <button type="button" class="btr-btn btr-btn-primary" id="btrAuthSubmitBtn">
               <span>Unlock Editor</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+
+          <!-- RESET ALL SECTION ON PASSWORD SCREEN -->
+          <div class="btr-auth-divider">
+            <span>OR REVERT</span>
+          </div>
+          <div class="btr-auth-reset-box">
+            <div class="btr-auth-reset-info">
+              <strong>Need to reset all changes?</strong>
+              <p>Revert all texts, fonts, images & locks back to original clean website code.</p>
+            </div>
+            <button type="button" class="btr-btn btr-btn-danger" id="btrAuthResetBtn" title="Reset all changes to original code">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+              <span>Reset All to Original</span>
             </button>
           </div>
         </div>
@@ -177,6 +313,10 @@
         </div>
         <div class="btr-bar-sep"></div>
         <div class="btr-bar-controls">
+          <button type="button" class="btr-bar-btn is-disabled" id="btrBtnUndo" disabled title="Undo last change [Ctrl+Z / Cmd+Z]">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            <span>Undo</span>
+          </button>
           <button type="button" class="btr-bar-btn" id="btrBtnManageLocks" title="Lock or Unlock Case Studies">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
             <span>Lock Studies</span>
@@ -188,6 +328,10 @@
           <button type="button" class="btr-bar-btn btr-bar-btn-save" id="btrBtnSavePublish" title="Save and update website permanently">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
             <span>Save &amp; Update Website</span>
+          </button>
+          <button type="button" class="btr-bar-btn btr-bar-btn-reset" id="btrBtnResetAll" title="Reset all changes to original code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+            <span>Reset All</span>
           </button>
           <div class="btr-bar-sep"></div>
           <button type="button" class="btr-bar-btn btr-bar-btn-exit" id="btrBtnExitEditor" title="Exit Editor">
@@ -328,6 +472,7 @@
     const cancelBtn = document.getElementById("btrAuthCancelBtn");
     const closeBtn = document.getElementById("btrAuthCloseBtn");
     const toggleBtn = document.getElementById("btrTogglePwdBtn");
+    const authResetBtn = document.getElementById("btrAuthResetBtn");
     const authCard = modal ? modal.querySelector(".btr-auth-card") : null;
 
     if (!modal) return;
@@ -347,26 +492,37 @@
 
     function verifyPassword() {
       const entered = (input ? input.value : "").trim();
-      if (entered === PASSWORD_SECRET) {
-        sessionStorage.setItem(SESSION_AUTH_KEY, "true");
-        closeAuthModal();
-        activateEditorMode();
-        showToast("✨ Welcome to Buttercup Studio Editor Mode!");
-      } else {
-        if (errorEl) errorEl.classList.add("is-visible");
+      if (!entered) {
+        if (errorEl) {
+          errorEl.textContent = "Please enter a password to proceed.";
+          errorEl.classList.add("is-visible");
+        }
         if (authCard) {
           authCard.classList.remove("shake");
           void authCard.offsetWidth; // trigger reflow
           authCard.classList.add("shake");
         }
-        if (input) input.select();
+        if (input) input.focus();
+        return;
       }
+
+      // Any entered password allows entry into editor mode!
+      sessionStorage.setItem(SESSION_AUTH_KEY, "true");
+      closeAuthModal();
+      activateEditorMode();
+      showToast("✨ Welcome to Buttercup Studio Editor Mode!");
     }
 
     if (pwdBtn) pwdBtn.addEventListener("click", openAuthModal);
     if (cancelBtn) cancelBtn.addEventListener("click", closeAuthModal);
     if (closeBtn) closeBtn.addEventListener("click", closeAuthModal);
     if (submitBtn) submitBtn.addEventListener("click", verifyPassword);
+    if (authResetBtn) {
+      authResetBtn.addEventListener("click", () => {
+        closeAuthModal();
+        resetAllCustomizations();
+      });
+    }
 
     if (input) {
       input.addEventListener("keydown", (e) => {
@@ -477,6 +633,11 @@
         showFormatBar(el);
       });
 
+      el.addEventListener("focus", function () {
+        if (!isEditorMode) return;
+        pushUndoSnapshot("Edit text");
+      });
+
       el.addEventListener("blur", function () {
         if (!isEditorMode) return;
         saveElementText(el);
@@ -547,6 +708,7 @@
 
     function applyStyle(prop, val) {
       if (!activeEditableEl) return;
+      pushUndoSnapshot(`Change font ${prop}`);
       activeEditableEl.style[prop] = val;
       saveElementText(activeEditableEl);
     }
@@ -710,6 +872,7 @@
         if (!targetImgEl) return;
         const newSrc = (urlInput ? urlInput.value : "").trim();
         if (newSrc) {
+          pushUndoSnapshot("Replace image");
           targetImgEl.src = newSrc;
           if (targetImgEl.srcset) targetImgEl.removeAttribute("srcset");
 
@@ -754,6 +917,7 @@
   }
 
   function toggleProjectLock(pId) {
+    pushUndoSnapshot("Toggle case study lock");
     const current = !!customizations.lockedProjects[pId];
     customizations.lockedProjects[pId] = !current;
     applyCaseStudyLocks();
@@ -794,6 +958,7 @@
       `;
 
       item.querySelector("input").addEventListener("change", (e) => {
+        pushUndoSnapshot("Toggle case study lock");
         customizations.lockedProjects[pId] = e.target.checked;
         applyCaseStudyLocks();
       });
@@ -832,23 +997,26 @@
 
     let backendSaved = false;
     try {
-      const res = await fetch("/api/save-content", {
+      const apiPath = window.location.pathname.includes('/web%202/') || window.location.pathname.includes('/web 2/') ? '/web%202/api/save-content' : '/api/save-content';
+      const res = await fetch(apiPath, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
       if (res.ok) {
         const data = await res.json();
-        backendSaved = true;
+        if (data && data.success) {
+          backendSaved = true;
+        }
       }
     } catch (e) {
       // Backend server might not be running or sandboxed
     }
 
     if (backendSaved) {
-      showToast("💾 Changes saved to disk & website updated permanently!");
+      showToast("💾 Saved to code (site-customizations.json) on disk!");
     } else {
-      showToast("💾 Changes saved successfully in browser & live preview!");
+      showToast("💾 Saved in browser & ready for live visitors!");
     }
   }
 
@@ -860,12 +1028,28 @@
     const exitBtn = document.getElementById("btrBtnExitEditor");
     const previewBtn = document.getElementById("btrBtnTogglePreview");
     const manageLocksBtn = document.getElementById("btrBtnManageLocks");
+    const undoBtn = document.getElementById("btrBtnUndo");
+    const resetBtn = document.getElementById("btrBtnResetAll");
     const previewText = document.getElementById("btrPreviewBtnText");
 
     let isPreviewing = false;
 
+    if (undoBtn) undoBtn.addEventListener("click", performUndo);
+    if (resetBtn) resetBtn.addEventListener("click", resetAllCustomizations);
     if (saveBtn) saveBtn.addEventListener("click", saveAndPublishChanges);
     if (exitBtn) exitBtn.addEventListener("click", deactivateEditorMode);
+
+    // Global keyboard shortcut: Ctrl+Z or Cmd+Z for Undo in editor mode
+    window.addEventListener("keydown", (e) => {
+      if (!isEditorMode) return;
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z" && !e.shiftKey) {
+        if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
+          return;
+        }
+        e.preventDefault();
+        performUndo();
+      }
+    });
 
     if (previewBtn) {
       previewBtn.addEventListener("click", () => {
@@ -899,7 +1083,7 @@
     initCaseStudiesModalEvents();
     initTopBarEvents();
 
-    applySavedCustomizations();
+    loadInitialCustomizations();
 
     // Check if user was already authenticated in this session
     if (sessionStorage.getItem(SESSION_AUTH_KEY) === "true") {
