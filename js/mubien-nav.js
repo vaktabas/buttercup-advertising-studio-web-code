@@ -44,6 +44,7 @@
     drawer.className = 'mubien-drawer';
     drawer.setAttribute('role', 'dialog');
     drawer.setAttribute('aria-label', 'Main Navigation');
+    drawer.setAttribute('data-lenis-prevent', 'true');
     drawer.innerHTML = `
       <div class="mubien-drawer-handle" aria-hidden="true"></div>
 
@@ -224,6 +225,11 @@
       pillBar.classList.add('is-open');
       drawer.classList.add('is-open');
       backdrop.classList.add('is-visible');
+      document.documentElement.classList.add('mubien-modal-open');
+      document.body.classList.add('mubien-modal-open');
+      if (window.lenis && typeof window.lenis.stop === 'function') {
+        window.lenis.stop();
+      }
       menuBtn.setAttribute('aria-expanded', 'true');
     }
 
@@ -232,6 +238,11 @@
       pillBar.classList.remove('is-open');
       drawer.classList.remove('is-open');
       backdrop.classList.remove('is-visible');
+      document.documentElement.classList.remove('mubien-modal-open');
+      document.body.classList.remove('mubien-modal-open');
+      if (window.lenis && typeof window.lenis.start === 'function') {
+        window.lenis.start();
+      }
       menuBtn.setAttribute('aria-expanded', 'false');
     }
 
@@ -239,6 +250,27 @@
       if (isOpen) closeMenu();
       else openMenu();
     }
+
+    // Direct, buttery-smooth wheel scrolling for drawer (bypasses Lenis & stops background page scroll)
+    drawer.addEventListener('wheel', e => {
+      e.stopPropagation();
+      drawer.scrollTop += e.deltaY;
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+
+    drawer.addEventListener('touchmove', e => {
+      e.stopPropagation();
+    }, { passive: true });
+
+    backdrop.addEventListener('wheel', e => {
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    backdrop.addEventListener('touchmove', e => {
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
 
     menuBtn.addEventListener('click', e => {
       e.stopPropagation();
