@@ -87,13 +87,13 @@
       <div class="em-ai-ui-layer">
         <!-- Top Bar -->
         <div class="em-ai-top-bar">
-          <div class="em-ai-logo-wrap">
+          <a href="index.html" class="em-ai-logo-wrap" id="em-ai-home-link" title="Back to Buttercup Home" aria-label="Buttercup Home" onclick="if(window.goButtercupHome){window.goButtercupHome();return false;}">
             <span class="em-ai-brand-name">Buttercup®</span>
             <span class="em-ai-star-mark">✦</span>
-          </div>
+          </a>
           <div class="em-ai-top-right">
             <a href="#contact" class="em-ai-talk-link" id="emAiTalkLink">Let's talk</a>
-            <button class="em-ai-close-btn" id="em-ai-close" title="Close AI Assistant" aria-label="Close Assistant">
+            <button type="button" class="em-ai-close-btn" id="em-ai-close" title="Close AI Assistant" aria-label="Close Assistant" onclick="if(window.closeButtercupAi){window.closeButtercupAi();return false;}else if(window.closeAiModal){window.closeAiModal();return false;}">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1786,32 +1786,133 @@
     }
 
     function closeAiModal() {
-      if (!aiOverlay) return;
+      const overlayEl = document.getElementById('em-ai-overlay') || aiOverlay;
+      if (!overlayEl) return;
       isModalOpen = false;
-      aiOverlay.classList.remove('is-open');
-      aiOverlay.setAttribute('aria-hidden', 'true');
+      overlayEl.classList.remove('is-open');
+      overlayEl.setAttribute('aria-hidden', 'true');
       document.documentElement.classList.remove('em-modal-open');
+      document.body.classList.remove('em-modal-open');
+      if (window.lenis && typeof window.lenis.start === 'function') {
+        window.lenis.start();
+      }
       stopSpeech();
       updateModalUrl(false);
       scheduleNextPop(3000);
     }
 
-    // Bind open/close triggers
+    function getHomeUrl() {
+      const p = window.location.pathname || '';
+      if (p.includes('/pages/services/') || p.includes('/pages/industries/')) {
+        return '../../../index.html';
+      }
+      if (p.includes('/pages/')) {
+        return '../../index.html';
+      }
+      return 'index.html';
+    }
+
+    function isHomePage() {
+      const p = window.location.pathname || '';
+      return !p.includes('/pages/') && (
+        p === '' ||
+        p === '/' ||
+        p.endsWith('/index.html') ||
+        p.endsWith('/web 2/') ||
+        p.endsWith('/web%202/') ||
+        p.endsWith('/web 2/index.html') ||
+        p.endsWith('/web%202/index.html')
+      );
+    }
+
+    function goToHome() {
+      closeAiModal();
+      if (isHomePage()) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(0, { immediate: false });
+        }
+      } else {
+        window.location.href = getHomeUrl();
+      }
+    }
+
+    // Expose close & navigation functions globally
+    window.closeButtercupAi = closeAiModal;
+    window.closeAiModal = closeAiModal;
+    window.goButtercupHome = goToHome;
+
+    // Direct event binding
     if (orbToggle) orbToggle.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
     if (aiBubble) aiBubble.addEventListener('click', (e) => { e.stopPropagation(); openAiModal(); });
-    if (aiCloseBtn) aiCloseBtn.addEventListener('click', closeAiModal);
+    if (aiCloseBtn) {
+      aiCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeAiModal();
+      });
+    }
 
-    window.openButtercupAi = openAiModal;
-    window.openAiModal = openAiModal;
+    const aiHomeLink = document.getElementById('em-ai-home-link');
+    if (aiHomeLink) {
+      aiHomeLink.href = getHomeUrl();
+      aiHomeLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goToHome();
+      });
+    }
 
+    if (aiTalkLink) {
+      aiTalkLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeAiModal();
+        const contactSec = document.getElementById('contact');
+        if (contactSec) {
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(contactSec);
+          } else {
+            contactSec.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    }
+
+    // Close when clicking directly on overlay backdrop outside content
+    if (aiOverlay) {
+      aiOverlay.addEventListener('click', (e) => {
+        if (e.target === aiOverlay || (e.target && e.target.classList && e.target.classList.contains('em-ai-ui-layer'))) {
+          closeAiModal();
+        }
+      });
+    }
+
+    // Universal capturing listener ensures close and home clicks NEVER get swallowed
     document.addEventListener('click', (e) => {
+      const closeBtn = e.target && e.target.closest && e.target.closest('#em-ai-close, .em-ai-close-btn, [data-action="close-ai"]');
+      if (closeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeAiModal();
+        return;
+      }
+      const homeLink = e.target && e.target.closest && e.target.closest('#em-ai-home-link, .em-ai-logo-wrap');
+      if (homeLink) {
+        e.preventDefault();
+        e.stopPropagation();
+        goToHome();
+        return;
+      }
       const trigger = e.target && e.target.closest && e.target.closest('[data-action="open-ai"], #openAiAssistantBtn, #dockAiAssistantBtn');
       if (trigger) {
         e.preventDefault();
         e.stopPropagation();
         openAiModal();
       }
-    });
+    }, true);
+
+    window.openButtercupAi = openAiModal;
+    window.openAiModal = openAiModal;
 
     // ESC key closes modal
     window.addEventListener('keydown', (e) => {
