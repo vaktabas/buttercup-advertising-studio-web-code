@@ -27,6 +27,25 @@ const MIME_TYPES = {
   '.xml': 'application/xml; charset=utf-8'
 };
 
+const REDIRECT_MAP = {
+  '/blog': '/pages/blogs/',
+  '/blog/': '/pages/blogs/',
+  '/blogs': '/pages/blogs/',
+  '/blogs/': '/pages/blogs/',
+  '/about': '/pages/about/',
+  '/about/': '/pages/about/',
+  '/contact': '/pages/contact/',
+  '/contact/': '/pages/contact/',
+  '/work': '/pages/work/',
+  '/work/': '/pages/work/',
+  '/case-studies': '/pages/case-studies/',
+  '/case-studies/': '/pages/case-studies/',
+  '/services': '/pages/services/brand-strategy/',
+  '/services/': '/pages/services/brand-strategy/',
+  '/industries': '/pages/industries/service-base/',
+  '/industries/': '/pages/industries/service-base/'
+};
+
 const server = http.createServer((req, res) => {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -46,7 +65,27 @@ const server = http.createServer((req, res) => {
     pathname = pathname.replace(/^\/web(?:%20|\s)2\//, '/');
   }
 
-  // Handle /api/save-content
+  // 1. Google SEO & Clean URL 301 Redirects
+  if (REDIRECT_MAP[pathname]) {
+    res.writeHead(301, {
+      'Location': REDIRECT_MAP[pathname] + (parsedUrl.search || ''),
+      'Cache-Control': 'public, max-age=31536000'
+    });
+    return res.end();
+  }
+
+  // Handle /blog/<article> -> /blogs/<article>
+  if (pathname.startsWith('/blog/') && pathname !== '/blog/') {
+    const article = pathname.slice('/blog/'.length);
+    const target = '/blogs/' + article;
+    res.writeHead(301, {
+      'Location': target + (parsedUrl.search || ''),
+      'Cache-Control': 'public, max-age=31536000'
+    });
+    return res.end();
+  }
+
+  // 2. Handle /api/save-content
   if (req.method === 'POST' && (pathname === '/api/save-content' || pathname === '/api/save-content.php')) {
     let body = '';
     req.on('data', chunk => { body += chunk; });
@@ -70,7 +109,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Handle /api/reset-content
+  // 3. Handle /api/reset-content
   if (req.method === 'POST' && (pathname === '/api/reset-content' || pathname === '/api/reset-content.php')) {
     try {
       const targetPath = path.join(ROOT, 'data', 'site-customizations.json');
@@ -85,11 +124,27 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Serve static files
+  // 4. Serve static files with clean URL resolution
   let safePath = path.normalize(path.join(ROOT, pathname));
   if (!safePath.startsWith(ROOT)) {
     res.writeHead(403);
     return res.end('Forbidden');
+  }
+
+  // Check if pathname has a .html sibling
+  if (!fs.existsSync(safePath)) {
+    if (fs.existsSync(safePath + '.html')) {
+      safePath = safePath + '.html';
+    } else {
+      const cleanPathname = pathname.replace(/\/$/, '');
+      const pagesTarget = path.join(ROOT, 'pages', cleanPathname, 'index.html');
+      if (fs.existsSync(pagesTarget)) {
+        res.writeHead(301, {
+          'Location': '/pages/' + cleanPathname.replace(/^\//, '') + '/' + (parsedUrl.search || '')
+        });
+        return res.end();
+      }
+    }
   }
 
   fs.stat(safePath, (err, stats) => {
@@ -125,4 +180,3 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`Buttercup Server running on port ${PORT}`);
 });
-

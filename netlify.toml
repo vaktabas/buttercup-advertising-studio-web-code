@@ -27,6 +27,62 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Google SEO & Clean URL 301 Permanent Redirects
+[[redirects]]
+  from = "/blog"
+  to = "/pages/blogs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/blogs/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blogs"
+  to = "/pages/blogs/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about"
+  to = "/pages/about/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/pages/contact/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/work"
+  to = "/pages/work/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case-studies"
+  to = "/pages/case-studies/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/pages/services/brand-strategy/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/industries"
+  to = "/pages/industries/service-base/"
+  status = 301
+  force = true
+
+# Fallback 404
 [[redirects]]
   from = "/*"
   to = "/pages/404/index.html"

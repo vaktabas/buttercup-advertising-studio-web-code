@@ -1,9 +1,28 @@
 # Apache & LiteSpeed High-Traffic Optimization Configuration
 # Buttercup Advertising Studio
 
-# 0. API Rewrites (Hostinger / Apache)
+# 0. Clean URL 301 Redirects & API Rewrites (Hostinger / Apache / LiteSpeed)
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # Google SEO & Clean URL 301 Permanent Redirects
+  RewriteRule ^blog/?$ /pages/blogs/ [R=301,L]
+  RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L]
+  RewriteRule ^blog/(.*)$ /blogs/$1 [R=301,L]
+
+  RewriteRule ^about/?$ /pages/about/ [R=301,L]
+  RewriteRule ^contact/?$ /pages/contact/ [R=301,L]
+  RewriteRule ^work/?$ /pages/work/ [R=301,L]
+  RewriteRule ^case-studies/?$ /pages/case-studies/ [R=301,L]
+  RewriteRule ^services/?$ /pages/services/brand-strategy/ [R=301,L]
+  RewriteRule ^industries/?$ /pages/industries/service-base/ [R=301,L]
+
+  # Clean URLs without .html
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # API Endpoints
   RewriteRule ^api/save-content/?$ api/save-content.php [QSA,L]
   RewriteRule ^api/reset-content/?$ api/reset-content.php [QSA,L]
 </IfModule>
