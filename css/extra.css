@@ -583,58 +583,30 @@ html body .navbar .nav-dropdown-wrapper:hover .underline svg path {
 }
 
 /* 12. Client Logos Marquee Styling */
-.marquee-section {
-    padding-top: clamp(1.5rem, 3vw, 2.5rem) !important;
-    padding-bottom: clamp(1.5rem, 3vw, 2.5rem) !important;
-    border-top: 1px solid rgba(0,0,0,0.08) !important;
-    overflow: hidden !important;
-}
-
-.marquee-wrapper {
-    overflow: hidden !important;
-    position: relative !important;
-}
-
 .marquee-track {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
     grid-column-gap: 0px !important;
     column-gap: 0px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
-    will-change: transform !important;
 }
 
-/* ALL logos → pure black */
 .marquee-logo-image {
-    height: 72px;
+    height: 260px;
     width: auto;
     object-fit: contain;
     flex-shrink: 0;
     display: block;
-    padding: 0 2.5rem;
-    /* Convert any color logo to pure black */
-    filter: grayscale(1) brightness(0) !important;
-    opacity: 0.85;
-    transition: opacity 0.2s ease;
-}
-
-.marquee-logo-image:hover {
-    opacity: 1;
 }
 
 @media screen and (max-width: 991px) {
     .marquee-logo-image {
-        height: 56px;
-        padding: 0 1.75rem;
+        height: 200px;
     }
 }
 
 @media screen and (max-width: 767px) {
     .marquee-logo-image {
-        height: 44px;
-        padding: 0 1.25rem;
+        height: 150px;
     }
 }
 
@@ -3274,7 +3246,6 @@ body.cs-modal-active .project-cursor-wrp {
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
     border-radius: 50% !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
-    filter: grayscale(1) brightness(0) !important;
 }
 
 .preson-name-job_wrapper .text-3x_base {
