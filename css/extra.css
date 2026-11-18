@@ -4649,3 +4649,109 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
     padding: 0 20px;
   }
 }
+
+/* ==========================================================================
+   19. MANIFESTO LEFT-STACKED HEADLINE & RIGHT EDITORIAL COPY (2-COLUMN)
+   ========================================================================== */
+.om-manifesto {
+  max-width: min(calc(100vw - clamp(140px, 12vw, 190px)), var(--content-max)) !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.mf-label {
+  max-width: min(calc(100vw - clamp(140px, 12vw, 190px)), var(--content-max)) !important;
+  margin: 0 auto 20px !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+.mf-main-grid {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  gap: clamp(36px, 5vw, 84px) !important;
+}
+
+.mf-headline-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  text-align: left !important;
+  gap: 0 !important;
+}
+
+.mf-headline-stack .mf-line {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0.94 !important;
+  font-size: clamp(38px, min(5.4vw, 8vh), 80px) !important;
+  letter-spacing: -0.015em !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+}
+
+.mf-headline-stack .mf-line span {
+  display: inline-block !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+
+.mf-stapel {
+  flex: 0 0 clamp(320px, 38vw, 490px) !important;
+  max-width: 490px !important;
+  margin-top: 0.35em !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+.mf-stapel .mf-copy {
+  margin-left: 0 !important;
+  text-transform: none !important;
+  font-size: clamp(12.5px, 1.12vw, 16px) !important;
+  line-height: 1.55 !important;
+  letter-spacing: 0.01em !important;
+  color: #FFFFFF !important;
+  opacity: 0.92 !important;
+  font-weight: 500 !important;
+}
+
+.mf-stapel .mf-copy + .mf-copy {
+  margin-top: 1.15em !important;
+}
+
+.mf-line--ende {
+  margin-top: clamp(24px, 3vh, 46px) !important;
+  width: 100% !important;
+}
+
+@media screen and (max-width: 860px) {
+  .mf-main-grid {
+    flex-direction: column !important;
+    gap: 28px !important;
+  }
+  .mf-headline-stack .mf-line {
+    font-size: clamp(32px, 8.8vw, 54px) !important;
+    line-height: 0.95 !important;
+  }
+  .mf-stapel {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    margin-top: 12px !important;
+  }
+  .mf-stapel .mf-copy {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+}

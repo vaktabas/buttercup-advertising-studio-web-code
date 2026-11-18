@@ -203,7 +203,8 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   }
 
   var mfRows = [document.querySelector('.mf-label')]
-    .concat(Array.prototype.slice.call(document.querySelectorAll('.om-manifesto > .mf-line')));
+    .concat(Array.prototype.slice.call(document.querySelectorAll('.om-manifesto .mf-line')))
+    .concat([document.querySelector('.mf-stapel')].filter(Boolean));
   var mfRowCenter = (mfRows.length - 1) / 2;
 
   var mfRowOffsets = mfRows.map(function () { return 0; });
