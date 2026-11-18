@@ -4745,17 +4745,21 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
 }
 
 .mf-line--ende .mf-phrase {
-  color: #0a0a0a !important;
+  color: #FFFFFF !important;
 }
 
 .mf-strich {
-  background: #0a0a0a !important;
-  opacity: 0.35 !important;
+  background: #FFFFFF !important;
+  opacity: 0.55 !important;
 }
 
 .mf-nachsatz {
-  color: #0a0a0a !important;
-  opacity: 0.8 !important;
+  color: #FFFFFF !important;
+  opacity: 0.9 !important;
+}
+
+.om-bold-underline::after {
+  background: #FFFFFF !important;
 }
 
 @media screen and (max-width: 860px) {
