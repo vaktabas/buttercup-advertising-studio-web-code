@@ -4,12 +4,18 @@
 # 0. Clean URL 301 Redirects & API Rewrites (Hostinger / Apache / LiteSpeed)
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteBase /
 
-  # Google SEO & Clean URL 301 Permanent Redirects
-  RewriteRule ^blog/?$ / [R=301,L]
+  # 1. Google SEO: /blog and /blog/ MUST go directly to Home Page
+  RewriteRule ^blog/?$ https://buttercup.in/ [R=301,L]
+
+  # 2. Individual articles /blog/xyz.html -> /blogs/xyz.html (only if 1 or more chars after blog/)
+  RewriteRule ^blog/(.+)$ /blogs/$1 [R=301,L]
+
+  # 3. Blogs listing page
   RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L]
-  RewriteRule ^blog/(.*)$ /blogs/$1 [R=301,L]
 
+  # 4. Other clean routes
   RewriteRule ^about/?$ /pages/about/ [R=301,L]
   RewriteRule ^contact/?$ /pages/contact/ [R=301,L]
   RewriteRule ^work/?$ /pages/work/ [R=301,L]

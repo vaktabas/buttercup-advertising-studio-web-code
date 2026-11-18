@@ -28,8 +28,8 @@ const MIME_TYPES = {
 };
 
 const REDIRECT_MAP = {
-  '/blog': '/',
-  '/blog/': '/',
+  '/blog': 'https://buttercup.in/',
+  '/blog/': 'https://buttercup.in/',
   '/blogs': '/pages/blogs/',
   '/blogs/': '/pages/blogs/',
   '/about': '/pages/about/',
