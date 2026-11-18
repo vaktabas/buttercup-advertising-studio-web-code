@@ -583,30 +583,54 @@ html body .navbar .nav-dropdown-wrapper:hover .underline svg path {
 }
 
 /* 12. Client Logos Marquee Styling */
+.marquee-section {
+    padding-top: 40px !important;
+    padding-bottom: 60px !important;
+}
+
 .marquee-track {
-    grid-column-gap: 0px !important;
-    column-gap: 0px !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    grid-column-gap: 56px !important;
+    column-gap: 56px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+    align-items: center !important;
 }
 
 .marquee-logo-image {
-    height: 260px;
-    width: auto;
-    object-fit: contain;
-    flex-shrink: 0;
-    display: block;
+    height: 36px !important;
+    max-height: 40px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.25s ease, transform 0.25s ease !important;
+}
+
+.marquee-logo-image:hover {
+    opacity: 1 !important;
+    transform: scale(1.06) !important;
 }
 
 @media screen and (max-width: 991px) {
+    .marquee-track {
+        grid-column-gap: 40px !important;
+        column-gap: 40px !important;
+    }
     .marquee-logo-image {
-        height: 200px;
+        height: 30px !important;
+        max-height: 34px !important;
     }
 }
 
 @media screen and (max-width: 767px) {
+    .marquee-track {
+        grid-column-gap: 32px !important;
+        column-gap: 32px !important;
+    }
     .marquee-logo-image {
-        height: 150px;
+        height: 26px !important;
+        max-height: 30px !important;
     }
 }
 
@@ -3259,27 +3283,56 @@ body.cs-modal-active .project-cursor-wrp {
 }
 
 /* ==========================================================================
-   14. TESTIMONIALS SLIDER NAVIGATION (LEFT/RIGHT BUTTONS REMOVED)
+   14. TESTIMONIALS SLIDER NAVIGATION (MUBIEN / TEMPLATE STYLE)
    ========================================================================== */
-.zts-testimonials-navigation,
+.zts-testimonials-navigation {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    gap: 12px !important;
+    z-index: 10 !important;
+}
+
 .zts-testimonials-navigation-prev-button,
 .zts-testimonials-navigation-next-button {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    position: absolute !important;
-    top: -9999px !important;
-    left: -9999px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    background-color: #ffffff !important;
+    color: #121212 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.zts-testimonials-navigation-prev-button:hover,
+.zts-testimonials-navigation-next-button:hover {
+    transform: scale(1.08) !important;
+    background-color: #121212 !important;
+    color: #ffffff !important;
 }
 
 .testimonial-arrow_icon {
-    display: none !important;
+    display: flex !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+@media screen and (max-width: 991px) {
+    .zts-testimonials-navigation {
+        position: static !important;
+        margin-bottom: 24px !important;
+        justify-content: flex-start !important;
+    }
 }
 
 /* ==========================================================================

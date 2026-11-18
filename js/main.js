@@ -1500,8 +1500,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // APPLE-STYLE FLOATING RIGHT NAVIGATION DOCK (Auto-injected for resilience)
   // =========================================================================
   function initAppleDock() {
-    const isHome = document.body.getAttribute('data-page') === 'index' || !!document.getElementById('gravityHome');
-    if (!isHome) return;
+    // Disabled in favor of Mubien-style bottom floating pill navigation
+    // Auto-load mubien-nav.js if not already present
+    if (!document.querySelector('script[src*="mubien-nav.js"]')) {
+      const script = document.createElement('script');
+      let prefix = '';
+      const loc = window.location.pathname;
+      if (loc.includes('/pages/services/') || loc.includes('/pages/industries/')) {
+        prefix = '../../../';
+      } else if (loc.includes('/pages/')) {
+        prefix = '../../';
+      } else if (loc.includes('/projects/')) {
+        prefix = '../';
+      }
+      script.src = prefix + 'js/mubien-nav.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+    return;
 
     const dockHTML = `
       <a href="#gravityHome" class="apple-dock-item" data-action="scroll-top" aria-label="Home">
