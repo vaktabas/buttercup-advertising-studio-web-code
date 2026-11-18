@@ -919,7 +919,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cursorRing.classList.toggle("is-hovering", isHovering);
         cursorDot.classList.toggle("is-hovering", isHovering);
       }
-      const isOverDockOrPopup = !!(e.target && e.target.closest && e.target.closest('.apple-dock, .industry-dropdown-popup, .industry-subpopup, .services-popup'));
+      const isOverDockOrPopup = !!(e.target && e.target.closest && e.target.closest('.apple-dock, .industry-dropdown-popup, .industry-subpopup, .services-popup, .mubien-drawer, .mubien-pill-bar, .mubien-backdrop'));
       if (isOverDockOrPopup) {
         cursorDot.style.display = 'none';
         cursorRing.style.display = 'none';

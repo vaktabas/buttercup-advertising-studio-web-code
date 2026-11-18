@@ -322,18 +322,11 @@ a,
 
 
 
-      /* Hide native OS mouse arrow inside web 2 zone so custom round cursor is visible there */
+      /* Ensure cursor is always visible inside web 2 zone */
       @media (pointer: fine) {
-
-        html.in-web2-zone #web2Rest,
-        html.in-web2-zone #web2Rest * {
-          cursor: none !important;
+        html.in-web2-zone #web2Rest {
+          cursor: auto !important;
         }
-      }
-
-      html.custom-cursor-active.in-web2-zone #web2Rest,
-      html.custom-cursor-active.in-web2-zone #web2Rest * {
-        cursor: none !important;
       }
     </style>
   </div>

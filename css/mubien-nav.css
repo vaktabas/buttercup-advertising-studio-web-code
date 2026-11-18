@@ -552,3 +552,40 @@
     height: 125px !important;
   }
 }
+
+/* 6. Explicit Cursor Visibility Guarantee */
+.mubien-pill-bar,
+.mubien-pill-bar * {
+  cursor: pointer !important;
+}
+
+.mubien-backdrop {
+  cursor: pointer !important;
+}
+
+.mubien-drawer {
+  cursor: default !important;
+}
+
+.mubien-drawer * {
+  cursor: default;
+}
+
+.mubien-card,
+.mubien-card *,
+.mubien-reel-card,
+.mubien-reel-card *,
+.mubien-reel-play-btn,
+.mubien-contact-slider,
+.mubien-contact-slider *,
+.mubien-drawer-brand-btn,
+.mubien-drawer-brand-btn *,
+.mubien-drawer-close-btn,
+.mubien-drawer-close-btn *,
+.mubien-drawer a,
+.mubien-drawer a *,
+.mubien-drawer button,
+.mubien-drawer button * {
+  cursor: pointer !important;
+}
+

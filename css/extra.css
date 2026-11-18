@@ -419,25 +419,36 @@ span:not([class*="w-icon-"]):not([class*="icon-"]),
     }
 }
 
-/* Hide native OS mouse arrow so only the custom round cursor is visible */
+/* Ensure native OS cursor is always visible and intuitive across the site */
 @media (pointer: fine) {
     html,
-    body,
-    body *,
+    body {
+        cursor: auto !important;
+    }
+
     a,
     button,
-    input,
-    textarea,
-    select,
-    [role="button"] {
-        cursor: none !important;
+    [role="button"],
+    input[type="submit"],
+    input[type="button"],
+    .cards,
+    .main-btn,
+    .menu-button,
+    .custom-lightbox-close {
+        cursor: pointer !important;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        cursor: text !important;
     }
 }
 
 html.custom-cursor-active,
-html.custom-cursor-active body,
-html.custom-cursor-active body * {
-    cursor: none !important;
+html.custom-cursor-active body {
+    cursor: auto !important;
 }
 
 /* 10. Video Lightbox Modal */
