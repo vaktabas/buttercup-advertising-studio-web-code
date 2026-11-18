@@ -4665,6 +4665,11 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   margin: 0 auto 20px !important;
   text-align: left !important;
   width: 100% !important;
+  color: #0c0c0c !important;
+  opacity: 0.75 !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.22em !important;
 }
 
 .mf-main-grid {
@@ -4672,7 +4677,7 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   justify-content: space-between !important;
   align-items: flex-start !important;
   width: 100% !important;
-  gap: clamp(36px, 5vw, 84px) !important;
+  gap: clamp(40px, 6vw, 96px) !important;
 }
 
 .mf-headline-stack {
@@ -4683,21 +4688,23 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   flex: 1 1 auto !important;
   min-width: 0 !important;
   text-align: left !important;
-  gap: 0 !important;
+  gap: 0.08em !important;
 }
 
 .mf-headline-stack .mf-line {
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
-  width: 100% !important;
+  width: auto !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 0.94 !important;
-  font-size: clamp(38px, min(5.4vw, 8vh), 80px) !important;
-  letter-spacing: -0.015em !important;
+  gap: 0.28em !important;
+  line-height: 0.92 !important;
+  font-size: clamp(44px, min(6.2vw, 9.4vh), 92px) !important;
+  letter-spacing: -0.02em !important;
   text-transform: uppercase !important;
-  font-weight: 800 !important;
+  font-weight: 850 !important;
+  color: #0a0a0a !important;
   text-align: left !important;
 }
 
@@ -4705,11 +4712,12 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
   display: inline-block !important;
   white-space: nowrap !important;
   text-align: left !important;
+  color: #0a0a0a !important;
 }
 
 .mf-stapel {
-  flex: 0 0 clamp(320px, 38vw, 490px) !important;
-  max-width: 490px !important;
+  flex: 0 0 clamp(320px, 36vw, 470px) !important;
+  max-width: 470px !important;
   margin-top: 0.35em !important;
   display: flex !important;
   flex-direction: column !important;
@@ -4719,12 +4727,12 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
 .mf-stapel .mf-copy {
   margin-left: 0 !important;
   text-transform: none !important;
-  font-size: clamp(12.5px, 1.12vw, 16px) !important;
+  font-size: clamp(13px, 1.15vw, 15.5px) !important;
   line-height: 1.55 !important;
-  letter-spacing: 0.01em !important;
-  color: #FFFFFF !important;
-  opacity: 0.92 !important;
-  font-weight: 500 !important;
+  letter-spacing: 0.005em !important;
+  color: #0f0f0f !important;
+  opacity: 0.88 !important;
+  font-weight: 600 !important;
 }
 
 .mf-stapel .mf-copy + .mf-copy {
@@ -4732,8 +4740,22 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
 }
 
 .mf-line--ende {
-  margin-top: clamp(24px, 3vh, 46px) !important;
+  margin-top: clamp(28px, 4vh, 52px) !important;
   width: 100% !important;
+}
+
+.mf-line--ende .mf-phrase {
+  color: #0a0a0a !important;
+}
+
+.mf-strich {
+  background: #0a0a0a !important;
+  opacity: 0.35 !important;
+}
+
+.mf-nachsatz {
+  color: #0a0a0a !important;
+  opacity: 0.8 !important;
 }
 
 @media screen and (max-width: 860px) {
@@ -4742,8 +4764,8 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
     gap: 28px !important;
   }
   .mf-headline-stack .mf-line {
-    font-size: clamp(32px, 8.8vw, 54px) !important;
-    line-height: 0.95 !important;
+    font-size: clamp(34px, 9vw, 56px) !important;
+    line-height: 0.94 !important;
   }
   .mf-stapel {
     flex: 1 1 100% !important;
