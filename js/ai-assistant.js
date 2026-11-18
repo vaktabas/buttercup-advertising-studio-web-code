@@ -1878,26 +1878,18 @@
       });
     }
 
-    // Close when clicking directly on overlay backdrop outside content
-    if (aiOverlay) {
-      aiOverlay.addEventListener('click', (e) => {
-        if (e.target === aiOverlay || (e.target && e.target.classList && e.target.classList.contains('em-ai-ui-layer'))) {
-          closeAiModal();
-        }
-      });
-    }
-
     // Universal capturing listener ensures close and home clicks NEVER get swallowed
+    // Note: Background/backdrop click intentionally DOES NOT close the modal so users can interact freely with 3D robot and UI
     document.addEventListener('click', (e) => {
-      const closeBtn = e.target && e.target.closest && e.target.closest('#em-ai-close, .em-ai-close-btn, [data-action="close-ai"]');
-      if (closeBtn) {
+      const closeBtn = e.target && e.target.closest && e.target.closest('#em-ai-close, .em-ai-close-btn');
+      if (closeBtn && isModalOpen) {
         e.preventDefault();
         e.stopPropagation();
         closeAiModal();
         return;
       }
-      const homeLink = e.target && e.target.closest && e.target.closest('#em-ai-home-link, .em-ai-logo-wrap');
-      if (homeLink) {
+      const homeLink = e.target && e.target.closest && e.target.closest('#em-ai-home-link');
+      if (homeLink && isModalOpen) {
         e.preventDefault();
         e.stopPropagation();
         goToHome();
