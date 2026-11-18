@@ -144,48 +144,76 @@
     return Array.from(new Set(urls));
   }
 
-  // Load customizations asynchronously from disk JSON and localStorage
+  // Load customizations asynchronously from server and localStorage
   async function loadInitialCustomizations() {
     initImageKeys();
-    // 1. Fetch from data/site-customizations.json (source of truth on disk/repo)
-    try {
-      let jsonPath = "data/site-customizations.json";
-      const p = window.location.pathname || "";
-      if (p.includes('/pages/services/') || p.includes('/pages/industries/')) {
-        jsonPath = "../../../data/site-customizations.json";
-      } else if (p.includes('/pages/')) {
-        jsonPath = "../../data/site-customizations.json";
-      }
-      
-      const res = await fetch(`${jsonPath}?t=${Date.now()}`);
-      if (res.ok) {
-        const remote = await res.json();
-        if (remote && typeof remote === "object") {
-          if (remote.texts) Object.assign(customizations.texts, remote.texts);
-          if (remote.images) Object.assign(customizations.images, remote.images);
-          if (remote.links) Object.assign(customizations.links, remote.links);
-          if (remote.lockedProjects) Object.assign(customizations.lockedProjects, remote.lockedProjects);
+
+    let serverLoaded = false;
+    // 1. Try fetching dynamically from live API first (bypasses CDN cache completely!)
+    const candidateUrls = getCandidateApiUrls("save-content");
+    for (const url of candidateUrls) {
+      try {
+        const res = await fetch(`${url}?t=${Date.now()}`);
+        if (res.ok) {
+          const remote = await res.json();
+          if (remote && typeof remote === "object") {
+            if (remote.texts) Object.assign(customizations.texts, remote.texts);
+            if (remote.images) Object.assign(customizations.images, remote.images);
+            if (remote.links) Object.assign(customizations.links, remote.links);
+            if (remote.lockedProjects) Object.assign(customizations.lockedProjects, remote.lockedProjects);
+            serverLoaded = true;
+            // Sync local storage to match live server truth
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(customizations));
+            } catch (_) {}
+            break;
+          }
         }
-      }
-    } catch (e) {
-      // Offline or static fallback
+      } catch (_) {}
     }
 
-    // 2. Merge with localStorage (local unsaved drafts)
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const local = JSON.parse(saved);
-        if (local && typeof local === "object") {
-          if (local.texts) Object.assign(customizations.texts, local.texts);
-          if (local.images) Object.assign(customizations.images, local.images);
-          if (local.links) Object.assign(customizations.links, local.links);
-          if (local.lockedProjects) Object.assign(customizations.lockedProjects, local.lockedProjects);
+    // 2. If API was not reachable, fallback to data/site-customizations.json
+    if (!serverLoaded) {
+      try {
+        let jsonPath = "data/site-customizations.json";
+        const p = window.location.pathname || "";
+        if (p.includes('/pages/services/') || p.includes('/pages/industries/')) {
+          jsonPath = "../../../data/site-customizations.json";
+        } else if (p.includes('/pages/') || p.includes('/blogs/') || p.includes('/projects/')) {
+          jsonPath = "../../data/site-customizations.json";
         }
-      }
-    } catch (e) {}
+        
+        const res = await fetch(`${jsonPath}?t=${Date.now()}`);
+        if (res.ok) {
+          const remote = await res.json();
+          if (remote && typeof remote === "object") {
+            if (remote.texts) Object.assign(customizations.texts, remote.texts);
+            if (remote.images) Object.assign(customizations.images, remote.images);
+            if (remote.links) Object.assign(customizations.links, remote.links);
+            if (remote.lockedProjects) Object.assign(customizations.lockedProjects, remote.lockedProjects);
+            serverLoaded = true;
+          }
+        }
+      } catch (e) {}
+    }
 
-    // 3. Apply to DOM
+    // 3. Fallback to localStorage ONLY if completely offline
+    if (!serverLoaded) {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const local = JSON.parse(saved);
+          if (local && typeof local === "object") {
+            if (local.texts) Object.assign(customizations.texts, local.texts);
+            if (local.images) Object.assign(customizations.images, local.images);
+            if (local.links) Object.assign(customizations.links, local.links);
+            if (local.lockedProjects) Object.assign(customizations.lockedProjects, local.lockedProjects);
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 4. Apply to DOM
     applySavedCustomizations();
   }
 

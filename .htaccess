@@ -8,6 +8,13 @@
   RewriteRule ^api/reset-content/?$ api/reset-content.php [QSA,L]
 </IfModule>
 
+# Prevent CDN caching on dynamic customizations and API
+<FilesMatch "\.(json|php)$">
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+  Header set Expires "0"
+</FilesMatch>
+
 # 1. Enable GZIP & Brotli Compression
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
