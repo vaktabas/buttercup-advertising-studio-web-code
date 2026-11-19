@@ -30,8 +30,16 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
 
-# Static Assets (Images, Icons, SVG): 1-Year Immutable Edge & Browser Cache
+# Static Assets (Images, Icons, SVG, Fonts, Videos): 1-Year Immutable Edge & Browser Cache
 /images/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/videos/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
 
