@@ -1004,11 +1004,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       // Add Web3Forms access key & recipient info
-      // Primary: vakta.bas@gmail.com | CC: info@buttercup.in
+      // Primary: vakta.bas@gmail.com | Secondary (parallel): info@buttercup.in
       const PRIMARY_KEY = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
-      const SECONDARY_KEY = ""; // Optional dedicated key for info@buttercup.in
+      const SECONDARY_KEY = ""; // Set info@buttercup.in key here when available
       dataObj["access_key"] = PRIMARY_KEY;
-      dataObj["ccemail"] = "info@buttercup.in";
+      // Note: ccemail is Web3Forms Pro only — using dual-submission instead
       dataObj["subject"] = dataObj["_subject"] || "New Project Inquiry - Buttercup Advertising Studio";
       dataObj["from_name"] = "Buttercup Advertising Studio Website";
 
