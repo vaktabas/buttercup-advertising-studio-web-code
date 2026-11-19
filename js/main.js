@@ -933,7 +933,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // 13. CONTACT FORM SUBMISSION (FormSubmit -> vakta.bas@gmail.com)
+  // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in & vakta.bas@gmail.com)
   // =========================================================================
   function setupContactForm() {
     const form = document.getElementById("email-form");
@@ -1003,33 +1003,61 @@ document.addEventListener("DOMContentLoaded", () => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      // Add Web3Forms access key
-      dataObj["access_key"] = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
+      // Add Web3Forms access key & recipient info
+      // Primary: vakta.bas@gmail.com | CC: info@buttercup.in
+      const PRIMARY_KEY = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
+      const SECONDARY_KEY = ""; // Optional dedicated key for info@buttercup.in
+      dataObj["access_key"] = PRIMARY_KEY;
+      dataObj["ccemail"] = "info@buttercup.in";
       dataObj["subject"] = dataObj["_subject"] || "New Project Inquiry - Buttercup Advertising Studio";
       dataObj["from_name"] = "Buttercup Advertising Studio Website";
 
       try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(dataObj),
-          signal: controller.signal
-        });
+        const fetchPromises = [
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(dataObj),
+            signal: controller.signal
+          })
+        ];
 
+        // If secondary key for info@buttercup.in is configured, dispatch parallel copy
+        if (SECONDARY_KEY && SECONDARY_KEY.trim() !== "") {
+          const secondaryData = Object.assign({}, dataObj, { access_key: SECONDARY_KEY.trim() });
+          fetchPromises.push(
+            fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              body: JSON.stringify(secondaryData),
+              signal: controller.signal
+            })
+          );
+        }
+
+        const responses = await Promise.allSettled(fetchPromises);
         clearTimeout(timeoutId);
-        const result = await response.json().catch(() => ({}));
 
-        if (result.success === true) {
-          form.style.display = "none";
-          if (successCard) {
-            successCard.style.display = "block";
-            successCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        const primaryRes = responses[0];
+        if (primaryRes.status === "fulfilled" && primaryRes.value.ok) {
+          const result = await primaryRes.value.json().catch(() => ({}));
+          if (result.success === true) {
+            form.style.display = "none";
+            if (successCard) {
+              successCard.style.display = "block";
+              successCard.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          } else {
+            throw new Error(result.message || "Failed to submit form");
           }
         } else {
-          throw new Error(result.message || "Failed to submit form");
+          throw new Error("Failed to submit form");
         }
       } catch (err) {
         clearTimeout(timeoutId);
@@ -1049,7 +1077,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (err.name === "AbortError") {
           if (errorCard) {
             errorCard.style.display = "block";
-            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Request timed out. Please check your internet connection and try again, or email us at <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>");
+            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Request timed out. Please check your internet connection and try again, or email us at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a> / <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>");
             errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
           }
           return;
@@ -1061,6 +1089,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (submitErr) {
           if (errorCard) {
             errorCard.style.display = "block";
+            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Something went wrong while sending your message. Please try again or reach out directly at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a> / <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>.");
             errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         }
