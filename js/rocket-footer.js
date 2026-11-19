@@ -95,11 +95,22 @@
     var isVisible = false;
     var footerEl = document.querySelector('.rwl-footer') || canvas.parentElement;
 
+    function ensureVideoSource(el) {
+      if (!el) return;
+      var dSrc = el.getAttribute('data-src');
+      if (dSrc && (!el.src || el.src === window.location.href)) {
+        el.src = dSrc;
+        el.load();
+      }
+    }
+
     if ('IntersectionObserver' in window && footerEl) {
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           isVisible = entry.isIntersecting;
           if (isVisible) {
+            ensureVideoSource(video);
+            ensureVideoSource(bgVideo);
             video.play().catch(function() {});
             if (bgVideo) bgVideo.play().catch(function() {});
           } else {
@@ -111,6 +122,8 @@
       observer.observe(footerEl);
     } else {
       isVisible = true;
+      ensureVideoSource(video);
+      ensureVideoSource(bgVideo);
       video.play().catch(function() {});
       if (bgVideo) bgVideo.play().catch(function() {});
     }
