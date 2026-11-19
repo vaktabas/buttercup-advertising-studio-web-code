@@ -49,3 +49,4 @@ We walk the whole journey with a brand — often from the first word of its name
 - **Website**: [https://buttercup.in](https://buttercup.in)
 - **LLM Context**: [https://buttercup.in/llms.txt](https://buttercup.in/llms.txt)
 - **MCP Server Card**: [https://buttercup.in/.well-known/mcp/server-card.json](https://buttercup.in/.well-known/mcp/server-card.json)
+
