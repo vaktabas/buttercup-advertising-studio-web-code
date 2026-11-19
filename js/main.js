@@ -1006,7 +1006,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Add Web3Forms access key & recipient info
       // Primary: vakta.bas@gmail.com | Secondary (parallel): info@buttercup.in
       const PRIMARY_KEY = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
-      const SECONDARY_KEY = ""; // Set info@buttercup.in key here when available
+      const SECONDARY_KEY = "a34185cd-5cda-4094-8c3d-93484874796e"; // info@buttercup.in
       dataObj["access_key"] = PRIMARY_KEY;
       // Note: ccemail is Web3Forms Pro only — using dual-submission instead
       dataObj["subject"] = dataObj["_subject"] || "New Project Inquiry - Buttercup Advertising Studio";
