@@ -590,7 +590,19 @@
       }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // High-performance RAF throttle to eliminate forced layout reflows on mobile
+    let isNavScrollTicking = false;
+    function handleScrollThrottled() {
+      if (!isNavScrollTicking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          isNavScrollTicking = false;
+        });
+        isNavScrollTicking = true;
+      }
+    }
+
+    window.addEventListener('scroll', handleScrollThrottled, { passive: true });
     // Trigger on load
     handleScroll();
   }

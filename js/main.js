@@ -8,10 +8,14 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // =========================================================================
-  // 1. LENIS SMOOTH SCROLL
+  // 1. LENIS SMOOTH SCROLL (Desktop only — Mobile uses native 120Hz touch scroll)
   // =========================================================================
   let lenis = null;
-  if (typeof Lenis !== "undefined") {
+  const isMobileOrTouch = (window.innerWidth <= 991) ||
+                          ('ontouchstart' in window && window.innerWidth <= 1024) ||
+                          (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
+
+  if (typeof Lenis !== "undefined" && !isMobileOrTouch) {
     try {
       lenis = new Lenis({
         lerp: 0.1,
@@ -51,6 +55,16 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {
       console.warn("Lenis initialization error:", e);
     }
+  } else {
+    // Graceful mobile stub for window.lenis so modal open/close calls never fail
+    window.lenis = {
+      start: () => {},
+      stop: () => {},
+      scrollTo: (target, opt) => {
+        const top = typeof target === 'number' ? target : 0;
+        window.scrollTo({ top: top, behavior: opt && opt.immediate ? 'auto' : 'smooth' });
+      }
+    };
   }
 
   // =========================================================================
@@ -66,13 +80,15 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(...pluginsToRegister);
       }
 
-      // Sync Lenis with GSAP ScrollTrigger
+      // Sync Lenis with GSAP ScrollTrigger if desktop Lenis is active
       if (lenis && typeof ScrollTrigger !== "undefined") {
         lenis.on("scroll", ScrollTrigger.update);
         gsap.ticker.add((time) => {
           lenis.raf(time * 1000);
         });
-        gsap.ticker.lagSmoothing(0);
+        gsap.ticker.lagSmoothing(500, 33);
+      } else if (typeof ScrollTrigger !== "undefined") {
+        gsap.ticker.lagSmoothing(500, 33);
       }
     } catch (e) {
       console.warn("GSAP plugin registration error:", e);

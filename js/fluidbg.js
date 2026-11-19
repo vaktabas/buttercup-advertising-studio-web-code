@@ -1,7 +1,13 @@
 (function () {
   "use strict";
 
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  // Disable on mobile/tablet or touch screens to ensure buttery smooth 60/120fps native scrolling
+  const isTouchOrMobile = (window.innerWidth <= 991) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0) ||
+                          (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+
+  if (isTouchOrMobile || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
     return;
   }
 
@@ -1040,7 +1046,7 @@
           updatePointerMoveData(pointer, posX, posY, pointer.color);
         }
       },
-      false
+      { passive: true }
     );
     
     window.addEventListener("touchend", (e) => {

@@ -4781,3 +4781,37 @@ body:has(.industry-subpopup:hover) .custom-cursor-ring {
     line-height: 1.5 !important;
   }
 }
+
+/* ==========================================================================
+   MOBILE NATIVE 120HZ MOMENTUM SCROLL & GPU ACCELERATION
+   ========================================================================== */
+@media screen and (max-width: 991px) {
+  html, body {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: pan-y !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Completely disable heavy background WebGL canvas on mobile */
+  canvas.fluid-bg, .fluid-bg {
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* GPU compositing layers for buttery smooth scroll */
+  .section, .wrapper, .service-group, .review-section, .good-fit-cards {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Optimize off-screen rendering on mobile */
+  .service-elements img.service-img {
+    content-visibility: auto;
+    contain-intrinsic-size: 300px 350px;
+  }
+}

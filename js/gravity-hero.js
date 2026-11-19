@@ -1012,7 +1012,30 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
     elAttractor.setAttribute('opacity', Math.min(0.9, env * 1.8));
 
-    requestAnimationFrame(frame);
+    if (isStageVisible) {
+      heroRafId = requestAnimationFrame(frame);
+    } else {
+      heroRafId = null;
+    }
+  }
+
+  var isStageVisible = true;
+  var heroRafId = null;
+
+  if ('IntersectionObserver' in window && stage) {
+    var stageObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var prev = isStageVisible;
+        isStageVisible = entry.isIntersecting;
+        if (isStageVisible && !prev) {
+          lastT = performance.now();
+          if (!heroRafId) {
+            heroRafId = requestAnimationFrame(frame);
+          }
+        }
+      });
+    }, { threshold: 0.02 });
+    stageObs.observe(stage);
   }
 
   placeShape(elMass, CX, CY);
@@ -1021,7 +1044,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   resolveCoreDistance(small); resolveCoreDistance(ring);
   placeShape(elSmall, small.x, small.y);
   placeShape(elRing, ring.x, ring.y);
-  requestAnimationFrame(frame);
+  heroRafId = requestAnimationFrame(frame);
 
   var elBrandLink = document.querySelector('.om-brand-heim');
   if (elBrandLink) {
