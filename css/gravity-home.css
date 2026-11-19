@@ -85,7 +85,7 @@
     position:relative; z-index:3;
     width:100%; height:150vh;
     background:var(--bg);
-    --photo:url('../images/gravity/portrait.jpg?v=p3');
+    --photo:url('../images/gravity/portrait.jpg?v=p4');
   }
 
   .om-bg::after{
