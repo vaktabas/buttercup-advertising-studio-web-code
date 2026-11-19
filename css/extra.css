@@ -3190,6 +3190,13 @@ body.cs-modal-active .project-cursor-wrp {
     width: 100% !important;
 }
 
+.contact-form.is-submitted,
+.contact-form.is-hidden,
+.contact-form[style*="display: none"],
+.contact-form[style*="display:none"] {
+    display: none !important;
+}
+
 .contact-form .contact-field_wrapper.is-full-width {
     grid-column: 1 / -1 !important;
 }

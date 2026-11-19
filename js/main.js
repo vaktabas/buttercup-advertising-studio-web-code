@@ -970,7 +970,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check if user returned from native redirect (?submitted=true)
     if (window.location.search.includes("submitted=true")) {
-      form.style.display = "none";
+      form.style.setProperty("display", "none", "important");
+      form.classList.add("is-submitted");
+      form.classList.add("is-hidden");
       if (successCard) {
         successCard.style.display = "block";
       }
@@ -1064,7 +1066,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (primaryRes.status === "fulfilled" && primaryRes.value.ok) {
           const result = await primaryRes.value.json().catch(() => ({}));
           if (result.success === true) {
-            form.style.display = "none";
+            form.style.setProperty("display", "none", "important");
+            form.classList.add("is-submitted");
+            form.classList.add("is-hidden");
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              if (submitBtn.tagName === "INPUT") {
+                submitBtn.value = "Message Sent ✓";
+              } else {
+                submitBtn.textContent = "Message Sent ✓";
+              }
+            }
             if (successCard) {
               successCard.style.display = "block";
               successCard.scrollIntoView({ behavior: "smooth", block: "center" });
