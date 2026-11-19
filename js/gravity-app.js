@@ -140,7 +140,7 @@
     if (img.decode) { img.decode().then(zeigen, zeigen); } else { zeigen(); }
   };
   img.onerror = zeigen;
-  img.src = 'images/gravity/portrait.jpg?v=lace1';
+  img.src = 'images/gravity/portrait.jpg?v=p2';
   if (img.complete && img.naturalWidth) { img.onload(); }
 
   setTimeout(zeigen, 2000);
@@ -157,8 +157,8 @@
 
   var FG_DARK = '#FFFFFF';
   var FG_LIGHT = '#2B2B2B';
-  var PHOTO_DARK = 'images/gravity/portrait.jpg?v=lace1';
-  var PHOTO_LIGHT = 'images/gravity/portrait.jpg?v=lace1';
+  var PHOTO_DARK = 'images/gravity/portrait.jpg?v=p2';
+  var PHOTO_LIGHT = 'images/gravity/portrait.jpg?v=p2';
 
   var OVERLAY_DARK = ['rgba(16,16,16,0.72)', 'rgba(16,16,16,0.38)', 'rgba(16,16,16,0.12)'];
   var OVERLAY_LIGHT = ['rgba(16,16,16,0.16)', 'rgba(16,16,16,0.08)', 'rgba(16,16,16,0.02)'];
@@ -3783,9 +3783,9 @@
     bild.src = quelle;
   }
 
-  laden('images/gravity/tiefenkarte.png', function (karte) {
+  laden('images/gravity/tiefenkarte.png?v=tk2', function (karte) {
     if (!karte) { status('tiefenkarte.png fehlt'); return; }
-    laden('images/gravity/portrait.jpg?v=lace1', function (foto) {
+    laden('images/gravity/portrait.jpg?v=p2', function (foto) {
       if (!foto) { status('portrait.jpg fehlt'); return; }
 
       try {
