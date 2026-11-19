@@ -1,0 +1,29 @@
+# Buttercup Advertising Studio
+
+> Award-winning creative branding, brand strategy, visual identity, and advertising agency based in Ahmedabad, Gujarat, India. Led by Creative Director & Founder Sneha Vakta Shah.
+
+Buttercup Advertising Studio (BAS) crafts bold brand identities, strategic narratives, packaging design, and modern interactive digital experiences for ambitious businesses across India and internationally.
+
+## Core Services
+- [Brand Strategy](https://buttercup.in/pages/services/brand-strategy/): Market positioning, audience persona architecture, competitive benchmarking, and core brand manifestos.
+- [Visual Identity](https://buttercup.in/pages/services/visual-identity/): Custom logo marks, typography hierarchies, brand guidelines, stationery, and packaging design.
+- [Brand Communication](https://buttercup.in/pages/services/marketing-communication/): Multi-channel campaign direction, creative copywriting, digital narratives, and launch campaigns.
+- [Product Base Industries](https://buttercup.in/pages/industries/product-base/): Branding for FMCG, Cosmetics, Textiles, Jewellery, Industrial Lubricants, Pharmaceuticals, and Medical Devices.
+- [Service Base Industries](https://buttercup.in/pages/industries/service-base/): Branding for Management Consulting, IT, Real Estate, Hospitality, Healthcare, and Finance.
+
+## Key Pages & Resources
+- [Homepage](https://buttercup.in/): Interactive showcase, agency manifesto, and brand overview.
+- [About Studio](https://buttercup.in/pages/about/): Background, founder vision, awards, and design philosophy.
+- [Pricing & Packages](https://buttercup.in/pages/pricing/): Transparent service tiers and starting packages from ₹49,999.
+- [Selected Work & Case Studies](https://buttercup.in/pages/case-studies/): Featured client branding and identity case studies.
+- [Contact & Consultation](https://buttercup.in/pages/contact/): Project inquiry and quotation form.
+- [Blogs & Insights](https://buttercup.in/pages/blogs/): Articles on brand architecture, luxury color theory, Gen Z authenticity, and rebranding strategy.
+- [Terms of Service](https://buttercup.in/pages/terms/): Client terms, intellectual property, and engagement terms.
+- [Privacy & Licenses](https://buttercup.in/utilities/licenses.html): Privacy policy and asset licensing.
+
+## Studio Details
+- Location: Ahmedabad, Gujarat &mdash; India
+- Email: info@buttercup.in
+- Phone: +91 99250 34404
+- Official Website: https://buttercup.in
+- MCP Server Card: https://buttercup.in/.well-known/mcp/server-card.json

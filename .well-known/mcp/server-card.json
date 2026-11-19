@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "buttercup-advertising-studio",
+  "title": "Buttercup Advertising Studio MCP Server",
+  "description": "Model Context Protocol interface for Buttercup Advertising Studio — creative brand strategy, visual identity design, portfolio case studies, and consultation booking.",
+  "version": "1.0.0",
+  "homepage": "https://buttercup.in",
+  "documentation": "https://buttercup.in/llms.txt",
+  "endpoint": "https://buttercup.in/api/mcp",
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    },
+    "prompts": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "get_services",
+      "description": "Retrieve comprehensive details on brand strategy, logo design, packaging, and advertising campaigns offered by Buttercup Advertising Studio.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "enum": ["brand-strategy", "visual-identity", "marketing-communication", "all"],
+            "description": "Service category to query"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_pricing",
+      "description": "Get transparent package pricing and deliverables for Brand Strategy (₹49,999+), Visual Identity (₹74,999+), and Brand Communication (₹99,999+).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": ["strategy", "identity", "campaign", "all"]
+          }
+        }
+      }
+    },
+    {
+      "name": "get_portfolio_case_studies",
+      "description": "Explore client branding case studies across FMCG, Luxury, Steel, Textiles, Hospitality, and Technology.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "industry": {
+            "type": "string",
+            "description": "Filter by industry"
+          }
+        }
+      }
+    },
+    {
+      "name": "request_consultation",
+      "description": "Submit a project brief or schedule a creative brand consultation with Sneha Vakta Shah and the Buttercup team.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["name", "email", "project_details"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Client email address"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Client phone number"
+          },
+          "project_details": {
+            "type": "string",
+            "description": "Description of the branding, identity, or advertising requirements"
+          }
+        }
+      }
+    }
+  ],
+  "contact": {
+    "name": "Sneha Vakta Shah",
+    "role": "Creative Director & Founder",
+    "email": "info@buttercup.in",
+    "phone": "+91 99250 34404",
+    "address": "Ahmedabad, Gujarat, India"
+  }
+}

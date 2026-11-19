@@ -38,6 +38,17 @@
   RewriteRule ^service/?$ /pages/services/brand-strategy/ [R=301,L]
   RewriteRule ^industries/?$ /pages/industries/service-base/ [R=301,L]
 
+  # 8. Pricing & Legal pages
+  RewriteRule ^pricing/?$ /pages/pricing/ [R=301,L]
+  RewriteRule ^terms/?$ /pages/terms/ [R=301,L]
+  RewriteRule ^privacy/?$ /utilities/licenses.html [R=301,L]
+
+  # 9. Agent Content Negotiation: Serve Markdown when Accept header requests text/markdown
+  RewriteCond %{HTTP:Accept} text/markdown [NC]
+  RewriteCond %{REQUEST_URI} ^/?$ [OR]
+  RewriteCond %{REQUEST_URI} ^/index(\.html)?$
+  RewriteRule ^.*$ /index.md [L,T=text/markdown;charset=UTF-8]
+
   # Clean URLs without .html
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
@@ -46,6 +57,11 @@
   # API Endpoints
   RewriteRule ^api/save-content/?$ api/save-content.php [QSA,L]
   RewriteRule ^api/reset-content/?$ api/reset-content.php [QSA,L]
+</IfModule>
+
+# Allow access to .well-known directory
+<IfModule mod_rewrite.c>
+  RewriteRule ^\.well-known/ - [L]
 </IfModule>
 
 # Prevent CDN caching on dynamic customizations and API
@@ -57,12 +73,12 @@
 
 # 1. Enable GZIP & Brotli Compression
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/markdown
   AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
   AddOutputFilterByType DEFLATE image/svg+xml application/xml
 </IfModule>
 
-# 2. Browser & CDN Cache Expiration (1-Year for Static Assets)
+# 2. Browser & CDN Cache Expiration
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault "access plus 1 month"
@@ -80,15 +96,34 @@
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
 
-  # HTML: Fresh delivery
+  # HTML & Markdown: Fresh delivery
   ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/markdown "access plus 0 seconds"
 </IfModule>
 
-# 3. Security Headers
+# 3. Security Headers, RFC 8288 Link Headers & CORS
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # RFC 8288 Link headers on homepage for AI Agents
+  SetEnvIf Request_URI "^/(index\.html)?$" HOMEPAGE_LINK=1
+  Header set Link '</llms.txt>; rel="describedby"; type="text/markdown", </index.md>; rel="alternate"; type="text/markdown"' env=HOMEPAGE_LINK
+
+  # CORS for MCP Server Card and LLM Resources
+  <FilesMatch "^(server-card\.json|llms\.txt|llms-full\.txt|index\.md)$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Accept"
+  </FilesMatch>
+</IfModule>
+
+# MIME Types for Agent Resources
+<IfModule mod_mime.c>
+  AddType text/markdown;charset=UTF-8 .md
+  AddType text/plain;charset=UTF-8 .txt
+  AddType application/json;charset=UTF-8 .json
 </IfModule>
 
 # 4. Custom 404 Error Page
