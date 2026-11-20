@@ -1605,7 +1605,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (errorMsg) errorMsg.style.display = 'none';
           if (btnText) btnText.textContent = '✓ Access Granted! Opening...';
           setTimeout(() => {
-            window.location.href = 'admin/leads.html';
+            window.location.href = 'admin/leads.html?v=' + Date.now();
           }, 350);
         } else {
           if (errorMsg) errorMsg.style.display = 'block';
