@@ -320,76 +320,85 @@ document.addEventListener("DOMContentLoaded", () => {
       const totalScrollCards = scrollCards.length;
 
       if (cardWrap && totalScrollCards > 0 && hasST) {
-        scrollCards.forEach((card, index) => {
-          gsap.set(card, {
-            transformPerspective: 1000,
-            x: 0,
-            y: 1000,
-            z: 750,
-            rotateX: 90,
-            scale: 1,
-            zIndex: index + 1
-          });
-        });
+        ScrollTrigger.matchMedia({
+          // Desktop screens: 3D stacking scroll animation with pin
+          "(min-width: 769px)": function () {
+            scrollCards.forEach((card, index) => {
+              gsap.set(card, {
+                transformPerspective: 1000,
+                x: 0,
+                y: 1000,
+                z: 750,
+                rotateX: 90,
+                scale: 1,
+                zIndex: index + 1
+              });
+            });
 
-        const cardDuration = 1.5;
-        const cardStagger = 2;
-        const enterPhaseEndTime = (totalScrollCards - 1) * cardStagger + cardDuration;
-        const holdDuration = 0.5;
-        const totalTimelineDuration = enterPhaseEndTime + holdDuration;
+            const cardDuration = 1.5;
+            const cardStagger = 2;
+            const enterPhaseEndTime = (totalScrollCards - 1) * cardStagger + cardDuration;
+            const holdDuration = 0.5;
+            const totalTimelineDuration = enterPhaseEndTime + holdDuration;
+            const scrollDistanceVh = Math.round((totalScrollCards - 1) * 44 + 40);
 
-        // Smooth scroll pin distance (~44vh per card on desktop; compact on mobile to eliminate excessive white gap)
-        const isMobileScreen = window.innerWidth <= 768;
-        const scrollDistanceVh = isMobileScreen
-          ? Math.round((totalScrollCards - 1) * 22 + 15)
-          : Math.round((totalScrollCards - 1) * 44 + 40);
+            const masterTL = gsap.timeline({
+              scrollTrigger: {
+                trigger: cardWrap,
+                start: "top top",
+                end: `+=${scrollDistanceVh}%`,
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true
+              }
+            });
 
-        const masterTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: cardWrap,
-            start: "top top",
-            end: `+=${scrollDistanceVh}%`,
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true
-          }
-        });
+            if (cardHeadline) {
+              masterTL.to(cardHeadline, {
+                scale: 0.75,
+                duration: enterPhaseEndTime,
+                ease: "none"
+              }, 0);
+            }
 
-        if (cardHeadline) {
-          masterTL.to(cardHeadline, {
-            scale: 0.75,
-            duration: enterPhaseEndTime,
-            ease: "none"
-          }, 0);
-        }
+            scrollCards.forEach((card, index) => {
+              const cardStartTime = index * cardStagger;
 
-        scrollCards.forEach((card, index) => {
-          const cardStartTime = index * cardStagger;
-
-          masterTL.to(card, {
-            x: 0,
-            y: 0,
-            z: 0,
-            rotateX: 0,
-            scale: 1,
-            duration: cardDuration,
-            ease: "power2.out"
-          }, cardStartTime);
-
-          if (index > 0) {
-            for (let i = 0; i < index; i++) {
-              masterTL.to(scrollCards[i], {
-                y: -35 * (index - i),
+              masterTL.to(card, {
+                x: 0,
+                y: 0,
+                z: 0,
+                rotateX: 0,
+                scale: 1,
                 duration: cardDuration,
                 ease: "power2.out"
               }, cardStartTime);
+
+              if (index > 0) {
+                for (let i = 0; i < index; i++) {
+                  masterTL.to(scrollCards[i], {
+                    y: -35 * (index - i),
+                    duration: cardDuration,
+                    ease: "power2.out"
+                  }, cardStartTime);
+                }
+              }
+            });
+
+            masterTL.to({}, { duration: holdDuration }, enterPhaseEndTime);
+          },
+
+          // Mobile screens: clean, responsive horizontal swipe without scroll-jacking, zero glitch, zero blank space
+          "(max-width: 768px)": function () {
+            scrollCards.forEach((card) => {
+              gsap.set(card, { clearProps: "all" });
+            });
+            if (cardHeadline) {
+              gsap.set(cardHeadline, { clearProps: "all" });
             }
           }
         });
-
-        // Small hold so the final card rests cleanly before unpinning directly into reviews
-        masterTL.to({}, { duration: holdDuration }, enterPhaseEndTime);
       }
     };
 
