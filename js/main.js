@@ -986,8 +986,162 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // DYNAMIC 12-SECOND CENTER SQUARE WHATSAPP MODAL POPUP
-  // Screen ke beech-o-beech bada square luxury popup with instant WhatsApp chat
+  // 1. AUTOMATIC SILENT VISITOR TELEMETRY & CITY DETECTION
+  // Captures IP, City, Region, Device, Referrer, Page into /data/visitors-log.csv
+  // =========================================================================
+  async function initVisitorTracking() {
+    if (window.__btrTrackingInitialized) return;
+    window.__btrTrackingInitialized = true;
+
+    let detectedCity = 'Detecting...';
+    let detectedCountry = 'India';
+
+    try {
+      // Fast IP Geolocation lookup
+      const res = await fetch('https://freeipapi.com/api/json', { signal: AbortSignal.timeout(4000) });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.cityName) {
+          detectedCity = data.cityName + (data.regionName ? ', ' + data.regionName : '');
+          detectedCountry = data.countryName || 'India';
+          window.__btrDetectedCity = detectedCity;
+          window.__btrDetectedCountry = detectedCountry;
+        }
+      }
+    } catch (e) {
+      try {
+        const fbRes = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+        if (fbRes.ok) {
+          const fbData = await fbRes.json();
+          if (fbData && fbData.city) {
+            detectedCity = fbData.city + (fbData.region ? ', ' + fbData.region : '');
+            detectedCountry = fbData.country_name || 'India';
+            window.__btrDetectedCity = detectedCity;
+            window.__btrDetectedCountry = detectedCountry;
+          }
+        }
+      } catch (err) {}
+    }
+
+    try {
+      const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+        ? window.location.origin + '/api/track-visitor.php'
+        : 'api/track-visitor.php';
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'visit',
+          city: detectedCity,
+          country: detectedCountry,
+          page: window.location.pathname + window.location.search,
+          referrer: document.referrer || 'Direct / Bookmark',
+          screen: window.innerWidth + 'x' + window.innerHeight
+        }),
+        keepalive: true
+      }).catch(() => {});
+    } catch (err) {}
+  }
+
+  // =========================================================================
+  // 2. BROWSER LOCATION PERMISSION PROMPT ("Personalize for your city")
+  // =========================================================================
+  function initLocationPermissionPrompt() {
+    if (localStorage.getItem('btr_loc_dismissed') === '1') return;
+    if (document.getElementById('btrLocPrompt')) return;
+
+    const locCard = document.createElement('div');
+    locCard.id = 'btrLocPrompt';
+    locCard.className = 'btr-loc-prompt';
+    locCard.innerHTML = `
+      <div class="btr-loc-prompt-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <div class="btr-loc-prompt-content">
+        <span class="btr-loc-prompt-title">Personalize for your city?</span>
+        <span class="btr-loc-prompt-subtitle">Enable location to view studio projects & availability near you.</span>
+      </div>
+      <div class="btr-loc-prompt-actions">
+        <button class="btr-loc-btn-allow" id="btrLocAllowBtn">Allow</button>
+        <button class="btr-loc-btn-close" id="btrLocCloseBtn" aria-label="Dismiss">&times;</button>
+      </div>
+    `;
+    document.body.appendChild(locCard);
+
+    // Show after 4.5 seconds
+    setTimeout(() => {
+      locCard.classList.add('is-active');
+    }, 4500);
+
+    const allowBtn = document.getElementById('btrLocAllowBtn');
+    const closeBtn = document.getElementById('btrLocCloseBtn');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        locCard.classList.remove('is-active');
+        localStorage.setItem('btr_loc_dismissed', '1');
+        setTimeout(() => locCard.remove(), 400);
+      });
+    }
+
+    if (allowBtn) {
+      allowBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          locCard.classList.remove('is-active');
+          return;
+        }
+
+        allowBtn.textContent = 'Detecting...';
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const locStr = `GPS [${lat.toFixed(4)}, ${lon.toFixed(4)}] • ${window.__btrDetectedCity || 'India'}`;
+            window.__btrDetectedCity = locStr;
+
+            const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+              ? window.location.origin + '/api/track-visitor.php'
+              : 'api/track-visitor.php';
+
+            fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'visit',
+                city: locStr,
+                country: window.__btrDetectedCountry || 'India',
+                page: window.location.pathname,
+                referrer: 'Browser Geolocation Granted',
+                screen: window.innerWidth + 'x' + window.innerHeight
+              }),
+              keepalive: true
+            }).catch(() => {});
+
+            allowBtn.textContent = '✓ Saved';
+            localStorage.setItem('btr_loc_dismissed', '1');
+            setTimeout(() => {
+              locCard.classList.remove('is-active');
+              setTimeout(() => locCard.remove(), 400);
+            }, 1800);
+          },
+          (err) => {
+            locCard.classList.remove('is-active');
+            localStorage.setItem('btr_loc_dismissed', '1');
+            setTimeout(() => locCard.remove(), 400);
+          },
+          { timeout: 8000, enableHighAccuracy: true }
+        );
+      });
+    }
+  }
+
+  // =========================================================================
+  // 3. DYNAMIC 12-SECOND CENTER SQUARE WHATSAPP & LEAD CAPTURE MODAL
+  // Screen ke beech-o-beech bada square luxury popup with instant contact capture
   // =========================================================================
   function initCenterSquareWhatsAppModal() {
     // Remove any legacy elements
@@ -1023,15 +1177,26 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3 class="btr-wa-square-title">Chat on WhatsApp</h3>
 
         <p class="btr-wa-square-desc">
-          Have a brand, design or campaign project? Talk directly with our creative team on WhatsApp.
+          Have a brand, design or campaign project? Enter your details to connect directly:
         </p>
 
-        <a href="https://wa.me/919925034404?text=${encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!')}"
-           target="_blank" rel="noopener noreferrer" class="btr-wa-square-btn" id="btrWaSquareCta">
-          <span>Chat on WhatsApp</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
+        <form class="btr-wa-form" id="btrWaForm" onsubmit="return false;">
+          <div class="btr-wa-inputs">
+            <input type="text" id="btrLeadName" class="btr-wa-input" placeholder="Your Name (e.g. Rahul)" autocomplete="name">
+            <input type="tel" id="btrLeadPhone" class="btr-wa-input" placeholder="WhatsApp / Phone Number" autocomplete="tel">
+          </div>
+
+          <button type="button" class="btr-wa-square-btn" id="btrWaSquareCta">
+            <span id="btrWaBtnText">Connect on WhatsApp</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </form>
+
+        <a href="https://wa.me/919925034404?text=Hi%20Buttercup%20Studio%2C%20I%20saw%20your%20work%20on%20buttercup.in%20and%20I%20want%20to%20discuss%20a%20project!"
+           target="_blank" rel="noopener noreferrer" class="btr-wa-skip-link" id="btrWaSkipLink">
+          Or skip and open WhatsApp directly &rarr;
         </a>
 
         <div class="btr-wa-square-footer">
@@ -1042,7 +1207,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(overlay);
 
     let isHovered = false;
+    let isInputFocused = false;
     let autoHideTimer = null;
+
+    const nameInput = document.getElementById('btrLeadName');
+    const phoneInput = document.getElementById('btrLeadPhone');
+    const btnCta = document.getElementById('btrWaSquareCta');
+    const btnText = document.getElementById('btrWaBtnText');
+    const skipLink = document.getElementById('btrWaSkipLink');
+
+    if (nameInput) {
+      nameInput.addEventListener('focus', () => { isInputFocused = true; if (autoHideTimer) clearTimeout(autoHideTimer); });
+      nameInput.addEventListener('blur', () => { isInputFocused = false; });
+    }
+    if (phoneInput) {
+      phoneInput.addEventListener('focus', () => { isInputFocused = true; if (autoHideTimer) clearTimeout(autoHideTimer); });
+      phoneInput.addEventListener('blur', () => { isInputFocused = false; });
+    }
 
     function isFooterInView() {
       const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
@@ -1059,17 +1240,66 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.setAttribute('aria-hidden', 'false');
 
       if (autoHideTimer) clearTimeout(autoHideTimer);
-      // Auto-hide after 7 seconds if user doesn't hover or interact
+      // Auto-hide after 9 seconds if user doesn't hover or interact
       autoHideTimer = setTimeout(() => {
-        if (!isHovered) {
+        if (!isHovered && !isInputFocused) {
           hideModal();
         }
-      }, 7000);
+      }, 9000);
     }
 
     function hideModal() {
       overlay.classList.remove('is-active');
       overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    // Lead Capture & Instant WhatsApp Redirect
+    if (btnCta) {
+      btnCta.addEventListener('click', () => {
+        const nameVal = nameInput ? nameInput.value.trim() : '';
+        const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+
+        if (nameVal || phoneVal) {
+          if (btnText) btnText.textContent = 'Connecting...';
+
+          const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+            ? window.location.origin + '/api/track-visitor.php'
+            : 'api/track-visitor.php';
+
+          fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'lead',
+              name: nameVal,
+              phone: phoneVal,
+              city: window.__btrDetectedCity || 'India',
+              page: window.location.pathname,
+              notes: 'Captured via 12s WhatsApp Center Modal'
+            }),
+            keepalive: true
+          }).catch(() => {});
+        }
+
+        let waMsg = 'Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!';
+        if (nameVal) {
+          waMsg = `Hi Buttercup Studio! My name is ${nameVal}${phoneVal ? ' (' + phoneVal + ')' : ''}. I saw your work on buttercup.in and I want to discuss a project!`;
+        }
+
+        const waUrl = `https://wa.me/919925034404?text=${encodeURIComponent(waMsg)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+        hideModal();
+        if (nameInput) nameInput.value = '';
+        if (phoneInput) phoneInput.value = '';
+        if (btnText) btnText.textContent = 'Connect on WhatsApp';
+      });
+    }
+
+    if (skipLink) {
+      skipLink.addEventListener('click', () => {
+        hideModal();
+      });
     }
 
     // Keep visible while hovering over the square card
@@ -1081,10 +1311,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       modalBox.addEventListener('mouseleave', () => {
         isHovered = false;
-        if (overlay.classList.contains('is-active')) {
+        if (overlay.classList.contains('is-active') && !isInputFocused) {
           autoHideTimer = setTimeout(() => {
             hideModal();
-          }, 3000);
+          }, 4000);
         }
       });
     }
@@ -1135,6 +1365,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 12000);
   }
 
+  // Initialize Visitor Tracking, Location Permission, and WhatsApp Modal
+  initVisitorTracking();
+  initLocationPermissionPrompt();
   initCenterSquareWhatsAppModal();
 
   // =========================================================================
@@ -1247,6 +1480,27 @@ document.addEventListener("DOMContentLoaded", () => {
             })
           );
         }
+
+        // Mirror lead to local server leads database (leads.csv & leads.json)
+        try {
+          const localTrackUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+            ? window.location.origin + '/api/track-visitor.php'
+            : 'api/track-visitor.php';
+          fetch(localTrackUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'lead',
+              name: dataObj['Name'] || dataObj['name'] || '',
+              phone: dataObj['Phone'] || dataObj['phone'] || dataObj['contact'] || '',
+              email: dataObj['Email'] || dataObj['email'] || '',
+              notes: dataObj['Message'] || dataObj['message'] || 'Website Contact Form Submission',
+              city: window.__btrDetectedCity || 'Website Contact Form',
+              page: window.location.pathname
+            }),
+            keepalive: true
+          }).catch(() => {});
+        } catch (e) {}
 
         const responses = await Promise.allSettled(fetchPromises);
         clearTimeout(timeoutId);
