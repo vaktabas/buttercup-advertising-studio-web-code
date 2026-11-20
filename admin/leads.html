@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="world-map.css?v=1">
+  <link rel="stylesheet" href="world-map.css?v=1795193566">
   <style>
     :root {
       --bg: #090a0f;
@@ -1083,10 +1083,12 @@
 
         <!-- Controls -->
         <div class="btr-globe-controls">
-          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomIn()" title="Zoom In (+)">➕ Zoom In</button>
-          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomOut()" title="Zoom Out (-)">➖ Zoom Out</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.rotateLeft()" title="Spin 3D Globe Left">⬅️ Rotate Left</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.rotateRight()" title="Spin 3D Globe Right">➡️ Rotate Right</button>
           <button class="globe-ctrl-btn" onclick="worldMapInstance.focusIndia()" title="Focus on Studio HQ (Ahmedabad, India)">📍 Focus India (HQ)</button>
           <button class="globe-ctrl-btn" id="btnToggleRotate" onclick="worldMapInstance.toggleAutoRotate()" title="Toggle Auto-Rotation">⏸️ Pause Spin</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomIn()" title="Zoom In (+)">➕ Zoom In</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomOut()" title="Zoom Out (-)">➖ Zoom Out</button>
         </div>
 
         <div class="btr-globe-hint">
@@ -1095,65 +1097,65 @@
         </div>
       </div>
 
-      <!-- COLOR HEATMAP LEGEND BAR (रंगों का मतलब) -->
+      <!-- COLOR HEATMAP LEGEND BAR -->
       <div class="btr-map-legend-bar">
         <div class="legend-bar-title">
           <div class="legend-title-badge">🎨 TRAFFIC HEATMAP COLOR GUIDE</div>
-          <div class="legend-title-hindi">मैप पर किस रंग का क्या मतलब है:</div>
+          <div class="legend-title-sub" style="font-size:12.5px; color:#c084fc; font-weight:600;">Global Traffic Density Color Legend:</div>
         </div>
 
         <div class="legend-cards-row">
           <div class="legend-card tier-red">
             <div class="legend-card-top">
               <span class="legend-dot-pulse red"></span>
-              <span class="legend-tier-name">🔴 लाल (Red Glow)</span>
+              <span class="legend-tier-name">🔴 Red Glow</span>
             </div>
-            <div class="legend-traffic-heading">सबसे ज़्यादा विज़िटर्स (Highest Traffic)</div>
-            <div class="legend-traffic-desc">Primary audience hub (>50% traffic volume). E.g. India & metro cities. Glowing red pillar & radar wave.</div>
+            <div class="legend-traffic-heading">Critical / Maximum Traffic</div>
+            <div class="legend-traffic-desc">Primary audience hub (50%+ traffic volume). Studio HQ in India. Pulsing beacon & illuminated red landmass.</div>
           </div>
 
           <div class="legend-card tier-orange">
             <div class="legend-card-top">
               <span class="legend-dot-pulse orange"></span>
-              <span class="legend-tier-name">🟠 नारंगी (Neon Orange)</span>
+              <span class="legend-tier-name">🟠 Neon Orange</span>
             </div>
-            <div class="legend-traffic-heading">काफ़ी ज़्यादा विज़िटर्स (High Traffic)</div>
-            <div class="legend-traffic-desc">Strong recurring engagement (10 - 19 visits). Active commercial inquiries.</div>
+            <div class="legend-traffic-heading">High Traffic Volume</div>
+            <div class="legend-traffic-desc">Strong recurring engagement (10 - 19 visits). Active commercial inquiries (e.g. UAE, United States).</div>
           </div>
 
           <div class="legend-card tier-yellow">
             <div class="legend-card-top">
               <span class="legend-dot-pulse yellow"></span>
-              <span class="legend-tier-name">🟡 पीला (Gold Yellow)</span>
+              <span class="legend-tier-name">🟡 Gold Yellow</span>
             </div>
-            <div class="legend-traffic-heading">मध्यम विज़िटर्स (Moderate Traffic)</div>
-            <div class="legend-traffic-desc">Steady exploratory visits (5 - 9 visits). Exploring case studies and services.</div>
+            <div class="legend-traffic-heading">Moderate Traffic Volume</div>
+            <div class="legend-traffic-desc">Steady exploratory sessions (5 - 9 visits). Exploring case studies and services (e.g. United Kingdom, Canada).</div>
           </div>
 
           <div class="legend-card tier-green">
             <div class="legend-card-top">
               <span class="legend-dot-pulse green"></span>
-              <span class="legend-tier-name">🟢 हरा (Emerald Green)</span>
+              <span class="legend-tier-name">🟢 Emerald Green</span>
             </div>
-            <div class="legend-traffic-heading">सक्रिय विज़िटर्स (Growing Traffic)</div>
-            <div class="legend-traffic-desc">Active organic or referral visits (2 - 4 visits). Category discovery.</div>
+            <div class="legend-traffic-heading">Growing Traffic Volume</div>
+            <div class="legend-traffic-desc">Active organic or referral visits (2 - 4 visits). Brand discovery (e.g. Singapore, Germany).</div>
           </div>
 
           <div class="legend-card tier-cyan">
             <div class="legend-card-top">
               <span class="legend-dot-pulse cyan"></span>
-              <span class="legend-tier-name">🔵 नीला (Electric Cyan)</span>
+              <span class="legend-tier-name">🔵 Electric Cyan</span>
             </div>
-            <div class="legend-traffic-heading">शुरुआती विज़िटर्स (Emerging Traffic)</div>
-            <div class="legend-traffic-desc">Initial global discovery sessions (1 visit). Expanding international presence.</div>
+            <div class="legend-traffic-heading">Emerging Traffic</div>
+            <div class="legend-traffic-desc">Initial global discovery sessions (1 visit). Expanding international presence (e.g. Australia, France).</div>
           </div>
 
           <div class="legend-card tier-dark">
             <div class="legend-card-top">
               <span class="legend-dot-pulse dark"></span>
-              <span class="legend-tier-name">⚫ गहरा (Dark Muted)</span>
+              <span class="legend-tier-name">⚫ Dark Muted</span>
             </div>
-            <div class="legend-traffic-heading">शून्य विज़िट (No Traffic Yet)</div>
+            <div class="legend-traffic-heading">Zero Recorded Traffic</div>
             <div class="legend-traffic-desc">0 recorded sessions. Untapped geographical market.</div>
           </div>
         </div>
@@ -1498,6 +1500,6 @@
     checkAuth();
   </script>
   <script src="../js/vendor/three.min.js"></script>
-  <script src="world-map.js?v=1"></script>
+  <script src="world-map.js?v=1795193544"></script>
 </body>
 </html>

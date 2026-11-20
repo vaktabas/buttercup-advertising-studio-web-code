@@ -84,6 +84,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
+  scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
@@ -334,7 +335,7 @@
 }
 
 /* =========================================================================
-   COLOR HEATMAP LEGEND BAR (रंगों का मतलब)
+   COLOR HEATMAP LEGEND BAR (Global Density Tiers)
    ========================================================================= */
 .btr-map-legend-bar {
   padding: 22px 28px;
@@ -361,8 +362,8 @@
   gap: 6px;
 }
 
-.legend-title-hindi {
-  font-size: 13.5px;
+.legend-title-sub {
+  font-size: 13px;
   font-weight: 600;
   color: #c084fc;
 }

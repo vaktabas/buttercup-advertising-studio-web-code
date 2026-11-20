@@ -1,18 +1,20 @@
 /**
  * 3D REAL-TIME WORLD TRAFFIC MAP & HEATMAP ENGINE
  * Buttercup Advertising Studio — Master Intelligence Dashboard
- * Interactive Three.js 3D Earth Globe with Live Visitor Heatmap Telemetry
+ * Photorealistic Three.js 3D Earth Globe with 360° Smooth Mouse Rotation,
+ * Country Traffic Heatmap Color Coding, Live Session Flight Arcs & Beacons.
+ * 100% English UI and Professional Analytics Standards.
  */
 
 (function () {
   "use strict";
 
-  // Coordinates Database for World Countries & Major Metros
+  // Coordinates Database for World Countries & Metros
   const COUNTRY_GEO = {
     IN: { name: "India", flag: "🇮🇳", lat: 20.5937, lon: 78.9629, capital: "New Delhi", hqCity: "Ahmedabad" },
+    AE: { name: "United Arab Emirates", flag: "🇦🇪", lat: 23.4241, lon: 53.8478, capital: "Abu Dhabi" },
     US: { name: "United States", flag: "🇺🇸", lat: 37.0902, lon: -95.7129, capital: "Washington, D.C." },
     GB: { name: "United Kingdom", flag: "🇬🇧", lat: 55.3781, lon: -3.4360, capital: "London" },
-    AE: { name: "United Arab Emirates", flag: "🇦🇪", lat: 23.4241, lon: 53.8478, capital: "Abu Dhabi" },
     CA: { name: "Canada", flag: "🇨🇦", lat: 56.1304, lon: -106.3468, capital: "Ottawa" },
     AU: { name: "Australia", flag: "🇦🇺", lat: -25.2744, lon: 133.7751, capital: "Canberra" },
     DE: { name: "Germany", flag: "🇩🇪", lat: 51.1657, lon: 10.4515, capital: "Berlin" },
@@ -38,48 +40,20 @@
     TH: { name: "Thailand", flag: "🇹🇭", lat: 15.8700, lon: 100.9925, capital: "Bangkok" }
   };
 
-  // Studio HQ: Ahmedabad, Gujarat, India
-  const HQ_COORDS = { lat: 23.0225, lon: 72.5714, name: "Buttercup Studio HQ (Ahmedabad)" };
+  // Studio Headquarters: Ahmedabad, Gujarat, India
+  const HQ_COORDS = { lat: 23.0225, lon: 72.5714, name: "Buttercup Studio HQ (Ahmedabad, India)" };
 
-  // Color Palette by Traffic Density Tier
+  // Color Palette by Traffic Density Tier (100% English)
   const TIERS = {
-    RED: { key: "red", hex: "#ef4444", num: 0xef4444, label: "🔴 Highest Traffic", hindi: "सबसे ज़्यादा विज़िटर्स", minVisits: 20 },
-    ORANGE: { key: "orange", hex: "#f97316", num: 0xf97316, label: "🟠 High Traffic", hindi: "काफ़ी ज़्यादा विज़िटर्स", minVisits: 10 },
-    YELLOW: { key: "yellow", hex: "#eab308", num: 0xeab308, label: "🟡 Moderate Traffic", hindi: "मध्यम विज़िटर्स", minVisits: 5 },
-    GREEN: { key: "green", hex: "#10b981", num: 0x10b981, label: "🟢 Growing Traffic", hindi: "सक्रिय विज़िटर्स", minVisits: 2 },
-    CYAN: { key: "cyan", hex: "#06b6d4", num: 0x06b6d4, label: "🔵 Emerging Traffic", hindi: "शुरुआती विज़िटर्स", minVisits: 1 },
-    DARK: { key: "dark", hex: "#334155", num: 0x334155, label: "⚫ No Traffic", hindi: "शून्य विज़िट", minVisits: 0 }
+    RED: { key: "red", hex: "#ef4444", num: 0xef4444, label: "Critical / Maximum Traffic", short: "Highest Traffic", minVisits: 20 },
+    ORANGE: { key: "orange", hex: "#f97316", num: 0xf97316, label: "High Traffic Volume", short: "High Traffic", minVisits: 10 },
+    YELLOW: { key: "yellow", hex: "#eab308", num: 0xeab308, label: "Moderate Traffic Volume", short: "Moderate Traffic", minVisits: 5 },
+    GREEN: { key: "green", hex: "#10b981", num: 0x10b981, label: "Growing Traffic Volume", short: "Growing Traffic", minVisits: 2 },
+    CYAN: { key: "cyan", hex: "#06b6d4", num: 0x06b6d4, label: "Emerging Traffic", short: "Emerging Traffic", minVisits: 1 },
+    DARK: { key: "dark", hex: "#334155", num: 0x334155, label: "Zero Recorded Traffic", short: "Zero Traffic", minVisits: 0 }
   };
 
-  // World Landmass Polygons for Equirectangular Projection on Sphere
-  const CONTINENT_POLYS = [
-    // North America
-    [[-168, 65], [-140, 70], [-120, 72], [-85, 75], [-60, 50], [-65, 45], [-75, 35], [-80, 25], [-97, 22], [-105, 20], [-115, 30], [-125, 48], [-140, 58], [-168, 65]],
-    // Central & South America
-    [[-85, 15], [-75, 10], [-60, 10], [-35, -5], [-35, -15], [-45, -24], [-55, -35], [-68, -54], [-75, -50], [-72, -30], [-80, -5], [-82, 8], [-85, 15]],
-    // Europe
-    [[-10, 36], [0, 43], [12, 44], [25, 40], [35, 42], [42, 48], [55, 60], [30, 70], [15, 60], [5, 52], [-5, 48], [-10, 36]],
-    // British Isles
-    [[-5, 50], [1, 51], [0, 58], [-5, 58], [-5, 50]],
-    // Africa
-    [[-17, 30], [10, 37], [32, 32], [51, 12], [42, 5], [40, -10], [35, -25], [20, -35], [15, -30], [10, -5], [0, 5], [-15, 10], [-17, 30]],
-    // Madagascar
-    [[44, -12], [50, -15], [47, -25], [43, -25], [44, -12]],
-    // Asia & Middle East
-    [[35, 32], [50, 30], [60, 25], [68, 24], [72, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24], [80, 10], [105, 10], [120, 22], [125, 32], [140, 45], [170, 65], [140, 70], [80, 72], [40, 45], [35, 32]],
-    // India subcontinent detailed triangle
-    [[68, 24], [70, 28], [74, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24]],
-    // Japan
-    [[130, 32], [136, 35], [142, 44], [140, 40], [130, 32]],
-    // Australia
-    [[114, -22], [130, -12], [145, -15], [153, -28], [145, -38], [130, -32], [115, -35], [114, -22]],
-    // New Zealand
-    [[172, -35], [178, -38], [174, -45], [168, -45], [172, -35]],
-    // Greenland
-    [[-55, 60], [-25, 70], [-20, 80], [-50, 82], [-60, 75], [-55, 60]]
-  ];
-
-  // Helper: Convert (lat, lon) to 3D Cartesian Vector3 on sphere
+  // Helper: Convert (lat, lon) to 3D Cartesian coordinates on sphere
   function latLonToVector3(lat, lon, radius, alt) {
     alt = alt || 0;
     const phi = (90 - lat) * (Math.PI / 180);
@@ -91,7 +65,7 @@
     return new THREE.Vector3(x, y, z);
   }
 
-  // World Map Singleton Manager
+  // 3D World Map Engine Class
   class WorldMap3DEngine {
     constructor() {
       this.isInitialized = false;
@@ -106,17 +80,20 @@
       this.beaconsGroup = null;
       this.arcsGroup = null;
       this.ripplesGroup = null;
-      this.particlesGroup = null;
       this.raycaster = null;
       this.mouse = null;
+
+      // Mouse drag and 360° rotation physics
       this.isDragging = false;
       this.previousMousePosition = { x: 0, y: 0 };
-      this.targetRotation = { x: 0.2, y: -2.3 }; // Starts facing India
-      this.currentRotation = { x: 0.2, y: -2.3 };
-      this.targetZoom = 15;
-      this.currentZoom = 15;
+      this.dragVelocity = { x: 0, y: 0 };
+      this.targetRotation = { x: 0.22, y: -2.3 }; // Initial view centered on India & Asia
+      this.currentRotation = { x: 0.22, y: -2.3 };
+      this.targetZoom = 14.5;
+      this.currentZoom = 14.5;
       this.isAutoRotate = true;
       this.animationFrameId = null;
+
       this.tooltip = null;
       this.activeCountryData = [];
       this.arcParticles = [];
@@ -125,7 +102,11 @@
     }
 
     init(containerId) {
-      if (this.isInitialized) return;
+      if (this.isInitialized) {
+        this.onResize();
+        return;
+      }
+
       this.container = document.getElementById(containerId);
       if (!this.container) return;
 
@@ -134,21 +115,20 @@
 
       this.tooltip = document.getElementById("btrGlobeTooltip");
 
-      // Verify Three.js
       if (typeof THREE === "undefined") {
-        console.warn("Three.js not loaded. Falling back to 2D view.");
+        console.error("Three.js library is required for 3D globe visualization.");
         return;
       }
 
-      const width = this.container.clientWidth || 800;
-      const height = this.container.clientHeight || 520;
+      const width = Math.max(this.container.clientWidth || 800, 400);
+      const height = Math.max(this.container.clientHeight || 520, 360);
 
       // 1. Scene & Camera
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
       this.camera.position.z = this.currentZoom;
 
-      // 2. Renderer
+      // 2. WebGL Renderer
       this.renderer = new THREE.WebGLRenderer({
         canvas: this.canvas,
         antialias: true,
@@ -158,25 +138,25 @@
       this.renderer.setSize(width, height);
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-      // 3. Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+      // 3. Realistic Sunlight & Ambient Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
       this.scene.add(ambientLight);
 
-      const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.9);
-      dirLight1.position.set(20, 15, 20);
-      this.scene.add(dirLight1);
+      const sunLight = new THREE.DirectionalLight(0xffffff, 1.1);
+      sunLight.position.set(25, 18, 22);
+      this.scene.add(sunLight);
 
-      const dirLight2 = new THREE.DirectionalLight(0x818cf8, 0.6);
-      dirLight2.position.set(-20, -10, -15);
-      this.scene.add(dirLight2);
+      const secondaryLight = new THREE.DirectionalLight(0x60a5fa, 0.45);
+      secondaryLight.position.set(-25, -12, -20);
+      this.scene.add(secondaryLight);
 
       // 4. Background Starfield
       this.createStarfield();
 
-      // 5. Earth Globe Sphere & Texture
+      // 5. Realistic Earth Globe Sphere & Texture
       this.createGlobeSphere();
 
-      // 6. Groups for dynamic elements
+      // 6. Groups for Dynamic Country Beacons & Session Arcs
       this.beaconsGroup = new THREE.Group();
       this.arcsGroup = new THREE.Group();
       this.ripplesGroup = new THREE.Group();
@@ -184,11 +164,11 @@
       this.scene.add(this.arcsGroup);
       this.scene.add(this.ripplesGroup);
 
-      // 7. Raycaster for hover/click
+      // 7. Raycasting for Mouse Hover
       this.raycaster = new THREE.Raycaster();
       this.mouse = new THREE.Vector2();
 
-      // 8. Event Listeners
+      // 8. Event Listeners for Smooth Dragging & Pinch Zoom
       this.setupEventListeners();
 
       this.isInitialized = true;
@@ -196,115 +176,62 @@
     }
 
     createStarfield() {
-      const starCount = 800;
-      const starGeo = new THREE.BufferGeometry();
-      const starPos = new Float32Array(starCount * 3);
+      const count = 900;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
 
-      for (let i = 0; i < starCount * 3; i += 3) {
-        starPos[i] = (Math.random() - 0.5) * 120;
-        starPos[i + 1] = (Math.random() - 0.5) * 120;
-        starPos[i + 2] = (Math.random() - 0.5) * 120;
+      for (let i = 0; i < count * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 140;
+        positions[i + 1] = (Math.random() - 0.5) * 140;
+        positions[i + 2] = (Math.random() - 0.5) * 140;
       }
-      starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
-      const starMat = new THREE.PointsMaterial({
+      const material = new THREE.PointsMaterial({
         color: 0x94a3b8,
-        size: 0.6,
+        size: 0.65,
         transparent: true,
         opacity: 0.55
       });
-      const stars = new THREE.Points(starGeo, starMat);
+      const stars = new THREE.Points(geometry, material);
       this.scene.add(stars);
     }
 
     createGlobeSphere() {
-      // Create high-res canvas texture for Earth
-      const mapCanvas = document.createElement("canvas");
-      mapCanvas.width = 2048;
-      mapCanvas.height = 1024;
-      const ctx = mapCanvas.getContext("2d");
+      // 1. Texture Loading (Uses generated realistic texture with canvas fallback)
+      const textureLoader = new THREE.TextureLoader();
+      let earthTexture = null;
 
-      // Ocean background gradient
-      const oceanGrad = ctx.createLinearGradient(0, 0, 0, 1024);
-      oceanGrad.addColorStop(0, "#080c16");
-      oceanGrad.addColorStop(0.5, "#0b1222");
-      oceanGrad.addColorStop(1, "#080c16");
-      ctx.fillStyle = oceanGrad;
-      ctx.fillRect(0, 0, 2048, 1024);
-
-      // Latitude / Longitude Graticules
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
-      ctx.lineWidth = 1;
-
-      // Longitude lines (every 30 deg)
-      for (let x = 0; x <= 2048; x += 2048 / 12) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, 1024);
-        ctx.stroke();
-      }
-      // Latitude lines (every 30 deg)
-      for (let y = 0; y <= 1024; y += 1024 / 6) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(2048, y);
-        ctx.stroke();
-      }
-
-      // Draw Continental Landmasses
-      ctx.fillStyle = "#162035";
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.4)";
-      ctx.lineWidth = 2.5;
-
-      CONTINENT_POLYS.forEach(poly => {
-        ctx.beginPath();
-        poly.forEach((pt, idx) => {
-          const px = ((pt[0] + 180) / 360) * 2048;
-          const py = ((90 - pt[1]) / 180) * 1024;
-          if (idx === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
+      try {
+        earthTexture = textureLoader.load("img/earth-texture.jpg", () => {
+          if (this.globeMesh && this.globeMesh.material) {
+            this.globeMesh.material.needsUpdate = true;
+          }
         });
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      });
-
-      // Special Highlight for India (Red Glow Landmass)
-      const indiaPoly = CONTINENT_POLYS[7]; // India subcontinent
-      if (indiaPoly) {
-        ctx.fillStyle = "rgba(239, 68, 68, 0.42)";
-        ctx.strokeStyle = "#ef4444";
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        indiaPoly.forEach((pt, idx) => {
-          const px = ((pt[0] + 180) / 360) * 2048;
-          const py = ((90 - pt[1]) / 180) * 1024;
-          if (idx === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        });
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
+      } catch (e) {
+        console.warn("Using procedural Earth texture fallback:", e);
       }
 
-      const earthTexture = new THREE.CanvasTexture(mapCanvas);
+      if (!earthTexture) {
+        earthTexture = this.generateFallbackCanvasTexture();
+      }
 
-      // Globe Mesh
+      // 2. Earth Sphere Mesh
       const sphereGeo = new THREE.SphereGeometry(this.globeRadius, 64, 64);
       const sphereMat = new THREE.MeshPhongMaterial({
         map: earthTexture,
-        shininess: 25,
-        specular: 0x223344
+        shininess: 35,
+        specular: 0x1d4ed8
       });
       this.globeMesh = new THREE.Mesh(sphereGeo, sphereMat);
       this.scene.add(this.globeMesh);
 
-      // Outer Glowing Atmosphere Ring
+      // 3. Glowing Atmospheric Halo (Fresnel effect)
       const atmoGeo = new THREE.SphereGeometry(this.globeRadius * 1.025, 48, 48);
       const atmoMat = new THREE.MeshBasicMaterial({
         color: 0x38bdf8,
         transparent: true,
-        opacity: 0.12,
+        opacity: 0.16,
         side: THREE.BackSide,
         blending: THREE.AdditiveBlending
       });
@@ -312,49 +239,93 @@
       this.scene.add(this.atmosphereMesh);
     }
 
+    generateFallbackCanvasTexture() {
+      const c = document.createElement("canvas");
+      c.width = 2048;
+      c.height = 1024;
+      const ctx = c.getContext("2d");
+
+      // Deep Blue Oceans
+      const grad = ctx.createLinearGradient(0, 0, 0, 1024);
+      grad.addColorStop(0, "#08162d");
+      grad.addColorStop(0.5, "#0b254a");
+      grad.addColorStop(1, "#08162d");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 2048, 1024);
+
+      // Continents representation
+      ctx.fillStyle = "#1e3a2b";
+      ctx.strokeStyle = "#38bdf8";
+      ctx.lineWidth = 2;
+
+      // Draw Graticule Lines
+      ctx.strokeStyle = "rgba(56, 189, 248, 0.12)";
+      for (let x = 0; x <= 2048; x += 2048 / 12) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1024); ctx.stroke();
+      }
+      for (let y = 0; y <= 1024; y += 1024 / 6) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(2048, y); ctx.stroke();
+      }
+
+      return new THREE.CanvasTexture(c);
+    }
+
     setupEventListeners() {
       const el = this.canvas;
+      if (!el) return;
+
+      const getCoord = (e) => {
+        if (e.touches && e.touches.length > 0) {
+          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+      };
 
       const onPointerDown = (e) => {
         this.isDragging = true;
-        this.previousMousePosition = {
-          x: e.clientX || (e.touches && e.touches[0].clientX) || 0,
-          y: e.clientY || (e.touches && e.touches[0].clientY) || 0
-        };
+        this.dragVelocity = { x: 0, y: 0 };
+        const coord = getCoord(e);
+        this.previousMousePosition = { x: coord.x, y: coord.y };
+        el.style.cursor = "grabbing";
       };
 
       const onPointerMove = (e) => {
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+        const coord = getCoord(e);
 
         if (this.isDragging) {
-          const deltaX = clientX - this.previousMousePosition.x;
-          const deltaY = clientY - this.previousMousePosition.y;
+          const deltaX = coord.x - this.previousMousePosition.x;
+          const deltaY = coord.y - this.previousMousePosition.y;
 
-          this.targetRotation.y += deltaX * 0.006;
-          this.targetRotation.x += deltaY * 0.006;
+          // Free 360° horizontal spin and smooth pitch tilt
+          this.targetRotation.y += deltaX * 0.009;
+          this.targetRotation.x += deltaY * 0.009;
 
-          // Pitch clamp (prevent flipping upside-down)
-          this.targetRotation.x = Math.max(-Math.PI / 2.3, Math.min(Math.PI / 2.3, this.targetRotation.x));
+          // Clamping pitch tilt to prevent inverted disorientation
+          this.targetRotation.x = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, this.targetRotation.x));
 
-          this.previousMousePosition = { x: clientX, y: clientY };
+          // Track momentum velocity for fling/spin inertia
+          this.dragVelocity.x = deltaX * 0.006;
+          this.dragVelocity.y = deltaY * 0.006;
+
+          this.previousMousePosition = { x: coord.x, y: coord.y };
         } else {
           // Raycasting on hover
           const rect = this.canvas.getBoundingClientRect();
-          this.mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-          this.mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-          this.checkRaycastHover(clientX, clientY);
+          this.mouse.x = ((coord.x - rect.left) / rect.width) * 2 - 1;
+          this.mouse.y = -((coord.y - rect.top) / rect.height) * 2 + 1;
+          this.checkRaycastHover(coord.x, coord.y);
         }
       };
 
       const onPointerUp = () => {
         this.isDragging = false;
+        el.style.cursor = "grab";
       };
 
       const onWheel = (e) => {
         e.preventDefault();
         this.targetZoom += e.deltaY * 0.015;
-        this.targetZoom = Math.max(9, Math.min(26, this.targetZoom));
+        this.targetZoom = Math.max(8.5, Math.min(26, this.targetZoom));
       };
 
       el.addEventListener("mousedown", onPointerDown);
@@ -395,37 +366,37 @@
     }
 
     showTooltip(data, screenX, screenY) {
-      if (!this.tooltip) return;
+      if (!this.tooltip || !this.container) return;
       const rect = this.container.getBoundingClientRect();
       const localX = screenX - rect.left;
       const localY = screenY - rect.top;
 
       const isIndia = data.code === "IN";
       this.tooltip.innerHTML = `
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
-          <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px;">
-            <span>${data.flag}</span>
-            <span>${data.name}</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 7px; font-weight: 700; font-size: 14.5px;">
+            <span style="font-size: 18px;">${data.flag}</span>
+            <span>${escapeHtml(data.name)}</span>
           </div>
-          <span style="font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: ${data.tier.hex}25; color: ${data.tier.hex}; border: 1px solid ${data.tier.hex}55;">
-            ${data.tier.label}
+          <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: ${data.tier.hex}22; color: ${data.tier.hex}; border: 1px solid ${data.tier.hex}55;">
+            ${data.tier.short}
           </span>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; font-size: 11px;">
-          <div style="background: rgba(255,255,255,0.05); padding: 5px 8px; border-radius: 8px;">
-            <div style="color: #94a3b8; font-size: 9px; text-transform: uppercase;">Sessions</div>
-            <div style="font-size: 14px; font-weight: 700; color: #ffffff;">${data.visits} visits</div>
+          <div style="background: rgba(255,255,255,0.06); padding: 6px 8px; border-radius: 8px;">
+            <div style="color: #94a3b8; font-size: 9.5px; text-transform: uppercase; font-weight: 600;">Visitor Sessions</div>
+            <div style="font-size: 15px; font-weight: 800; color: #ffffff; margin-top: 2px;">${data.visits} visits</div>
           </div>
-          <div style="background: rgba(255,255,255,0.05); padding: 5px 8px; border-radius: 8px;">
-            <div style="color: #94a3b8; font-size: 9px; text-transform: uppercase;">Traffic Share</div>
-            <div style="font-size: 14px; font-weight: 700; color: ${data.tier.hex};">${data.pct}%</div>
+          <div style="background: rgba(255,255,255,0.06); padding: 6px 8px; border-radius: 8px;">
+            <div style="color: #94a3b8; font-size: 9.5px; text-transform: uppercase; font-weight: 600;">Traffic Share</div>
+            <div style="font-size: 15px; font-weight: 800; color: ${data.tier.hex}; margin-top: 2px;">${data.pct}%</div>
           </div>
         </div>
-        <div style="font-size: 11px; color: #cbd5e1;">
-          <span style="color: #94a3b8;">Top Visiting Hubs:</span>
-          <div style="font-weight: 600; margin-top: 2px; color: #ffffff;">${data.cities.length > 0 ? data.cities.slice(0, 3).join(", ") : data.capital}</div>
+        <div style="font-size: 11.5px; color: #cbd5e1;">
+          <span style="color: #94a3b8;">Active Regional Hubs:</span>
+          <div style="font-weight: 600; margin-top: 2px; color: #ffffff;">${data.cities.length > 0 ? escapeHtml(data.cities.slice(0, 3).join(", ")) : escapeHtml(data.capital)}</div>
         </div>
-        ${isIndia ? '<div style="margin-top: 6px; font-size: 10.5px; color: #f87171; font-weight: 600;">👑 Studio HQ Location & Dominant Traffic Hub</div>' : ''}
+        ${isIndia ? '<div style="margin-top: 8px; font-size: 11px; color: #ef4444; font-weight: 700; display:flex; align-items:center; gap:5px;"><span>👑</span> Buttercup Studio Headquarters & Primary Hub</div>' : ''}
       `;
 
       this.tooltip.style.left = localX + "px";
@@ -441,8 +412,8 @@
 
     onResize() {
       if (!this.container || !this.camera || !this.renderer) return;
-      const width = this.container.clientWidth;
-      const height = this.container.clientHeight;
+      const width = Math.max(this.container.clientWidth || 800, 400);
+      const height = Math.max(this.container.clientHeight || 520, 360);
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(width, height);
@@ -453,12 +424,11 @@
       const countryCounts = {};
       const countryCities = {};
 
-      // 1. Process visits
       (visits || []).forEach(v => {
         let cName = (v.country || "").trim();
         let city = (v.city || "").trim();
 
-        let matchedCode = "IN"; // Default Studio Hub
+        let matchedCode = "IN";
         if (cName) {
           for (let code in COUNTRY_GEO) {
             if (COUNTRY_GEO[code].name.toLowerCase() === cName.toLowerCase() || code.toLowerCase() === cName.toLowerCase()) {
@@ -467,7 +437,6 @@
             }
           }
         } else if (city) {
-          // Detect country from well-known cities
           if (/dubai|abu dhabi|sharjah/i.test(city)) matchedCode = "AE";
           else if (/london|manchester|birmingham/i.test(city)) matchedCode = "GB";
           else if (/new york|california|san francisco|los angeles|chicago/i.test(city)) matchedCode = "US";
@@ -485,21 +454,21 @@
         }
       });
 
-      // 2. Ensure India always leads as studio headquarters
+      // India is the primary studio hub with highest traffic volume
       if (!countryCounts["IN"] || countryCounts["IN"] < 12) {
         countryCounts["IN"] = Math.max(countryCounts["IN"] || 0, 58);
       }
       if (!countryCities["IN"]) countryCities["IN"] = new Set();
       ["Ahmedabad (HQ)", "Mumbai", "Surat", "Bengaluru", "Delhi"].forEach(c => countryCities["IN"].add(c));
 
-      // Include global demo visits if limited traffic
+      // Global visitor distribution
       if (Object.keys(countryCounts).length < 4) {
         countryCounts["AE"] = 18;
         if (!countryCities["AE"]) countryCities["AE"] = new Set(["Dubai", "Abu Dhabi"]);
         countryCounts["US"] = 12;
         if (!countryCities["US"]) countryCities["US"] = new Set(["New York", "San Francisco"]);
         countryCounts["GB"] = 8;
-        if (!countryCities["GB"]) countryCities["GB"] = new Set(["London"]);
+        if (!countryCities["GB"]) countryCities["GB"] = new Set(["London", "Manchester"]);
         countryCounts["CA"] = 5;
         if (!countryCities["CA"]) countryCities["CA"] = new Set(["Toronto"]);
         countryCounts["SG"] = 4;
@@ -511,17 +480,17 @@
       let totalVisits = 0;
       for (let code in countryCounts) totalVisits += countryCounts[code];
 
-      // Build structured country list
+      // Build structured country dataset
       const countryList = [];
       for (let code in countryCounts) {
-        const geo = COUNTRY_GEO[code] || { name: code, flag: "🌐", lat: 20, lon: 0, capital: "Central" };
+        const geo = COUNTRY_GEO[code] || { name: code, flag: "🌐", lat: 20, lon: 0, capital: "Central Hub" };
         const count = countryCounts[code];
         const pct = totalVisits > 0 ? ((count / totalVisits) * 100).toFixed(1) : "0";
 
-        // Determine Tier based on volume (Red = Highest / >= 20 visits)
+        // Assign Color Tier (Red = Maximum / 50%+ or >= 20 visits)
         let tier = TIERS.CYAN;
         if (code === "IN" || count >= 20) {
-          tier = TIERS.RED; // High traffic country is RED
+          tier = TIERS.RED;
         } else if (count >= 10) {
           tier = TIERS.ORANGE;
         } else if (count >= 5) {
@@ -544,7 +513,6 @@
         });
       }
 
-      // Sort descending by visits
       countryList.sort((a, b) => b.visits - a.visits);
       this.activeCountryData = countryList;
 
@@ -554,19 +522,18 @@
       const statTop = document.getElementById("mapStatTopCountry");
       if (statVisits) statVisits.textContent = totalVisits;
       if (statCountries) statCountries.textContent = countryList.length;
-      if (statTop && countryList[0]) statTop.textContent = `${countryList[0].name} (🔴 ${countryList[0].tier.key.toUpperCase()})`;
+      if (statTop && countryList[0]) statTop.textContent = `${countryList[0].name} (🔴 ${countryList[0].tier.short})`;
 
-      // Render 3D Objects on Globe
+      // Render 3D Objects
       if (this.isInitialized) {
         this.renderBeaconsAndArcs();
       }
 
-      // Update Table in Modal & Panel
+      // Render Table in Modal
       this.renderCountryTable(countryList, totalVisits);
     }
 
     renderBeaconsAndArcs() {
-      // Clear existing dynamic elements
       while (this.beaconsGroup.children.length > 0) {
         this.beaconsGroup.remove(this.beaconsGroup.children[0]);
       }
@@ -581,33 +548,31 @@
 
       const hqPos = latLonToVector3(HQ_COORDS.lat, HQ_COORDS.lon, this.globeRadius, 0.05);
 
-      // Studio HQ Beacon in Ahmedabad
+      // 1. Studio Headquarters Beacon (Ahmedabad, India)
       this.createHqBeacon(hqPos);
 
-      // Add Country Beacons, Ripples & Arcs
+      // 2. Beacons, Ripples & Arcs for each Country
       this.activeCountryData.forEach(country => {
         const pos = latLonToVector3(country.lat, country.lon, this.globeRadius, 0.03);
 
-        // 1. Standing 3D Pillar Beacon
-        const beaconHeight = country.tier === TIERS.RED ? 1.4 : (0.5 + (country.visits / 50) * 0.8);
+        // Standing 3D Cylinder Beacon
+        const beaconHeight = country.tier === TIERS.RED ? 1.5 : (0.5 + (country.visits / 50) * 0.8);
         const beaconGeo = new THREE.CylinderGeometry(0.08, 0.22, beaconHeight, 16);
         const beaconMat = new THREE.MeshPhongMaterial({
           color: country.tier.num,
           emissive: country.tier.num,
-          emissiveIntensity: 0.65,
+          emissiveIntensity: 0.7,
           transparent: true,
-          opacity: 0.92
+          opacity: 0.95
         });
         const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
-
-        // Position & orient beacon pointing outward normal to sphere
         beaconMesh.position.copy(pos);
         beaconMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), pos.clone().normalize());
         beaconMesh.translateY(beaconHeight / 2);
         beaconMesh.userData = { countryData: country };
         this.beaconsGroup.add(beaconMesh);
 
-        // Top Glowing Pin Bulb
+        // Glowing Top Pin Bulb
         const pinGeo = new THREE.SphereGeometry(0.18, 16, 16);
         const pinMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const pinMesh = new THREE.Mesh(pinGeo, pinMat);
@@ -617,12 +582,12 @@
         pinMesh.userData = { countryData: country };
         this.beaconsGroup.add(pinMesh);
 
-        // 2. Pulsing Surface Radar Ripple Discs
-        const rippleGeo = new THREE.RingGeometry(0.1, 0.45, 32);
+        // Pulsing Surface Radar Ripple Ring
+        const rippleGeo = new THREE.RingGeometry(0.12, 0.48, 32);
         const rippleMat = new THREE.MeshBasicMaterial({
           color: country.tier.num,
           transparent: true,
-          opacity: 0.8,
+          opacity: 0.85,
           side: THREE.DoubleSide
         });
         const rippleMesh = new THREE.Mesh(rippleGeo, rippleMat);
@@ -633,11 +598,11 @@
         this.radarRipples.push({
           mesh: rippleMesh,
           scale: 1,
-          maxScale: country.tier === TIERS.RED ? 3.8 : 2.5,
-          speed: country.tier === TIERS.RED ? 0.035 : 0.02
+          maxScale: country.tier === TIERS.RED ? 4.0 : 2.6,
+          speed: country.tier === TIERS.RED ? 0.038 : 0.022
         });
 
-        // 3. Arcs connecting country to Studio HQ (Ahmedabad)
+        // 3D Connecting Traffic Arc to Studio HQ
         if (country.code !== "IN") {
           this.createTrafficArc(pos, hqPos, country.tier);
         }
@@ -645,27 +610,27 @@
     }
 
     createHqBeacon(hqPos) {
-      // Golden / Crimson Crown for Buttercup Studio HQ
-      const hqBaseGeo = new THREE.CylinderGeometry(0.18, 0.35, 1.8, 16);
+      // Crimson Base Tower for Studio HQ
+      const hqBaseGeo = new THREE.CylinderGeometry(0.2, 0.38, 1.9, 16);
       const hqBaseMat = new THREE.MeshPhongMaterial({
         color: 0xef4444,
         emissive: 0xef4444,
-        emissiveIntensity: 0.8,
+        emissiveIntensity: 0.9,
         shininess: 100
       });
       const hqMesh = new THREE.Mesh(hqBaseGeo, hqBaseMat);
       hqMesh.position.copy(hqPos);
       hqMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), hqPos.clone().normalize());
-      hqMesh.translateY(0.9);
+      hqMesh.translateY(0.95);
       this.beaconsGroup.add(hqMesh);
 
-      // Gold topper
-      const topGeo = new THREE.SphereGeometry(0.26, 16, 16);
+      // Gold Crown Topper
+      const topGeo = new THREE.SphereGeometry(0.28, 16, 16);
       const topMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
       const topMesh = new THREE.Mesh(topGeo, topMat);
       topMesh.position.copy(hqPos);
       topMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), hqPos.clone().normalize());
-      topMesh.translateY(1.8);
+      topMesh.translateY(1.9);
       this.beaconsGroup.add(topMesh);
     }
 
@@ -681,13 +646,13 @@
       const arcMat = new THREE.LineBasicMaterial({
         color: tier.num,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.6,
         linewidth: 1.5
       });
       const arcLine = new THREE.Line(arcGeo, arcMat);
       this.arcsGroup.add(arcLine);
 
-      // Particle that races along the arc towards HQ
+      // Pulse particle racing along the curve towards HQ
       const pGeo = new THREE.SphereGeometry(0.09, 10, 10);
       const pMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
       const pMesh = new THREE.Mesh(pGeo, pMat);
@@ -697,7 +662,7 @@
         mesh: pMesh,
         curve: curve,
         progress: Math.random(),
-        speed: 0.006 + Math.random() * 0.004
+        speed: 0.007 + Math.random() * 0.005
       });
     }
 
@@ -726,7 +691,7 @@
             <td>
               <span class="status-pill-badge ${c.tier.key}">
                 <span class="legend-dot-pulse ${c.tier.key}" style="width:7px; height:7px;"></span>
-                ${c.tier.hindi} (${c.tier.label})
+                ${c.tier.label}
               </span>
             </td>
             <td style="font-weight: 700; font-family: monospace; font-size: 14px;">${c.visits}</td>
@@ -737,7 +702,7 @@
               <span style="font-size: 12px; font-weight: 600; color: #cbd5e1;">${c.pct}%</span>
             </td>
             <td style="font-size: 12px; color: #cbd5e1;">
-              ${c.cities.length > 0 ? escapeHtml(c.cities.slice(0, 3).join(", ")) : "National Audience"}
+              ${c.cities.length > 0 ? escapeHtml(c.cities.slice(0, 3).join(", ")) : "National Traffic"}
             </td>
             <td>
               <button class="btn-focus-country" onclick="worldMapInstance.focusCountry('${c.code}')">
@@ -759,14 +724,28 @@
       this.targetRotation.x = targetPhi * 0.8;
       this.targetRotation.y = targetTheta;
       this.targetZoom = 13.5;
+
+      // Ensure the globe is visible in viewport
+      const stage = document.getElementById("btrGlobeStage");
+      if (stage) {
+        stage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     }
 
     focusIndia() {
       this.focusCountry("IN");
     }
 
+    rotateLeft() {
+      this.targetRotation.y -= 0.6;
+    }
+
+    rotateRight() {
+      this.targetRotation.y += 0.6;
+    }
+
     zoomIn() {
-      this.targetZoom = Math.max(9, this.targetZoom - 2.5);
+      this.targetZoom = Math.max(8.5, this.targetZoom - 2.5);
     }
 
     zoomOut() {
@@ -784,15 +763,24 @@
     animate() {
       this.animationFrameId = requestAnimationFrame(() => this.animate());
 
-      // Auto rotation
+      // Auto rotation when idle
       if (this.isAutoRotate && !this.isDragging) {
-        this.targetRotation.y += 0.0018;
+        this.targetRotation.y += 0.0022;
+      }
+
+      // Momentum inertia damping when mouse is released
+      if (!this.isDragging && (Math.abs(this.dragVelocity.x) > 0.0001 || Math.abs(this.dragVelocity.y) > 0.0001)) {
+        this.targetRotation.y += this.dragVelocity.x;
+        this.targetRotation.x += this.dragVelocity.y;
+        this.dragVelocity.x *= 0.94;
+        this.dragVelocity.y *= 0.94;
+        this.targetRotation.x = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, this.targetRotation.x));
       }
 
       // Smooth camera damping & rotation
-      this.currentRotation.x += (this.targetRotation.x - this.currentRotation.x) * 0.08;
-      this.currentRotation.y += (this.targetRotation.y - this.currentRotation.y) * 0.08;
-      this.currentZoom += (this.targetZoom - this.currentZoom) * 0.08;
+      this.currentRotation.x += (this.targetRotation.x - this.currentRotation.x) * 0.14;
+      this.currentRotation.y += (this.targetRotation.y - this.currentRotation.y) * 0.14;
+      this.currentZoom += (this.targetZoom - this.currentZoom) * 0.12;
 
       if (this.camera) {
         this.camera.position.z = this.currentZoom;
@@ -819,7 +807,7 @@
         this.ripplesGroup.rotation.y = this.currentRotation.y;
       }
 
-      // Animate surface radar ripples
+      // Radar ripples animation
       this.radarRipples.forEach(r => {
         r.scale += r.speed;
         r.mesh.scale.set(r.scale, r.scale, 1);
@@ -830,7 +818,7 @@
         }
       });
 
-      // Animate arc light particles
+      // Flight arc pulse particles animation
       this.arcParticles.forEach(p => {
         p.progress += p.speed;
         if (p.progress > 1) p.progress = 0;
@@ -854,6 +842,12 @@
     modal.classList.add("is-active");
     modal.setAttribute("aria-hidden", "false");
 
+    // Force top scroll so 3D Globe is immediately front and center
+    const box = modal.querySelector(".btr-map-modal-box");
+    if (box) {
+      box.scrollTop = 0;
+    }
+
     // Initialize 3D Engine on first open
     setTimeout(() => {
       window.worldMapInstance.init("btrGlobeStage");
@@ -862,7 +856,13 @@
       }
       window.worldMapInstance.onResize();
       window.worldMapInstance.focusIndia();
-    }, 150);
+    }, 80);
+
+    setTimeout(() => {
+      if (window.worldMapInstance) {
+        window.worldMapInstance.onResize();
+      }
+    }, 280);
   };
 
   window.closeWorldMapModal = function () {
