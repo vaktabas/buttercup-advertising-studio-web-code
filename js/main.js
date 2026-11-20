@@ -1365,24 +1365,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Trigger STRICTLY ONCE after 12 seconds of opening the website
+    const loadTime = Date.now();
+    let hasTriggeredOnce = false;
+
     // Hide if scrolling into footer
     function checkFooter() {
       if (isFooterInView() && overlay.classList.contains('is-active')) {
         hideModal();
+      } else if (!hasTriggeredOnce && !isFooterInView() && (Date.now() - loadTime >= 12000)) {
+        hasTriggeredOnce = true;
+        showModal();
       }
     }
     window.addEventListener('scroll', checkFooter, { passive: true });
 
-    // Every 12 seconds: pop up in the center of the screen
-    setInterval(() => {
-      if (!overlay.classList.contains('is-active') && !isFooterInView()) {
-        showModal();
-      }
-    }, 12000);
-
-    // Initial popup after 12 seconds
+    // Single one-time timer: exactly 12 seconds after opening
     setTimeout(() => {
-      if (!isFooterInView()) {
+      if (!hasTriggeredOnce && !isFooterInView()) {
+        hasTriggeredOnce = true;
         showModal();
       }
     }, 12000);
