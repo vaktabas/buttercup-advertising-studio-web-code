@@ -1023,6 +1023,25 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {}
     }
 
+    function detectBrowserName() {
+      const ua = navigator.userAgent || '';
+      if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Chrome';
+      if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+      if (ua.includes('Firefox')) return 'Firefox';
+      if (ua.includes('Edg')) return 'Edge';
+      return 'Browser';
+    }
+
+    function detectOSName() {
+      const ua = navigator.userAgent || '';
+      if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+      if (/Android/.test(ua)) return 'Android';
+      if (/Macintosh|Mac OS X/.test(ua)) return 'macOS';
+      if (/Windows/.test(ua)) return 'Windows';
+      if (/Linux/.test(ua)) return 'Linux';
+      return 'Unknown OS';
+    }
+
     try {
       const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
         ? window.location.origin + '/api/track-visitor.php'
@@ -1037,7 +1056,11 @@ document.addEventListener("DOMContentLoaded", () => {
           country: detectedCountry,
           page: window.location.pathname + window.location.search,
           referrer: document.referrer || 'Direct / Bookmark',
-          screen: window.innerWidth + 'x' + window.innerHeight
+          screen: window.innerWidth + 'x' + window.innerHeight,
+          browser: detectBrowserName(),
+          os: detectOSName(),
+          language: navigator.language || 'en',
+          timezone: (typeof Intl !== 'undefined' && Intl.DateTimeFormat) ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
         }),
         keepalive: true
       }).catch(() => {});
@@ -1365,10 +1388,136 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 12000);
   }
 
-  // Initialize Visitor Tracking, Location Permission, and WhatsApp Modal
+  // =========================================================================
+  // 4. HOME PAGE LOGIN MODAL (Password: branding@gmail.com -> admin/leads.html)
+  // =========================================================================
+  function initHomeLoginModal() {
+    const loginLink = document.getElementById('homeLoginBtn');
+    if (!loginLink) return;
+
+    let modalOverlay = document.getElementById('btrHomeLoginOverlay');
+    if (!modalOverlay) {
+      modalOverlay = document.createElement('div');
+      modalOverlay.id = 'btrHomeLoginOverlay';
+      modalOverlay.className = 'btr-login-modal-overlay';
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      modalOverlay.innerHTML = `
+        <div class="btr-login-modal" role="dialog" aria-modal="true" aria-label="Studio Master Portal Login">
+          <button class="btr-login-close" id="btrHomeLoginClose" aria-label="Close dialog">&times;</button>
+          
+          <div class="btr-login-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+
+          <div class="btr-login-badge">
+            <span class="btr-login-dot"></span>
+            <span>BUTTERCUP STUDIO MASTER ACCESS</span>
+          </div>
+
+          <h3 class="btr-login-title">Portal Login</h3>
+          <p class="btr-login-desc">Enter the studio master password to access live visitor analytics and inbound leads:</p>
+
+          <form class="btr-login-form" id="btrHomeLoginForm" onsubmit="return false;">
+            <div class="btr-login-input-wrap">
+              <input type="password" id="btrHomeLoginPassword" class="btr-login-input" placeholder="Enter Master Password" autocomplete="current-password">
+              <button type="button" class="btr-login-toggle-pw" id="btrHomeLoginTogglePw" aria-label="Toggle password visibility">👁️</button>
+            </div>
+            <div class="btr-login-error" id="btrHomeLoginError">⚠️ Incorrect password. Access denied.</div>
+            <button type="submit" class="btr-login-btn" id="btrHomeLoginSubmitBtn">
+              <span id="btrHomeLoginBtnText">Unlock Dashboard &rarr;</span>
+            </button>
+          </form>
+        </div>
+      `;
+      document.body.appendChild(modalOverlay);
+    }
+
+    const pwInput = document.getElementById('btrHomeLoginPassword');
+    const togglePw = document.getElementById('btrHomeLoginTogglePw');
+    const errorMsg = document.getElementById('btrHomeLoginError');
+    const form = document.getElementById('btrHomeLoginForm');
+    const closeBtn = document.getElementById('btrHomeLoginClose');
+    const btnText = document.getElementById('btrHomeLoginBtnText');
+
+    function openModal() {
+      const stored = sessionStorage.getItem('btr_admin_auth') || localStorage.getItem('btr_admin_auth');
+      if (stored === 'branding@gmail.com') {
+        window.location.href = 'admin/leads.html';
+        return;
+      }
+      modalOverlay.classList.add('is-active');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (pwInput) {
+        pwInput.value = '';
+        setTimeout(() => pwInput.focus(), 150);
+      }
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('is-active');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    loginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('is-active')) {
+        closeModal();
+      }
+    });
+
+    if (togglePw && pwInput) {
+      togglePw.addEventListener('click', () => {
+        pwInput.type = pwInput.type === 'password' ? 'text' : 'password';
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const entered = (pwInput ? pwInput.value : '').trim();
+        if (entered === 'branding@gmail.com') {
+          sessionStorage.setItem('btr_admin_auth', 'branding@gmail.com');
+          localStorage.setItem('btr_admin_auth', 'branding@gmail.com');
+          if (errorMsg) errorMsg.style.display = 'none';
+          if (btnText) btnText.textContent = '✓ Access Granted! Opening...';
+          setTimeout(() => {
+            window.location.href = 'admin/leads.html';
+          }, 350);
+        } else {
+          if (errorMsg) errorMsg.style.display = 'block';
+          if (pwInput) {
+            pwInput.value = '';
+            pwInput.focus();
+          }
+          const box = modalOverlay.querySelector('.btr-login-modal');
+          if (box) {
+            box.style.animation = 'none';
+            box.offsetHeight;
+            box.style.animation = 'btr-login-shake 0.4s ease';
+          }
+        }
+      });
+    }
+  }
+
+  // Initialize Visitor Tracking, Location Permission, WhatsApp Modal, and Home Login
   initVisitorTracking();
   initLocationPermissionPrompt();
   initCenterSquareWhatsAppModal();
+  initHomeLoginModal();
 
   // =========================================================================
   // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in)

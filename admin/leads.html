@@ -3,349 +3,1243 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buttercup Studio — Lead & Visitor Intelligence Dashboard</title>
+  <title>Buttercup Studio — Master Lead & Visitor Intelligence Suite</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0c10;
-      --card-bg: rgba(18, 20, 28, 0.85);
-      --border: rgba(255, 255, 255, 0.1);
-      --text: #f1f5f9;
+      --bg: #090a0f;
+      --card-bg: rgba(16, 18, 27, 0.88);
+      --card-hover: rgba(24, 28, 42, 0.95);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(37, 211, 102, 0.35);
+      --text: #f8fafc;
       --text-muted: #94a3b8;
+      --text-dim: #64748b;
       --accent: #25D366;
       --accent-glow: rgba(37, 211, 102, 0.25);
       --purple: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.25);
+      --blue: #38bdf8;
+      --amber: #f59e0b;
+      --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: var(--font);
       min-height: 100vh;
-      padding: 30px 24px;
+      line-height: 1.5;
+      padding: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(168, 85, 247, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(37, 211, 102, 0.08), transparent);
+      background-attachment: fixed;
     }
-    .container {
-      max-width: 1200px;
+
+    /* AUTH GATE OVERLAY */
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(9, 10, 15, 0.98);
+      backdrop-filter: blur(28px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-box {
+      width: min(92vw, 420px);
+      background: rgba(18, 20, 30, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 28px;
+      padding: 36px 30px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 50px rgba(168, 85, 247, 0.25);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .auth-lock-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+    }
+
+    .auth-lock-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; }
+
+    .auth-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .auth-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .auth-input-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .auth-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 13px 44px 13px 16px;
+      color: #ffffff;
+      font-size: 14.5px;
+      font-family: var(--font);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .auth-input:focus {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(37, 211, 102, 0.3);
+    }
+
+    .auth-toggle-pw {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #0b0c10;
+      font-size: 14.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .auth-btn:hover {
+      background: #20ba5a;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+    }
+
+    .auth-error {
+      font-size: 12.5px;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      padding: 8px 12px;
+      border-radius: 10px;
+      width: 100%;
+      display: none;
+    }
+
+    /* MAIN CONTAINER */
+    .app-shell {
+      display: none;
+      padding: 30px 32px 60px;
+      max-width: 1560px;
       margin: 0 auto;
     }
-    .header {
+
+    /* TOP HEADER */
+    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
-      padding-bottom: 20px;
+      padding-bottom: 22px;
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 18px;
     }
-    .logo-badge {
+
+    .brand-cluster {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
-    .logo-dot {
-      width: 12px;
-      height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(0.9); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 1; }
-    }
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .header-actions {
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1f2334, #121420);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-info h1 {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse-live 1.8s infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .brand-info p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 18px;
-      border-radius: 999px;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 12px;
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
+      font-family: inherit;
     }
-    .btn-primary {
+
+    .btn-emerald {
       background: var(--accent);
-      color: #ffffff;
+      color: #0b0c10 !important;
       border-color: var(--accent);
-      box-shadow: 0 4px 14px var(--accent-glow);
+      font-weight: 700;
+      box-shadow: 0 4px 16px var(--accent-glow);
     }
-    .btn-primary:hover {
+    .btn-emerald:hover {
       background: #20ba5a;
       transform: translateY(-2px);
     }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
+
+    .btn-purple {
+      background: rgba(168, 85, 247, 0.16);
+      color: #d8b4fe;
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+    .btn-purple:hover {
+      background: rgba(168, 85, 247, 0.26);
+      transform: translateY(-2px);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text);
     }
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
-    .stats-grid {
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    /* KPI STATS ROW */
+    .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-bottom: 35px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
     }
-    .stat-card {
+
+    .kpi-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 22px;
-      backdrop-filter: blur(12px);
+      padding: 22px 24px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .stat-label {
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .kpi-card:hover {
+      background: var(--card-hover);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-3px);
+    }
+
+    .kpi-card.green::before { background: var(--accent); }
+    .kpi-card.purple::before { background: var(--purple); }
+    .kpi-card.blue::before { background: var(--blue); }
+    .kpi-card.amber::before { background: var(--amber); }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .kpi-label {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .stat-val {
-      font-size: 32px;
       font-weight: 700;
-      letter-spacing: -0.03em;
     }
-    .stat-val.green { color: var(--accent); }
-    .stat-val.purple { color: var(--purple); }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 30px;
-      backdrop-filter: blur(12px);
+    .kpi-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.06);
     }
-    .card-title {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 16px;
+
+    .kpi-val {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-val.green { color: var(--accent); text-shadow: 0 0 20px rgba(37, 211, 102, 0.3); }
+    .kpi-val.purple { color: #d8b4fe; text-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+    .kpi-val.blue { color: #7dd3fc; text-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+    .kpi-val.amber { color: #fcd34d; }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* CONTROLS BAR: SEARCH & TABS */
+    .controls-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
+
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .tab-pill {
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .tab-pill.active {
+      background: #ffffff;
+      color: #0b0c10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .tab-pill:hover:not(.active) {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 300px;
+      max-width: 440px;
+      flex: 1;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px 10px 38px;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+      display: flex;
+    }
+
+    .search-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+    /* CONTENT PANELS */
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+
+    /* DATA TABLE CONTAINER */
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      margin-bottom: 30px;
+    }
+
+    .table-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .table-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .table-badge-count {
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: var(--text-muted);
+    }
+
+    .table-scroll-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13.5px;
+      white-space: nowrap;
     }
-    th {
+
+    thead th {
       text-align: left;
-      padding: 12px 14px;
-      font-size: 11.5px;
+      padding: 14px 16px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
-    }
-    td {
-      padding: 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: #e2e8f0;
-    }
-    tr:hover td {
       background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
     }
-    .badge {
+
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .badge-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      background: rgba(37, 211, 102, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(37, 211, 102, 0.25);
+    }
+
+    .badge-ip {
       display: inline-block;
       padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 11px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .badge-city {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #f1f5f9;
       font-weight: 600;
-      background: rgba(37, 211, 102, 0.15);
-      color: var(--accent);
-      border: 1px solid rgba(37, 211, 102, 0.3);
     }
-    .empty-state {
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
+
+    .badge-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
     }
-    .wa-btn {
+
+    .btn-wa-action {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 6px 12px;
       border-radius: 999px;
       background: var(--accent);
-      color: #fff;
+      color: #0b0c10 !important;
       text-decoration: none;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       transition: all 0.2s ease;
     }
-    .wa-btn:hover {
+
+    .btn-wa-action:hover {
       background: #20ba5a;
       transform: scale(1.05);
     }
-    .wa-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .btn-wa-action svg { width: 13px; height: 13px; fill: currentColor; }
+
+    .btn-call-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-call-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .empty-state {
+      padding: 50px 20px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    /* GRID INSIGHTS (ANALYTICS BREAKDOWN) */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .insight-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      backdrop-filter: blur(16px);
+    }
+
+    .insight-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ranking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ranking-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ranking-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .ranking-label {
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .ranking-count {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .ranking-bar-wrap {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .ranking-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 0.5s ease;
+    }
+
+    .ranking-bar-fill.purple { background: var(--purple); }
+    .ranking-bar-fill.blue { background: var(--blue); }
+
+    /* TOAST ALERT */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(18, 20, 30, 0.95);
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 13px;
+      color: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+      z-index: 999999;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .app-shell { padding: 20px 16px 50px; }
+      .top-bar { flex-direction: column; align-items: flex-start; }
+      .top-actions { width: 100%; justify-content: flex-start; }
+      .search-box { min-width: 100%; }
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo-badge">
-        <span class="logo-dot"></span>
-        <h1>Buttercup Studio — Lead & Visitor Intelligence</h1>
-      </div>
-      <div class="header-actions">
-        <a href="../api/track-visitor.php?action=download_leads_csv" class="btn btn-primary" id="exportBtn">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Export Leads (Excel/CSV)
-        </a>
-        <button class="btn btn-secondary" onclick="fetchData()">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          Refresh Data
-        </button>
-      </div>
-    </div>
 
-    <!-- STATS OVERVIEW -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Total Inbound Leads</div>
-        <div class="stat-val green" id="statLeads">0</div>
+  <!-- 1. MASTER AUTHENTICATION GATE (PASSWORD REQUIRED) -->
+  <div class="auth-gate" id="authGate">
+    <div class="auth-box">
+      <div class="auth-lock-icon">
+        <svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Total Visits Logged</div>
-        <div class="stat-val purple" id="statVisits">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">File Storage Location</div>
-        <div class="stat-val" style="font-size: 16px; margin-top: 8px; color: #94a3b8;">/web 2/data/leads.json</div>
-      </div>
-    </div>
-
-    <!-- INBOUND LEADS TABLE -->
-    <div class="card">
-      <div class="card-title">
-        <span>Captured Inbound Leads (Name, Phone/WhatsApp & Location)</span>
-      </div>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Date / Time</th>
-              <th>Name</th>
-              <th>WhatsApp / Phone</th>
-              <th>City / Location</th>
-              <th>Email</th>
-              <th>Page Visited</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="leadsTableBody">
-            <tr><td colspan="7" class="empty-state">Loading leads data...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- RECENT VISITORS LOG -->
-    <div class="card">
-      <div class="card-title">
-        <span>Recent Visitors Telemetry (IP & Geolocation Log)</span>
-      </div>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>IP Address</th>
-              <th>City / Location</th>
-              <th>Device</th>
-              <th>Page Visited</th>
-              <th>Referrer Source</th>
-            </tr>
-          </thead>
-          <tbody id="visitsTableBody">
-            <tr><td colspan="6" class="empty-state">Loading visitor log...</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h2 class="auth-title">Studio Master Portal</h2>
+      <p class="auth-subtitle">Enter master password to access Buttercup Intelligence, live visitor telemetry, and inbound client leads.</p>
+      
+      <form class="auth-form" id="authGateForm" onsubmit="return false;">
+        <div class="auth-input-wrap">
+          <input type="password" id="authPasswordInput" class="auth-input" placeholder="Enter Master Password" autocomplete="current-password" autofocus>
+          <button type="button" class="auth-toggle-pw" id="authTogglePw">👁️</button>
+        </div>
+        <div class="auth-error" id="authErrorMsg">⚠️ Incorrect master password. Access denied.</div>
+        <button type="submit" class="auth-btn" id="authSubmitBtn">Unlock Dashboard &rarr;</button>
+      </form>
     </div>
   </div>
 
-  <script>
-    async function fetchData() {
-      try {
-        const res = await fetch('../api/track-visitor.php');
-        const data = await res.json();
-        if (!data.success) return;
+  <!-- 2. MAIN INTELLIGENCE DASHBOARD (REVEALED AFTER AUTH) -->
+  <div class="app-shell" id="appShell">
+    
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="brand-cluster">
+        <div class="brand-mark">BAS</div>
+        <div class="brand-info">
+          <h1>
+            <span>Buttercup Studio — Master Intelligence</span>
+            <span class="live-indicator"><span class="live-dot"></span> Live Telemetry</span>
+          </h1>
+          <p>Real-time analytics, geolocations, IP logs & direct WhatsApp lead capture</p>
+        </div>
+      </div>
 
-        document.getElementById('statLeads').innerText = data.stats.total_leads || 0;
-        document.getElementById('statVisits').innerText = data.stats.total_visits_logged || 0;
+      <div class="top-actions">
+        <a href="../api/track-visitor.php?action=download_leads_csv" class="btn btn-emerald" title="Export Inbound Leads to Excel">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export Leads (Excel/CSV)
+        </a>
+        <a href="../api/track-visitor.php?action=download_visits_csv" class="btn btn-purple" title="Export Visitor Telemetry to Excel">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export Visitors Log
+        </a>
+        <button class="btn btn-glass" onclick="fetchLiveData()" id="refreshBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh
+        </button>
+        <button class="btn btn-danger" onclick="logoutAdmin()" title="Lock dashboard & return to homepage">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Logout
+        </button>
+      </div>
+    </header>
 
-        // Render Leads
-        const leadsBody = document.getElementById('leadsTableBody');
-        if (!data.leads || data.leads.length === 0) {
-          leadsBody.innerHTML = '<tr><td colspan="7" class="empty-state">No leads captured yet. They will appear here immediately when a visitor enters their details!</td></tr>';
-        } else {
-          leadsBody.innerHTML = data.leads.map(lead => {
-            const cleanPhone = (lead.phone || '').replace(/[^0-9]/g, '');
-            const waLink = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hi ' + (lead.name || '') + ', thanks for connecting with Buttercup Studio!')}` : '#';
-            return `
+    <!-- KPI OVERVIEW -->
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-top">
+          <span class="kpi-label">Inbound Leads</span>
+          <span class="kpi-tag" id="leadConvRate">0% Conv</span>
+        </div>
+        <div class="kpi-val green" id="kpiLeads">0</div>
+        <div class="kpi-desc">Verified Phone & WhatsApp contacts</div>
+      </div>
+
+      <div class="kpi-card purple">
+        <div class="kpi-top">
+          <span class="kpi-label">Total Visits Logged</span>
+          <span class="kpi-tag" id="kpiTodayVisits">0 Today</span>
+        </div>
+        <div class="kpi-val purple" id="kpiVisits">0</div>
+        <div class="kpi-desc">Total website page impressions</div>
+      </div>
+
+      <div class="kpi-card blue">
+        <div class="kpi-top">
+          <span class="kpi-label">Unique Visitors</span>
+          <span class="kpi-tag">IP Count</span>
+        </div>
+        <div class="kpi-val blue" id="kpiUnique">0</div>
+        <div class="kpi-desc">Distinct individual devices</div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-top">
+          <span class="kpi-label">Mobile vs Desktop</span>
+          <span class="kpi-tag" id="kpiMobileRatio">0% Mobile</span>
+        </div>
+        <div class="kpi-val amber" id="kpiDeviceShare">--</div>
+        <div class="kpi-desc" id="kpiDeviceSub">Analyzing device breakdown...</div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-top">
+          <span class="kpi-label">Top Location</span>
+          <span class="kpi-tag">City</span>
+        </div>
+        <div class="kpi-val" style="font-size: 22px; margin-top: 6px; color: #ffffff;" id="kpiTopCity">Detecting...</div>
+        <div class="kpi-desc">Most active geographic region</div>
+      </div>
+    </div>
+
+    <!-- CONTROLS: TABS & LIVE SEARCH -->
+    <div class="controls-bar">
+      <div class="tab-pills">
+        <button class="tab-pill active" onclick="switchTab('leads')" id="tabLeadsBtn">🌟 Inbound Leads (<span id="tabLeadsCount">0</span>)</button>
+        <button class="tab-pill" onclick="switchTab('visits')" id="tabVisitsBtn">🛰️ Complete Visitor Telemetry (<span id="tabVisitsCount">0</span>)</button>
+        <button class="tab-pill" onclick="switchTab('analytics')" id="tabAnalyticsBtn">📈 Geographic & Traffic Breakdown</button>
+      </div>
+
+      <div class="search-box">
+        <div class="search-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <input type="text" id="globalSearchInput" class="search-input" placeholder="Search by Name, Phone, City, Country, IP, Referrer, Page..." oninput="filterAllTables()">
+      </div>
+    </div>
+
+    <!-- TAB 1: INBOUND LEADS (DETAILED TABLE) -->
+    <section class="panel active" id="panelLeads">
+      <div class="table-card">
+        <div class="table-header-row">
+          <h2 class="table-title">
+            <span>Captured Inbound Leads (Every Detail)</span>
+            <span class="table-badge-count" id="badgeLeadsShown">Showing all</span>
+          </h2>
+          <span style="font-size: 12px; color: var(--text-muted);">Auto-saved locally in <code>/data/leads.csv</code></span>
+        </div>
+
+        <div class="table-scroll-wrap">
+          <table id="leadsTable">
+            <thead>
               <tr>
-                <td><strong>${lead.timestamp}</strong></td>
-                <td><strong style="color:#ffffff;">${escapeHtml(lead.name || 'Anonymous')}</strong></td>
-                <td><span class="badge">${escapeHtml(lead.phone || 'N/A')}</span></td>
-                <td>${escapeHtml(lead.city || 'Detected via IP')}</td>
-                <td>${escapeHtml(lead.email || '—')}</td>
-                <td style="font-size:12px; color:#94a3b8;">${escapeHtml(lead.page || '/')}</td>
-                <td>
-                  ${cleanPhone ? `<a href="${waLink}" target="_blank" class="wa-btn">
+                <th>Date / Time</th>
+                <th>Visitor Name</th>
+                <th>WhatsApp / Phone</th>
+                <th>City / Region</th>
+                <th>Email Address</th>
+                <th>Capture Source</th>
+                <th>Landing Page</th>
+                <th>IP & Device</th>
+                <th>Quick Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTbody">
+              <tr><td colspan="9" class="empty-state">Loading leads data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: COMPLETE VISITOR TELEMETRY (HAR CHHOTI SE CHHOTI CHEEZ) -->
+    <section class="panel" id="panelVisits">
+      <div class="table-card">
+        <div class="table-header-row">
+          <h2 class="table-title">
+            <span>Live Visitor Telemetry (Every Small Detail)</span>
+            <span class="table-badge-count" id="badgeVisitsShown">Showing all</span>
+          </h2>
+          <span style="font-size: 12px; color: var(--text-muted);">Auto-saved locally in <code>/data/visitors-log.csv</code></span>
+        </div>
+
+        <div class="table-scroll-wrap">
+          <table id="visitsTable">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>IP Address</th>
+                <th>City, Region & Country</th>
+                <th>Device & OS</th>
+                <th>Browser</th>
+                <th>Screen Size</th>
+                <th>Page Visited</th>
+                <th>Traffic Referrer</th>
+                <th>Language / Timezone</th>
+              </tr>
+            </thead>
+            <tbody id="visitsTbody">
+              <tr><td colspan="9" class="empty-state">Loading visitor telemetry...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: GEOGRAPHIC & REFERRER BREAKDOWN -->
+    <section class="panel" id="panelAnalytics">
+      <div class="insights-grid">
+        <!-- Top Cities -->
+        <div class="insight-card">
+          <h3 class="insight-title">
+            <span>📍 Top Visitor Cities</span>
+            <span style="font-size: 11px; color: var(--text-muted);">By Volume</span>
+          </h3>
+          <div class="ranking-list" id="citiesRankingList">
+            <div class="empty-state">Calculating city data...</div>
+          </div>
+        </div>
+
+        <!-- Top Traffic Referrers -->
+        <div class="insight-card">
+          <h3 class="insight-title">
+            <span>🔗 Traffic Sources & Referrers</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Channel</span>
+          </h3>
+          <div class="ranking-list" id="referrersRankingList">
+            <div class="empty-state">Calculating referrer channels...</div>
+          </div>
+        </div>
+
+        <!-- Top Visited Pages -->
+        <div class="insight-card">
+          <h3 class="insight-title">
+            <span>📄 Most Visited Pages</span>
+            <span style="font-size: 11px; color: var(--text-muted);">URLs</span>
+          </h3>
+          <div class="ranking-list" id="pagesRankingList">
+            <div class="empty-state">Calculating pages popularity...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">Data refreshed successfully!</div>
+
+  <script>
+    const MASTER_PASSWORD = "branding@gmail.com";
+    let rawLeadsData = [];
+    let rawVisitsData = [];
+    let refreshInterval = null;
+
+    // 1. AUTHENTICATION CONTROLLER
+    const authGate = document.getElementById("authGate");
+    const appShell = document.getElementById("appShell");
+    const authInput = document.getElementById("authPasswordInput");
+    const authError = document.getElementById("authErrorMsg");
+    const authForm = document.getElementById("authGateForm");
+    const authTogglePw = document.getElementById("authTogglePw");
+
+    authTogglePw.addEventListener("click", () => {
+      authInput.type = authInput.type === "password" ? "text" : "password";
+    });
+
+    function checkAuth() {
+      const stored = sessionStorage.getItem("btr_admin_auth") || localStorage.getItem("btr_admin_auth");
+      if (stored === MASTER_PASSWORD) {
+        unlockDashboard();
+      } else {
+        authGate.style.display = "flex";
+        appShell.style.display = "none";
+        setTimeout(() => authInput.focus(), 100);
+      }
+    }
+
+    function unlockDashboard() {
+      authGate.style.display = "none";
+      appShell.style.display = "block";
+      sessionStorage.setItem("btr_admin_auth", MASTER_PASSWORD);
+      localStorage.setItem("btr_admin_auth", MASTER_PASSWORD);
+      fetchLiveData();
+      // Auto-refresh every 8 seconds
+      if (!refreshInterval) {
+        refreshInterval = setInterval(fetchLiveData, 8000);
+      }
+    }
+
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = (authInput.value || "").trim();
+      if (val === MASTER_PASSWORD) {
+        authError.style.display = "none";
+        unlockDashboard();
+      } else {
+        authError.style.display = "block";
+        authInput.value = "";
+        authInput.focus();
+      }
+    });
+
+    function logoutAdmin() {
+      sessionStorage.removeItem("btr_admin_auth");
+      localStorage.removeItem("btr_admin_auth");
+      window.location.href = "../index.html";
+    }
+
+    // 2. DATA FETCH & RENDERING ENGINE
+    async function fetchLiveData() {
+      try {
+        const res = await fetch("../api/track-visitor.php?v=" + Date.now());
+        const data = await res.json();
+        if (!data || !data.success) return;
+
+        rawLeadsData = data.leads || [];
+        rawVisitsData = data.recent_visits || [];
+        const stats = data.stats || {};
+
+        // Update KPIs
+        const totalLeads = stats.total_leads || rawLeadsData.length;
+        const totalVisits = stats.total_visits_logged || rawVisitsData.length;
+        const convRate = totalVisits > 0 ? ((totalLeads / totalVisits) * 100).toFixed(1) + "% Conv" : "0% Conv";
+
+        document.getElementById("kpiLeads").innerText = totalLeads;
+        document.getElementById("leadConvRate").innerText = convRate;
+        document.getElementById("kpiVisits").innerText = totalVisits;
+        document.getElementById("kpiTodayVisits").innerText = (stats.today_visits || 0) + " Today";
+        document.getElementById("kpiUnique").innerText = stats.unique_visitors || 0;
+
+        const mobileShare = stats.mobile_share || 0;
+        document.getElementById("kpiMobileRatio").innerText = mobileShare + "% Mobile";
+        document.getElementById("kpiDeviceShare").innerText = mobileShare + "% / " + (100 - mobileShare) + "%";
+        document.getElementById("kpiDeviceSub").innerText = (stats.mobile_visits || 0) + " Mobile • " + (stats.desktop_visits || 0) + " Desktop";
+
+        const topCity = (stats.top_cities && stats.top_cities.length > 0) ? stats.top_cities[0].city : "Detecting...";
+        document.getElementById("kpiTopCity").innerText = topCity;
+
+        document.getElementById("tabLeadsCount").innerText = rawLeadsData.length;
+        document.getElementById("tabVisitsCount").innerText = rawVisitsData.length;
+
+        // Render Tables
+        filterAllTables();
+
+        // Render Analytics Rankings
+        renderRankings(stats);
+
+      } catch (err) {
+        console.error("Failed to fetch live telemetry:", err);
+      }
+    }
+
+    // 3. TABLE FILTERING & RENDERING
+    function filterAllTables() {
+      const q = (document.getElementById("globalSearchInput").value || "").toLowerCase().trim();
+
+      // Render Leads Table
+      const leadsFiltered = rawLeadsData.filter(l => {
+        if (!q) return true;
+        const haystack = [l.name, l.phone, l.email, l.city, l.notes, l.page, l.ip, l.device].join(" ").toLowerCase();
+        return haystack.includes(q);
+      });
+
+      const leadsTbody = document.getElementById("leadsTbody");
+      if (leadsFiltered.length === 0) {
+        leadsTbody.innerHTML = `<tr><td colspan="9" class="empty-state">${q ? "No matching leads found for: " + escapeHtml(q) : "No inbound leads captured yet. When visitors fill their name/number in the WhatsApp modal or contact form, they appear here instantly!"}</td></tr>`;
+      } else {
+        leadsTbody.innerHTML = leadsFiltered.map(l => {
+          const cleanPhone = (l.phone || "").replace(/[^0-9]/g, "");
+          const waUrl = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent("Hi " + (l.name || "") + ", thanks for connecting with Buttercup Studio!")}` : "#";
+          const callUrl = cleanPhone ? `tel:${cleanPhone}` : "#";
+          const mailUrl = l.email ? `mailto:${l.email}` : "#";
+
+          return `
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(l.timestamp)}</td>
+              <td><strong style="color: #ffffff; font-size: 14.5px;">${escapeHtml(l.name || "Anonymous")}</strong></td>
+              <td>
+                ${cleanPhone ? `<span class="badge-phone">📱 ${escapeHtml(l.phone)}</span>` : `<span style="color:#64748b;">—</span>`}
+              </td>
+              <td><span class="badge-city">📍 ${escapeHtml(l.city || "India")}</span></td>
+              <td>
+                ${l.email ? `<a href="${mailUrl}" style="color: #7dd3fc; text-decoration: underline;">${escapeHtml(l.email)}</a>` : `<span style="color:#64748b;">—</span>`}
+              </td>
+              <td><span class="badge-tag">${escapeHtml(l.notes || "Lead Capture")}</span></td>
+              <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(l.page || "/")}</td>
+              <td><span class="badge-ip">${escapeHtml(l.ip || "127.0.0.1")}</span> <span style="font-size: 11px; color:#64748b;">(${escapeHtml(l.device || "Browser")})</span></td>
+              <td>
+                ${cleanPhone ? `
+                  <a href="${waUrl}" target="_blank" rel="noopener" class="btn-wa-action" title="Chat on WhatsApp">
                     <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/></svg>
                     Chat on WA
-                  </a>` : '—'}
-                </td>
-              </tr>
-            `;
-          }).join('');
-        }
-
-        // Render Visits
-        const visitsBody = document.getElementById('visitsTableBody');
-        if (!data.recent_visits || data.recent_visits.length === 0) {
-          visitsBody.innerHTML = '<tr><td colspan="6" class="empty-state">No visitor logs yet.</td></tr>';
-        } else {
-          visitsBody.innerHTML = data.recent_visits.map(v => `
-            <tr>
-              <td>${v.timestamp}</td>
-              <td><code>${escapeHtml(v.ip)}</code></td>
-              <td><strong>${escapeHtml(v.city || 'Unknown')}, ${escapeHtml(v.country || 'India')}</strong></td>
-              <td>${escapeHtml(v.device || 'Browser')}</td>
-              <td style="font-size:12px; color:#94a3b8;">${escapeHtml(v.page)}</td>
-              <td style="font-size:12px; color:#94a3b8;">${escapeHtml(v.referrer)}</td>
+                  </a>
+                  <a href="${callUrl}" class="btn-call-action" title="Call Number">Call</a>
+                ` : `<span style="color:#64748b;">—</span>`}
+              </td>
             </tr>
-          `).join('');
-        }
-      } catch (err) {
-        console.error('Failed to load leads:', err);
+          `;
+        }).join("");
+      }
+
+      // Render Visits Table
+      const visitsFiltered = rawVisitsData.filter(v => {
+        if (!q) return true;
+        const haystack = [v.ip, v.city, v.country, v.device, v.browser, v.os, v.page, v.referrer, v.language, v.timezone].join(" ").toLowerCase();
+        return haystack.includes(q);
+      });
+
+      const visitsTbody = document.getElementById("visitsTbody");
+      if (visitsFiltered.length === 0) {
+        visitsTbody.innerHTML = `<tr><td colspan="9" class="empty-state">${q ? "No matching visitors found for: " + escapeHtml(q) : "No visitor logs recorded yet."}</td></tr>`;
+      } else {
+        visitsTbody.innerHTML = visitsFiltered.map(v => {
+          return `
+            <tr>
+              <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(v.timestamp)}</td>
+              <td><span class="badge-ip">${escapeHtml(v.ip)}</span></td>
+              <td><span class="badge-city">📍 ${escapeHtml(v.city || "Unknown")}, ${escapeHtml(v.country || "India")}</span></td>
+              <td><strong style="color:#ffffff;">${escapeHtml(v.device || "Browser")}</strong> ${v.os ? `<span style="color:#94a3b8; font-size:12px;">(${escapeHtml(v.os)})</span>` : ""}</td>
+              <td>${escapeHtml(v.browser || "Chrome / Safari")}</td>
+              <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(v.screen || "Standard")}</td>
+              <td style="font-family: var(--font-mono); font-size: 12px; color: #38bdf8;">${escapeHtml(v.page)}</td>
+              <td style="color: #e2e8f0;">${escapeHtml(v.referrer || "Direct")}</td>
+              <td style="font-size: 11.5px; color: #94a3b8;">${escapeHtml(v.language || "en")} ${v.timezone ? "• " + escapeHtml(v.timezone) : ""}</td>
+            </tr>
+          `;
+        }).join("");
+      }
+    }
+
+    // 4. RANKINGS & ANALYTICS VISUALIZATIONS
+    function renderRankings(stats) {
+      renderRankingList("citiesRankingList", stats.top_cities || [], "city", stats.total_visits_logged || 1, "green");
+      renderRankingList("referrersRankingList", stats.top_referrers || [], "referrer", stats.total_visits_logged || 1, "purple");
+      renderRankingList("pagesRankingList", stats.top_pages || [], "page", stats.total_visits_logged || 1, "blue");
+    }
+
+    function renderRankingList(elemId, items, key, total, colorClass) {
+      const container = document.getElementById(elemId);
+      if (!items || items.length === 0) {
+        container.innerHTML = `<div class="empty-state">No telemetry data available yet.</div>`;
+        return;
+      }
+      container.innerHTML = items.map(item => {
+        const label = item[key] || "Unknown";
+        const count = item.count || 0;
+        const pct = Math.max(5, Math.min(100, Math.round((count / total) * 100)));
+        return `
+          <div class="ranking-item">
+            <div class="ranking-meta">
+              <span class="ranking-label">${escapeHtml(label)}</span>
+              <span class="ranking-count">${count} visits (${pct}%)</span>
+            </div>
+            <div class="ranking-bar-wrap">
+              <div class="ranking-bar-fill ${colorClass}" style="width: ${pct}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // 5. TABS SWITCHER
+    function switchTab(tab) {
+      document.querySelectorAll(".tab-pill").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+
+      if (tab === "leads") {
+        document.getElementById("tabLeadsBtn").classList.add("active");
+        document.getElementById("panelLeads").classList.add("active");
+      } else if (tab === "visits") {
+        document.getElementById("tabVisitsBtn").classList.add("active");
+        document.getElementById("panelVisits").classList.add("active");
+      } else if (tab === "analytics") {
+        document.getElementById("tabAnalyticsBtn").classList.add("active");
+        document.getElementById("panelAnalytics").classList.add("active");
       }
     }
 
     function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-    fetchData();
+    // Auto-check auth on load
+    checkAuth();
   </script>
 </body>
 </html>

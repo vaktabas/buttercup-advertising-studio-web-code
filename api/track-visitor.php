@@ -78,6 +78,19 @@ if ($method === 'GET') {
         }
     }
 
+    if ($action === 'download_visits_csv') {
+        if (file_exists($visitsCsvFile)) {
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="buttercup_visitors_' . date('Y-m-d') . '.csv"');
+            readfile($visitsCsvFile);
+            exit;
+        } else {
+            http_response_code(404);
+            echo "No visitor logs recorded yet.";
+            exit;
+        }
+    }
+
     // Default GET: Return JSON stats & leads for Dashboard
     $leads = [];
     if (file_exists($leadsJsonFile)) {
@@ -89,15 +102,90 @@ if ($method === 'GET') {
         $visits = json_decode(file_get_contents($visitsJsonFile), true) ?: [];
     }
 
+    $todayStr = date('Y-m-d');
+    $todayVisits = 0;
+    $todayLeads = 0;
+    $uniqueIps = [];
+    $mobileCount = 0;
+    $desktopCount = 0;
+    $citiesCount = [];
+    $referrersCount = [];
+    $pagesCount = [];
+
+    foreach ($visits as $v) {
+        $vIp = $v['ip'] ?? '';
+        if ($vIp) $uniqueIps[$vIp] = true;
+
+        if (isset($v['timestamp']) && strpos($v['timestamp'], $todayStr) === 0) {
+            $todayVisits++;
+        }
+
+        $vDevice = $v['device'] ?? '';
+        if (stripos($vDevice, 'Mobile') !== false) {
+            $mobileCount++;
+        } else {
+            $desktopCount++;
+        }
+
+        $vCity = trim($v['city'] ?? '');
+        if ($vCity && $vCity !== 'Detecting...' && $vCity !== 'Unknown') {
+            $citiesCount[$vCity] = ($citiesCount[$vCity] ?? 0) + 1;
+        }
+
+        $vRef = trim($v['referrer'] ?? 'Direct');
+        if ($vRef) {
+            $referrersCount[$vRef] = ($referrersCount[$vRef] ?? 0) + 1;
+        }
+
+        $vPage = trim($v['page'] ?? '/');
+        if ($vPage) {
+            $pagesCount[$vPage] = ($pagesCount[$vPage] ?? 0) + 1;
+        }
+    }
+
+    foreach ($leads as $l) {
+        if (isset($l['timestamp']) && strpos($l['timestamp'], $todayStr) === 0) {
+            $todayLeads++;
+        }
+    }
+
+    arsort($citiesCount);
+    arsort($referrersCount);
+    arsort($pagesCount);
+
+    $topCities = [];
+    foreach (array_slice($citiesCount, 0, 10, true) as $c => $cnt) {
+        $topCities[] = ['city' => $c, 'count' => $cnt];
+    }
+
+    $topReferrers = [];
+    foreach (array_slice($referrersCount, 0, 10, true) as $r => $cnt) {
+        $topReferrers[] = ['referrer' => $r, 'count' => $cnt];
+    }
+
+    $topPages = [];
+    foreach (array_slice($pagesCount, 0, 10, true) as $p => $cnt) {
+        $topPages[] = ['page' => $p, 'count' => $cnt];
+    }
+
     echo json_encode([
         'success' => true,
         'stats' => [
             'total_leads' => count($leads),
             'total_visits_logged' => count($visits),
+            'unique_visitors' => count($uniqueIps),
+            'today_visits' => $todayVisits,
+            'today_leads' => $todayLeads,
+            'mobile_visits' => $mobileCount,
+            'desktop_visits' => $desktopCount,
+            'mobile_share' => (count($visits) > 0 ? round(($mobileCount / count($visits)) * 100) : 0),
+            'top_cities' => $topCities,
+            'top_referrers' => $topReferrers,
+            'top_pages' => $topPages,
             'last_updated' => date('c')
         ],
-        'leads' => array_reverse(array_slice($leads, -200)),
-        'recent_visits' => array_reverse(array_slice($visits, -100))
+        'leads' => array_reverse(array_slice($leads, -500)),
+        'recent_visits' => array_reverse(array_slice($visits, -500))
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
@@ -199,6 +287,10 @@ if ($method === 'POST') {
         $clientCity = trim($payload['city'] ?? '');
         $clientCountry = trim($payload['country'] ?? '');
         $screen = trim($payload['screen'] ?? '');
+        $browserName = trim($payload['browser'] ?? '');
+        $osName = trim($payload['os'] ?? '');
+        $language = trim($payload['language'] ?? 'en');
+        $timezone = trim($payload['timezone'] ?? '');
 
         $visitRecord = [
             'timestamp' => $timestamp,
@@ -208,7 +300,11 @@ if ($method === 'POST') {
             'page' => $page,
             'referrer' => $referrer,
             'screen' => $screen,
-            'device' => $device
+            'device' => $device,
+            'browser' => $browserName,
+            'os' => $osName,
+            'language' => $language,
+            'timezone' => $timezone
         ];
 
         // Append to visitors-log.json (keep max 1000 items)
@@ -227,7 +323,7 @@ if ($method === 'POST') {
         $visFp = fopen($visitsCsvFile, 'a');
         if ($visFp) {
             if ($isNewVisitsCsv) {
-                fputcsv($visFp, ['Timestamp', 'IP Address', 'City', 'Country', 'Page Visited', 'Referrer', 'Device', 'Screen']);
+                fputcsv($visFp, ['Timestamp', 'IP Address', 'City', 'Country', 'Page Visited', 'Referrer', 'Device', 'Browser', 'OS', 'Screen', 'Language', 'Timezone']);
             }
             fputcsv($visFp, [
                 $timestamp,
@@ -237,7 +333,11 @@ if ($method === 'POST') {
                 $page,
                 $referrer,
                 $device,
-                $screen
+                $browserName,
+                $osName,
+                $screen,
+                $language,
+                $timezone
             ]);
             fclose($visFp);
         }
@@ -254,3 +354,4 @@ if ($method === 'POST') {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'Unknown action']);
 }
+
