@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="world-map.css?v=1795193566">
+  <link rel="stylesheet" href="world-map.css?v=202611202235">
   <style>
     :root {
       --bg: #090a0f;
@@ -1077,8 +1077,8 @@
       </div>
 
       <!-- 3D Globe Stage -->
-      <div class="btr-globe-stage" id="btrGlobeStage">
-        <canvas id="btrWorldGlobeCanvas"></canvas>
+      <div class="btr-globe-stage" id="btrGlobeStage" style="display: block !important; width: 100% !important; height: 540px !important; min-height: 540px !important; position: relative !important;">
+        <canvas id="btrWorldGlobeCanvas" style="display: block !important; width: 100% !important; height: 540px !important; min-height: 540px !important;"></canvas>
         <div class="btr-globe-tooltip" id="btrGlobeTooltip"></div>
 
         <!-- Controls -->
@@ -1500,6 +1500,6 @@
     checkAuth();
   </script>
   <script src="../js/vendor/three.min.js"></script>
-  <script src="world-map.js?v=1795193544"></script>
+  <script src="world-map.js?v=202611202235"></script>
 </body>
 </html>

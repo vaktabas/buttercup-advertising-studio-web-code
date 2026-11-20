@@ -53,6 +53,34 @@
     DARK: { key: "dark", hex: "#334155", num: 0x334155, label: "Zero Recorded Traffic", short: "Zero Traffic", minVisits: 0 }
   };
 
+  // World Landmass Polygons for Equirectangular Spherical Projection
+  const CONTINENT_POLYS = [
+    // North America
+    [[-168, 65], [-140, 70], [-120, 72], [-85, 75], [-60, 50], [-65, 45], [-75, 35], [-80, 25], [-97, 22], [-105, 20], [-115, 30], [-125, 48], [-140, 58], [-168, 65]],
+    // Central & South America
+    [[-85, 15], [-75, 10], [-60, 10], [-35, -5], [-35, -15], [-45, -24], [-55, -35], [-68, -54], [-75, -50], [-72, -30], [-80, -5], [-82, 8], [-85, 15]],
+    // Europe
+    [[-10, 36], [0, 43], [12, 44], [25, 40], [35, 42], [42, 48], [55, 60], [30, 70], [15, 60], [5, 52], [-5, 48], [-10, 36]],
+    // British Isles
+    [[-5, 50], [1, 51], [0, 58], [-5, 58], [-5, 50]],
+    // Africa
+    [[-17, 30], [10, 37], [32, 32], [51, 12], [42, 5], [40, -10], [35, -25], [20, -35], [15, -30], [10, -5], [0, 5], [-15, 10], [-17, 30]],
+    // Madagascar
+    [[44, -12], [50, -15], [47, -25], [43, -25], [44, -12]],
+    // Asia & Middle East
+    [[35, 32], [50, 30], [60, 25], [68, 24], [72, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24], [80, 10], [105, 10], [120, 22], [125, 32], [140, 45], [170, 65], [140, 70], [80, 72], [40, 45], [35, 32]],
+    // India Subcontinent (Primary Studio Hub)
+    [[68, 24], [70, 28], [74, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24]],
+    // Japan
+    [[130, 32], [136, 35], [142, 44], [140, 40], [130, 32]],
+    // Australia
+    [[114, -22], [130, -12], [145, -15], [153, -28], [145, -38], [130, -32], [115, -35], [114, -22]],
+    // New Zealand
+    [[172, -35], [178, -38], [174, -45], [168, -45], [172, -35]],
+    // Greenland
+    [[-55, 60], [-25, 70], [-20, 80], [-50, 82], [-60, 75], [-55, 60]]
+  ];
+
   // Helper: Convert (lat, lon) to 3D Cartesian coordinates on sphere
   function latLonToVector3(lat, lon, radius, alt) {
     alt = alt || 0;
@@ -87,7 +115,7 @@
       this.isDragging = false;
       this.previousMousePosition = { x: 0, y: 0 };
       this.dragVelocity = { x: 0, y: 0 };
-      this.targetRotation = { x: 0.22, y: -2.3 }; // Initial view centered on India & Asia
+      this.targetRotation = { x: 0.22, y: -2.3 }; // Starts facing India & Asia
       this.currentRotation = { x: 0.22, y: -2.3 };
       this.targetZoom = 14.5;
       this.currentZoom = 14.5;
@@ -102,11 +130,6 @@
     }
 
     init(containerId) {
-      if (this.isInitialized) {
-        this.onResize();
-        return;
-      }
-
       this.container = document.getElementById(containerId);
       if (!this.container) return;
 
@@ -120,8 +143,14 @@
         return;
       }
 
-      const width = Math.max(this.container.clientWidth || 800, 400);
-      const height = Math.max(this.container.clientHeight || 520, 360);
+      // Enforce guaranteed minimum dimensions so canvas NEVER collapses
+      const width = Math.max(this.container.clientWidth || 800, 480);
+      const height = Math.max(this.container.clientHeight || 540, 480);
+
+      if (this.isInitialized) {
+        this.onResize();
+        return;
+      }
 
       // 1. Scene & Camera
       this.scene = new THREE.Scene();
@@ -139,21 +168,21 @@
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
       // 3. Realistic Sunlight & Ambient Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
       this.scene.add(ambientLight);
 
-      const sunLight = new THREE.DirectionalLight(0xffffff, 1.1);
+      const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
       sunLight.position.set(25, 18, 22);
       this.scene.add(sunLight);
 
-      const secondaryLight = new THREE.DirectionalLight(0x60a5fa, 0.45);
+      const secondaryLight = new THREE.DirectionalLight(0x60a5fa, 0.55);
       secondaryLight.position.set(-25, -12, -20);
       this.scene.add(secondaryLight);
 
       // 4. Background Starfield
       this.createStarfield();
 
-      // 5. Realistic Earth Globe Sphere & Texture
+      // 5. Realistic Earth Globe Sphere
       this.createGlobeSphere();
 
       // 6. Groups for Dynamic Country Beacons & Session Arcs
@@ -168,7 +197,7 @@
       this.raycaster = new THREE.Raycaster();
       this.mouse = new THREE.Vector2();
 
-      // 8. Event Listeners for Smooth Dragging & Pinch Zoom
+      // 8. Event Listeners for 360° Dragging & Controls
       this.setupEventListeners();
 
       this.isInitialized = true;
@@ -198,40 +227,38 @@
     }
 
     createGlobeSphere() {
-      // 1. Texture Loading (Uses generated realistic texture with canvas fallback)
-      const textureLoader = new THREE.TextureLoader();
-      let earthTexture = null;
-
-      try {
-        earthTexture = textureLoader.load("img/earth-texture.jpg", () => {
-          if (this.globeMesh && this.globeMesh.material) {
-            this.globeMesh.material.needsUpdate = true;
-          }
-        });
-      } catch (e) {
-        console.warn("Using procedural Earth texture fallback:", e);
-      }
-
-      if (!earthTexture) {
-        earthTexture = this.generateFallbackCanvasTexture();
-      }
+      // 1. Instantly create rich canvas texture as immediate base
+      const canvasTexture = this.generateFallbackCanvasTexture();
 
       // 2. Earth Sphere Mesh
       const sphereGeo = new THREE.SphereGeometry(this.globeRadius, 64, 64);
       const sphereMat = new THREE.MeshPhongMaterial({
-        map: earthTexture,
-        shininess: 35,
+        map: canvasTexture,
+        shininess: 32,
         specular: 0x1d4ed8
       });
       this.globeMesh = new THREE.Mesh(sphereGeo, sphereMat);
       this.scene.add(this.globeMesh);
 
-      // 3. Glowing Atmospheric Halo (Fresnel effect)
+      // 3. Asynchronously upgrade with high-res photorealistic texture
+      try {
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load("img/earth-texture.jpg", (tex) => {
+          if (this.globeMesh) {
+            this.globeMesh.material.map = tex;
+            this.globeMesh.material.needsUpdate = true;
+          }
+        });
+      } catch (e) {
+        console.warn("Using base canvas texture:", e);
+      }
+
+      // 4. Glowing Atmospheric Halo (Fresnel effect)
       const atmoGeo = new THREE.SphereGeometry(this.globeRadius * 1.025, 48, 48);
       const atmoMat = new THREE.MeshBasicMaterial({
         color: 0x38bdf8,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.18,
         side: THREE.BackSide,
         blending: THREE.AdditiveBlending
       });
@@ -245,21 +272,53 @@
       c.height = 1024;
       const ctx = c.getContext("2d");
 
-      // Deep Blue Oceans
-      const grad = ctx.createLinearGradient(0, 0, 0, 1024);
-      grad.addColorStop(0, "#08162d");
-      grad.addColorStop(0.5, "#0b254a");
-      grad.addColorStop(1, "#08162d");
-      ctx.fillStyle = grad;
+      // Deep Blue Realistic Ocean Gradient
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, 1024);
+      oceanGrad.addColorStop(0, "#08162d");
+      oceanGrad.addColorStop(0.5, "#0b254a");
+      oceanGrad.addColorStop(1, "#08162d");
+      ctx.fillStyle = oceanGrad;
       ctx.fillRect(0, 0, 2048, 1024);
 
-      // Continents representation
+      // Draw Continents
       ctx.fillStyle = "#1e3a2b";
       ctx.strokeStyle = "#38bdf8";
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
 
-      // Draw Graticule Lines
+      CONTINENT_POLYS.forEach(poly => {
+        ctx.beginPath();
+        poly.forEach((pt, idx) => {
+          const px = ((pt[0] + 180) / 360) * 2048;
+          const py = ((90 - pt[1]) / 180) * 1024;
+          if (idx === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      // Special Glowing Red Landmass for India Subcontinent
+      const indiaPoly = CONTINENT_POLYS[7];
+      if (indiaPoly) {
+        ctx.fillStyle = "rgba(239, 68, 68, 0.45)";
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        indiaPoly.forEach((pt, idx) => {
+          const px = ((pt[0] + 180) / 360) * 2048;
+          const py = ((90 - pt[1]) / 180) * 1024;
+          if (idx === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Graticule Lines (every 30 deg)
       ctx.strokeStyle = "rgba(56, 189, 248, 0.12)";
+      ctx.lineWidth = 1;
       for (let x = 0; x <= 2048; x += 2048 / 12) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1024); ctx.stroke();
       }
@@ -303,13 +362,12 @@
           // Clamping pitch tilt to prevent inverted disorientation
           this.targetRotation.x = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, this.targetRotation.x));
 
-          // Track momentum velocity for fling/spin inertia
+          // Track momentum velocity for smooth fling/spin inertia
           this.dragVelocity.x = deltaX * 0.006;
           this.dragVelocity.y = deltaY * 0.006;
 
           this.previousMousePosition = { x: coord.x, y: coord.y };
         } else {
-          // Raycasting on hover
           const rect = this.canvas.getBoundingClientRect();
           this.mouse.x = ((coord.x - rect.left) / rect.width) * 2 - 1;
           this.mouse.y = -((coord.y - rect.top) / rect.height) * 2 + 1;
@@ -412,8 +470,8 @@
 
     onResize() {
       if (!this.container || !this.camera || !this.renderer) return;
-      const width = Math.max(this.container.clientWidth || 800, 400);
-      const height = Math.max(this.container.clientHeight || 520, 360);
+      const width = Math.max(this.container.clientWidth || 800, 480);
+      const height = Math.max(this.container.clientHeight || 540, 480);
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(width, height);
@@ -459,7 +517,7 @@
         countryCounts["IN"] = Math.max(countryCounts["IN"] || 0, 58);
       }
       if (!countryCities["IN"]) countryCities["IN"] = new Set();
-      ["Ahmedabad (HQ)", "Mumbai", "Surat", "Bengaluru", "Delhi"].forEach(c => countryCities["IN"].add(c));
+      ["Bareja", "Ahmedabad (Studio HQ)", "Mumbai", "Surat", "Bengaluru", "Delhi"].forEach(c => countryCities["IN"].add(c));
 
       // Global visitor distribution
       if (Object.keys(countryCounts).length < 4) {
@@ -725,15 +783,20 @@
       this.targetRotation.y = targetTheta;
       this.targetZoom = 13.5;
 
-      // Ensure the globe is visible in viewport
-      const stage = document.getElementById("btrGlobeStage");
-      if (stage) {
-        stage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      // Scroll smoothly back up to the 3D globe so user sees the country in focus
+      const box = document.querySelector(".btr-map-modal-box");
+      if (box) {
+        box.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
     focusIndia() {
-      this.focusCountry("IN");
+      const c = COUNTRY_GEO["IN"];
+      const targetPhi = (c.lat) * (Math.PI / 180);
+      const targetTheta = -(c.lon + 180) * (Math.PI / 180) + Math.PI;
+      this.targetRotation.x = targetPhi * 0.8;
+      this.targetRotation.y = targetTheta;
+      this.targetZoom = 14.0;
     }
 
     rotateLeft() {
@@ -848,21 +911,24 @@
       box.scrollTop = 0;
     }
 
-    // Initialize 3D Engine on first open
+    // Initialize 3D Engine immediately
+    window.worldMapInstance.init("btrGlobeStage");
+    if (window.rawVisitsData && window.rawLeadsData) {
+      window.worldMapInstance.updateTrafficData(window.rawVisitsData, window.rawLeadsData, window.__btrStats || {});
+    }
+    window.worldMapInstance.onResize();
+
+    // Multi-stage resize to ensure canvas is always correctly sized
     setTimeout(() => {
-      window.worldMapInstance.init("btrGlobeStage");
-      if (window.rawVisitsData && window.rawLeadsData) {
-        window.worldMapInstance.updateTrafficData(window.rawVisitsData, window.rawLeadsData, window.__btrStats || {});
-      }
+      if (box) box.scrollTop = 0;
       window.worldMapInstance.onResize();
-      window.worldMapInstance.focusIndia();
-    }, 80);
+    }, 50);
 
     setTimeout(() => {
-      if (window.worldMapInstance) {
-        window.worldMapInstance.onResize();
-      }
-    }, 280);
+      if (box) box.scrollTop = 0;
+      window.worldMapInstance.onResize();
+      window.worldMapInstance.focusIndia();
+    }, 180);
   };
 
   window.closeWorldMapModal = function () {
