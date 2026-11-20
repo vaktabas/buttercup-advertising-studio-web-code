@@ -987,37 +987,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========================================================================
   // 1. AUTOMATIC SILENT VISITOR TELEMETRY & CITY DETECTION
-  // Captures IP, City, Region, Device, Referrer, Page into /data/visitors-log.csv
+  // Captures IP, City, Region, GPS, ISP, Device, Referrer, Page into /data/visitors-log.csv
   // =========================================================================
   async function initVisitorTracking() {
     if (window.__btrTrackingInitialized) return;
     window.__btrTrackingInitialized = true;
 
     let detectedCity = 'Detecting...';
+    let detectedRegion = 'Gujarat';
     let detectedCountry = 'India';
+    let detectedLat = '';
+    let detectedLon = '';
+    let detectedIsp = '';
 
     try {
-      // Fast IP Geolocation lookup
-      const res = await fetch('https://freeipapi.com/api/json', { signal: AbortSignal.timeout(4000) });
+      // Fast IP Geolocation & ISP lookup
+      const res = await fetch('https://freeipapi.com/api/json', { signal: AbortSignal.timeout(4500) });
       if (res.ok) {
         const data = await res.json();
         if (data && data.cityName) {
           detectedCity = data.cityName + (data.regionName ? ', ' + data.regionName : '');
+          detectedRegion = data.regionName || '';
           detectedCountry = data.countryName || 'India';
+          detectedLat = data.latitude || '';
+          detectedLon = data.longitude || '';
+          detectedIsp = data.asnOrganization || '';
+
           window.__btrDetectedCity = detectedCity;
+          window.__btrDetectedRegion = detectedRegion;
           window.__btrDetectedCountry = detectedCountry;
+          window.__btrDetectedLat = detectedLat;
+          window.__btrDetectedLon = detectedLon;
+          window.__btrDetectedIsp = detectedIsp;
         }
       }
     } catch (e) {
       try {
-        const fbRes = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+        const fbRes = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3500) });
         if (fbRes.ok) {
           const fbData = await fbRes.json();
           if (fbData && fbData.city) {
             detectedCity = fbData.city + (fbData.region ? ', ' + fbData.region : '');
+            detectedRegion = fbData.region || '';
             detectedCountry = fbData.country_name || 'India';
+            detectedLat = fbData.latitude || '';
+            detectedLon = fbData.longitude || '';
+            detectedIsp = fbData.org || '';
+
             window.__btrDetectedCity = detectedCity;
+            window.__btrDetectedRegion = detectedRegion;
             window.__btrDetectedCountry = detectedCountry;
+            window.__btrDetectedLat = detectedLat;
+            window.__btrDetectedLon = detectedLon;
+            window.__btrDetectedIsp = detectedIsp;
           }
         }
       } catch (err) {}
@@ -1047,21 +1069,32 @@ document.addEventListener("DOMContentLoaded", () => {
         ? window.location.origin + '/api/track-visitor.php'
         : 'api/track-visitor.php';
 
+      const payload = {
+        action: 'visit',
+        city: detectedCity,
+        region: detectedRegion,
+        country: detectedCountry,
+        latitude: detectedLat,
+        longitude: detectedLon,
+        isp: detectedIsp,
+        connection: (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : '',
+        page: window.location.pathname + window.location.search,
+        referrer: document.referrer || 'Direct / Bookmark',
+        screen: `${window.innerWidth}x${window.innerHeight} (${window.screen.width}x${window.screen.height}${window.devicePixelRatio > 1 ? ' @' + window.devicePixelRatio + 'x' : ''})`,
+        browser: detectBrowserName(),
+        os: detectOSName(),
+        language: navigator.language || 'en',
+        timezone: (typeof Intl !== 'undefined' && Intl.DateTimeFormat) ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
+      };
+
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(apiUrl, new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+      }
+
       fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'visit',
-          city: detectedCity,
-          country: detectedCountry,
-          page: window.location.pathname + window.location.search,
-          referrer: document.referrer || 'Direct / Bookmark',
-          screen: window.innerWidth + 'x' + window.innerHeight,
-          browser: detectBrowserName(),
-          os: detectOSName(),
-          language: navigator.language || 'en',
-          timezone: (typeof Intl !== 'undefined' && Intl.DateTimeFormat) ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
-        }),
+        body: JSON.stringify(payload),
         keepalive: true
       }).catch(() => {});
     } catch (err) {}
@@ -1203,13 +1236,13 @@ document.addEventListener("DOMContentLoaded", () => {
           Have a brand, design or campaign project? Enter your details to connect directly:
         </p>
 
-        <form class="btr-wa-form" id="btrWaForm" onsubmit="return false;">
+        <form class="btr-wa-form" id="btrWaForm">
           <div class="btr-wa-inputs">
             <input type="text" id="btrLeadName" class="btr-wa-input" placeholder="Your Name (e.g. Rahul)" autocomplete="name">
             <input type="tel" id="btrLeadPhone" class="btr-wa-input" placeholder="WhatsApp / Phone Number" autocomplete="tel">
           </div>
 
-          <button type="button" class="btr-wa-square-btn" id="btrWaSquareCta">
+          <button type="submit" class="btr-wa-square-btn" id="btrWaSquareCta">
             <span id="btrWaBtnText">Connect on WhatsApp</span>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1233,6 +1266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let isInputFocused = false;
     let autoHideTimer = null;
 
+    const waForm = document.getElementById('btrWaForm');
     const nameInput = document.getElementById('btrLeadName');
     const phoneInput = document.getElementById('btrLeadPhone');
     const btnCta = document.getElementById('btrWaSquareCta');
@@ -1276,48 +1310,81 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.setAttribute('aria-hidden', 'true');
     }
 
-    // Lead Capture & Instant WhatsApp Redirect
-    if (btnCta) {
-      btnCta.addEventListener('click', () => {
-        const nameVal = nameInput ? nameInput.value.trim() : '';
-        const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+    // Lead Capture & Instant WhatsApp Redirect (Permanent multi-channel persistence)
+    function handleWaLeadSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
 
-        if (nameVal || phoneVal) {
-          if (btnText) btnText.textContent = 'Connecting...';
+      const nameVal = nameInput ? nameInput.value.trim() : '';
+      const phoneVal = phoneInput ? phoneInput.value.trim() : '';
 
-          const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
-            ? window.location.origin + '/api/track-visitor.php'
-            : 'api/track-visitor.php';
+      if (nameVal || phoneVal) {
+        if (btnText) btnText.textContent = 'Connecting...';
 
-          fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              action: 'lead',
-              name: nameVal,
-              phone: phoneVal,
-              city: window.__btrDetectedCity || 'India',
-              page: window.location.pathname,
-              notes: 'Captured via 12s WhatsApp Center Modal'
-            }),
-            keepalive: true
-          }).catch(() => {});
+        const leadPayload = {
+          action: 'lead',
+          name: nameVal,
+          phone: phoneVal,
+          city: window.__btrDetectedCity || 'India',
+          page: window.location.pathname,
+          notes: 'Captured via 12s WhatsApp Center Modal'
+        };
+
+        // 1. Local Persistence (Permanent client cache)
+        try {
+          const cached = JSON.parse(localStorage.getItem('btr_cached_leads') || '[]');
+          cached.push(Object.assign({ timestamp: new Date().toLocaleString() }, leadPayload));
+          localStorage.setItem('btr_cached_leads', JSON.stringify(cached));
+        } catch (err) {}
+
+        const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+          ? window.location.origin + '/api/track-visitor.php'
+          : 'api/track-visitor.php';
+
+        // 2. Guaranteed server delivery (sendBeacon survives app switch)
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(apiUrl, new Blob([JSON.stringify(leadPayload)], { type: 'application/json' }));
         }
 
-        let waMsg = 'Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!';
-        if (nameVal) {
-          waMsg = `Hi Buttercup Studio! My name is ${nameVal}${phoneVal ? ' (' + phoneVal + ')' : ''}. I saw your work on buttercup.in and I want to discuss a project!`;
-        }
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadPayload),
+          keepalive: true
+        }).catch(() => {});
 
-        const waUrl = `https://wa.me/919925034404?text=${encodeURIComponent(waMsg)}`;
-        window.open(waUrl, '_blank', 'noopener,noreferrer');
+        // 3. Email Notification Backup (Direct to info@buttercup.in)
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: "a34185cd-5cda-4094-8c3d-93484874796e", // info@buttercup.in
+            subject: `⚡ WhatsApp Lead Captured: ${nameVal || 'Visitor'} (${phoneVal || 'No Phone'})`,
+            from_name: "Buttercup Studio WhatsApp Portal",
+            Name: nameVal || "Anonymous",
+            Phone: phoneVal || "Not provided",
+            City: window.__btrDetectedCity || "India",
+            Page: window.location.pathname
+          }),
+          keepalive: true
+        }).catch(() => {});
+      }
 
-        hideModal();
-        if (nameInput) nameInput.value = '';
-        if (phoneInput) phoneInput.value = '';
-        if (btnText) btnText.textContent = 'Connect on WhatsApp';
-      });
+      let waMsg = 'Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!';
+      if (nameVal) {
+        waMsg = `Hi Buttercup Studio! My name is ${nameVal}${phoneVal ? ' (' + phoneVal + ')' : ''}. I saw your work on buttercup.in and I want to discuss a project!`;
+      }
+
+      const waUrl = `https://wa.me/919925034404?text=${encodeURIComponent(waMsg)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+      hideModal();
+      if (nameInput) nameInput.value = '';
+      if (phoneInput) phoneInput.value = '';
+      if (btnText) btnText.textContent = 'Connect on WhatsApp';
     }
+
+    if (waForm) waForm.addEventListener('submit', handleWaLeadSubmit);
+    if (btnCta) btnCta.addEventListener('click', handleWaLeadSubmit);
 
     if (skipLink) {
       skipLink.addEventListener('click', () => {

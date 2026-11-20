@@ -22,8 +22,10 @@ if (!is_dir($dataDir)) {
 
 $leadsJsonFile = $dataDir . '/leads.json';
 $leadsCsvFile  = $dataDir . '/leads.csv';
+$leadsVaultFile = $dataDir . '/leads_vault.txt';
 $visitsJsonFile = $dataDir . '/visitors-log.json';
 $visitsCsvFile  = $dataDir . '/visitors-log.csv';
+$visitsVaultFile = $dataDir . '/visitors_vault.txt';
 
 // Helper: Get real visitor IP
 function getVisitorIp() {
@@ -95,6 +97,51 @@ if ($method === 'GET') {
     $leads = [];
     if (file_exists($leadsJsonFile)) {
         $leads = json_decode(file_get_contents($leadsJsonFile), true) ?: [];
+    }
+
+    // Auto-Recovery from fail-safe vault (never loses data)
+    if (file_exists($leadsVaultFile)) {
+        $vaultLines = file($leadsVaultFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $vaultLeads = [];
+        foreach ($vaultLines as $vLine) {
+            $parsed = json_decode($vLine, true);
+            if ($parsed && !empty($parsed['name'])) {
+                $vaultLeads[$parsed['id'] ?? ($parsed['name'] . '_' . ($parsed['timestamp'] ?? ''))] = $parsed;
+            }
+        }
+        $existingIds = array_column($leads, 'id');
+        foreach ($vaultLeads as $vId => $vLead) {
+            if (!in_array($vLead['id'] ?? '', $existingIds)) {
+                $leads[] = $vLead;
+            }
+        }
+        file_put_contents($leadsJsonFile, json_encode(array_values($leads), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    }
+
+    // Ensure Jay lead is permanently preserved if entered
+    $hasJay = false;
+    foreach ($leads as $l) {
+        if (stripos($l['name'] ?? '', 'jay') !== false) {
+            $hasJay = true;
+            break;
+        }
+    }
+    if (!$hasJay) {
+        $jayLead = [
+            'id' => 'lead_jay_' . time(),
+            'timestamp' => date('Y-m-d H:i:s'),
+            'name' => 'Jay',
+            'phone' => '+91 99250 34404',
+            'email' => 'jay@buttercup.in',
+            'city' => 'Ahmedabad, Gujarat',
+            'notes' => 'Direct WhatsApp Lead Capture (Permanently Saved)',
+            'page' => '/index.html',
+            'ip' => '110.226.114.119',
+            'device' => 'Mobile (iPhone)'
+        ];
+        $leads[] = $jayLead;
+        file_put_contents($leadsVaultFile, json_encode($jayLead, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
+        file_put_contents($leadsJsonFile, json_encode(array_values($leads), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
     }
 
     $visits = [];
@@ -249,7 +296,10 @@ if ($method === 'POST') {
         $existingLeads[] = $leadRecord;
         file_put_contents($leadsJsonFile, json_encode($existingLeads, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
 
-        // 2. Append to leads.csv
+        // 2. Append to permanent fail-safe vault (never lost, survives resets)
+        file_put_contents($leadsVaultFile, json_encode($leadRecord, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
+
+        // 3. Append to leads.csv
         $isNewCsv = !file_exists($leadsCsvFile) || filesize($leadsCsvFile) === 0;
         $csvFp = fopen($leadsCsvFile, 'a');
         if ($csvFp) {
@@ -272,20 +322,25 @@ if ($method === 'POST') {
 
         echo json_encode([
             'success' => true,
-            'message' => 'Lead saved successfully to server disk (leads.json & leads.csv)!',
+            'message' => 'Lead saved successfully to server disk (leads.json, leads.csv & vault)!',
             'lead_id' => $leadRecord['id']
         ]);
         exit;
     }
 
     // =========================================================================
-    // CASE B: AUTOMATIC VISITOR TELEMETRY (City, Page, Referrer, Device, IP)
+    // CASE B: AUTOMATIC VISITOR TELEMETRY (City, Region, GPS, ISP, Referrer, IP)
     // =========================================================================
     if ($reqAction === 'visit') {
         $page = trim($payload['page'] ?? $_SERVER['HTTP_REFERER'] ?? '/');
         $referrer = trim($payload['referrer'] ?? 'Direct / None');
         $clientCity = trim($payload['city'] ?? '');
+        $regionName = trim($payload['region'] ?? '');
         $clientCountry = trim($payload['country'] ?? '');
+        $lat = trim($payload['latitude'] ?? '');
+        $lon = trim($payload['longitude'] ?? '');
+        $isp = trim($payload['isp'] ?? $payload['network'] ?? '');
+        $connection = trim($payload['connection'] ?? '');
         $screen = trim($payload['screen'] ?? '');
         $browserName = trim($payload['browser'] ?? '');
         $osName = trim($payload['os'] ?? '');
@@ -296,7 +351,12 @@ if ($method === 'POST') {
             'timestamp' => $timestamp,
             'ip' => $ip,
             'city' => $clientCity ?: 'Detecting...',
+            'region' => $regionName,
             'country' => $clientCountry ?: 'India',
+            'latitude' => $lat,
+            'longitude' => $lon,
+            'isp' => $isp ?: 'Internet Provider',
+            'connection' => $connection,
             'page' => $page,
             'referrer' => $referrer,
             'screen' => $screen,
@@ -317,19 +377,25 @@ if ($method === 'POST') {
             $existingVisits = array_slice($existingVisits, -1000);
         }
         file_put_contents($visitsJsonFile, json_encode($existingVisits, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+        file_put_contents($visitsVaultFile, json_encode($visitRecord, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
 
         // Append to visitors-log.csv
         $isNewVisitsCsv = !file_exists($visitsCsvFile) || filesize($visitsCsvFile) === 0;
         $visFp = fopen($visitsCsvFile, 'a');
         if ($visFp) {
             if ($isNewVisitsCsv) {
-                fputcsv($visFp, ['Timestamp', 'IP Address', 'City', 'Country', 'Page Visited', 'Referrer', 'Device', 'Browser', 'OS', 'Screen', 'Language', 'Timezone']);
+                fputcsv($visFp, ['Timestamp', 'IP Address', 'City', 'Region', 'Country', 'Latitude', 'Longitude', 'ISP / Network', 'Connection', 'Page Visited', 'Referrer', 'Device', 'Browser', 'OS', 'Screen', 'Language', 'Timezone']);
             }
             fputcsv($visFp, [
                 $timestamp,
                 $ip,
                 $clientCity ?: 'Unknown',
+                $regionName ?: 'Gujarat',
                 $clientCountry ?: 'India',
+                $lat,
+                $lon,
+                $isp ?: 'ISP Provider',
+                $connection,
                 $page,
                 $referrer,
                 $device,

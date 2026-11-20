@@ -937,14 +937,14 @@
             <thead>
               <tr>
                 <th>Timestamp</th>
-                <th>IP Address</th>
-                <th>City, Region & Country</th>
+                <th>IP Address & Network (ISP)</th>
+                <th>Location & Map</th>
                 <th>Device & OS</th>
-                <th>Browser</th>
-                <th>Screen Size</th>
+                <th>Browser & Screen</th>
+                <th>Connection Speed</th>
                 <th>Page Visited</th>
                 <th>Traffic Referrer</th>
-                <th>Language / Timezone</th>
+                <th>Timezone & Lang</th>
               </tr>
             </thead>
             <tbody id="visitsTbody">
@@ -1066,6 +1066,22 @@
         if (!data || !data.success) return;
 
         rawLeadsData = data.leads || [];
+
+        // Fail-safe merge: ensure client-cached leads are permanently preserved
+        try {
+          const localLeads = JSON.parse(localStorage.getItem('btr_cached_leads') || '[]');
+          if (Array.isArray(localLeads) && localLeads.length > 0) {
+            const existingKeys = new Set(rawLeadsData.map(l => ((l.name || '') + '_' + (l.phone || '')).toLowerCase()));
+            localLeads.forEach(loc => {
+              const key = ((loc.name || '') + '_' + (loc.phone || '')).toLowerCase();
+              if (!existingKeys.has(key)) {
+                rawLeadsData.unshift(loc);
+                existingKeys.add(key);
+              }
+            });
+          }
+        } catch (e) {}
+
         rawVisitsData = data.recent_visits || [];
         const stats = data.stats || {};
 
@@ -1123,6 +1139,11 @@
           const callUrl = cleanPhone ? `tel:${cleanPhone}` : "#";
           const mailUrl = l.email ? `mailto:${l.email}` : "#";
 
+          const locText = l.city || "Ahmedabad, Gujarat";
+          const mapUrl = (l.latitude && l.longitude)
+            ? `https://www.google.com/maps?q=${l.latitude},${l.longitude}`
+            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locText)}`;
+
           return `
             <tr>
               <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(l.timestamp)}</td>
@@ -1130,7 +1151,10 @@
               <td>
                 ${cleanPhone ? `<span class="badge-phone">📱 ${escapeHtml(l.phone)}</span>` : `<span style="color:#64748b;">—</span>`}
               </td>
-              <td><span class="badge-city">📍 ${escapeHtml(l.city || "India")}</span></td>
+              <td>
+                <span class="badge-city">📍 ${escapeHtml(locText)}</span>
+                <a href="${mapUrl}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:3px; margin-top:3px; font-size:11px; color:#38bdf8; text-decoration:none; background:rgba(56,189,248,0.1); padding:1px 5px; border-radius:3px; border:1px solid rgba(56,189,248,0.2);" title="View location on Google Maps">🗺️ Map</a>
+              </td>
               <td>
                 ${l.email ? `<a href="${mailUrl}" style="color: #7dd3fc; text-decoration: underline;">${escapeHtml(l.email)}</a>` : `<span style="color:#64748b;">—</span>`}
               </td>
@@ -1154,7 +1178,7 @@
       // Render Visits Table
       const visitsFiltered = rawVisitsData.filter(v => {
         if (!q) return true;
-        const haystack = [v.ip, v.city, v.country, v.device, v.browser, v.os, v.page, v.referrer, v.language, v.timezone].join(" ").toLowerCase();
+        const haystack = [v.ip, v.city, v.country, v.device, v.browser, v.os, v.page, v.referrer, v.language, v.timezone, v.isp, v.region, v.connection].join(" ").toLowerCase();
         return haystack.includes(q);
       });
 
@@ -1163,17 +1187,44 @@
         visitsTbody.innerHTML = `<tr><td colspan="9" class="empty-state">${q ? "No matching visitors found for: " + escapeHtml(q) : "No visitor logs recorded yet."}</td></tr>`;
       } else {
         visitsTbody.innerHTML = visitsFiltered.map(v => {
+          const locStr = [v.city, v.region, v.country].filter(Boolean).join(', ') || 'Unknown';
+          const mapUrl = (v.latitude && v.longitude)
+            ? `https://www.google.com/maps?q=${v.latitude},${v.longitude}`
+            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locStr || 'India')}`;
+
+          const ispText = v.isp || '';
+          const connText = v.connection ? v.connection.toUpperCase() : '';
+
           return `
             <tr>
               <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(v.timestamp)}</td>
-              <td><span class="badge-ip">${escapeHtml(v.ip)}</span></td>
-              <td><span class="badge-city">📍 ${escapeHtml(v.city || "Unknown")}, ${escapeHtml(v.country || "India")}</span></td>
-              <td><strong style="color:#ffffff;">${escapeHtml(v.device || "Browser")}</strong> ${v.os ? `<span style="color:#94a3b8; font-size:12px;">(${escapeHtml(v.os)})</span>` : ""}</td>
-              <td>${escapeHtml(v.browser || "Chrome / Safari")}</td>
-              <td style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">${escapeHtml(v.screen || "Standard")}</td>
+              <td>
+                <span class="badge-ip">${escapeHtml(v.ip)}</span>
+                ${ispText ? `<div style="font-size:11px; color:#c084fc; margin-top:3px; font-weight:500;">📶 ${escapeHtml(ispText)}</div>` : ''}
+              </td>
+              <td>
+                <span class="badge-city">📍 ${escapeHtml(locStr)}</span>
+                <a href="${mapUrl}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:3px; margin-top:4px; font-size:11px; color:#38bdf8; font-weight:600; text-decoration:none; background:rgba(56,189,248,0.1); padding:2px 6px; border-radius:4px; border:1px solid rgba(56,189,248,0.25);" title="Open GPS Coordinates in Google Maps">
+                  🗺️ Google Map
+                </a>
+              </td>
+              <td>
+                <strong style="color:#ffffff;">${escapeHtml(v.device || "Browser")}</strong>
+                ${v.os ? `<span style="color:#94a3b8; font-size:12px;">(${escapeHtml(v.os)})</span>` : ""}
+              </td>
+              <td>
+                <div>${escapeHtml(v.browser || "Chrome / Safari")}</div>
+                <div style="font-family: var(--font-mono); font-size: 11px; color: #94a3b8; margin-top:2px;">🖥️ ${escapeHtml(v.screen || "Standard")}</div>
+              </td>
+              <td>
+                ${connText ? `<span class="badge-tag" style="background:rgba(52,211,153,0.15); color:#34d399; border-color:rgba(52,211,153,0.3);">⚡ ${escapeHtml(connText)}</span>` : `<span style="color:#64748b;">—</span>`}
+              </td>
               <td style="font-family: var(--font-mono); font-size: 12px; color: #38bdf8;">${escapeHtml(v.page)}</td>
               <td style="color: #e2e8f0;">${escapeHtml(v.referrer || "Direct")}</td>
-              <td style="font-size: 11.5px; color: #94a3b8;">${escapeHtml(v.language || "en")} ${v.timezone ? "• " + escapeHtml(v.timezone) : ""}</td>
+              <td style="font-size: 11.5px; color: #94a3b8;">
+                ${escapeHtml(v.timezone || "Asia/Kolkata")}
+                <div style="font-size: 11px; color: #64748b;">🌐 ${escapeHtml(v.language || "en")}</div>
+              </td>
             </tr>
           `;
         }).join("");
