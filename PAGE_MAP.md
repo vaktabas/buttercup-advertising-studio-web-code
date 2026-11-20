@@ -49,7 +49,7 @@
 
 ### 3. Contact Page (`web 2/pages/contact/index.html`)
 * **HTML File:** [`web 2/pages/contact/index.html`](file:///Users/nishitbaleja/Desktop/website%20home%20page/web%202/pages/contact/index.html)
-* **Form Destination:** Sends directly to **`vakta.bas@gmail.com`** via FormSubmit AJAX with automatic native fallback.
+* **Form Destination:** Sends directly to **`info@buttercup.in`** via FormSubmit AJAX with automatic native fallback.
 * **Form Fields:** First Name, Last Name, Email, Phone Number, Project Details.
 * **JS Handler:** Lines 936-1035 in [`js/main.js`](file:///Users/nishitbaleja/Desktop/website%20home%20page/web%202/js/main.js).
 
@@ -74,7 +74,7 @@
 * **Brand Strategy:** [`pages/services/brand-strategy/index.html`](file:///Users/nishitbaleja/Desktop/website%20home%20page/web%202/pages/services/brand-strategy/index.html)
 * **Visual Identity:** [`pages/services/visual-identity/index.html`](file:///Users/nishitbaleja/Desktop/website%20home%20page/web%202/pages/services/visual-identity/index.html)
 * **Marketing Communication:** [`pages/services/marketing-communication/index.html`](file:///Users/nishitbaleja/Desktop/website%20home%20page/web%202/pages/services/marketing-communication/index.html)
-*(Har service page ke bottom par built-in inquiry form hai jo direct `vakta.bas@gmail.com` ko message bhejta hai).*
+*(Har service page ke bottom par built-in inquiry form hai jo direct `info@buttercup.in` ko message bhejta hai).*
 
 ---
 

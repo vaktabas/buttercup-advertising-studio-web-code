@@ -1251,274 +1251,282 @@
   }
 
   var FALLBACK_PROJEKTE = [
-    {
-      "projekt": "Geschäfts- und Nachhaltigkeitsbericht 2021 — Gewobag, Berlin",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2023",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "link": "https://berichte.gewobag.de/2021",
-      "bilder": [
-        {
-          "datei": "images/gravity/work-10.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true,
-          "ki": true
-        },
-        {
-          "datei": "images/gravity/work-03.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-05.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Antibody-Drug Conjugate — Wirkprinzip in Bewegung",
-      "rolle": "Konzept, Animation und Umsetzung Gorden Koschel — gravity",
-      "award": null,
-      "fotocredit": null,
-      "heureka": false,
-      "groesse": 2.6,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-04.jpg",
-          "w": 1280,
-          "h": 720,
-          "orbit": true,
-          "ki": true
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäfts- und Nachhaltigkeitsbericht 2022 „Zukunft im Gleichgewicht“ — Gewobag, Berlin",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2024",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "link": "https://berichte.gewobag.de/2022",
-      "bilder": [
-        {
-          "datei": "images/gravity/work-03.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-10.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-09.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäfts- und Nachhaltigkeitsbericht 2023 „Impuls der Zeit“ — Gewobag, Berlin",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot: Best of the Best 2025 · Red Dot: Grand Prix 2025",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "link": "https://berichte.gewobag.de/2023",
-      "bilder": [
-        {
-          "datei": "images/gravity/work-02.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-10.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-05.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2017/2018 — GESCO AG, Wuppertal",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": null,
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-09.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-01.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-03.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "„virtuos“ — Mitgliedermagazin der GEMA, Berlin/München",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": null,
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-08.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-09.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2013/2014 — GESCO AG, Wuppertal",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2014",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-01.jpg",
-          "w": 2048,
-          "h": 2048,
-          "orbit": true,
-          "ki": true
-        },
-        {
-          "datei": "images/gravity/work-09.jpg",
-          "w": 2048,
-          "h": 2048
-        },
-        {
-          "datei": "images/gravity/work-03.jpg",
-          "w": 2048,
-          "h": 2048
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2011/2012 — GESCO AG, Wuppertal",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2013",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-06.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-01.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2017 „Digital me. Digital us.“ — Telefónica Deutschland",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2018",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-07.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-02.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-05.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2015 — MLP AG, Wiesloch",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2016",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-05.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-06.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    },
-    {
-      "projekt": "Geschäftsbericht 2015 „Simply.Connected.“ — Robert Bosch GmbH, Stuttgart",
-      "rolle": "heureka GmbH (Creative Director Gorden Koschel)",
-      "award": "Red Dot Winner 2016",
-      "fotocredit": null,
-      "heureka": true,
-      "groesse": 1.28,
-      "bilder": [
-        {
-          "datei": "images/gravity/work-06.jpg",
-          "w": 1600,
-          "h": 1600,
-          "orbit": true
-        },
-        {
-          "datei": "images/gravity/work-05.jpg",
-          "w": 1600,
-          "h": 1600
-        },
-        {
-          "datei": "images/gravity/work-08.jpg",
-          "w": 1600,
-          "h": 1600
-        }
-      ]
-    }
-  ];
+  {
+    "projekt": "Grabz — Bold Snacking Identity & Packaging",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Branding & Packaging Design",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/grabz.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-10.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true,
+        "ki": true
+      },
+      {
+        "datei": "images/gravity/work-03.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Beatitude — Luxury Saree & Handcrafted Brand Architecture",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Brand Identity & E-Commerce",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 2.6,
+    "link": "projects/beatitude.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-04.jpg",
+        "w": 1280,
+        "h": 720,
+        "orbit": true,
+        "ki": true
+      }
+    ]
+  },
+  {
+    "projekt": "Coin Dhan — Next-Gen FinTech Trading Ecosystem",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "FinTech Brand Identity & UI Design",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/coin-dhan.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-03.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-10.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-09.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Enlight — Clean Energy & Corporate Brand Narrative",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Corporate Brand Narrative & Collateral",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/enlight.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-02.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-10.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Aloevella — Botanical Skincare & Organic Wellness",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Brand Architecture & Product Design",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/aloevella.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-09.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-01.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-03.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Ecoforest — Agro Forestry & Eco Packaging System",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Sustainable Identity & Package Architecture",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/ecoforest.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-08.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-09.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Atlas Bloom — Spatial Architecture & Brand Experience",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Spatial Architecture & Experiential Design",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/atlas-bloom.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-01.jpg",
+        "w": 2048,
+        "h": 2048,
+        "orbit": true,
+        "ki": true
+      },
+      {
+        "datei": "images/gravity/work-09.jpg",
+        "w": 2048,
+        "h": 2048
+      },
+      {
+        "datei": "images/gravity/work-03.jpg",
+        "w": 2048,
+        "h": 2048
+      }
+    ]
+  },
+  {
+    "projekt": "Form Theory — Minimalist Luxury Furniture & Art Direction",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Art Direction & Luxury Catalog Design",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/form-theory.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-06.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-01.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Studio Verra — Bespoke Interior Design & Editorial Brand",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Editorial Identity & Digital Showcase",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/studio-verra.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-07.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-02.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Velvet Orbit — Contemporary Fashion & Dynamic Brand Identity",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Fashion Brand Strategy & Visual Ecosystem",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/velvet-orbit.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-06.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  },
+  {
+    "projekt": "Polka Tots — Playful Baby Care & Family Lifestyle Branding",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Visual Identity & Retail Packaging",
+    "fotocredit": null,
+    "heureka": true,
+    "groesse": 1.28,
+    "link": "projects/polka-tots.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-06.jpg",
+        "w": 1600,
+        "h": 1600,
+        "orbit": true
+      },
+      {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1600,
+        "h": 1600
+      },
+      {
+        "datei": "images/gravity/work-08.jpg",
+        "w": 1600,
+        "h": 1600
+      }
+    ]
+  }
+]];
 
   function projekteHolen(dann) {
     if (location.protocol === 'file:') {
@@ -1624,7 +1632,7 @@
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  var NAMEN = /(gravity|Gorden Koschel|heureka)/g;
+  var NAMEN = /(Buttercup|Sneha Vakta Shah|BAS|Ahmedabad)/g;
   function namenSetzen(s) {
     return maskieren(s).replace(NAMEN, '<span class="om-marke">$1</span>');
   }
@@ -1656,6 +1664,7 @@
     }
 
     function nachlaufAnhalten() {
+      if (window.matchMedia('(max-width: 1024px), (pointer: coarse)').matches) return;
       if (window.lenis && window.lenis.isScrolling === 'smooth') return;
       if (window.lenis && window.lenis.scrollTo) {
         window.lenis.scrollTo(window.scrollY, { immediate: true, force: true });
@@ -2812,6 +2821,7 @@
     var CLICK_SLOP = 6;
 
     layerFront.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return;
       e.preventDefault();
       downX = e.clientX; downY = e.clientY; movedPx = 0;
 
@@ -3073,18 +3083,47 @@
       return -1;
     }
     if (galerie) {
+      var isTouchDrag = false;
+      var startX = 0, startY = 0;
+      var isHoriz = false;
+
       galerie.addEventListener('pointerdown', function (e) {
         if (!galerieAn) return;
 
         if (e.target.closest &&
           e.target.closest('.om-galerie-pfeil, .om-film-tasten')) return;
-        ziehtVon = e.clientX; gezogen = 0;
-        galerie.classList.add('is-zug');
 
-        try { galerie.setPointerCapture(e.pointerId); } catch (fehler) { }
+        startX = e.clientX;
+        startY = e.clientY;
+        isHoriz = false;
+        isTouchDrag = (e.pointerType === 'touch');
+
+        ziehtVon = e.clientX; gezogen = 0;
+
+        if (!isTouchDrag) {
+          galerie.classList.add('is-zug');
+          try { galerie.setPointerCapture(e.pointerId); } catch (fehler) { }
+        }
       });
       galerie.addEventListener('pointermove', function (e) {
         if (ziehtVon === null) { blaetternMelden(e.clientX, e.clientY); return; }
+
+        if (isTouchDrag && !isHoriz) {
+          var dx = Math.abs(e.clientX - startX);
+          var dy = Math.abs(e.clientY - startY);
+          if (dy > dx && dy > 8) {
+            ziehtVon = null;
+            return;
+          }
+          if (dx > dy && dx > 8) {
+            isHoriz = true;
+            galerie.classList.add('is-zug');
+            try { galerie.setPointerCapture(e.pointerId); } catch (fehler) { }
+          } else {
+            return;
+          }
+        }
+
         gezogen = e.clientX - ziehtVon;
         zug = gezogen * ZUG_DAEMPFUNG;
         galerieLegen();

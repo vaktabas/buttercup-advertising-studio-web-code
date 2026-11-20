@@ -949,7 +949,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in & vakta.bas@gmail.com)
+  // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in)
   // =========================================================================
   function setupContactForm() {
     const form = document.getElementById("email-form");
@@ -1022,7 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       // Add Web3Forms access key & recipient info
-      // Primary: vakta.bas@gmail.com | Secondary (parallel): info@buttercup.in
+      // Primary & Secondary Dual-Submission (Parallel) -> info@buttercup.in
       const PRIMARY_KEY = "ba5be8bf-4ec9-4044-83fa-e29e82e12a4d";
       const SECONDARY_KEY = "a34185cd-5cda-4094-8c3d-93484874796e"; // info@buttercup.in
       dataObj["access_key"] = PRIMARY_KEY;
@@ -1105,7 +1105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (err.name === "AbortError") {
           if (errorCard) {
             errorCard.style.display = "block";
-            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Request timed out. Please check your internet connection and try again, or email us at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a> / <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>");
+            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Request timed out. Please check your internet connection and try again, or email us at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a>");
             errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
           }
           return;
@@ -1117,7 +1117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (submitErr) {
           if (errorCard) {
             errorCard.style.display = "block";
-            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Something went wrong while sending your message. Please try again or reach out directly at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a> / <a href=\"mailto:vakta.bas@gmail.com\">vakta.bas@gmail.com</a>.");
+            errorCard.querySelector("p") && (errorCard.querySelector("p").innerHTML = "Something went wrong while sending your message. Please try again or reach out directly at <a href=\"mailto:info@buttercup.in\">info@buttercup.in</a>.");
             errorCard.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         }
