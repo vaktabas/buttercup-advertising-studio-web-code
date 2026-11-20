@@ -986,45 +986,63 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // DYNAMIC 12-SECOND WHATSAPP POPUP NOTIFICATION (No permanent static button)
-  // Pops up smoothly every 12s with "Chat on WhatsApp", stays for 5.5s, then vanishes
+  // DYNAMIC 12-SECOND CENTER SQUARE WHATSAPP MODAL POPUP
+  // Screen ke beech-o-beech bada square luxury popup with instant WhatsApp chat
   // =========================================================================
-  function initDynamic12sWhatsAppPopup() {
-    // Remove any legacy static button if present
+  function initCenterSquareWhatsAppModal() {
+    // Remove any legacy elements
     const oldStatic = document.getElementById('btrFloatingWa');
     if (oldStatic) oldStatic.remove();
+    const oldToast = document.getElementById('btrWaToast');
+    if (oldToast) oldToast.remove();
 
-    if (document.getElementById('btrWaToast')) return;
+    if (document.getElementById('btrWaModalOverlay')) return;
 
-    const toast = document.createElement('div');
-    toast.id = 'btrWaToast';
-    toast.className = 'btr-wa-toast';
-    toast.setAttribute('role', 'dialog');
-    toast.setAttribute('aria-live', 'polite');
-    toast.innerHTML = `
-      <a href="https://wa.me/919925034404?text=${encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!')}"
-         target="_blank" rel="noopener noreferrer" class="btr-wa-toast-inner" aria-label="Chat on WhatsApp with Buttercup Advertising Studio">
-        <div class="btr-wa-toast-avatar">
-          <span class="btr-wa-pulse-dot" aria-hidden="true"></span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/>
+    const overlay = document.createElement('div');
+    overlay.id = 'btrWaModalOverlay';
+    overlay.className = 'btr-wa-modal-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = `
+      <div class="btr-wa-square-modal" role="dialog" aria-modal="true" aria-label="Chat on WhatsApp with Buttercup Studio">
+        <button class="btr-wa-square-close" id="btrWaSquareClose" aria-label="Close dialog" title="Close">&times;</button>
+
+        <div class="btr-wa-square-icon-wrap">
+          <span class="btr-wa-square-pulse" aria-hidden="true"></span>
+          <div class="btr-wa-square-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="btr-wa-square-tag">
+          <span class="btr-wa-live-dot" aria-hidden="true"></span>
+          <span>Buttercup Creative Studio</span>
+        </div>
+
+        <h3 class="btr-wa-square-title">Chat on WhatsApp</h3>
+
+        <p class="btr-wa-square-desc">
+          Have a brand, design or campaign project? Talk directly with our creative team on WhatsApp.
+        </p>
+
+        <a href="https://wa.me/919925034404?text=${encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!')}"
+           target="_blank" rel="noopener noreferrer" class="btr-wa-square-btn" id="btrWaSquareCta">
+          <span>Chat on WhatsApp</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
+        </a>
+
+        <div class="btr-wa-square-footer">
+          <span>⚡ Fast Reply &bull; Typically within 2 mins</span>
         </div>
-        <div class="btr-wa-toast-body">
-          <div class="btr-wa-toast-title">Chat on WhatsApp</div>
-          <div class="btr-wa-toast-sub">Online now &bull; Fast Studio Reply</div>
-        </div>
-        <div class="btr-wa-toast-cta">
-          <span>Chat</span>
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <button class="btr-wa-toast-close" id="btrWaToastClose" aria-label="Close notification" title="Dismiss">&times;</button>
+      </div>
     `;
-    document.body.appendChild(toast);
+    document.body.appendChild(overlay);
 
     let isHovered = false;
-    let hideTimer = null;
+    let autoHideTimer = null;
 
     function isFooterInView() {
       const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
@@ -1035,72 +1053,89 @@ document.addEventListener("DOMContentLoaded", () => {
       return rect.top < vh - 20;
     }
 
-    function showPopup() {
+    function showModal() {
       if (isFooterInView()) return;
-      toast.classList.add('is-shown');
+      overlay.classList.add('is-active');
+      overlay.setAttribute('aria-hidden', 'false');
 
-      if (hideTimer) clearTimeout(hideTimer);
-      // Auto-hide after 5.5s unless hovered
-      hideTimer = setTimeout(() => {
+      if (autoHideTimer) clearTimeout(autoHideTimer);
+      // Auto-hide after 7 seconds if user doesn't hover or interact
+      autoHideTimer = setTimeout(() => {
         if (!isHovered) {
-          hidePopup();
+          hideModal();
         }
-      }, 5500);
+      }, 7000);
     }
 
-    function hidePopup() {
-      toast.classList.remove('is-shown');
+    function hideModal() {
+      overlay.classList.remove('is-active');
+      overlay.setAttribute('aria-hidden', 'true');
     }
 
-    // Keep visible while user is hovering
-    toast.addEventListener('mouseenter', () => {
-      isHovered = true;
-      if (hideTimer) clearTimeout(hideTimer);
-    });
-
-    toast.addEventListener('mouseleave', () => {
-      isHovered = false;
-      if (toast.classList.contains('is-shown')) {
-        hideTimer = setTimeout(() => {
-          hidePopup();
-        }, 2500);
-      }
-    });
-
-    // Close button dismiss
-    const closeBtn = document.getElementById('btrWaToastClose');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        hidePopup();
+    // Keep visible while hovering over the square card
+    const modalBox = overlay.querySelector('.btr-wa-square-modal');
+    if (modalBox) {
+      modalBox.addEventListener('mouseenter', () => {
+        isHovered = true;
+        if (autoHideTimer) clearTimeout(autoHideTimer);
+      });
+      modalBox.addEventListener('mouseleave', () => {
+        isHovered = false;
+        if (overlay.classList.contains('is-active')) {
+          autoHideTimer = setTimeout(() => {
+            hideModal();
+          }, 3000);
+        }
       });
     }
 
-    // Hide if user scrolls into footer
+    // Close on backdrop click (outside modal)
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        hideModal();
+      }
+    });
+
+    // Close on 'x' button
+    const closeBtn = document.getElementById('btrWaSquareClose');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideModal();
+      });
+    }
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+        hideModal();
+      }
+    });
+
+    // Hide if scrolling into footer
     function checkFooter() {
-      if (isFooterInView() && toast.classList.contains('is-shown')) {
-        hidePopup();
+      if (isFooterInView() && overlay.classList.contains('is-active')) {
+        hideModal();
       }
     }
     window.addEventListener('scroll', checkFooter, { passive: true });
 
-    // Every 12 seconds: pop up to engage visitor!
+    // Every 12 seconds: pop up in the center of the screen
     setInterval(() => {
-      if (!toast.classList.contains('is-shown') && !isFooterInView()) {
-        showPopup();
+      if (!overlay.classList.contains('is-active') && !isFooterInView()) {
+        showModal();
       }
     }, 12000);
 
     // Initial popup after 12 seconds
     setTimeout(() => {
       if (!isFooterInView()) {
-        showPopup();
+        showModal();
       }
     }, 12000);
   }
 
-  initDynamic12sWhatsAppPopup();
+  initCenterSquareWhatsAppModal();
 
   // =========================================================================
   // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in)
