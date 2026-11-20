@@ -2426,10 +2426,10 @@
       {
         match: /\b(cost|price|pricing|charge|budget|rate|fee|fees|kitna kharcha|kitna lagega|quotation|quote|estimate|package)\b/i,
         reply: [
-          "Every brand partnership is tailored to growth milestones. We offer bespoke milestone-based packages: starting from focused Startup Brand Sprints to Full Enterprise Systems. Schedule a 20-minute discovery call to receive a transparent roadmap and quote.",
+          "Every brand partnership is tailored to growth milestones. We offer bespoke milestone-based packages: starting from focused Startup Brand Sprints to Full Enterprise Systems. Schedule a 20-minute discovery call to receive a transparent roadmap or Request a Free Quote.",
           "Hum project scope ke hisaab se fixed milestone pricing offer karte hain: jaise startup brand sprint, retail packaging rollout, ya full enterprise rebranding. 20-min free discovery call schedule karein jisme hum exact roadmap aur quotation deliver karte hain."
         ],
-        chips: ["Book a discovery call", "Our 4-stage process", "Explore Case Studies"]
+        chips: ["Request a Free Quote", "Our 4-stage process", "Explore Case Studies"]
       },
       {
         match: /\b(timeline|how long|kitna time|duration|days|weeks|kitne din|kab tak|time frame)\b/i,

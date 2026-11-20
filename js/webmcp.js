@@ -10,7 +10,7 @@
       try {
         navigator.modelContext.registerTool({
           name: "requestBrandConsultation",
-          description: "Submit a project inquiry or request a brand consultation quote from Buttercup Advertising Studio.",
+          description: "Submit a project inquiry or Request a Free Quote from Buttercup Advertising Studio.",
           inputSchema: {
             type: "object",
             properties: {

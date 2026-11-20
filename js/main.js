@@ -2569,9 +2569,9 @@ document.addEventListener("DOMContentLoaded", () => {
       </a>
 
       <div class="apple-dock-divider" aria-hidden="true"></div>
-      <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="GET A QUOTE">
-        <img class="apple-dock-icon" src="images/dock/call.png" alt="GET A QUOTE" />
-        <span class="apple-dock-label">GET A QUOTE</span>
+      <a href="pages/contact/index.html" class="apple-dock-item is-call" aria-label="Request a Free Quote">
+        <img class="apple-dock-icon" src="images/dock/call.png" alt="Request a Free Quote" />
+        <span class="apple-dock-label">Request a Free Quote</span>
       </a>
     `;
 
