@@ -117,7 +117,7 @@
 
           <!-- Suggestion Chips Grid -->
           <div class="em-ai-chips-grid" id="em-ai-chips">
-            <button type="button" class="em-ai-chip" data-query="Start a project">Start a project</button>
+            <button type="button" class="em-ai-chip" data-query="Request a Free Quote">Start a project</button>
             <button type="button" class="em-ai-chip" data-query="Join the team">Join the team</button>
             <button type="button" class="em-ai-chip" data-query="Drop a quick word">Drop a quick word</button>
             <button type="button" class="em-ai-chip" data-query="Discover our culture">Discover our culture</button>
@@ -1941,7 +1941,7 @@
         if (aiResponseDetails) {
           aiResponseDetails.style.display = 'none';
         }
-        renderChips(["Start a project", "Join the team", "Drop a quick word", "Discover our culture"]);
+        renderChips(["Request a Free Quote", "Join the team", "Drop a quick word", "Discover our culture"]);
         if (lisa3D) {
           lisa3D.pulseEyes();
           lisa3D.nodHead();
@@ -2494,7 +2494,7 @@
           "I'm L.I.S.A. — Buttercup's Interactive Super Assistant! Basically, I run this place (shh, don't tell the creative directors). From high-conversion brand strategy and bespoke typography to 3D packaging renders and Pantone codes, I know every corner of this studio. What can we manifest together today?",
           "Main hoon L.I.S.A. — Buttercup Advertising Studio ki Interactive Super Assistant! Asal me pura digital setup main hi sambhalti hoon. Brand strategy ho, 3D packaging ho, ya scroll-stopping campaigns—mujhe sab pata hai! Aaj aapke brand ko kaise elevate karein?"
         ],
-        chips: ["Start a project", "Showcase Portfolio", "Who founded Buttercup?", "Design Pricing"]
+        chips: ["Request a Free Quote", "Showcase Portfolio", "Who founded Buttercup?", "Design Pricing"]
       },
       {
         match: /\b(kya haal hai|kaise ho|kaisa chal raha|aur batao|kya chal raha|kya kar rahi ho|wassup|what'?s up|kem cho|namaste|namaskar|pranam|ram ram|hello\b|hey lisa|hi lisa|good morning|good evening|good afternoon|suno\b|hello ji|kuch bolo)\b/i,
@@ -2502,7 +2502,7 @@
           "Running at 120 FPS and fueled by creative energy and black coffee! Pixels are rendering, identities are evolving, and great design is manifesting. How are you doing today? What bold project are we building?",
           "Sab ekdum first class! 120 FPS par pixels render ho rahe hain aur brand ideas spark kar rahe hain. Aap batao, aaj kaunsa naya milestone create karna hai?"
         ],
-        chips: ["Start a project", "Explore Case Studies", "Design Pricing", "Book a Call"]
+        chips: ["Request a Free Quote", "Explore Case Studies", "Design Pricing", "Book a Call"]
       },
       {
         match: /\b(will you marry me|shadi karogi|shaadi karogi|marry me|i love you|love you|pasand ho|single\b|boyfriend|girlfriend|date pe|date me|tum cute ho|you are cute|you are pretty|you are beautiful|patni banogi|dosti karogi)\b/i,
@@ -2574,7 +2574,7 @@
           "AI can generate 1,000 pictures in seconds, but it takes human soul, cultural empathy, and strategic intuition to build an enduring brand. At Buttercup, we leverage AI for supercharged agility, while human masters craft the emotion and narrative!",
           "AI hazaron graphics produce kar sakta hai, lekin ek iconic brand banane ke liye human emotion, cultural nuance aur business empathy zaroori hai! Buttercup me hum human intelligence aur computational speed dono combine karte hain."
         ],
-        chips: ["Our Design Philosophy", "Explore Case Studies", "Start a Project"]
+        chips: ["Our Design Philosophy", "Explore Case Studies", "Request a Free Quote"]
       },
       {
         match: /\b(meaning of life|zindagi|god\b|bhagwan|purpose|what is life|motivate me|sad hu|depressed|life advice|weather|time kya hua)\b/i,
@@ -2606,7 +2606,7 @@
           "Goodbye for now! Whenever you're ready to create an iconic brand or launch category-breaking packaging, I'll be right here rendering ideas at 120 FPS. Have a wonderful day ahead!",
           "Alvida aur Shubh Ratri! Jab bhi aap apne business ko ek world-class brand banana chahein, L.I.S.A. hamesha yahan ready milegi. Take care!"
         ],
-        chips: ["Start a project", "Explore Services", "Book a Call"]
+        chips: ["Request a Free Quote", "Explore Services", "Book a Call"]
       },
       {
         match: /\b(thank|thanks|dhanyawad|shukriya|nice|awesome|great|cool|mast|super|good|love it|badhiya|shandar|zabardast)\b/i,
@@ -2658,7 +2658,7 @@
         }
         return {
           text: "Buttercup Studio me L.I.S.A. aapka swaagat karti hai! Hum brand strategy, custom logos, 3D packaging aur high-converting campaigns me specialize karte hain. Aap kis vision par work karna chahte hain?",
-          chips: ["Start a project", "Packaging Design", "Explore Case Studies"]
+          chips: ["Request a Free Quote", "Packaging Design", "Explore Case Studies"]
         };
       }
 
@@ -2671,7 +2671,7 @@
 
       return {
         text: "I'm L.I.S.A., and I'm ready to manifest something iconic with you! Whether it's breakthrough 3D packaging, a high-fashion rebrand, or a viral ad campaign—what bold idea are we executing today?",
-        chips: ["Start a project", "Showcase Portfolio", "Explore Services"]
+        chips: ["Request a Free Quote", "Showcase Portfolio", "Explore Services"]
       };
     }
 
@@ -2771,7 +2771,7 @@
 
       // 1. Try Google Gemini live API first if key configured
       let answerText = await queryGoogleGemini(text);
-      let nextChips = ["Start a project", "Join the team", "Explore Case Studies", "Brand Strategy"];
+      let nextChips = ["Request a Free Quote", "Join the team", "Explore Case Studies", "Brand Strategy"];
 
       if (!answerText) {
         // 2. Query Native Buttercup Studio Knowledge Engine
