@@ -7,21 +7,14 @@
 
   // Strict check: Bottom capsule pill navigation is strictly for the Home Page only!
   function isHomePage() {
-    const pageAttr = document.body ? document.body.getAttribute('data-page') : '';
-    if (pageAttr === 'index' || pageAttr === 'home') return true;
-    const loc = window.location.pathname;
+    const loc = (window.location.pathname || '').toLowerCase();
     // Inner pages have their own top navbar and do not need bottom capsule
     if (loc.includes('/pages/') || loc.includes('/projects/') || loc.includes('/blogs/') || loc.includes('/case-studies/') || loc.includes('/utilities/')) {
       return false;
     }
-    const cleanPath = loc.replace(/\/+$/, '');
-    return cleanPath === '' || cleanPath === '/index.html' || cleanPath.endsWith('/web 2') || cleanPath.endsWith('/web 2/index.html');
-  }
-
-  // If not homepage, clean up any existing elements and exit immediately
-  if (!isHomePage()) {
-    document.querySelectorAll('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop').forEach(el => el.remove());
-    return;
+    const pageAttr = document.body ? document.body.getAttribute('data-page') : '';
+    if (pageAttr === 'index' || pageAttr === 'home') return true;
+    return true;
   }
 
   // Helper to resolve links relative to the site root
@@ -45,26 +38,34 @@
   if (!document.querySelector('link[href*="mubien-nav.css"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = resolvePath('css/mubien-nav.css');
+    link.href = resolvePath('css/mubien-nav.css?v=161');
     document.head.appendChild(link);
   }
 
   // Build and inject HTML
   function initMubienNav() {
-    if (document.querySelector('.mubien-pill-bar')) return;
+    if (!isHomePage()) {
+      document.querySelectorAll('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop').forEach(el => el.remove());
+      return;
+    }
 
     // 1. Backdrop Overlay
-    const backdrop = document.createElement('div');
-    backdrop.className = 'mubien-backdrop';
-    document.body.appendChild(backdrop);
+    let backdrop = document.querySelector('.mubien-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'mubien-backdrop';
+      document.body.appendChild(backdrop);
+    }
 
     // 2. iOS Control Center Widget Drawer
-    const drawer = document.createElement('div');
-    drawer.className = 'mubien-drawer';
-    drawer.setAttribute('role', 'dialog');
-    drawer.setAttribute('aria-label', 'Main Navigation');
-    drawer.setAttribute('data-lenis-prevent', 'true');
-    drawer.innerHTML = `
+    let drawer = document.querySelector('.mubien-drawer');
+    if (!drawer) {
+      drawer = document.createElement('div');
+      drawer.className = 'mubien-drawer';
+      drawer.setAttribute('role', 'dialog');
+      drawer.setAttribute('aria-label', 'Main Navigation');
+      drawer.setAttribute('data-lenis-prevent', 'true');
+      drawer.innerHTML = `
       <div class="mubien-drawer-handle" aria-hidden="true"></div>
 
       <!-- Top Widgets Grid -->
@@ -204,25 +205,29 @@
         <button class="mubien-drawer-close-btn" id="mubienDrawerCloseBtn" aria-label="Close menu">✕</button>
       </div>
     `;
-    document.body.appendChild(drawer);
+      document.body.appendChild(drawer);
+    }
 
     // 3. Floating Bottom Capsule Pill Bar
-    const pillBar = document.createElement('nav');
-    pillBar.className = 'mubien-pill-bar';
-    pillBar.setAttribute('aria-label', 'Floating Project Navigation');
-    pillBar.innerHTML = `
-      <div class="mubien-pill-badge" id="mubienPillBadge" title="Buttercup Studio">
-        <span class="badge-text" id="mubienBadgeText">BAS</span>
-      </div>
-      <a href="${resolvePath('pages/case-studies/index.html')}" class="mubien-pill-text-link" id="mubienPillLink">
-        <span class="mubien-pill-text" id="mubienPillText">Explore Selected Work</span>
-      </a>
-      <button class="mubien-menu-btn" id="mubienMenuBtn" aria-label="Toggle menu" aria-expanded="false">
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-      </button>
-    `;
-    document.body.appendChild(pillBar);
+    let pillBar = document.querySelector('.mubien-pill-bar');
+    if (!pillBar) {
+      pillBar = document.createElement('nav');
+      pillBar.className = 'mubien-pill-bar';
+      pillBar.setAttribute('aria-label', 'Floating Project Navigation');
+      pillBar.innerHTML = `
+        <div class="mubien-pill-badge" id="mubienPillBadge" title="Buttercup Studio">
+          <span class="badge-text" id="mubienBadgeText">BAS</span>
+        </div>
+        <a href="${resolvePath('pages/case-studies/index.html')}" class="mubien-pill-text-link" id="mubienPillLink">
+          <span class="mubien-pill-text" id="mubienPillText">Explore Selected Work</span>
+        </a>
+        <button class="mubien-menu-btn" id="mubienMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </button>
+      `;
+      document.body.appendChild(pillBar);
+    }
 
     // Elements
     const menuBtn = pillBar.querySelector('#mubienMenuBtn');

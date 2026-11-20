@@ -244,6 +244,7 @@
   <link rel="stylesheet" href="css/extra.css?v=159">
   <link rel="stylesheet" href="css/loader.css?v=9">
   <link rel="stylesheet" href="css/gravity-home.css?v=32">
+  <link rel="stylesheet" href="css/mubien-nav.css?v=161">
   <link rel="stylesheet" href="css/lenis.css">
   <link rel="stylesheet" href="css/swiper-bundle.min.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/ai-assistant.css?v=125" media="print" onload="this.media='all'">
@@ -1897,15 +1898,26 @@ a,
   <script src="js/vendor/swiper-bundle.min.js" defer></script>
   <script src="js/vendor/ztstestimonials.js" defer></script>
   <script src="js/gravity-app.js?v=15" defer></script>
-  <script src="js/main.js?v=159" defer></script>
+  <!-- Mubien-Style Floating Bottom Pill Navigation & iOS Control Center Widget Drawer -->
+  <nav class="mubien-pill-bar" aria-label="Floating Project Navigation">
+    <div class="mubien-pill-badge" id="mubienPillBadge" title="Buttercup Studio">
+      <span class="badge-text" id="mubienBadgeText">BAS</span>
+    </div>
+    <a href="pages/case-studies/index.html" class="mubien-pill-text-link" id="mubienPillLink">
+      <span class="mubien-pill-text" id="mubienPillText">Explore Selected Work</span>
+    </a>
+    <button class="mubien-menu-btn" id="mubienMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </nav>
+
+  <script src="js/main.js?v=161" defer></script>
   <script src="js/fluidbg.js?v=2" defer></script>
   <script src="js/ai-assistant.js?v=126" defer></script>
   <script src="js/loader.js?v=6" defer></script>
   <script src="js/editor.js?v=7" defer></script>
-
-  <!-- Mubien-Style Floating Bottom Pill Navigation & iOS Control Center Widget Drawer -->
-  <link rel="stylesheet" href="css/mubien-nav.css?v=160" media="print" onload="this.media='all'">
-  <script src="js/mubien-nav.js?v=160" defer></script>
+  <script src="js/mubien-nav.js?v=161" defer></script>
 </body>
 
 </html>

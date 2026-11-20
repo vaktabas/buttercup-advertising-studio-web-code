@@ -130,18 +130,6 @@ body.is-over-footer .btr-floating-wa,
 }
 
 /* =========================================================================
-   1. RESTRICT MUBIEN FLOATING PILL NAV STRICTLY TO HOME PAGE ONLY
-   ========================================================================= */
-body:not([data-page="index"]) .mubien-pill-bar,
-body:not([data-page="index"]) .mubien-drawer,
-body:not([data-page="index"]) .mubien-backdrop {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  opacity: 0 !important;
-}
-
-/* =========================================================================
    2. CUSTOM CURSOR INTEGRATION (NEVER DISAPPEARS OVER NAV PILL)
    ========================================================================= */
 .custom-cursor-dot,

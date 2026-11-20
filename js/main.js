@@ -1692,11 +1692,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   function initAppleDock() {
     // Bottom floating pill nav is STRICTLY for the Home Page only
-    const pageAttr = document.body ? document.body.getAttribute('data-page') : '';
-    const loc = window.location.pathname;
-    const isHomePage = pageAttr === 'index' || pageAttr === 'home' || loc === '/' || loc === '/index.html' || (!loc.includes('/pages/') && !loc.includes('/projects/') && !loc.includes('/blogs/') && !loc.includes('/case-studies/') && !loc.includes('/utilities/') && (loc.endsWith('/') || loc.endsWith('/index.html') || loc.endsWith('/web 2')));
+    const loc = (window.location.pathname || '').toLowerCase();
+    const isInnerPage = loc.includes('/pages/') || loc.includes('/projects/') || loc.includes('/blogs/') || loc.includes('/case-studies/') || loc.includes('/utilities/');
 
-    if (!isHomePage) {
+    if (isInnerPage) {
       // Clean up if somehow present on inner pages
       const existingPill = document.querySelector('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop');
       if (existingPill) {
