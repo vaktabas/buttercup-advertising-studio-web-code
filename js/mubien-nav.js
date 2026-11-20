@@ -244,6 +244,8 @@
 
     function openMenu() {
       isOpen = true;
+      const locPrompt = document.getElementById('btrLocPrompt');
+      if (locPrompt) locPrompt.classList.remove('is-active');
       pillBar.classList.add('is-open');
       drawer.classList.add('is-open');
       backdrop.classList.add('is-visible');

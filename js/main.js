@@ -1302,6 +1302,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const loginOverlay = document.getElementById('btrHomeLoginOverlay');
       if (loginOverlay && loginOverlay.classList.contains('is-active')) return;
 
+      // Tuck away any location toast so modals have 100% clean presentation
+      const locPrompt = document.getElementById('btrLocPrompt');
+      if (locPrompt) locPrompt.classList.remove('is-active');
+
       if (isFooterInView()) return;
       overlay.classList.add('is-active');
       overlay.setAttribute('aria-hidden', 'false');
@@ -1531,11 +1535,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnText = document.getElementById('btrHomeLoginBtnText');
 
     function openModal() {
-      // Immediately suppress and dismiss WhatsApp popup when Login is activated
+      // Immediately suppress and dismiss WhatsApp popup and location prompt when Login is activated
       window.__btrWaSuppressed = true;
       if (typeof window.__btrDismissWhatsAppPopup === 'function') {
         window.__btrDismissWhatsAppPopup();
       }
+      const locPrompt = document.getElementById('btrLocPrompt');
+      if (locPrompt) locPrompt.classList.remove('is-active');
 
       // Always require entering password on login
       modalOverlay.classList.add('is-active');

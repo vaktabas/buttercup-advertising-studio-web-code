@@ -16,7 +16,7 @@
 .btr-wa-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 100000;
+  z-index: 1000000 !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,7 +264,7 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 9998;
+  z-index: 999995 !important;
   max-width: 380px;
   background: rgba(15, 17, 23, 0.94);
   backdrop-filter: blur(24px) saturate(180%);
@@ -384,11 +384,34 @@
     line-height: 1.4;
   }
   .btr-loc-prompt {
-    left: 12px;
-    right: 12px;
-    bottom: 14px;
-    max-width: none;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 82px) !important;
+    max-width: none !important;
+    padding: 10px 14px !important;
+    border-radius: 16px !important;
+    z-index: 999995 !important;
   }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .btr-loc-prompt {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 84px) !important;
+    max-width: none !important;
+    z-index: 999995 !important;
+  }
+}
+
+/* Hide location toast when full modals or nav drawer are active */
+body.mubien-modal-open .btr-loc-prompt,
+.mubien-drawer.is-open ~ .btr-loc-prompt,
+.btr-wa-modal-overlay.is-active ~ .btr-loc-prompt,
+.btr-login-modal-overlay.is-active ~ .btr-loc-prompt {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* =========================================================================
@@ -471,7 +494,7 @@
 .btr-login-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 1000002 !important;
   display: flex;
   align-items: center;
   justify-content: center;
