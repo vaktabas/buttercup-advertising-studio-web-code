@@ -314,6 +314,18 @@
   transform: translateY(-1px);
 }
 
+.globe-ctrl-btn.active-hub {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #fca5a5;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+}
+
+.globe-ctrl-btn.active-hub:hover {
+  background: rgba(239, 68, 68, 0.35);
+  border-color: #ef4444;
+}
+
 .globe-ctrl-btn:active {
   transform: scale(0.97);
 }

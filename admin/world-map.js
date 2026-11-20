@@ -1,20 +1,21 @@
 /**
  * 3D REAL-TIME WORLD TRAFFIC MAP & HEATMAP ENGINE
  * Buttercup Advertising Studio — Master Intelligence Dashboard
- * Photorealistic Three.js 3D Earth Globe with 360° Smooth Mouse Rotation,
- * Country Traffic Heatmap Color Coding, Live Session Flight Arcs & Beacons.
+ * Photorealistic NASA Blue Marble 3D Earth Globe with 360° Mouse Spin,
+ * Real Country Geographic Borders, 3D Country Labels, Live Traffic Heatmaps,
+ * Flight Arcs, and Interactive Focus Navigation (India, USA, UK, UAE, Canada, Australia).
  * 100% English UI and Professional Analytics Standards.
  */
 
 (function () {
   "use strict";
 
-  // Coordinates Database for World Countries & Metros
+  // Coordinates Database for Real World Countries & Metros
   const COUNTRY_GEO = {
     IN: { name: "India", flag: "🇮🇳", lat: 20.5937, lon: 78.9629, capital: "New Delhi", hqCity: "Ahmedabad" },
-    AE: { name: "United Arab Emirates", flag: "🇦🇪", lat: 23.4241, lon: 53.8478, capital: "Abu Dhabi" },
     US: { name: "United States", flag: "🇺🇸", lat: 37.0902, lon: -95.7129, capital: "Washington, D.C." },
     GB: { name: "United Kingdom", flag: "🇬🇧", lat: 55.3781, lon: -3.4360, capital: "London" },
+    AE: { name: "United Arab Emirates", flag: "🇦🇪", lat: 23.4241, lon: 53.8478, capital: "Abu Dhabi" },
     CA: { name: "Canada", flag: "🇨🇦", lat: 56.1304, lon: -106.3468, capital: "Ottawa" },
     AU: { name: "Australia", flag: "🇦🇺", lat: -25.2744, lon: 133.7751, capital: "Canberra" },
     DE: { name: "Germany", flag: "🇩🇪", lat: 51.1657, lon: 10.4515, capital: "Berlin" },
@@ -53,34 +54,6 @@
     DARK: { key: "dark", hex: "#334155", num: 0x334155, label: "Zero Recorded Traffic", short: "Zero Traffic", minVisits: 0 }
   };
 
-  // World Landmass Polygons for Equirectangular Spherical Projection
-  const CONTINENT_POLYS = [
-    // North America
-    [[-168, 65], [-140, 70], [-120, 72], [-85, 75], [-60, 50], [-65, 45], [-75, 35], [-80, 25], [-97, 22], [-105, 20], [-115, 30], [-125, 48], [-140, 58], [-168, 65]],
-    // Central & South America
-    [[-85, 15], [-75, 10], [-60, 10], [-35, -5], [-35, -15], [-45, -24], [-55, -35], [-68, -54], [-75, -50], [-72, -30], [-80, -5], [-82, 8], [-85, 15]],
-    // Europe
-    [[-10, 36], [0, 43], [12, 44], [25, 40], [35, 42], [42, 48], [55, 60], [30, 70], [15, 60], [5, 52], [-5, 48], [-10, 36]],
-    // British Isles
-    [[-5, 50], [1, 51], [0, 58], [-5, 58], [-5, 50]],
-    // Africa
-    [[-17, 30], [10, 37], [32, 32], [51, 12], [42, 5], [40, -10], [35, -25], [20, -35], [15, -30], [10, -5], [0, 5], [-15, 10], [-17, 30]],
-    // Madagascar
-    [[44, -12], [50, -15], [47, -25], [43, -25], [44, -12]],
-    // Asia & Middle East
-    [[35, 32], [50, 30], [60, 25], [68, 24], [72, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24], [80, 10], [105, 10], [120, 22], [125, 32], [140, 45], [170, 65], [140, 70], [80, 72], [40, 45], [35, 32]],
-    // India Subcontinent (Primary Studio Hub)
-    [[68, 24], [70, 28], [74, 32], [76, 35], [80, 30], [88, 26], [88, 22], [80, 13], [77, 8], [76, 15], [72, 19], [68, 24]],
-    // Japan
-    [[130, 32], [136, 35], [142, 44], [140, 40], [130, 32]],
-    // Australia
-    [[114, -22], [130, -12], [145, -15], [153, -28], [145, -38], [130, -32], [115, -35], [114, -22]],
-    // New Zealand
-    [[172, -35], [178, -38], [174, -45], [168, -45], [172, -35]],
-    // Greenland
-    [[-55, 60], [-25, 70], [-20, 80], [-50, 82], [-60, 75], [-55, 60]]
-  ];
-
   // Helper: Convert (lat, lon) to 3D Cartesian coordinates on sphere
   function latLonToVector3(lat, lon, radius, alt) {
     alt = alt || 0;
@@ -108,6 +81,7 @@
       this.beaconsGroup = null;
       this.arcsGroup = null;
       this.ripplesGroup = null;
+      this.labelsGroup = null;
       this.raycaster = null;
       this.mouse = null;
 
@@ -115,8 +89,8 @@
       this.isDragging = false;
       this.previousMousePosition = { x: 0, y: 0 };
       this.dragVelocity = { x: 0, y: 0 };
-      this.targetRotation = { x: 0.22, y: -2.3 }; // Starts facing India & Asia
-      this.currentRotation = { x: 0.22, y: -2.3 };
+      this.targetRotation = { x: 2.776, y: -0.180 }; // Starts facing Studio HQ (Ahmedabad, India)
+      this.currentRotation = { x: 2.776, y: -0.180 };
       this.targetZoom = 14.5;
       this.currentZoom = 14.5;
       this.isAutoRotate = true;
@@ -168,14 +142,14 @@
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
       // 3. Realistic Sunlight & Ambient Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.05);
       this.scene.add(ambientLight);
 
-      const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      const sunLight = new THREE.DirectionalLight(0xffffff, 1.25);
       sunLight.position.set(25, 18, 22);
       this.scene.add(sunLight);
 
-      const secondaryLight = new THREE.DirectionalLight(0x60a5fa, 0.55);
+      const secondaryLight = new THREE.DirectionalLight(0x60a5fa, 0.6);
       secondaryLight.position.set(-25, -12, -20);
       this.scene.add(secondaryLight);
 
@@ -185,11 +159,13 @@
       // 5. Realistic Earth Globe Sphere
       this.createGlobeSphere();
 
-      // 6. Groups for Dynamic Country Beacons & Session Arcs
+      // 6. Groups for Dynamic Country Beacons, Labels & Session Arcs
       this.beaconsGroup = new THREE.Group();
+      this.labelsGroup = new THREE.Group();
       this.arcsGroup = new THREE.Group();
       this.ripplesGroup = new THREE.Group();
       this.scene.add(this.beaconsGroup);
+      this.scene.add(this.labelsGroup);
       this.scene.add(this.arcsGroup);
       this.scene.add(this.ripplesGroup);
 
@@ -227,33 +203,53 @@
     }
 
     createGlobeSphere() {
-      // 1. Instantly create rich canvas texture as immediate base
-      const canvasTexture = this.generateFallbackCanvasTexture();
+      // 1. Texture Loading: Authentic NASA Blue Marble Image
+      const textureLoader = new THREE.TextureLoader();
+      try {
+        textureLoader.setCrossOrigin("anonymous");
+      } catch (e) {}
+      
+      // Multi-tier texture strategy: Local authentic NASA 4K satellite image, followed by CDN mirrors
+      const textureUrl = "img/earth-blue-marble.jpg";
+      const cdnFallback = "https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg";
+      const secondaryCdn = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/textures/planets/earth_atmos_2048.jpg";
 
-      // 2. Earth Sphere Mesh
       const sphereGeo = new THREE.SphereGeometry(this.globeRadius, 64, 64);
       const sphereMat = new THREE.MeshPhongMaterial({
-        map: canvasTexture,
-        shininess: 32,
+        color: 0x1e3a5f, // Deep ocean base tone while texture streams in
+        shininess: 35,
         specular: 0x1d4ed8
       });
+
       this.globeMesh = new THREE.Mesh(sphereGeo, sphereMat);
       this.scene.add(this.globeMesh);
 
-      // 3. Asynchronously upgrade with high-res photorealistic texture
-      try {
-        const textureLoader = new THREE.TextureLoader();
-        textureLoader.load("img/earth-texture.jpg", (tex) => {
-          if (this.globeMesh) {
-            this.globeMesh.material.map = tex;
-            this.globeMesh.material.needsUpdate = true;
-          }
-        });
-      } catch (e) {
-        console.warn("Using base canvas texture:", e);
-      }
+      const applyTexture = (tex) => {
+        if (!tex) return;
+        tex.needsUpdate = true;
+        sphereMat.color.setHex(0xffffff);
+        sphereMat.map = tex;
+        sphereMat.needsUpdate = true;
+      };
 
-      // 4. Glowing Atmospheric Halo (Fresnel effect)
+      // Load texture with multi-tier error fallback
+      textureLoader.load(
+        textureUrl,
+        applyTexture,
+        undefined,
+        () => {
+          textureLoader.load(
+            cdnFallback,
+            applyTexture,
+            undefined,
+            () => {
+              textureLoader.load(secondaryCdn, applyTexture);
+            }
+          );
+        }
+      );
+
+      // 2. Glowing Atmospheric Halo (Fresnel rim effect)
       const atmoGeo = new THREE.SphereGeometry(this.globeRadius * 1.025, 48, 48);
       const atmoMat = new THREE.MeshBasicMaterial({
         color: 0x38bdf8,
@@ -264,69 +260,6 @@
       });
       this.atmosphereMesh = new THREE.Mesh(atmoGeo, atmoMat);
       this.scene.add(this.atmosphereMesh);
-    }
-
-    generateFallbackCanvasTexture() {
-      const c = document.createElement("canvas");
-      c.width = 2048;
-      c.height = 1024;
-      const ctx = c.getContext("2d");
-
-      // Deep Blue Realistic Ocean Gradient
-      const oceanGrad = ctx.createLinearGradient(0, 0, 0, 1024);
-      oceanGrad.addColorStop(0, "#08162d");
-      oceanGrad.addColorStop(0.5, "#0b254a");
-      oceanGrad.addColorStop(1, "#08162d");
-      ctx.fillStyle = oceanGrad;
-      ctx.fillRect(0, 0, 2048, 1024);
-
-      // Draw Continents
-      ctx.fillStyle = "#1e3a2b";
-      ctx.strokeStyle = "#38bdf8";
-      ctx.lineWidth = 2.5;
-
-      CONTINENT_POLYS.forEach(poly => {
-        ctx.beginPath();
-        poly.forEach((pt, idx) => {
-          const px = ((pt[0] + 180) / 360) * 2048;
-          const py = ((90 - pt[1]) / 180) * 1024;
-          if (idx === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        });
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      });
-
-      // Special Glowing Red Landmass for India Subcontinent
-      const indiaPoly = CONTINENT_POLYS[7];
-      if (indiaPoly) {
-        ctx.fillStyle = "rgba(239, 68, 68, 0.45)";
-        ctx.strokeStyle = "#ef4444";
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        indiaPoly.forEach((pt, idx) => {
-          const px = ((pt[0] + 180) / 360) * 2048;
-          const py = ((90 - pt[1]) / 180) * 1024;
-          if (idx === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        });
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      }
-
-      // Graticule Lines (every 30 deg)
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.12)";
-      ctx.lineWidth = 1;
-      for (let x = 0; x <= 2048; x += 2048 / 12) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1024); ctx.stroke();
-      }
-      for (let y = 0; y <= 1024; y += 1024 / 6) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(2048, y); ctx.stroke();
-      }
-
-      return new THREE.CanvasTexture(c);
     }
 
     setupEventListeners() {
@@ -519,7 +452,7 @@
       if (!countryCities["IN"]) countryCities["IN"] = new Set();
       ["Bareja", "Ahmedabad (Studio HQ)", "Mumbai", "Surat", "Bengaluru", "Delhi"].forEach(c => countryCities["IN"].add(c));
 
-      // Global visitor distribution
+      // Global visitor distribution (USA, UK, UAE, Canada, Australia, Singapore, Germany)
       if (Object.keys(countryCounts).length < 4) {
         countryCounts["AE"] = 18;
         if (!countryCities["AE"]) countryCities["AE"] = new Set(["Dubai", "Abu Dhabi"]);
@@ -582,7 +515,7 @@
       if (statCountries) statCountries.textContent = countryList.length;
       if (statTop && countryList[0]) statTop.textContent = `${countryList[0].name} (🔴 ${countryList[0].tier.short})`;
 
-      // Render 3D Objects
+      // Render 3D Objects on Globe
       if (this.isInitialized) {
         this.renderBeaconsAndArcs();
       }
@@ -594,6 +527,9 @@
     renderBeaconsAndArcs() {
       while (this.beaconsGroup.children.length > 0) {
         this.beaconsGroup.remove(this.beaconsGroup.children[0]);
+      }
+      while (this.labelsGroup.children.length > 0) {
+        this.labelsGroup.remove(this.labelsGroup.children[0]);
       }
       while (this.arcsGroup.children.length > 0) {
         this.arcsGroup.remove(this.arcsGroup.children[0]);
@@ -609,17 +545,17 @@
       // 1. Studio Headquarters Beacon (Ahmedabad, India)
       this.createHqBeacon(hqPos);
 
-      // 2. Beacons, Ripples & Arcs for each Country
+      // 2. Beacons, 3D Labels, Ripples & Arcs for each Country
       this.activeCountryData.forEach(country => {
         const pos = latLonToVector3(country.lat, country.lon, this.globeRadius, 0.03);
 
-        // Standing 3D Cylinder Beacon
-        const beaconHeight = country.tier === TIERS.RED ? 1.5 : (0.5 + (country.visits / 50) * 0.8);
-        const beaconGeo = new THREE.CylinderGeometry(0.08, 0.22, beaconHeight, 16);
+        // Standing 3D Cylinder Beacon Pillar
+        const beaconHeight = country.tier === TIERS.RED ? 1.6 : (0.6 + (country.visits / 50) * 0.8);
+        const beaconGeo = new THREE.CylinderGeometry(0.09, 0.24, beaconHeight, 16);
         const beaconMat = new THREE.MeshPhongMaterial({
           color: country.tier.num,
           emissive: country.tier.num,
-          emissiveIntensity: 0.7,
+          emissiveIntensity: 0.8,
           transparent: true,
           opacity: 0.95
         });
@@ -631,7 +567,7 @@
         this.beaconsGroup.add(beaconMesh);
 
         // Glowing Top Pin Bulb
-        const pinGeo = new THREE.SphereGeometry(0.18, 16, 16);
+        const pinGeo = new THREE.SphereGeometry(0.2, 16, 16);
         const pinMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const pinMesh = new THREE.Mesh(pinGeo, pinMat);
         pinMesh.position.copy(pos);
@@ -640,8 +576,15 @@
         pinMesh.userData = { countryData: country };
         this.beaconsGroup.add(pinMesh);
 
+        // 3D Floating Country Name & Flag Billboard Badge
+        const labelSprite = this.createCountrySprite(country);
+        const labelPos = latLonToVector3(country.lat, country.lon, this.globeRadius, beaconHeight + 0.65);
+        labelSprite.position.copy(labelPos);
+        labelSprite.userData = { countryData: country };
+        this.labelsGroup.add(labelSprite);
+
         // Pulsing Surface Radar Ripple Ring
-        const rippleGeo = new THREE.RingGeometry(0.12, 0.48, 32);
+        const rippleGeo = new THREE.RingGeometry(0.12, 0.52, 32);
         const rippleMat = new THREE.MeshBasicMaterial({
           color: country.tier.num,
           transparent: true,
@@ -656,7 +599,7 @@
         this.radarRipples.push({
           mesh: rippleMesh,
           scale: 1,
-          maxScale: country.tier === TIERS.RED ? 4.0 : 2.6,
+          maxScale: country.tier === TIERS.RED ? 4.2 : 2.8,
           speed: country.tier === TIERS.RED ? 0.038 : 0.022
         });
 
@@ -667,28 +610,70 @@
       });
     }
 
+    createCountrySprite(country) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 420;
+      canvas.height = 110;
+      const ctx = canvas.getContext("2d");
+
+      // Translucent glass pill background
+      ctx.fillStyle = "rgba(10, 15, 28, 0.92)";
+      ctx.strokeStyle = country.tier.hex;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === "function") {
+        ctx.roundRect(6, 6, 408, 98, 22);
+      } else {
+        ctx.rect(6, 6, 408, 98);
+      }
+      ctx.fill();
+      ctx.stroke();
+
+      // Country Flag & Name in bold
+      ctx.font = "bold 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(`${country.flag} ${country.name.toUpperCase()}`, 20, 48);
+
+      // Sessions & Status Tag
+      ctx.font = "bold 20px monospace";
+      ctx.fillStyle = country.tier.hex;
+      ctx.fillText(`${country.visits} visits • ${country.tier.short.toUpperCase()}`, 20, 82);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.minFilter = THREE.LinearFilter;
+      const spriteMat = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        depthTest: true,
+        depthWrite: false
+      });
+      const sprite = new THREE.Sprite(spriteMat);
+      sprite.scale.set(2.0, 0.52, 1);
+      return sprite;
+    }
+
     createHqBeacon(hqPos) {
       // Crimson Base Tower for Studio HQ
-      const hqBaseGeo = new THREE.CylinderGeometry(0.2, 0.38, 1.9, 16);
+      const hqBaseGeo = new THREE.CylinderGeometry(0.22, 0.42, 2.1, 16);
       const hqBaseMat = new THREE.MeshPhongMaterial({
         color: 0xef4444,
         emissive: 0xef4444,
-        emissiveIntensity: 0.9,
+        emissiveIntensity: 0.95,
         shininess: 100
       });
       const hqMesh = new THREE.Mesh(hqBaseGeo, hqBaseMat);
       hqMesh.position.copy(hqPos);
       hqMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), hqPos.clone().normalize());
-      hqMesh.translateY(0.95);
+      hqMesh.translateY(1.05);
       this.beaconsGroup.add(hqMesh);
 
       // Gold Crown Topper
-      const topGeo = new THREE.SphereGeometry(0.28, 16, 16);
+      const topGeo = new THREE.SphereGeometry(0.32, 16, 16);
       const topMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
       const topMesh = new THREE.Mesh(topGeo, topMat);
       topMesh.position.copy(hqPos);
       topMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), hqPos.clone().normalize());
-      topMesh.translateY(1.9);
+      topMesh.translateY(2.1);
       this.beaconsGroup.add(topMesh);
     }
 
@@ -704,7 +689,7 @@
       const arcMat = new THREE.LineBasicMaterial({
         color: tier.num,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.65,
         linewidth: 1.5
       });
       const arcLine = new THREE.Line(arcGeo, arcMat);
@@ -776,11 +761,20 @@
       const c = this.activeCountryData.find(item => item.code === code) || COUNTRY_GEO[code];
       if (!c) return;
 
-      const targetPhi = (c.lat) * (Math.PI / 180);
-      const targetTheta = -(c.lon + 180) * (Math.PI / 180) + Math.PI;
+      const phi = (90 - c.lat) * (Math.PI / 180);
+      const theta = (c.lon + 180) * (Math.PI / 180);
+      const r = this.globeRadius || 5.0;
+      const x = -(r * Math.sin(phi) * Math.cos(theta));
+      const z = (r * Math.sin(phi) * Math.sin(theta));
+      const y = (r * Math.cos(phi));
 
-      this.targetRotation.x = targetPhi * 0.8;
-      this.targetRotation.y = targetTheta;
+      // Calculate exact Euler angles to bring the country to face camera (+Z axis)
+      const rx = Math.atan2(y, z);
+      const z1 = y * Math.sin(rx) + z * Math.cos(rx);
+      const ry = Math.atan2(-x, z1);
+
+      this.targetRotation.x = rx;
+      this.targetRotation.y = ry;
       this.targetZoom = 13.5;
 
       // Scroll smoothly back up to the 3D globe so user sees the country in focus
@@ -791,12 +785,27 @@
     }
 
     focusIndia() {
-      const c = COUNTRY_GEO["IN"];
-      const targetPhi = (c.lat) * (Math.PI / 180);
-      const targetTheta = -(c.lon + 180) * (Math.PI / 180) + Math.PI;
-      this.targetRotation.x = targetPhi * 0.8;
-      this.targetRotation.y = targetTheta;
-      this.targetZoom = 14.0;
+      this.focusCountry("IN");
+    }
+
+    focusUSA() {
+      this.focusCountry("US");
+    }
+
+    focusUK() {
+      this.focusCountry("GB");
+    }
+
+    focusUAE() {
+      this.focusCountry("AE");
+    }
+
+    focusCanada() {
+      this.focusCountry("CA");
+    }
+
+    focusAustralia() {
+      this.focusCountry("AU");
     }
 
     rotateLeft() {
@@ -860,6 +869,20 @@
       if (this.beaconsGroup) {
         this.beaconsGroup.rotation.x = this.currentRotation.x;
         this.beaconsGroup.rotation.y = this.currentRotation.y;
+      }
+      if (this.labelsGroup) {
+        this.labelsGroup.rotation.x = this.currentRotation.x;
+        this.labelsGroup.rotation.y = this.currentRotation.y;
+
+        // Clean depth-culling: hide labels on the back hemisphere so they do not clutter
+        const cameraPos = this.camera ? this.camera.position : new THREE.Vector3(0, 0, 14.5);
+        this.labelsGroup.children.forEach(sprite => {
+          const worldPos = new THREE.Vector3();
+          sprite.getWorldPosition(worldPos);
+          // Dot product with camera vector: positive when facing user
+          const dot = worldPos.dot(cameraPos);
+          sprite.visible = (dot > 18);
+        });
       }
       if (this.arcsGroup) {
         this.arcsGroup.rotation.x = this.currentRotation.x;

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="world-map.css?v=202611202235">
+  <link rel="stylesheet" href="world-map.css?v=202611202255">
   <style>
     :root {
       --bg: #090a0f;
@@ -1085,7 +1085,12 @@
         <div class="btr-globe-controls">
           <button class="globe-ctrl-btn" onclick="worldMapInstance.rotateLeft()" title="Spin 3D Globe Left">⬅️ Rotate Left</button>
           <button class="globe-ctrl-btn" onclick="worldMapInstance.rotateRight()" title="Spin 3D Globe Right">➡️ Rotate Right</button>
-          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusIndia()" title="Focus on Studio HQ (Ahmedabad, India)">📍 Focus India (HQ)</button>
+          <button class="globe-ctrl-btn active-hub" onclick="worldMapInstance.focusIndia()" title="Focus on Studio HQ (Ahmedabad, India)">📍 India 🇮🇳 (HQ)</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusUSA()" title="Focus on United States">📍 USA 🇺🇸</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusUK()" title="Focus on United Kingdom">📍 UK 🇬🇧</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusUAE()" title="Focus on United Arab Emirates">📍 UAE 🇦🇪</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusCanada()" title="Focus on Canada">📍 Canada 🇨🇦</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusAustralia()" title="Focus on Australia">📍 Australia 🇦🇺</button>
           <button class="globe-ctrl-btn" id="btnToggleRotate" onclick="worldMapInstance.toggleAutoRotate()" title="Toggle Auto-Rotation">⏸️ Pause Spin</button>
           <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomIn()" title="Zoom In (+)">➕ Zoom In</button>
           <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomOut()" title="Zoom Out (-)">➖ Zoom Out</button>
@@ -1500,6 +1505,6 @@
     checkAuth();
   </script>
   <script src="../js/vendor/three.min.js"></script>
-  <script src="world-map.js?v=202611202235"></script>
+  <script src="world-map.js?v=202611202255"></script>
 </body>
 </html>
