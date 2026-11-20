@@ -608,26 +608,29 @@
         setPillState('<span class="badge-text">BAS</span>', 'Explore Selected Work', 'pages/case-studies/index.html');
       }
 
-      // Check if footer is visible on Home Page and scroll pill bar upwards to avoid overlapping
+      // Check if footer is visible on Home Page and scroll pill bar upwards with previous content and vanish from footer
       const footer = document.querySelector('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer');
       const pillBar = document.querySelector('.mubien-pill-bar');
       if (footer && pillBar) {
         const footerRect = footer.getBoundingClientRect();
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
         const overlap = viewportHeight - footerRect.top;
-        if (overlap > 0) {
-          const pushUp = overlap + 20;
+        if (overlap > 10) {
+          const pushUp = Math.min(viewportHeight, overlap + 30);
           pillBar.style.transform = `translateX(-50%) translate3d(0, -${pushUp}px, 0)`;
-          if (pushUp > viewportHeight * 0.6) {
-            pillBar.style.opacity = '0';
+          const fadeProgress = Math.min(1, Math.max(0, overlap / 70));
+          pillBar.style.opacity = `${1 - fadeProgress}`;
+          if (overlap > 50) {
+            pillBar.style.visibility = 'hidden';
             pillBar.style.pointerEvents = 'none';
           } else {
-            pillBar.style.opacity = '1';
-            pillBar.style.pointerEvents = 'auto';
+            pillBar.style.visibility = 'visible';
+            pillBar.style.pointerEvents = fadeProgress > 0.4 ? 'none' : 'auto';
           }
         } else {
           pillBar.style.transform = '';
           pillBar.style.opacity = '1';
+          pillBar.style.visibility = 'visible';
           pillBar.style.pointerEvents = 'auto';
         }
       }

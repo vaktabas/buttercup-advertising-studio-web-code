@@ -52,6 +52,16 @@
   color: #ffffff;
 }
 
+/* When footer enters view, scroll button UPWARDS with previous page content and vanish from footer */
+body.is-over-footer .btr-floating-wa,
+.btr-floating-wa.is-in-footer {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translate3d(0, -140px, 0) scale(0.9) !important;
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s ease !important;
+}
+
 .btr-wa-icon-wrap {
   position: relative;
   width: 28px;

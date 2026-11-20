@@ -1008,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.body.appendChild(waBtn);
 
-    // Scroll tracking: As soon as the footer comes into view, scroll the button UPWARDS so it never overlaps the footer
+    // Scroll tracking: As soon as the footer comes into view, scroll the button UPWARDS with previous content and vanish from footer completely
     function handleFooterAvoidance() {
       const footer = document.querySelector('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer, #contact.is-footer');
       if (!footer) return;
@@ -1017,29 +1017,37 @@ document.addEventListener("DOMContentLoaded", () => {
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const overlap = viewportHeight - footerRect.top;
 
-      if (overlap > 0) {
-        // Footer is entering view: push WhatsApp button up with page scroll
-        const pushUp = overlap + 20; // 20px padding above footer top
+      if (overlap > 10) {
+        // Footer is entering view: push WhatsApp button UP with previous page content
+        document.body.classList.add('is-over-footer');
+        waBtn.classList.add('is-in-footer');
+
+        const pushUp = Math.min(viewportHeight, overlap + 30);
         waBtn.style.setProperty('--wa-push', `${pushUp}px`);
 
-        // If pushed up beyond 60% of viewport, fade out cleanly
-        if (pushUp > viewportHeight * 0.6) {
-          waBtn.style.opacity = '0';
+        // Fade out rapidly as footer enters so it is 100% GONE inside the footer
+        const fadeProgress = Math.min(1, Math.max(0, overlap / 70));
+        waBtn.style.opacity = `${1 - fadeProgress}`;
+        if (overlap > 50) {
+          waBtn.style.visibility = 'hidden';
           waBtn.style.pointerEvents = 'none';
         } else {
-          waBtn.style.opacity = '1';
-          waBtn.style.pointerEvents = 'auto';
+          waBtn.style.visibility = 'visible';
+          waBtn.style.pointerEvents = fadeProgress > 0.4 ? 'none' : 'auto';
         }
       } else {
-        // Normal fixed position
+        // On page above footer: normal visible floating state
+        document.body.classList.remove('is-over-footer');
+        waBtn.classList.remove('is-in-footer');
         waBtn.style.setProperty('--wa-push', '0px');
         waBtn.style.opacity = '1';
+        waBtn.style.visibility = 'visible';
         waBtn.style.pointerEvents = 'auto';
       }
     }
 
     let isScrollTicking = false;
-    window.addEventListener('scroll', () => {
+    function onScrollCheck() {
       if (!isScrollTicking) {
         requestAnimationFrame(() => {
           handleFooterAvoidance();
@@ -1047,9 +1055,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         isScrollTicking = true;
       }
-    }, { passive: true });
+    }
 
-    window.addEventListener('resize', handleFooterAvoidance, { passive: true });
+    window.addEventListener('scroll', onScrollCheck, { passive: true });
+    window.addEventListener('resize', onScrollCheck, { passive: true });
+
+    // Hook to Lenis if active
+    if (window.lenis) {
+      window.lenis.on('scroll', onScrollCheck);
+    } else {
+      const checkLenisTimer = setInterval(() => {
+        if (window.lenis) {
+          window.lenis.on('scroll', onScrollCheck);
+          clearInterval(checkLenisTimer);
+        }
+      }, 200);
+      setTimeout(() => clearInterval(checkLenisTimer), 3000);
+    }
+
+    // IntersectionObserver for infallible footer enter/exit detection
+    if ('IntersectionObserver' in window) {
+      const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(() => handleFooterAvoidance());
+      }, {
+        threshold: [0, 0.02, 0.05, 0.1, 0.2, 0.5, 0.8, 1.0]
+      });
+      const footers = document.querySelectorAll('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer, #contact.is-footer');
+      footers.forEach(f => footerObserver.observe(f));
+    }
+
     handleFooterAvoidance();
   }
 
