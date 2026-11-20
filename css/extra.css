@@ -58,8 +58,8 @@ body.is-over-footer .btr-floating-wa,
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  transform: translate3d(0, -140px, 0) scale(0.9) !important;
-  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s ease !important;
+  transform: translate3d(0, calc(-1 * var(--wa-push, 120px)), 0) scale(0.92) !important;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease !important;
 }
 
 .btr-wa-icon-wrap {

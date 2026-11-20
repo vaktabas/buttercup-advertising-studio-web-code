@@ -1010,7 +1010,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Scroll tracking: As soon as the footer comes into view, scroll the button UPWARDS with previous content and vanish from footer completely
     function handleFooterAvoidance() {
-      const footer = document.querySelector('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer, #contact.is-footer');
+      const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
+      const footer = footers.length > 0 ? footers[footers.length - 1] : document.querySelector('footer');
       if (!footer) return;
 
       const footerRect = footer.getBoundingClientRect();
@@ -1018,23 +1019,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const overlap = viewportHeight - footerRect.top;
 
       if (overlap > 10) {
-        // Footer is entering view: push WhatsApp button UP with previous page content
+        // Footer is entering view: push WhatsApp button UP with previous page content and vanish
         document.body.classList.add('is-over-footer');
         waBtn.classList.add('is-in-footer');
 
         const pushUp = Math.min(viewportHeight, overlap + 30);
         waBtn.style.setProperty('--wa-push', `${pushUp}px`);
-
-        // Fade out rapidly as footer enters so it is 100% GONE inside the footer
-        const fadeProgress = Math.min(1, Math.max(0, overlap / 70));
-        waBtn.style.opacity = `${1 - fadeProgress}`;
-        if (overlap > 50) {
-          waBtn.style.visibility = 'hidden';
-          waBtn.style.pointerEvents = 'none';
-        } else {
-          waBtn.style.visibility = 'visible';
-          waBtn.style.pointerEvents = fadeProgress > 0.4 ? 'none' : 'auto';
-        }
+        waBtn.style.opacity = '0';
+        waBtn.style.visibility = 'hidden';
+        waBtn.style.pointerEvents = 'none';
       } else {
         // On page above footer: normal visible floating state
         document.body.classList.remove('is-over-footer');
@@ -1080,7 +1073,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, {
         threshold: [0, 0.02, 0.05, 0.1, 0.2, 0.5, 0.8, 1.0]
       });
-      const footers = document.querySelectorAll('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer, #contact.is-footer');
+      const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
       footers.forEach(f => footerObserver.observe(f));
     }
 
