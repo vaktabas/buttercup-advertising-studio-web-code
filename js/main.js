@@ -960,7 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // High-performance cached hover detection
-    const interactiveSel = "a, button, input, textarea, select, [role='button'], .nav-links, .cards, .submit-btn, .menu-button, .custom-lightbox-close, .cs-close-btn, .cs-btn, .btr-ai-orb-button, .em-ai-chip";
+    const interactiveSel = "a, button, input, textarea, select, [role='button'], .nav-links, .cards, .submit-btn, .menu-button, .custom-lightbox-close, .cs-close-btn, .cs-btn, .btr-ai-orb-button, .em-ai-chip, .mubien-pill-badge, .mubien-pill-text-link, .mubien-menu-btn, .mubien-card, .mubien-reel-card, .mubien-drawer-brand-btn, .mubien-drawer-close-btn, .mubien-contact-slider, .mubien-contact-knob";
     let lastTarget = null;
 
     document.addEventListener("mouseover", (e) => {
@@ -972,7 +972,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cursorRing.classList.toggle("is-hovering", isHovering);
         cursorDot.classList.toggle("is-hovering", isHovering);
       }
-      const isOverDockOrPopup = !!(e.target && e.target.closest && e.target.closest('.apple-dock, .industry-dropdown-popup, .industry-subpopup, .services-popup, .mubien-drawer, .mubien-pill-bar, .mubien-backdrop'));
+      const isOverDockOrPopup = !!(e.target && e.target.closest && e.target.closest('.apple-dock, .industry-dropdown-popup, .industry-subpopup, .services-popup'));
       if (isOverDockOrPopup) {
         cursorDot.style.display = 'none';
         cursorRing.style.display = 'none';
@@ -1620,20 +1620,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // APPLE-STYLE FLOATING RIGHT NAVIGATION DOCK (Auto-injected for resilience)
   // =========================================================================
   function initAppleDock() {
-    // Disabled in favor of Mubien-style bottom floating pill navigation
-    // Auto-load mubien-nav.js if not already present
+    // Bottom floating pill nav is STRICTLY for the Home Page only
+    const pageAttr = document.body ? document.body.getAttribute('data-page') : '';
+    const loc = window.location.pathname;
+    const isHomePage = pageAttr === 'index' || pageAttr === 'home' || loc === '/' || loc === '/index.html' || (!loc.includes('/pages/') && !loc.includes('/projects/') && !loc.includes('/blogs/') && !loc.includes('/case-studies/') && !loc.includes('/utilities/') && (loc.endsWith('/') || loc.endsWith('/index.html') || loc.endsWith('/web 2')));
+
+    if (!isHomePage) {
+      // Clean up if somehow present on inner pages
+      const existingPill = document.querySelector('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop');
+      if (existingPill) {
+        document.querySelectorAll('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop').forEach(el => el.remove());
+      }
+      return;
+    }
+
+    // Auto-load mubien-nav.js on Home Page if not already present
     if (!document.querySelector('script[src*="mubien-nav.js"]')) {
       const script = document.createElement('script');
-      let prefix = '';
-      const loc = window.location.pathname;
-      if (loc.includes('/pages/services/') || loc.includes('/pages/industries/')) {
-        prefix = '../../../';
-      } else if (loc.includes('/pages/')) {
-        prefix = '../../';
-      } else if (loc.includes('/projects/')) {
-        prefix = '../';
-      }
-      script.src = prefix + 'js/mubien-nav.js';
+      script.src = 'js/mubien-nav.js';
       script.defer = true;
       document.body.appendChild(script);
     }

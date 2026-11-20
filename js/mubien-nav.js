@@ -5,6 +5,25 @@
 (function () {
   'use strict';
 
+  // Strict check: Bottom capsule pill navigation is strictly for the Home Page only!
+  function isHomePage() {
+    const pageAttr = document.body ? document.body.getAttribute('data-page') : '';
+    if (pageAttr === 'index' || pageAttr === 'home') return true;
+    const loc = window.location.pathname;
+    // Inner pages have their own top navbar and do not need bottom capsule
+    if (loc.includes('/pages/') || loc.includes('/projects/') || loc.includes('/blogs/') || loc.includes('/case-studies/') || loc.includes('/utilities/')) {
+      return false;
+    }
+    const cleanPath = loc.replace(/\/+$/, '');
+    return cleanPath === '' || cleanPath === '/index.html' || cleanPath.endsWith('/web 2') || cleanPath.endsWith('/web 2/index.html');
+  }
+
+  // If not homepage, clean up any existing elements and exit immediately
+  if (!isHomePage()) {
+    document.querySelectorAll('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop').forEach(el => el.remove());
+    return;
+  }
+
   // Helper to resolve links relative to the site root
   function resolvePath(target) {
     if (target.startsWith('http') || target.startsWith('#') || target.startsWith('mailto:') || target.startsWith('tel:')) {
@@ -607,11 +626,19 @@
     handleScroll();
   }
 
-  // Initialize once DOM is ready
+  // Initialize once DOM is ready (only on Home Page)
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMubienNav);
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!isHomePage()) {
+        document.querySelectorAll('.mubien-pill-bar, .mubien-drawer, .mubien-backdrop').forEach(el => el.remove());
+        return;
+      }
+      initMubienNav();
+    });
   } else {
-    initMubienNav();
+    if (isHomePage()) {
+      initMubienNav();
+    }
   }
 })();
 
