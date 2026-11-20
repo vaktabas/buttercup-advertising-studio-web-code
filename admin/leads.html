@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="world-map.css?v=1">
   <style>
     :root {
       --bg: #090a0f;
@@ -804,6 +805,15 @@
       </div>
 
       <div class="top-actions">
+        <button class="btn btn-globe" onclick="openWorldMapModal()" id="openWorldMapBtn" title="Open Interactive 3D World Traffic Map">
+          <span class="globe-live-ping"></span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            <path d="M2 12h20"></path>
+          </svg>
+          <span>3D World Map</span>
+        </button>
         <a href="../api/track-visitor.php?action=download_leads_csv" class="btn btn-emerald" title="Export Inbound Leads to Excel">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Export Leads (Excel/CSV)
@@ -880,6 +890,7 @@
       <div class="tab-pills">
         <button class="tab-pill active" onclick="switchTab('leads')" id="tabLeadsBtn">🌟 Inbound Leads (<span id="tabLeadsCount">0</span>)</button>
         <button class="tab-pill" onclick="switchTab('visits')" id="tabVisitsBtn">🛰️ Complete Visitor Telemetry (<span id="tabVisitsCount">0</span>)</button>
+        <button class="tab-pill" onclick="openWorldMapModal()" id="tabMapBtn">🌍 Live 3D World Traffic Map</button>
         <button class="tab-pill" onclick="switchTab('analytics')" id="tabAnalyticsBtn">📈 Geographic & Traffic Breakdown</button>
       </div>
 
@@ -997,6 +1008,159 @@
       </div>
     </section>
 
+  </div>
+
+  <!-- 3D WORLD TRAFFIC MAP MODAL -->
+  <div class="btr-map-modal-overlay" id="btrWorldMapModal" aria-hidden="true">
+    <div class="btr-map-modal-box">
+      <!-- Header -->
+      <div class="btr-map-modal-header">
+        <div class="btr-map-title-group">
+          <div class="btr-map-icon-badge">
+            <span class="globe-live-ping"></span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="btr-map-modal-headline">
+              <h2>Live 3D World Traffic Telemetry</h2>
+              <span class="status-pill-badge red"><span class="legend-dot-pulse red" style="width:6px; height:6px;"></span> REAL-TIME 3D MAP</span>
+            </div>
+            <p class="btr-map-modal-sub">Real-time global visitor heatmap, country traffic density & active session arcs</p>
+          </div>
+        </div>
+
+        <div class="btr-map-header-actions">
+          <div class="btr-map-stats-summary">
+            <div class="btr-map-stat-chip">
+              <span class="chip-label">Total Visits</span>
+              <span class="chip-val green" id="mapStatTotalVisits">0</span>
+            </div>
+            <div class="btr-map-stat-chip">
+              <span class="chip-label">Active Countries</span>
+              <span class="chip-val purple" id="mapStatCountries">0</span>
+            </div>
+            <div class="btr-map-stat-chip highlight-red">
+              <span class="chip-label">Top Volume Hub</span>
+              <span class="chip-val red" id="mapStatTopCountry">India (🔴 Red)</span>
+            </div>
+          </div>
+          <button class="btr-map-close-btn" onclick="closeWorldMapModal()" aria-label="Close Map Modal">&times;</button>
+        </div>
+      </div>
+
+      <!-- 3D Globe Stage -->
+      <div class="btr-globe-stage" id="btrGlobeStage">
+        <canvas id="btrWorldGlobeCanvas"></canvas>
+        <div class="btr-globe-tooltip" id="btrGlobeTooltip"></div>
+
+        <!-- Controls -->
+        <div class="btr-globe-controls">
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomIn()" title="Zoom In (+)">➕ Zoom In</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.zoomOut()" title="Zoom Out (-)">➖ Zoom Out</button>
+          <button class="globe-ctrl-btn" onclick="worldMapInstance.focusIndia()" title="Focus on Studio HQ (Ahmedabad, India)">📍 Focus India (HQ)</button>
+          <button class="globe-ctrl-btn" id="btnToggleRotate" onclick="worldMapInstance.toggleAutoRotate()" title="Toggle Auto-Rotation">⏸️ Pause Spin</button>
+        </div>
+
+        <div class="btr-globe-hint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          Click & drag to spin 3D Globe 360° • Scroll to Zoom • Hover on beacons for details
+        </div>
+      </div>
+
+      <!-- COLOR HEATMAP LEGEND BAR (रंगों का मतलब) -->
+      <div class="btr-map-legend-bar">
+        <div class="legend-bar-title">
+          <div class="legend-title-badge">🎨 TRAFFIC HEATMAP COLOR GUIDE</div>
+          <div class="legend-title-hindi">मैप पर किस रंग का क्या मतलब है:</div>
+        </div>
+
+        <div class="legend-cards-row">
+          <div class="legend-card tier-red">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse red"></span>
+              <span class="legend-tier-name">🔴 लाल (Red Glow)</span>
+            </div>
+            <div class="legend-traffic-heading">सबसे ज़्यादा विज़िटर्स (Highest Traffic)</div>
+            <div class="legend-traffic-desc">Primary audience hub (>50% traffic volume). E.g. India & metro cities. Glowing red pillar & radar wave.</div>
+          </div>
+
+          <div class="legend-card tier-orange">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse orange"></span>
+              <span class="legend-tier-name">🟠 नारंगी (Neon Orange)</span>
+            </div>
+            <div class="legend-traffic-heading">काफ़ी ज़्यादा विज़िटर्स (High Traffic)</div>
+            <div class="legend-traffic-desc">Strong recurring engagement (10 - 19 visits). Active commercial inquiries.</div>
+          </div>
+
+          <div class="legend-card tier-yellow">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse yellow"></span>
+              <span class="legend-tier-name">🟡 पीला (Gold Yellow)</span>
+            </div>
+            <div class="legend-traffic-heading">मध्यम विज़िटर्स (Moderate Traffic)</div>
+            <div class="legend-traffic-desc">Steady exploratory visits (5 - 9 visits). Exploring case studies and services.</div>
+          </div>
+
+          <div class="legend-card tier-green">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse green"></span>
+              <span class="legend-tier-name">🟢 हरा (Emerald Green)</span>
+            </div>
+            <div class="legend-traffic-heading">सक्रिय विज़िटर्स (Growing Traffic)</div>
+            <div class="legend-traffic-desc">Active organic or referral visits (2 - 4 visits). Category discovery.</div>
+          </div>
+
+          <div class="legend-card tier-cyan">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse cyan"></span>
+              <span class="legend-tier-name">🔵 नीला (Electric Cyan)</span>
+            </div>
+            <div class="legend-traffic-heading">शुरुआती विज़िटर्स (Emerging Traffic)</div>
+            <div class="legend-traffic-desc">Initial global discovery sessions (1 visit). Expanding international presence.</div>
+          </div>
+
+          <div class="legend-card tier-dark">
+            <div class="legend-card-top">
+              <span class="legend-dot-pulse dark"></span>
+              <span class="legend-tier-name">⚫ गहरा (Dark Muted)</span>
+            </div>
+            <div class="legend-traffic-heading">शून्य विज़िट (No Traffic Yet)</div>
+            <div class="legend-traffic-desc">0 recorded sessions. Untapped geographical market.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE COUNTRY TELEMETRY LEADERBOARD -->
+      <div class="btr-map-country-section">
+        <div class="country-section-header">
+          <h3>📊 Real-Time Country Traffic Leaderboard</h3>
+          <span style="font-size: 12px; color: var(--text-muted);">Click "Focus" to rotate 3D globe to any country</span>
+        </div>
+        <div class="country-table-wrap">
+          <table class="country-table" id="countryTrafficTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Country</th>
+                <th>Traffic Status / Color</th>
+                <th>Visitor Sessions</th>
+                <th>Global Share</th>
+                <th>Top Cities</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="countryTrafficTbody">
+              <tr><td colspan="7" class="empty-state">Calculating global traffic distribution...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- TOAST NOTIFICATION -->
@@ -1122,6 +1286,13 @@
 
         // Render Analytics Rankings
         renderRankings(stats);
+
+        // Update 3D World Traffic Map
+        window.rawVisitsData = rawVisitsData;
+        window.rawLeadsData = rawLeadsData;
+        if (typeof window.updateWorldMapTraffic === "function") {
+          window.updateWorldMapTraffic(rawVisitsData, rawLeadsData, stats);
+        }
 
       } catch (err) {
         console.error("Failed to fetch live telemetry:", err);
@@ -1302,5 +1473,7 @@
     // Auto-check auth on load
     checkAuth();
   </script>
+  <script src="../js/vendor/three.min.js"></script>
+  <script src="world-map.js?v=1"></script>
 </body>
 </html>
