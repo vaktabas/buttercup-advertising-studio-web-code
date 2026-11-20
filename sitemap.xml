@@ -1,81 +1,731 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://buttercup.in/</loc>
-    <lastmod>2026-11-18</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Advertising Studio Ahmedabad</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://buttercup.in/pages/services/brand-strategy/</loc>
-    <lastmod>2026-11-18</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Brand Strategy & Positioning Ahmedabad</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://buttercup.in/pages/services/visual-identity/</loc>
-    <lastmod>2026-11-18</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-06.jpg</image:loc>
+      <image:title>Visual Identity & Packaging Design Ahmedabad</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://buttercup.in/pages/services/marketing-communication/</loc>
-    <lastmod>2026-11-18</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/work/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/about/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/case-studies/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/contact/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/blogs/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://buttercup.in/pages/industries/service-base/</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-07.jpg</image:loc>
+      <image:title>Marketing Communication & Advertising Ahmedabad</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://buttercup.in/pages/industries/product-base/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-02.jpg</image:loc>
+      <image:title>Product Base Industry Branding & Packaging</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/industries/service-base/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-04.jpg</image:loc>
+      <image:title>Service Base Industry Branding & Strategy</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/about/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>About Buttercup Advertising Studio</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/work/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-08.jpg</image:loc>
+      <image:title>Selected Branding Case Studies</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/work-classic/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/case-studies/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-05.jpg</image:loc>
+      <image:title>Client Rebranding & Packaging Case Studies</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/contact/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://buttercup.in/pages/blogs/</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://buttercup.in/pages/pricing/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://buttercup.in/pages/terms/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/anatomy-of-high-converting-brand-identity.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Anatomy Of High Converting Brand Identity</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/b2b-industrial-branding-secrets.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: B2B Industrial Branding Secrets</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/brand-positioning-strategy-guide.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Brand Positioning Strategy Guide</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/brand-storytelling-narrative-frameworks.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Brand Storytelling Narrative Frameworks</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/building-functional-brand-guidelines.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Building Functional Brand Guidelines</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/color-theory-for-luxury-brands.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Color Theory For Luxury Brands</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/corporate-brand-architecture-models.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Corporate Brand Architecture Models</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/creative-campaign-direction-roi.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Creative Campaign Direction Roi</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/creative-web-development-notes.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Creative Web Development Notes</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/designing-for-gen-z-authenticity.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Designing For Gen Z Authenticity</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/fmcg-brand-strategy-differentiation.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Fmcg Brand Strategy Differentiation</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/interface-code-chronicles.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Interface Code Chronicles</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/minimalist-vs-maximalist-branding.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Minimalist Vs Maximalist Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/omnichannel-visual-consistency-revenue.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Omnichannel Visual Consistency Revenue</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/power-of-brand-voice-tone-copywriting.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Power Of Brand Voice Tone Copywriting</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/psychology-of-packaging-design.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Psychology Of Packaging Design</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/the-digital-craft-journal.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: The Digital Craft Journal</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/typography-in-branding-perception.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Typography In Branding Perception</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/web-design-development-insights.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Web Design Development Insights</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/blogs/why-rebranding-fails-and-how-to-succeed.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/portrait.jpg</image:loc>
+      <image:title>Buttercup Insights: Why Rebranding Fails And How To Succeed</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/abode.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Abode Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/aloevella.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Aloevella Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/ark-hair-oil.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Ark Hair Oil Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/atlas-bloom.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Atlas Bloom Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/beatitude.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Beatitude Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/bigly-agro.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Bigly Agro Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/cinder-ash.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Cinder Ash Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/coin-dhan.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Coin Dhan Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/cp-india.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Cp India Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/crispo.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Crispo Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/ecoforest.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Ecoforest Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/enlight.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Enlight Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/eon-studio.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Eon Studio Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/farmbyte.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Farmbyte Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/form-theory.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Form Theory Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/gabbar.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Gabbar Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/glogeous.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Glogeous Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/grabz.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Grabz Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/huzzah.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Huzzah Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/jd-group.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Jd Group Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/jimmy.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Jimmy Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/kindred-haus.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Kindred Haus Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/kriaa-wellness.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Kriaa Wellness Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/laxmi-infra.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Laxmi Infra Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/luv-trance.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Luv Trance Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/maruti-barrier-films.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Maruti Barrier Films Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/noir-supply-co.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Noir Supply Co Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/playcent.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Playcent Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/plutus-school.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Plutus School Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/polka-tots.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Polka Tots Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/prajay-steel.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Prajay Steel Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/r-pramodchand.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: R Pramodchand Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/senal-diamonds.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Senal Diamonds Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/shivala.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Shivala Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/studio-verra.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Studio Verra Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/titano-led.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Titano Led Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/velvet-orbit.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Velvet Orbit Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/vijay-trivedi-group.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Vijay Trivedi Group Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/projects/yogesh-joshi.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://buttercup.in/images/gravity/work-01.jpg</image:loc>
+      <image:title>Case Study: Yogesh Joshi Branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://buttercup.in/utilities/licenses.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://buttercup.in/utilities/style-guide.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://buttercup.in/utilities/change-log.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
   </url>
 </urlset>
