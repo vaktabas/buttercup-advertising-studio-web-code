@@ -117,7 +117,7 @@
 
           <!-- Suggestion Chips Grid -->
           <div class="em-ai-chips-grid" id="em-ai-chips">
-            <button type="button" class="em-ai-chip" data-query="Request a Free Quote">Start a project</button>
+            <button type="button" class="em-ai-chip" data-query="Request a Free Quote">Request a Free Quote</button>
             <button type="button" class="em-ai-chip" data-query="Join the team">Join the team</button>
             <button type="button" class="em-ai-chip" data-query="Drop a quick word">Drop a quick word</button>
             <button type="button" class="em-ai-chip" data-query="Discover our culture">Discover our culture</button>
@@ -2510,7 +2510,7 @@
           "Flattery will get you everywhere! But my heart is already committed to bespoke vector curves, 60fps micro-interactions, and gold-foiled packaging. How about we turn that mutual admiration into a category-leading brand identity together?",
           "Arey wah, dil khush kar diya! Lekin main already committed hoon—pixel-perfect typography aur luxury packaging ke sath! Lekin aapke business se ek loyal, multi-million dollar relationship zaroor bana sakti hoon. Kaunsa project shuru karein?"
         ],
-        chips: ["Start a project with LISA", "Explore Services", "Schedule a Call"]
+        chips: ["Request a Free Quote with LISA", "Explore Services", "Schedule a Call"]
       },
       {
         match: /\b(tell me a joke|joke sunao|chutkula|hasao|bore ho raha|kuch funny|entertain me|koi kahani|story sunao|make me laugh|koi joke|hasna hai)\b/i,

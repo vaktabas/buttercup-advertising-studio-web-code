@@ -1200,6 +1200,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Screen ke beech-o-beech bada square luxury popup with instant contact capture
   // =========================================================================
   function initCenterSquareWhatsAppModal() {
+    // Purge any stale localStorage admin auth so WhatsApp popup is never suppressed
+    try {
+      localStorage.removeItem('btr_admin_auth');
+    } catch (e) {}
+
     // Remove any legacy elements
     const oldStatic = document.getElementById('btrFloatingWa');
     if (oldStatic) oldStatic.remove();
@@ -1292,12 +1297,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showModal() {
-      // Suppress WhatsApp popup if user clicked Login, if Login modal is active, or if admin is authenticated
+      // Suppress WhatsApp popup only if user actively clicked Login or if Login modal is active
       if (window.__btrWaSuppressed) return;
       const loginOverlay = document.getElementById('btrHomeLoginOverlay');
       if (loginOverlay && loginOverlay.classList.contains('is-active')) return;
-      const storedAuth = sessionStorage.getItem('btr_admin_auth') || localStorage.getItem('btr_admin_auth');
-      if (storedAuth === 'branding@gmail.com') return;
 
       if (isFooterInView()) return;
       overlay.classList.add('is-active');
@@ -1534,11 +1537,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.__btrDismissWhatsAppPopup();
       }
 
-      const stored = sessionStorage.getItem('btr_admin_auth') || localStorage.getItem('btr_admin_auth');
-      if (stored === 'branding@gmail.com') {
-        window.location.href = 'admin/leads.html';
-        return;
-      }
+      // Always require entering password on login
       modalOverlay.classList.add('is-active');
       modalOverlay.setAttribute('aria-hidden', 'false');
       if (errorMsg) errorMsg.style.display = 'none';
@@ -1596,7 +1595,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const entered = (pwInput ? pwInput.value : '').trim();
         if (entered === 'branding@gmail.com') {
           sessionStorage.setItem('btr_admin_auth', 'branding@gmail.com');
-          localStorage.setItem('btr_admin_auth', 'branding@gmail.com');
+          try { localStorage.removeItem('btr_admin_auth'); } catch (e) {}
           if (errorMsg) errorMsg.style.display = 'none';
           if (btnText) btnText.textContent = '✓ Access Granted! Opening...';
           setTimeout(() => {

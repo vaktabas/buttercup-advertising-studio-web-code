@@ -601,7 +601,7 @@
         if (viewportCenter >= top) {
           if (currentMode !== 'contact') {
             currentMode = 'contact';
-            setPillState('<span class="badge-text">✎</span>', 'Start A Project · Let’s Talk', 'pages/contact/index.html');
+            setPillState('<span class="badge-text">✎</span>', 'Request a Free Quote · Let’s Talk', 'pages/contact/index.html');
           }
           return;
         }
