@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   let lenis = null;
   const isMobileOrTouch = (window.innerWidth <= 991) ||
-                          ('ontouchstart' in window && window.innerWidth <= 1024) ||
-                          (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
+    ('ontouchstart' in window && window.innerWidth <= 1024) ||
+    (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
 
   if (typeof Lenis !== "undefined" && !isMobileOrTouch) {
     try {
@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     // Graceful mobile stub for window.lenis so modal open/close calls never fail
     window.lenis = {
-      start: () => {},
-      stop: () => {},
+      start: () => { },
+      stop: () => { },
       scrollTo: (target, opt) => {
         const top = typeof target === 'number' ? target : 0;
         window.scrollTo({ top: top, behavior: opt && opt.immediate ? 'auto' : 'smooth' });
@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cardWrap && totalScrollCards > 0 && hasST) {
         ScrollTrigger.matchMedia({
           // Desktop screens: 3D stacking scroll animation with pin
-          "(min-width: 992px)": function () {
+          "(min-width: 769px)": function () {
             scrollCards.forEach((card, index) => {
               gsap.set(card, {
                 transformPerspective: 1000,
@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
 
           // Mobile screens: clean, responsive horizontal swipe without scroll-jacking, zero glitch, zero blank space
-          "(max-width: 991px)": function () {
+          "(max-width: 768px)": function () {
             scrollCards.forEach((card) => {
               gsap.set(card, { clearProps: "all" });
             });
@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursorWrp = document.querySelector(".project-cursor-wrp");
   const cursorFollower = document.querySelector(".view-project-follow-cursor");
 
-  if (cursorWrp && cursorFollower && !isMobileOrTouch) {
+  if (cursorWrp && cursorFollower) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let currentX = mouseX;
@@ -443,10 +443,9 @@ document.addEventListener("DOMContentLoaded", () => {
         currentX += (mouseX - currentX) * 0.18;
         currentY += (mouseY - currentY) * 0.18;
         cursorFollower.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+        requestAnimationFrame(updateCursor);
       }
-      requestAnimationFrame(updateCursor);
     }
-    requestAnimationFrame(updateCursor);
 
     // Show cursor when hovering over interactive project elements
     const hoverTargets = document.querySelectorAll(".works-wrapper, .project-clw_wrapper, .cards.is-projects, .work-elem");
@@ -454,8 +453,10 @@ document.addEventListener("DOMContentLoaded", () => {
       el.addEventListener("mouseenter", () => {
         isTracking = true;
         cursorWrp.classList.add("is-visible");
+        requestAnimationFrame(updateCursor);
       });
       el.addEventListener("mouseleave", () => {
+        isTracking = false;
         cursorWrp.classList.remove("is-visible");
       });
     });
@@ -568,7 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (rawUrl.includes("youtu.be/")) {
           videoId = rawUrl.split("youtu.be/")[1].split("?")[0];
         }
-        const embedUrl = videoId 
+        const embedUrl = videoId
           ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`
           : rawUrl;
 
@@ -693,9 +694,9 @@ document.addEventListener("DOMContentLoaded", () => {
     catCards.forEach(card => {
       const catType = card.getAttribute("data-category") ||
         (card.innerText.includes("Product") ? "product" :
-         card.innerText.includes("Strategy") ? "brand-strategy" :
-         card.innerText.includes("Visual") ? "visual-identity" :
-         card.innerText.includes("Marketing") ? "marketing-comm" : "service");
+          card.innerText.includes("Strategy") ? "brand-strategy" :
+            card.innerText.includes("Visual") ? "visual-identity" :
+              card.innerText.includes("Marketing") ? "marketing-comm" : "service");
 
       const handleEnter = () => {
         clearTimeout(subTimer);
@@ -767,7 +768,7 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimeout(timer);
       wrapper.classList.add("is-open");
       if (video && video.paused) {
-        video.play().catch(() => {});
+        video.play().catch(() => { });
       }
     });
 
@@ -799,7 +800,7 @@ document.addEventListener("DOMContentLoaded", () => {
           wrapper.classList.toggle("is-mobile-open", !wasOpen);
         }
         if (video && video.paused) {
-          video.play().catch(() => {});
+          video.play().catch(() => { });
         }
       });
     }
@@ -886,6 +887,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let isHovering = false;
     let rafId = null;
 
+    function wakeCursor() {
+      if (!rafId && isVisible) {
+        rafId = requestAnimationFrame(renderCursor);
+      }
+    }
+
     window.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -897,42 +904,60 @@ document.addEventListener("DOMContentLoaded", () => {
         cursorDot.classList.add("is-active");
         cursorRing.classList.add("is-active");
       }
+      wakeCursor();
     }, { passive: true });
 
     window.addEventListener("mousedown", () => {
       cursorRing.classList.add("is-clicking");
+      wakeCursor();
     }, { passive: true });
 
     window.addEventListener("mouseup", () => {
       cursorRing.classList.remove("is-clicking");
+      wakeCursor();
     }, { passive: true });
 
     document.addEventListener("mouseleave", () => {
       isVisible = false;
       cursorDot.classList.remove("is-active");
       cursorRing.classList.remove("is-active");
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
     }, { passive: true });
 
     document.addEventListener("mouseenter", () => {
       isVisible = true;
       cursorDot.classList.add("is-active");
       cursorRing.classList.add("is-active");
+      wakeCursor();
     }, { passive: true });
 
-    // Single unified 120fps hardware-accelerated RAF render loop
+    // Single unified 120fps hardware-accelerated RAF render loop with smart idle sleep
     function renderCursor() {
-      if (isVisible) {
-        // Dot follows 1:1 instantaneously with zero lag
-        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      if (!isVisible) {
+        rafId = null;
+        return;
+      }
 
-        // Ring follows with responsive luxury spring lerp (0.35 = buttery smooth, no dragging)
-        ringX += (mouseX - ringX) * 0.35;
-        ringY += (mouseY - ringY) * 0.35;
-        cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      // Dot follows 1:1 instantaneously with zero lag
+      cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+      // Ring follows with responsive luxury spring lerp (0.35 = buttery smooth, no dragging)
+      ringX += (mouseX - ringX) * 0.35;
+      ringY += (mouseY - ringY) * 0.35;
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+
+      // If ring is settled on mouse position, rest until next mousemove
+      const dx = Math.abs(mouseX - ringX);
+      const dy = Math.abs(mouseY - ringY);
+      if (dx < 0.25 && dy < 0.25) {
+        rafId = null;
+        return;
       }
       rafId = requestAnimationFrame(renderCursor);
     }
-    rafId = requestAnimationFrame(renderCursor);
 
     // High-performance cached hover detection
     const interactiveSel = "a, button, input, textarea, select, [role='button'], .nav-links, .cards, .submit-btn, .menu-button, .custom-lightbox-close, .cs-close-btn, .cs-btn, .btr-ai-orb-button, .em-ai-chip";
@@ -977,7 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const cleanUrl = window.location.origin + window.location.pathname;
         nextInput.value = cleanUrl + "?submitted=true";
-      } catch (e) {}
+      } catch (e) { }
     }
 
     // Check if user returned from native redirect (?submitted=true)
@@ -991,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const cleanUrl = window.location.origin + window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
-      } catch (e) {}
+      } catch (e) { }
     }
 
     form.addEventListener("submit", async (e) => {

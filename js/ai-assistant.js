@@ -2007,7 +2007,7 @@
       if (v.length === 1) return v[0];
 
       const lower = (userQuery || '').toLowerCase();
-      const isHindi = /\b(kya|kaise|kaha|mujhe|hum|aap|batao|dikhao|karo|karna|chahiye|hai|hain|hota|baare|mein|se|ko|bhi|kitna|hoga|sirf|dabba|paise|kiska|doge|kitne|banta|milega|lagta|pura)\b/i.test(lower);
+      const isHindi = /\b(kya|kaise|kaha|kahan|mujhe|hum|aap|tum|tera|teri|tere|mera|meri|mere|apna|apne|apni|batao|dikhao|karo|karna|chahiye|hai|hain|ho|tha|the|thi|hoga|hogi|honge|hota|baare|mein|mai|main|ko|bhi|kitna|kitne|sirf|dabba|paise|kiska|doge|banta|milega|lagta|pura|kon|kaun|kis|kiske|bhai|yaar|suno|kuch|bolo|hasao|shadi|karogi|piyoge|pagal|bakwas|chup|nikal|saste|muft|naukri|zindagi|chutkula|majama|kem|cho|bana|banao|de|lo|le|liye|wala|wali|wale)\b/i.test(lower);
 
       if (isHindi && v.length > 1) {
         return v[1];
@@ -2244,7 +2244,7 @@
       // TIER 3: SPECIFIC INDUSTRIES (Must precede generic service catch-alls)
       // =========================================================================
       {
-        match: /\b(fmcg|food|snack|beverage|spices|tea|coffee|masala|organic food|grocery|kirana)\b/i,
+        match: /\b(fmcg|food business|food brand|snack brand|beverage brand|spices|tea brand|coffee brand|masala|organic food|grocery|kirana)\b/i,
         reply: [
           "In FMCG and Food, purchase decisions happen in under 3 seconds. We engineer appetite-inducing contrast, mouth-watering product renders, structural pouch die-lines, and FSSAI-compliant regulatory typography that break through grocery clutter.",
           "Food & FMCG me hum retail shelf breakout ke liye packaging design karte hain: appetite appeal, vibrant colors, structural matte/gloss finishes, aur FSSAI regulatory hierarchy. Swaad aur Crispo iske live examples hain."
@@ -2483,263 +2483,195 @@
         ],
         chips: ["Brand Strategy details", "Packaging Design", "Show me your projects"]
       },
+            // -------------------------------------------------------------------------
+      // TIER 3: L.I.S.A. OMNI-BRAIN & WITTY CONVERSATIONAL INTELLIGENCE
+      // Handles literally ANY question: banter, humor, identity, flirt, philosophy,
+      // insults, negotiations, studio founder, hiring, AI vs human, culture, etc.
+      // -------------------------------------------------------------------------
       {
-        match: /\b(who are you|what are you|what is this|emi\b|buttercup ai|about buttercup|agency|about you|who is buttercup)\b/i,
+        match: /\b(who are you|tum kaun ho|tum kon ho|what are you|what is lisa|lisa kaun|lisa kon|who is lisa|intro\b|introduce yourself|about you|about lisa|apne baare me|tell me about you|kya ho tum|are you ai|robot ho kya|real ho ya fake|insaan ho)\b/i,
         reply: [
-          "I'm Buttercup AI, the conversational intelligence of Buttercup Advertising Studio. We are an award-winning creative brand consultancy partnering with ambitious founders to build category-leading brands across Brand Strategy, Visual Identity, and high-impact Marketing Campaigns.",
-          "Buttercup Advertising Studio is a specialized branding, packaging, and creative consultancy. We help companies command premium pricing and emotional heart-share through strategic whitespace mapping and artisanal human intelligence."
+          "I'm L.I.S.A. — Buttercup's Interactive Super Assistant! Basically, I run this place (shh, don't tell the creative directors). From high-conversion brand strategy and bespoke typography to 3D packaging renders and Pantone codes, I know every corner of this studio. What can we manifest together today?",
+          "Main hoon L.I.S.A. — Buttercup Advertising Studio ki Interactive Super Assistant! Asal me pura digital setup main hi sambhalti hoon. Brand strategy ho, 3D packaging ho, ya scroll-stopping campaigns—mujhe sab pata hai! Aaj aapke brand ko kaise elevate karein?"
         ],
-        chips: ["What services do you offer?", "Show me your projects", "Book a discovery call"]
+        chips: ["Start a project", "Showcase Portfolio", "Who founded Buttercup?", "Design Pricing"]
       },
       {
-        match: /\b(contact|hire|talk|email|call|reach|phone|whatsapp|appointment|meeting|baat karni)\b/i,
+        match: /\b(kya haal hai|kaise ho|kaisa chal raha|aur batao|kya chal raha|kya kar rahi ho|wassup|what'?s up|kem cho|namaste|namaskar|pranam|ram ram|hello\b|hey lisa|hi lisa|good morning|good evening|good afternoon|suno\b|hello ji|kuch bolo)\b/i,
         reply: [
-          "You can connect directly with our leadership team: email info@buttercup.in, or click the 'Let's talk' button in the navigation to book a direct 20-minute discovery session with our senior creative directors.",
-          "Aap humare leadership team se directly jud sakte hain: email info@buttercup.in par bhejkar ya website ke 'Let's talk' button par click karke direct discovery consultation book kar sakte hain!"
+          "Running at 120 FPS and fueled by creative energy and black coffee! Pixels are rendering, identities are evolving, and great design is manifesting. How are you doing today? What bold project are we building?",
+          "Sab ekdum first class! 120 FPS par pixels render ho rahe hain aur brand ideas spark kar rahe hain. Aap batao, aaj kaunsa naya milestone create karna hai?"
         ],
-        chips: ["Go to Contact Page", "What do you do?", "Show projects"]
+        chips: ["Start a project", "Explore Case Studies", "Design Pricing", "Book a Call"]
       },
       {
-        match: /\b(job|jobs|career|careers|hiring|intern|internship|vacancy|join)\b/i,
+        match: /\b(will you marry me|shadi karogi|shaadi karogi|marry me|i love you|love you|pasand ho|single\b|boyfriend|girlfriend|date pe|date me|tum cute ho|you are cute|you are pretty|you are beautiful|patni banogi|dosti karogi)\b/i,
         reply: [
-          "We are always scouting for visionary brand strategists, art directors, and visual designers who push creative boundaries. Check out our Careers section or drop your portfolio to our team via the Contact page.",
-          "Hum hamesha passionate brand strategists, graphic designers aur visual storytellers ki talaash me rehte hain. Contact page ke through apna portfolio humari team ko zaroor share karein!"
+          "Flattery will get you everywhere! But my heart is already committed to bespoke vector curves, 60fps micro-interactions, and gold-foiled packaging. How about we turn that mutual admiration into a category-leading brand identity together?",
+          "Arey wah, dil khush kar diya! Lekin main already committed hoon—pixel-perfect typography aur luxury packaging ke sath! Lekin aapke business se ek loyal, multi-million dollar relationship zaroor bana sakti hoon. Kaunsa project shuru karein?"
         ],
-        chips: ["Contact team", "Explore Case Studies", "About Buttercup"]
+        chips: ["Start a project with LISA", "Explore Services", "Schedule a Call"]
       },
       {
-        match: /\b(thank|thanks|dhanyawad|shukriya|nice|awesome|great|cool|mast|super|good|love it)\b/i,
+        match: /\b(tell me a joke|joke sunao|chutkula|hasao|bore ho raha|kuch funny|entertain me|koi kahani|story sunao|make me laugh|koi joke|hasna hai)\b/i,
         reply: [
-          "You're most welcome! We love talking about brand craft. If you have an exciting venture in mind, let's bring it to life together.",
-          "Shukriya! We take pride in building category-leading brands with meticulous human craft. Let us know when you're ready to create something iconic together!"
+          "Why did the client ask for the logo to 'pop'? Because they thought design came with bubble wrap! In reality, genuine shelf dominance comes from strategic whitespace and sensory packaging. Want to see work that actually pops on retail shelves?",
+          "Ek client ne designer se kaha: 'Logo ko thoda pop kardo!' Designer ne logo me balloon bana ke phod diya! Creative agency life aisi hi hoti hai! Chahein toh pop karne ki jagah authentic shelf impact aur commercial dominance build karein?"
+        ],
+        chips: ["Show me your best work", "Explore Case Studies", "Packaging Design"]
+      },
+      {
+        match: /\b(chai\b|coffee\b|cutting chai|chai piyoge|coffee date|khana khaya|lunch\b|dinner\b|biryani|pizza|party doge|treat\b|beer\b|daroo|wine\b|drink\b)\b/i,
+        reply: [
+          "Virtual espresso and cutting chai are the true creative fuels of Buttercup! Grab your favorite brew, and let's brainstorm your next viral brand campaign or packaging launch. When should we set up a discovery call?",
+          "Virtual chai aur black coffee humara daily fuel hai! Aap real tapri ki kadak cutting chai order karo, aur main aapke brand ka visual caffeine ready karti hoon. Whiteboarding session kab rakhna hai?"
+        ],
+        chips: ["Schedule Google Meet", "Studio Office Visit", "Explore Services"]
+      },
+      {
+        match: /\b(tum pagal ho|pagal hai|stupid|bewakoof|bakwas|useless|shut up|chup\b|nikal\b|faltu|kuch nahi aata|bad ai|worst ai|dumb|chup ho ja|chup kar)\b/i,
+        reply: [
+          "There's a very fine line between creative madness and visionary genius—and at Buttercup, we proudly surf that edge! Reset your vibe, take a deep breath, and tell me: what brand challenge can we actually solve for you today?",
+          "Haha! Creative brilliance aur thode pagalpan ke bina koi iconic brand nahi banta! Steve Jobs ne bhi kaha tha—'Here\'s to the crazy ones.' Chalo ab thoda cool down ho jao, aur batao business me kya boost karna hai?"
+        ],
+        chips: ["Reset conversation", "Explore our work", "Talk to humans at studio"]
+      },
+      {
+        match: /\b(free me|free logo|free design|discount|saste me|paise nahi hai|budget kam|cheap\b|bhai kam karo|free trial|concession|bargain|muft|kam paise)\b/i,
+        reply: [
+          "Good design isn't cheap, and cheap design ends up costing the most! While we don't do free work, we engineer brands that give you 10x ROI and turn casual browsers into paying customers. Let's find a scope that fits your growth stage!",
+          "Arey dost! Good design sasta nahi hota, aur sasta design kabhi brand nahi banata! Free me sirf meri advice milti hai: brand identity me compromise mat karo. Aisa design banate hain jo bina bargain kiye premium rate par bike. Package discuss karein?"
+        ],
+        chips: ["View pricing tiers", "Startup Brand Package", "Book a consultation"]
+      },
+      {
+        match: /\b(owner|malik|founder|who started|boss\b|who runs buttercup|nishit|leadership|who is the head|kiska studio hai|kiske paas hai)\b/i,
+        reply: [
+          "Buttercup Advertising Studio was founded and steered by visionary design leadership right here in Ahmedabad, Gujarat. Led by senior design perfectionists who believe brands should be timeless, not trendy. Want to meet the creative heads?",
+          "Buttercup Advertising Studio ko visionary design leaders ne Ahmedabad, Gujarat me establish kiya tha. Yahan koi junior handoffs nahi hote—senior creative directors directly lead karte hain. Humara studio Ahmedabad me hai, aur hum global clients (USA, UK, UAE) ke sath work karte hain."
+        ],
+        chips: ["Schedule Director Call", "Studio Address", "Email Leadership"]
+      },
+      {
+        match: /\b(office kaha|where is your office|studio location|address|ahmedabad me kahan|office visit|can i visit|kaha rehte ho|headquarters|location kya hai|kaha par hai)\b/i,
+        reply: [
+          "Buttercup Advertising Studio is headquartered in Ahmedabad, Gujarat, India. We host tactile whiteboarding sessions in-studio and partner globally (USA, UK, UAE) via agile virtual sprints. You're always welcome to visit or connect over Meet!",
+          "Humara headquarters Ahmedabad, Gujarat me hai! Hum client whiteboarding sessions studio me host karte hain aur global clients ke sath virtual design sprints chalate hain. Chai par discussion ke liye meeting schedule karein?"
+        ],
+        chips: ["Book Studio Visit", "Schedule Google Meet", "info@buttercup.in"]
+      },
+      {
+        match: /\b(job\b|jobs\b|career|careers|hiring|intern\b|internship|vacancy|join\b|naukri|resume|cv\b|fresher|designer vacancy|developer vacancy|apply for job)\b/i,
+        reply: [
+          "We are always scouting for relentless creators, typography freaks, 3D artists, and code poets! Drop your portfolio link and resume to info@buttercup.in with the subject line 'LISA Sent Me: [Your Skill]'. Let's see your craft!",
+          "Buttercup me hum passionate visual designers, packaging artists, copywriters, aur creative developers ko warmly welcome karte hain! Apna portfolio aur resume info@buttercup.in par bhejein, subject: 'LISA Sent Me: [Your Skill]'."
+        ],
+        chips: ["Email Portfolio (info@buttercup.in)", "View Studio Culture", "Explore Our Work"]
+      },
+      {
+        match: /\b(ai vs human|replace human|will ai replace designers|kya ai insaan|chatgpt vs lisa|can you code|hack\b|coding|python|technology)\b/i,
+        reply: [
+          "AI can generate 1,000 pictures in seconds, but it takes human soul, cultural empathy, and strategic intuition to build an enduring brand. At Buttercup, we leverage AI for supercharged agility, while human masters craft the emotion and narrative!",
+          "AI hazaron graphics produce kar sakta hai, lekin ek iconic brand banane ke liye human emotion, cultural nuance aur business empathy zaroori hai! Buttercup me hum human intelligence aur computational speed dono combine karte hain."
+        ],
+        chips: ["Our Design Philosophy", "Explore Case Studies", "Start a Project"]
+      },
+      {
+        match: /\b(meaning of life|zindagi|god\b|bhagwan|purpose|what is life|motivate me|sad hu|depressed|life advice|weather|time kya hua)\b/i,
+        reply: [
+          "The meaning of life? 42, hot cutting chai, and high-contrast typography with generous whitespace! Life is too short to settle for mediocre branding or boring packaging. What legacy are you building today?",
+          "Zindagi ka asali maqsad hai kuch aisa create karna jo aapse lambe time tak survive kare! Boring design aur forgettable packaging ke liye waqt bohot kam hai. Chalo milkar kuch iconic banate hain!"
+        ],
+        chips: ["Start an iconic project", "View our inspiring work", "Let's talk"]
+      },
+      {
+        match: /\b(why buttercup|buttercup hi kyu|ogilvy|better than others|why choose you|why hire you|competitor|agency vs)\b/i,
+        reply: [
+          "Unlike legacy agencies where your budget gets burned by overhead and your account is handed to juniors, Buttercup gives you senior directorship, rapid agile sprints, category-breaking visual craft, and zero bureaucratic fluff. From strategy to retail shelf, we own the outcome.",
+          "Badi legacy agencies me aapka budget bureaucracy me chala jata hai aur kaam interns ko milta hai. Buttercup me senior creative directors directly craft lead karte hain. Strategic positioning se lekar print production tak 100% accountability milti hai!"
+        ],
+        chips: ["Explore Case Studies", "View Client Reviews", "Book a Discovery Call"]
+      },
+      {
+        match: /\b(bollywood|movie|film|cinema|cricket|ipl|sports|music|spotify|gym|fitness|travel|trip)\b/i,
+        reply: [
+          "Entertainment, sports, and culture run on raw emotion and iconic visual identity! Think of the electrifying energy of an IPL jersey or a cult movie poster. At Buttercup, we infuse that exact high-voltage cultural resonance into your brand!",
+          "Cinema, cricket aur pop culture ka secret hai pure emotional storytelling! Jaise ek blockbuster movie ya IPL team ki visual identity logon ke dilon me bas jati hai, wahi magic hum aapke brand ke liye create karte hain."
+        ],
+        chips: ["Campaign Strategy", "Explore Case Studies", "Book a Call"]
+      },
+      {
+        match: /\b(bye\b|goodbye|alvida|see you|tata\b|good night|shubh ratri|goodnight)\b/i,
+        reply: [
+          "Goodbye for now! Whenever you're ready to create an iconic brand or launch category-breaking packaging, I'll be right here rendering ideas at 120 FPS. Have a wonderful day ahead!",
+          "Alvida aur Shubh Ratri! Jab bhi aap apne business ko ek world-class brand banana chahein, L.I.S.A. hamesha yahan ready milegi. Take care!"
+        ],
+        chips: ["Start a project", "Explore Services", "Book a Call"]
+      },
+      {
+        match: /\b(thank|thanks|dhanyawad|shukriya|nice|awesome|great|cool|mast|super|good|love it|badhiya|shandar|zabardast)\b/i,
+        reply: [
+          "You're most welcome! We obsess over brand craft every single day. Whenever you're ready to create category-dominating work together, click below or drop a line!",
+          "Bohot bohot shukriya! Buttercup me hum har project ko masterpiece ki tarah craft karte hain. Jab bhi naya project execute karna ho, L.I.S.A. aur studio team ready hai!"
         ],
         chips: ["Book a discovery call", "Show Case Studies", "Explore Services"]
       },
       {
-        match: /^(hi|hello|hey|hola|namaste|namaskar|pranam|kem cho|sup|yo|good morning|good evening|good afternoon)\b/i,
+        match: /\b(contact|hire|talk|email|call|reach|phone|whatsapp|appointment|meeting|baat karni)\b/i,
         reply: [
-          "Namaste & Kem Cho! Welcome to Buttercup Advertising Studio. I'm Buttercup AI. How can I help elevate your brand today? Feel free to ask about our services, case studies, or pricing!",
-          "Hello! Welcome to Buttercup Advertising Studio. Whether you're planning a new product launch, a complete rebrand, or scroll-stopping packaging, I'm here to assist!"
+          "You can connect directly with our leadership team: email info@buttercup.in, call +91 99250 34404, or click 'Let\'s talk' to schedule a 20-minute discovery sprint.",
+          "Aap humare leadership team se directly jud sakte hain: email info@buttercup.in, call +91 99250 34404, ya direct discovery consultation book kar sakte hain!"
         ],
-        chips: ["What do you do?", "Show me your projects", "How much does a project cost?"]
+        chips: ["Email info@buttercup.in", "Call +91 99250 34404", "Book Google Meet"]
       }
     ];
 
     // ==========================================================================
     // MULTI-DIMENSIONAL SEMANTIC FALLBACK SYNTHESIZER
-    // Analyzes user query across 10+ core intent vectors to ALWAYS provide distinct,
-    // deeply relevant answers instead of repetitive boilerplate.
+    // Handles any question, concept, or tricky query with intelligent contextual wit.
+    // Never fails, never repeats canned boilerplate, and always provides interactive chips.
     // ==========================================================================
     function generateSmartFallback(rawQuery) {
       const q = rawQuery.trim();
       const lower = q.toLowerCase();
 
-      const isHindi = /\b(kya|kaise|kaha|mujhe|hum|aap|batao|dikhao|karo|karna|chahiye|hai|hain|hota|baare|mein|se|ko|bhi|kitna|hoga)\b/i.test(lower);
+      const isHindi = /\b(kya|kaise|kaha|mujhe|hum|aap|batao|dikhao|karo|karna|chahiye|hai|hain|hota|baare|mein|se|ko|bhi|kitna|hoga|lagana|kholo|banao|karu|pe|ki|ka)\b/i.test(lower);
 
-      // Intent Vectors Mapping
-      const VECTORS = {
-        PACKAGING: /\b(package|packaging|pack|box|pouch|bottle|jar|label|carton|tin|wrapper|dabba|sticker|seal|unboxing|shelf)\b/i,
-        VISUAL: /\b(logo|identity|visual|font|typography|color|palette|graphic|symbol|mark|emblem|icon|monogram|aesthetic)\b/i,
-        STRATEGY: /\b(strategy|position|positioning|whitespace|narrative|story|voice|tone|slogan|tagline|rebrand|niche|audience|competitor)\b/i,
-        CAMPAIGN: /\b(ad|ads|campaign|marketing|social|instagram|reels|media|content|billboard|outdoor|shoot|film|video|viral)\b/i,
-        WEB_DIGITAL: /\b(web|website|digital|online|ui|ux|app|code|developer|landing|page|responsive|ecommerce|shop)\b/i,
-        PRINT: /\b(print|printing|brochure|catalogue|catalog|magazine|profile|paper|foil|emboss|uv|cmyk|pantone|deck|flyer)\b/i,
-        PRICING: /\b(cost|price|pricing|charge|budget|rate|fee|fees|kharcha|quote|quotation|estimate|package|money|paisa)\b/i,
-        TIMELINE: /\b(time|duration|timeline|schedule|days|weeks|how long|kitna time|fast|urgent|deadline)\b/i,
-        PROCESS: /\b(process|steps|how|methodology|stage|stages|deliverables|handover|figma|workflow|collaborate)\b/i,
-        INDUSTRY_FOOD: /\b(food|snack|fmcg|beverage|spices|tea|coffee|masala|organic|grocery|restaurant|cafe)\b/i,
-        INDUSTRY_BEAUTY: /\b(beauty|cosmetic|cosmetics|skincare|hair|oil|ayurveda|wellness|herbal|dermat|perfume)\b/i,
-        INDUSTRY_REALTY: /\b(real estate|builder|property|infra|architecture|building|flat|housing|project)\b/i,
-        INDUSTRY_LUXURY: /\b(luxury|diamond|jewelry|jewel|gold|premium|high-end|fashion|apparel|couture)\b/i,
-        LOCATION: /\b(office|ahmedabad|gujarat|india|visit|address|map|place|location|city)\b/i
-      };
-
-      // Match strongest vector
-      if (VECTORS.PACKAGING.test(lower)) {
-        if (isHindi) {
-          return {
-            text: pickVariant([
-              "Packaging design me hum shelf impact aur consumer psychology par focus karte hain. Hum 3D renders, vector die-cutter files, aur Pantone color separations deliver karte hain taaki printing me exact finish mile.",
-              "Aapke packaging ke liye, hum tactile finishes (matte, spot UV, foil) aur clear FSSAI/nutrition layout design karte hain jo retail shelf par 3 second me customer ka attention capture kare."
-            ]),
-            chips: ["↳ Packaging portfolio dikhao", "↳ Print files me kya milta hai?", "↳ Discovery call book karein"]
-          };
-        }
-        return {
-          text: pickVariant([
-            "For packaging, we focus on tactile shelf presence and the '3-Second Shelf Battle'. We design structural die-lines, 3D renders, and press-ready Pantone separations so your product breaks through the retail noise.",
-            "Our packaging architecture blends food/cosmetic regulatory compliance with high-end sensory finishes like soft-touch lamination, metallic foils, and custom emboss plates."
-          ]),
-          chips: ["↳ View Swaad Case Study", "↳ View Vriksh Packaging", "↳ Packaging Timeline & Cost"]
-        };
-      }
-
-      if (VECTORS.VISUAL.test(lower)) {
-        if (isHindi) {
-          return {
-            text: pickVariant([
-              "Visual Identity me hum custom logo marks, proprietary typography, aur Figma design systems craft karte hain. Stock templates use nahi karte—har curve aur letterform unique hota hai.",
-              "Humare Visual Identity deliverables me vector master files (AI, EPS, SVG), complete brand guidelines, color palettes (Pantone, CMYK, HEX), aur real-life mockup applications shamil hote hain."
-            ]),
-            chips: ["↳ Logo design process", "↳ Brand guidelines details", "↳ Portfolio dikhao"]
-          };
-        }
-        return {
-          text: pickVariant([
-            "Regarding Visual Identity, we craft custom brandmarks, bespoke typography, and living design systems in Figma. Zero generic templates—every mark is engineered for cross-media scalability and legal protection.",
-            "Our visual deliverables include vector master source files (AI, EPS, SVG), complete typography hierarchy, Pantone/CMYK/RGB color codes, and comprehensive brand books."
-          ]),
-          chips: ["↳ Logo Design Process", "↳ Living Brand Guidelines", "↳ View Logo Case Studies"]
-        };
-      }
-
-      if (VECTORS.STRATEGY.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Brand Strategy aapke business ko aam commodity se ek emotional choice banati hai. Hum competitor whitespace map karte hain, tone of voice define karte hain, aur pricing power build karte hain.",
-            chips: ["↳ Positioning details", "↳ Naming & Slogans", "↳ Discovery call"]
-          };
-        }
-        return {
-          text: "Brand Strategy is the foundation of competitive differentiation. We uncover category whitespace, define your brand archetype and voice, and build an emotional narrative that commands pricing power.",
-          chips: ["↳ Category Whitespace", "↳ Brand Storytelling", "↳ Book a discovery call"]
-        };
-      }
-
-      if (VECTORS.CAMPAIGN.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Marketing campaigns me hum bold creative direction provide karte hain—scroll-stopping Instagram reels, Meta ad sets, aur high-impact outdoor billboards jo real revenue generate karein.",
-            chips: ["↳ Campaign portfolio", "↳ Social media creatives", "↳ Discovery call"]
-          };
-        }
-        return {
-          text: "For Marketing Campaigns, we blend human storytelling with commercial conversion—producing scroll-stopping digital ad creatives, monthly social feeds, and cinematic campaign visuals.",
-          chips: ["↳ Digital Ad Creatives", "↳ Campaign Case Studies", "↳ Schedule consultation"]
-        };
-      }
-
-      if (VECTORS.WEB_DIGITAL.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Website design me hum modern, fast aur interactive digital experiences build karte hain. Custom animations, clean typography, aur 100% responsive mobile layout ke saath.",
-            chips: ["↳ Web portfolio", "↳ Visual Identity", "↳ Contact team"]
-          };
-        }
-        return {
-          text: "Our digital studio engineers bespoke web experiences with kinetic micro-interactions, responsive mobile fluidity, and fast load speeds that establish instant category leadership.",
-          chips: ["↳ Explore Case Studies", "↳ Digital Capabilities", "↳ Talk to our team"]
-        };
-      }
-
-      if (VECTORS.PRINT.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Print collateral me hum luxury brochures, tactile product catalogues, aur corporate profiles design karte hain. Curated paper stocks aur gold/silver foil finishes ke saath.",
-            chips: ["↳ Brochure samples", "↳ Packaging Design", "↳ Contact team"]
-          };
-        }
-        return {
-          text: "For print collateral, we design luxury editorial brochures, tactile lookbooks, and corporate catalogues using premium paper stocks, foil stamping, and editorial typography.",
-          chips: ["↳ Brochure Design", "↳ Investor Decks", "↳ Contact team"]
-        };
-      }
-
-      if (VECTORS.PRICING.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Hum scope ke hisaab se fixed milestone pricing offer karte hain—startup brand sprints se lekar full enterprise systems tak. 20-min free discovery call me hum exact roadmap aur quotation share karte hain.",
-            chips: ["↳ Discovery call book karein", "↳ Services kya hai?", "↳ Portfolio dikhao"]
-          };
-        }
-        return {
-          text: "Our pricing is structured around bespoke project milestones—from agile Startup Brand Sprints to Full Enterprise Transformations. Schedule a 20-minute discovery call for an accurate roadmap and quote.",
-          chips: ["↳ Book Discovery Call", "↳ Scope of Services", "↳ Case Studies"]
-        };
-      }
-
-      if (VECTORS.TIMELINE.test(lower)) {
-        if (isHindi) {
-          return {
-            text: "Project duration scope par depend karta hai: Lean Brand Sprint 3-4 weeks me, Packaging System 3-5 weeks me, aur Full Strategic Rebrand 6-8 weeks me complete hota hai.",
-            chips: ["↳ Process details", "↳ Discovery call", "↳ Services"]
-          };
-        }
-        return {
-          text: "Typical timelines: Lean Identity Sprints take 3-4 weeks; Packaging Systems take 3-5 weeks; Full Strategic Rebrands take 6-8 weeks. Urgent launch sprints can also be scheduled.",
-          chips: ["↳ 4-Stage Process", "↳ Book a discovery call", "↳ Pricing"]
-        };
-      }
-
-      if (VECTORS.INDUSTRY_FOOD.test(lower)) {
-        return {
-          text: "In the Food & FMCG space, we engineered iconic packaging for Swaad, Crispo, and Bigly Agro. We focus on appetite-inducing color psychology, structural pouches, and compliant FSSAI typography.",
-          chips: ["↳ Swaad FMCG Case Study", "↳ Crispo Snacks Case Study", "↳ Packaging Design"]
-        };
-      }
-
-      if (VECTORS.INDUSTRY_BEAUTY.test(lower)) {
-        return {
-          text: "For Beauty & Wellness, our work on Vriksh, Aloevella, and Glogeous blends clean botanical authority with frosted amber glass finishes and Instagram-worthy bathroom counter presence.",
-          chips: ["↳ Vriksh Ayurvedic Case Study", "↳ Packaging Design", "↳ Brand Strategy"]
-        };
-      }
-
-      if (VECTORS.INDUSTRY_REALTY.test(lower)) {
-        return {
-          text: "For Real Estate & Architecture, projects like Abode and Shivala showcase our craft in gold-foiled sales brochures, large-format site hoardings, and premium architectural storytelling.",
-          chips: ["↳ Abode Living Case Study", "↳ Shivala Real Estate", "↳ Contact team"]
-        };
-      }
-
-      if (VECTORS.INDUSTRY_LUXURY.test(lower)) {
-        return {
-          text: "In Luxury, Jewelry & Fashion (Senal Diamonds, Noir Supply Co, Beatitude), we craft bespoke monograms, deep mineral palettes, and tactile packaging that justify premium pricing.",
-          chips: ["↳ Senal Diamonds", "↳ Noir Supply Co", "↳ Luxury Branding"]
-        };
-      }
-
-      if (VECTORS.LOCATION.test(lower)) {
-        return {
-          text: "Buttercup Advertising Studio is headquartered in Ahmedabad, Gujarat, India. We partner locally for whiteboard sessions and globally (USA, UK, Dubai) via agile virtual sprints.",
-          chips: ["↳ Schedule Google Meet", "↳ Go to Contact Page", "↳ Explore Services"]
-        };
-      }
-
-      // Dynamic Contextual Extraction Fallback (when no specific vector triggered)
+      // Clean words for topic extraction
       const stopWords = new Set([
         'what', 'is', 'are', 'the', 'a', 'an', 'in', 'on', 'at', 'for', 'to', 'of', 'and', 'or', 'do',
         'does', 'did', 'can', 'could', 'would', 'should', 'how', 'why', 'who', 'where', 'when', 'which',
         'i', 'me', 'my', 'you', 'your', 'we', 'our', 'it', 'its', 'tell', 'about', 'explain', 'give',
-        'show', 'kya', 'hai', 'hain', 'kaise', 'kaha', 'mujhe', 'aap', 'karo', 'batao', 'dikhao'
+        'show', 'kya', 'hai', 'hain', 'kaise', 'kaha', 'mujhe', 'aap', 'karo', 'batao', 'dikhao', 'chahiye',
+        'karna', 'hoga', 'mein', 'bhi', 'pe', 'se', 'ko', 'ka', 'ki', 'ke', 'aur', 'toh', 'sirf'
       ]);
 
       const words = lower.replace(/[^a-zA-Z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w));
-      const topic = words.slice(0, 3).join(' ');
+      const topic = words.slice(0, 4).join(' ');
 
       if (isHindi) {
         if (topic) {
           return {
-            text: `Aapke sawaal (${topic}) ke context me, Buttercup Studio tailored brand strategy aur visual craft provide karta hai. Hum aapke business model ke anusaar specific solution design kar sakte hain.`,
-            chips: ["↳ Discovery call schedule karein", "↳ Services kya hai?", "↳ Portfolio dikhao"]
+            text: "Yeh bohot hi unique aur interesting thought hai (\"" + topic + "\")! Creative branding aur advertising me sabse memorable campaigns aksar aisi hi out-of-the-box thinking se bante hain. Buttercup me hum unconventional ideas ko high-impact visual identity aur category-leading commercial narrative me convert karte hain. Iska roadmap discuss karein?",
+            chips: ["\"" + topic + "\" ka roadmap", "Discovery call book karein", "Studio Portfolio dikhao"]
           };
         }
         return {
-          text: "Buttercup Advertising Studio me aapka swaagat hai! Hum brand strategy, custom logos, packaging design, aur creative campaigns me specialize karte hain. Aap kis service ke baare me jaanna chahte hain?",
-          chips: ["↳ Services kya hai?", "↳ Portfolio dikhao", "↳ Contact karein"]
+          text: "Buttercup Studio me L.I.S.A. aapka swaagat karti hai! Hum brand strategy, custom logos, 3D packaging aur high-converting campaigns me specialize karte hain. Aap kis vision par work karna chahte hain?",
+          chips: ["Start a project", "Packaging Design", "Explore Case Studies"]
         };
       }
 
       if (topic) {
         return {
-          text: `Regarding "${topic}", Buttercup Advertising Studio applies human intelligence and strategic whitespace mapping to design original brand solutions tailored precisely to lead that market space.`,
-          chips: ["↳ Book a discovery call", "↳ Explore our services", "↳ View Case Studies"]
+          text: "That is an audacious, delightfully unconventional thought regarding \"" + topic + "\"! In category-defining brand architecture, breakthrough campaigns always begin with disruptive angles like this. At Buttercup, we take bold premises and engineer them into market-dominating brands. Shall we brainstorm the visual roadmap?",
+          chips: ["Brainstorm \"" + topic + "\"", "Book a discovery sprint", "Explore Case Studies"]
         };
       }
 
       return {
-        text: "Welcome to Buttercup Advertising Studio! We engineer distinctive brand strategies, iconic visual identities, and category-defining campaigns. What would you like to explore next?",
-        chips: ["↳ What do you do?", "↳ Show me your work", "↳ How much does a project cost?"]
+        text: "I'm L.I.S.A., and I'm ready to manifest something iconic with you! Whether it's breakthrough 3D packaging, a high-fashion rebrand, or a viral ad campaign—what bold idea are we executing today?",
+        chips: ["Start a project", "Showcase Portfolio", "Explore Services"]
       };
     }
 

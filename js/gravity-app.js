@@ -103,9 +103,11 @@
 
   var ORBIT_PERIOD_SEC = 3.4;
   function frame(now) {
-    var theta = ((now / 1000) / ORBIT_PERIOD_SEC) * 2 * Math.PI;
-    dot.setAttribute('cx', midX + radius * Math.cos(theta));
-    dot.setAttribute('cy', midY + radius * Math.sin(theta));
+    if (window.scrollY < 220) {
+      var theta = ((now / 1000) / ORBIT_PERIOD_SEC) * 2 * Math.PI;
+      dot.setAttribute('cx', midX + radius * Math.cos(theta));
+      dot.setAttribute('cy', midY + radius * Math.sin(theta));
+    }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

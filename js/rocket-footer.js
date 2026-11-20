@@ -142,26 +142,13 @@
       }
     }
 
-    if ('IntersectionObserver' in window && footerEl) {
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          isVisible = entry.isIntersecting;
-          if (isVisible) {
-            playVideos();
-          } else {
-            video.pause();
-            if (bgVideo) bgVideo.pause();
-          }
-        });
-      }, { threshold: 0.01, rootMargin: '400px 0px' });
-      observer.observe(footerEl);
-    } else {
-      isVisible = true;
-      playVideos();
-    }
-
+    var footerRafId = null;
     function renderLoop() {
-      if (isVisible && video.readyState >= 2) {
+      if (!isVisible) {
+        footerRafId = null;
+        return;
+      }
+      if (video.readyState >= 2) {
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -169,9 +156,38 @@
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
-      requestAnimationFrame(renderLoop);
+      footerRafId = requestAnimationFrame(renderLoop);
     }
-    requestAnimationFrame(renderLoop);
+
+    function startFooterLoop() {
+      if (!footerRafId && isVisible) {
+        footerRafId = requestAnimationFrame(renderLoop);
+      }
+    }
+
+    if ('IntersectionObserver' in window && footerEl) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            playVideos();
+            startFooterLoop();
+          } else {
+            video.pause();
+            if (bgVideo) bgVideo.pause();
+            if (footerRafId) {
+              cancelAnimationFrame(footerRafId);
+              footerRafId = null;
+            }
+          }
+        });
+      }, { threshold: 0.01, rootMargin: '400px 0px' });
+      observer.observe(footerEl);
+    } else {
+      isVisible = true;
+      playVideos();
+      startFooterLoop();
+    }
   }
 
   function setupScrollTop() {

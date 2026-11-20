@@ -810,11 +810,33 @@
     //   requestAnimationFrame(update);
     // }
     
+    let isSimulationRunning = false;
+    let lastInteractionTime = Date.now();
+    const IDLE_TIMEOUT_MS = 2500;
+
+    function wakeUpSimulation() {
+      lastInteractionTime = Date.now();
+      if (!isSimulationRunning && !document.hidden) {
+        isSimulationRunning = true;
+        lastUpdateTime = Date.now();
+        requestAnimationFrame(update);
+      }
+    }
+
     function update() {
       if (document.hidden) {
-        requestAnimationFrame(update);
+        isSimulationRunning = false;
         return;
       }
+      const now = Date.now();
+      const hasActivePointers = pointers.some(p => p.moved || p.down);
+      const hasSplats = splatStack.length > 0;
+
+      if (!hasActivePointers && !hasSplats && (now - lastInteractionTime > IDLE_TIMEOUT_MS)) {
+        isSimulationRunning = false;
+        return;
+      }
+
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
@@ -993,7 +1015,7 @@
       let posY = scaleByPixelRatio(e.clientY);
       let color = generateColor();
     
-      update();
+      wakeUpSimulation();
       updatePointerMoveData(pointer, posX, posY, color);
     
       // Remove this event listener after the first mousemove event
@@ -1017,7 +1039,7 @@
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
     
-        update();
+        wakeUpSimulation();
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
       }
     
@@ -1057,8 +1079,15 @@
         updatePointerUpData(pointer);
       }
     });
+
+    window.addEventListener("scroll", wakeUpSimulation, { passive: true });
+    window.addEventListener("wheel", wakeUpSimulation, { passive: true });
+    document.addEventListener("visibilitychange", function() {
+      if (!document.hidden) wakeUpSimulation();
+    });
     
     function updatePointerDownData(pointer, id, posX, posY) {
+      wakeUpSimulation();
       pointer.id = id;
       pointer.down = true;
       pointer.moved = false;
@@ -1072,6 +1101,7 @@
     }
     
     function updatePointerMoveData(pointer, posX, posY, color) {
+      wakeUpSimulation();
       // pointer.down = false;
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
@@ -1084,6 +1114,7 @@
     }
     
     function updatePointerUpData(pointer) {
+      wakeUpSimulation();
       pointer.down = false;
     }
     
