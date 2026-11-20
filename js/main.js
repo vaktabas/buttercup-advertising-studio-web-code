@@ -338,8 +338,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const holdDuration = 0.5;
         const totalTimelineDuration = enterPhaseEndTime + holdDuration;
 
-        // Smooth scroll pin distance (~44vh per card + slight hold, total ~350vh)
-        const scrollDistanceVh = Math.round((totalScrollCards - 1) * 44 + 40);
+        // Smooth scroll pin distance (~44vh per card on desktop; compact on mobile to eliminate excessive white gap)
+        const isMobileScreen = window.innerWidth <= 768;
+        const scrollDistanceVh = isMobileScreen
+          ? Math.round((totalScrollCards - 1) * 22 + 15)
+          : Math.round((totalScrollCards - 1) * 44 + 40);
 
         const masterTL = gsap.timeline({
           scrollTrigger: {

@@ -1534,7 +1534,7 @@
       if (lokal.length) dann(lokal);
       return;
     }
-    fetch('images/gravity/projekte.json?v=8', { cache: 'no-cache' })
+    fetch('images/gravity/projekte.json?v=9', { cache: 'no-cache' })
       .then(function (a) {
         if (!a.ok) throw new Error('HTTP ' + a.status);
         return a.json();
