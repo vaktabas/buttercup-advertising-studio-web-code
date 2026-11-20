@@ -986,101 +986,121 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // GLOBAL FLOATING LUXURY WHATSAPP QUICK-INQUIRY BUTTON
+  // DYNAMIC 12-SECOND WHATSAPP POPUP NOTIFICATION (No permanent static button)
+  // Pops up smoothly every 12s with "Chat on WhatsApp", stays for 5.5s, then vanishes
   // =========================================================================
-  function initGlobalFloatingWhatsApp() {
-    if (document.getElementById('btrFloatingWa')) return;
+  function initDynamic12sWhatsAppPopup() {
+    // Remove any legacy static button if present
+    const oldStatic = document.getElementById('btrFloatingWa');
+    if (oldStatic) oldStatic.remove();
 
-    const waBtn = document.createElement('a');
-    waBtn.id = 'btrFloatingWa';
-    waBtn.className = 'btr-floating-wa';
-    waBtn.href = 'https://wa.me/919925034404?text=' + encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!');
-    waBtn.target = '_blank';
-    waBtn.rel = 'noopener noreferrer';
-    waBtn.setAttribute('aria-label', 'Chat on WhatsApp with Buttercup Advertising Studio');
-    waBtn.innerHTML = `
-      <div class="btr-wa-icon-wrap">
-        <span class="btr-wa-pulse-dot" aria-hidden="true"></span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/></svg>
-      </div>
-      <span class="btr-wa-text">Chat on WhatsApp</span>
-      <span class="btr-wa-tag">Fast Reply</span>
+    if (document.getElementById('btrWaToast')) return;
+
+    const toast = document.createElement('div');
+    toast.id = 'btrWaToast';
+    toast.className = 'btr-wa-toast';
+    toast.setAttribute('role', 'dialog');
+    toast.setAttribute('aria-live', 'polite');
+    toast.innerHTML = `
+      <a href="https://wa.me/919925034404?text=${encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!')}"
+         target="_blank" rel="noopener noreferrer" class="btr-wa-toast-inner" aria-label="Chat on WhatsApp with Buttercup Advertising Studio">
+        <div class="btr-wa-toast-avatar">
+          <span class="btr-wa-pulse-dot" aria-hidden="true"></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/>
+          </svg>
+        </div>
+        <div class="btr-wa-toast-body">
+          <div class="btr-wa-toast-title">Chat on WhatsApp</div>
+          <div class="btr-wa-toast-sub">Online now &bull; Fast Studio Reply</div>
+        </div>
+        <div class="btr-wa-toast-cta">
+          <span>Chat</span>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      <button class="btr-wa-toast-close" id="btrWaToastClose" aria-label="Close notification" title="Dismiss">&times;</button>
     `;
-    document.body.appendChild(waBtn);
+    document.body.appendChild(toast);
 
-    // Scroll tracking: As soon as the footer comes into view, scroll the button UPWARDS with previous content and vanish from footer completely
-    function handleFooterAvoidance() {
+    let isHovered = false;
+    let hideTimer = null;
+
+    function isFooterInView() {
       const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
       const footer = footers.length > 0 ? footers[footers.length - 1] : document.querySelector('footer');
-      if (!footer) return;
-
-      const footerRect = footer.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const overlap = viewportHeight - footerRect.top;
-
-      if (overlap > 10) {
-        // Footer is entering view: push WhatsApp button UP with previous page content and vanish
-        document.body.classList.add('is-over-footer');
-        waBtn.classList.add('is-in-footer');
-
-        const pushUp = Math.min(viewportHeight, overlap + 30);
-        waBtn.style.setProperty('--wa-push', `${pushUp}px`);
-        waBtn.style.opacity = '0';
-        waBtn.style.visibility = 'hidden';
-        waBtn.style.pointerEvents = 'none';
-      } else {
-        // On page above footer: normal visible floating state
-        document.body.classList.remove('is-over-footer');
-        waBtn.classList.remove('is-in-footer');
-        waBtn.style.setProperty('--wa-push', '0px');
-        waBtn.style.opacity = '1';
-        waBtn.style.visibility = 'visible';
-        waBtn.style.pointerEvents = 'auto';
-      }
+      if (!footer) return false;
+      const rect = footer.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top < vh - 20;
     }
 
-    let isScrollTicking = false;
-    function onScrollCheck() {
-      if (!isScrollTicking) {
-        requestAnimationFrame(() => {
-          handleFooterAvoidance();
-          isScrollTicking = false;
-        });
-        isScrollTicking = true;
-      }
-    }
+    function showPopup() {
+      if (isFooterInView()) return;
+      toast.classList.add('is-shown');
 
-    window.addEventListener('scroll', onScrollCheck, { passive: true });
-    window.addEventListener('resize', onScrollCheck, { passive: true });
-
-    // Hook to Lenis if active
-    if (window.lenis) {
-      window.lenis.on('scroll', onScrollCheck);
-    } else {
-      const checkLenisTimer = setInterval(() => {
-        if (window.lenis) {
-          window.lenis.on('scroll', onScrollCheck);
-          clearInterval(checkLenisTimer);
+      if (hideTimer) clearTimeout(hideTimer);
+      // Auto-hide after 5.5s unless hovered
+      hideTimer = setTimeout(() => {
+        if (!isHovered) {
+          hidePopup();
         }
-      }, 200);
-      setTimeout(() => clearInterval(checkLenisTimer), 3000);
+      }, 5500);
     }
 
-    // IntersectionObserver for infallible footer enter/exit detection
-    if ('IntersectionObserver' in window) {
-      const footerObserver = new IntersectionObserver((entries) => {
-        entries.forEach(() => handleFooterAvoidance());
-      }, {
-        threshold: [0, 0.02, 0.05, 0.1, 0.2, 0.5, 0.8, 1.0]
+    function hidePopup() {
+      toast.classList.remove('is-shown');
+    }
+
+    // Keep visible while user is hovering
+    toast.addEventListener('mouseenter', () => {
+      isHovered = true;
+      if (hideTimer) clearTimeout(hideTimer);
+    });
+
+    toast.addEventListener('mouseleave', () => {
+      isHovered = false;
+      if (toast.classList.contains('is-shown')) {
+        hideTimer = setTimeout(() => {
+          hidePopup();
+        }, 2500);
+      }
+    });
+
+    // Close button dismiss
+    const closeBtn = document.getElementById('btrWaToastClose');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        hidePopup();
       });
-      const footers = document.querySelectorAll('footer.rwl-footer, footer.section.is-footer, footer#contact, #contact.is-footer, footer:not(.om-fuss)');
-      footers.forEach(f => footerObserver.observe(f));
     }
 
-    handleFooterAvoidance();
+    // Hide if user scrolls into footer
+    function checkFooter() {
+      if (isFooterInView() && toast.classList.contains('is-shown')) {
+        hidePopup();
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+
+    // Every 12 seconds: pop up to engage visitor!
+    setInterval(() => {
+      if (!toast.classList.contains('is-shown') && !isFooterInView()) {
+        showPopup();
+      }
+    }, 12000);
+
+    // Initial popup after 12 seconds
+    setTimeout(() => {
+      if (!isFooterInView()) {
+        showPopup();
+      }
+    }, 12000);
   }
 
-  initGlobalFloatingWhatsApp();
+  initDynamic12sWhatsAppPopup();
 
   // =========================================================================
   // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in)
