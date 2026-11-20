@@ -57,6 +57,7 @@
   # API Endpoints
   RewriteRule ^api/save-content/?$ api/save-content.php [QSA,L]
   RewriteRule ^api/reset-content/?$ api/reset-content.php [QSA,L]
+  RewriteRule ^api/track-visitor/?$ api/track-visitor.php [QSA,L]
 </IfModule>
 
 # Allow access to .well-known directory
