@@ -64,8 +64,8 @@
   RewriteRule ^\.well-known/ - [L]
 </IfModule>
 
-# Prevent CDN caching on dynamic customizations and API
-<FilesMatch "\.(json|php)$">
+# Prevent CDN caching on dynamic customizations, sitemaps, and API
+<FilesMatch "\.(xml|txt|json|php)$">
   Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
   Header set Expires "0"
