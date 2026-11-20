@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cardWrap && totalScrollCards > 0 && hasST) {
         ScrollTrigger.matchMedia({
           // Desktop screens: 3D stacking scroll animation with pin
-          "(min-width: 769px)": function () {
+          "(min-width: 992px)": function () {
             scrollCards.forEach((card, index) => {
               gsap.set(card, {
                 transformPerspective: 1000,
@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
 
           // Mobile screens: clean, responsive horizontal swipe without scroll-jacking, zero glitch, zero blank space
-          "(max-width: 768px)": function () {
+          "(max-width: 991px)": function () {
             scrollCards.forEach((card) => {
               gsap.set(card, { clearProps: "all" });
             });
@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursorWrp = document.querySelector(".project-cursor-wrp");
   const cursorFollower = document.querySelector(".view-project-follow-cursor");
 
-  if (cursorWrp && cursorFollower) {
+  if (cursorWrp && cursorFollower && !isMobileOrTouch) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let currentX = mouseX;
