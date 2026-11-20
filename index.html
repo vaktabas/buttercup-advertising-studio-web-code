@@ -1733,15 +1733,13 @@ a,
     <footer id="contact" class="section is-footer fy-footer rwl-footer" aria-label="Footer">
       <!-- Ambient Moving Light Video Background -->
       <div class="rwl-bg-light-wrap" aria-hidden="true">
-        <video id="rwlBgLightVideo" class="rwl-bg-light-video" data-data-src="videos/rocket-bg-light.mp4" preload="none" loop muted
-          playsinline preload="none"></video>
+        <video id="rwlBgLightVideo" class="rwl-bg-light-video" src="videos/rocket-bg-light.mp4" data-src="videos/rocket-bg-light.mp4" loop muted playsinline preload="metadata"></video>
       </div>
 
       <!-- Center Floating 3D Sculpture WebGL Canvas Layer (Full HD 1080p) -->
       <div class="rwl-sculpture-wrap" aria-hidden="true">
         <canvas id="rwlSculptureCanvas" class="rwl-sculpture-canvas" width="1440" height="1440"></canvas>
-        <video id="rwlSculptureVideo" class="rwl-hidden-video" data-data-src="videos/rocket-object-1080p.mp4" preload="none" loop muted
-          playsinline preload="none" crossorigin="anonymous"></video>
+        <video id="rwlSculptureVideo" class="rwl-hidden-video" src="videos/rocket-object-1080p.mp4" data-src="videos/rocket-object-1080p.mp4" loop muted playsinline preload="metadata" crossorigin="anonymous"></video>
       </div>
 
       <!-- Giant Horizontal Infinite Marquee -->
@@ -1867,7 +1865,7 @@ a,
     </div>
   </div>
   <script src="js/gravity-hero.js?v=14" defer></script>
-  <script src="js/rocket-footer.js?v=2" defer></script>
+  <script src="js/rocket-footer.js?v=3" defer></script>
   <script src="js/vendor/gsap.min.js" defer></script>
   <script src="js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="js/vendor/SplitText.min.js" defer></script>

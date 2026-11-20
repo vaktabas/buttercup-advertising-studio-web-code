@@ -92,15 +92,53 @@
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
+    // Ensure audio is muted so browser autoplay policies never block playback
+    video.muted = true;
+    video.defaultMuted = true;
+    if (bgVideo) {
+      bgVideo.muted = true;
+      bgVideo.defaultMuted = true;
+    }
+
     var isVisible = false;
     var footerEl = document.querySelector('.rwl-footer') || canvas.parentElement;
 
     function ensureVideoSource(el) {
       if (!el) return;
-      var dSrc = el.getAttribute('data-src');
-      if (dSrc && (!el.src || el.src === window.location.href)) {
+      var dSrc = el.getAttribute('data-src') || el.getAttribute('data-data-src') || el.getAttribute('src');
+      if (dSrc && (!el.src || el.src === window.location.href || !el.src.includes('.mp4'))) {
         el.src = dSrc;
         el.load();
+      }
+    }
+
+    function playVideos() {
+      ensureVideoSource(video);
+      ensureVideoSource(bgVideo);
+      var p = video.play();
+      if (p !== undefined) {
+        p.catch(function() {
+          video.muted = true;
+          video.play().catch(function() {});
+        });
+      }
+      if (bgVideo) {
+        var bp = bgVideo.play();
+        if (bp !== undefined) {
+          bp.catch(function() {
+            bgVideo.muted = true;
+            bgVideo.play().catch(function() {});
+          });
+        }
+      }
+    }
+
+    // Pre-check if footer is already near or in viewport (e.g. refreshed while scrolled)
+    if (footerEl) {
+      var initialRect = footerEl.getBoundingClientRect();
+      if (initialRect.top < window.innerHeight + 600 && initialRect.bottom > -200) {
+        isVisible = true;
+        playVideos();
       }
     }
 
@@ -109,23 +147,17 @@
         entries.forEach(function(entry) {
           isVisible = entry.isIntersecting;
           if (isVisible) {
-            ensureVideoSource(video);
-            ensureVideoSource(bgVideo);
-            video.play().catch(function() {});
-            if (bgVideo) bgVideo.play().catch(function() {});
+            playVideos();
           } else {
             video.pause();
             if (bgVideo) bgVideo.pause();
           }
         });
-      }, { threshold: 0.02 });
+      }, { threshold: 0.01, rootMargin: '400px 0px' });
       observer.observe(footerEl);
     } else {
       isVisible = true;
-      ensureVideoSource(video);
-      ensureVideoSource(bgVideo);
-      video.play().catch(function() {});
-      if (bgVideo) bgVideo.play().catch(function() {});
+      playVideos();
     }
 
     function renderLoop() {
