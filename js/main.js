@@ -1007,6 +1007,50 @@ document.addEventListener("DOMContentLoaded", () => {
       <span class="btr-wa-tag">Fast Reply</span>
     `;
     document.body.appendChild(waBtn);
+
+    // Scroll tracking: As soon as the footer comes into view, scroll the button UPWARDS so it never overlaps the footer
+    function handleFooterAvoidance() {
+      const footer = document.querySelector('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer, #contact.is-footer');
+      if (!footer) return;
+
+      const footerRect = footer.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const overlap = viewportHeight - footerRect.top;
+
+      if (overlap > 0) {
+        // Footer is entering view: push WhatsApp button up with page scroll
+        const pushUp = overlap + 20; // 20px padding above footer top
+        waBtn.style.setProperty('--wa-push', `${pushUp}px`);
+
+        // If pushed up beyond 60% of viewport, fade out cleanly
+        if (pushUp > viewportHeight * 0.6) {
+          waBtn.style.opacity = '0';
+          waBtn.style.pointerEvents = 'none';
+        } else {
+          waBtn.style.opacity = '1';
+          waBtn.style.pointerEvents = 'auto';
+        }
+      } else {
+        // Normal fixed position
+        waBtn.style.setProperty('--wa-push', '0px');
+        waBtn.style.opacity = '1';
+        waBtn.style.pointerEvents = 'auto';
+      }
+    }
+
+    let isScrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!isScrollTicking) {
+        requestAnimationFrame(() => {
+          handleFooterAvoidance();
+          isScrollTicking = false;
+        });
+        isScrollTicking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', handleFooterAvoidance, { passive: true });
+    handleFooterAvoidance();
   }
 
   initGlobalFloatingWhatsApp();

@@ -607,6 +607,30 @@
         currentMode = 'default';
         setPillState('<span class="badge-text">BAS</span>', 'Explore Selected Work', 'pages/case-studies/index.html');
       }
+
+      // Check if footer is visible on Home Page and scroll pill bar upwards to avoid overlapping
+      const footer = document.querySelector('footer.rwl-footer, footer.om-fuss, footer.section.is-footer, footer');
+      const pillBar = document.querySelector('.mubien-pill-bar');
+      if (footer && pillBar) {
+        const footerRect = footer.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const overlap = viewportHeight - footerRect.top;
+        if (overlap > 0) {
+          const pushUp = overlap + 20;
+          pillBar.style.transform = `translateX(-50%) translate3d(0, -${pushUp}px, 0)`;
+          if (pushUp > viewportHeight * 0.6) {
+            pillBar.style.opacity = '0';
+            pillBar.style.pointerEvents = 'none';
+          } else {
+            pillBar.style.opacity = '1';
+            pillBar.style.pointerEvents = 'auto';
+          }
+        } else {
+          pillBar.style.transform = '';
+          pillBar.style.opacity = '1';
+          pillBar.style.pointerEvents = 'auto';
+        }
+      }
     }
 
     // High-performance RAF throttle to eliminate forced layout reflows on mobile
