@@ -986,6 +986,32 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
+  // GLOBAL FLOATING LUXURY WHATSAPP QUICK-INQUIRY BUTTON
+  // =========================================================================
+  function initGlobalFloatingWhatsApp() {
+    if (document.getElementById('btrFloatingWa')) return;
+
+    const waBtn = document.createElement('a');
+    waBtn.id = 'btrFloatingWa';
+    waBtn.className = 'btr-floating-wa';
+    waBtn.href = 'https://wa.me/919925034404?text=' + encodeURIComponent('Hi Buttercup Studio, I saw your work on buttercup.in and I want to discuss a project!');
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener noreferrer';
+    waBtn.setAttribute('aria-label', 'Chat on WhatsApp with Buttercup Advertising Studio');
+    waBtn.innerHTML = `
+      <div class="btr-wa-icon-wrap">
+        <span class="btr-wa-pulse-dot" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/></svg>
+      </div>
+      <span class="btr-wa-text">Chat on WhatsApp</span>
+      <span class="btr-wa-tag">Fast Reply</span>
+    `;
+    document.body.appendChild(waBtn);
+  }
+
+  initGlobalFloatingWhatsApp();
+
+  // =========================================================================
   // 13. CONTACT FORM SUBMISSION (Web3Forms -> info@buttercup.in)
   // =========================================================================
   function setupContactForm() {

@@ -2617,12 +2617,12 @@
         chips: ["Book a discovery call", "Show Case Studies", "Explore Services"]
       },
       {
-        match: /\b(contact|hire|talk|email|call|reach|phone|whatsapp|appointment|meeting|baat karni)\b/i,
+        match: /\b(start a project|start project|new project|hire|quote\b|pricing|price|cost|charges|inquiry|enquiry|work with you|project banwana|logo banwana|packaging banwani|website banwani|contact|talk|call|phone|whatsapp)\b/i,
         reply: [
-          "You can connect directly with our leadership team: email info@buttercup.in, call +91 99250 34404, or click 'Let\'s talk' to schedule a 20-minute discovery sprint.",
-          "Aap humare leadership team se directly jud sakte hain: email info@buttercup.in, call +91 99250 34404, ya direct discovery consultation book kar sakte hain!"
+          "Let's build category-dominating work together! You can connect directly with our studio founders right now: click 'Chat on WhatsApp' for instant reply, call +91 99250 34404, or submit our quick project brief.",
+          "Chaliye aapke brand ko iconic banate hain! Aap directly humare studio founders se connect kar sakte hain: instant reply ke liye niche 'Chat on WhatsApp' par tap karein, direct call karein (+91 99250 34404), ya brief submit karein."
         ],
-        chips: ["Email info@buttercup.in", "Call +91 99250 34404", "Book Google Meet"]
+        chips: ["Chat on WhatsApp", "Call +91 99250 34404", "Submit Project Brief", "Explore Case Studies"]
       }
     ];
 
@@ -2742,6 +2742,15 @@
     async function handleUserSubmit(rawText) {
       const text = (rawText || (aiInput ? aiInput.value : '')).trim();
       if (!text) return;
+
+      if (/whatsapp/i.test(text)) {
+        window.open('https://wa.me/919925034404?text=' + encodeURIComponent('Hi Buttercup Studio, I am connecting via LISA and want to discuss a project!'), '_blank');
+      } else if (/call\s*(\+|studio|leadership|direct)/i.test(text)) {
+        window.location.href = 'tel:+919925034404';
+      } else if (/project brief|fill form|contact form/i.test(text)) {
+        const targetPath = window.location.pathname.includes('/pages/') ? '../contact/index.html' : 'pages/contact/index.html';
+        window.location.href = targetPath;
+      }
 
       if (aiInput) aiInput.value = '';
 
