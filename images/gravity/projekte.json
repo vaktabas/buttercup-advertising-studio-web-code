@@ -1,75 +1,80 @@
 [
   {
-    "projekt": "Grabz — FMCG Gourmet Snack Brand Identity & Packaging",
+    "projekt": "Structure & Soul — Architectural Monograph & Editorial Design",
     "rolle": "Buttercup Advertising Studio",
-    "award": "FMCG Brand Strategy & Packaging Design",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/grabz.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-01.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true,
-        "ki": true
-      },
-      {
-        "datei": "images/gravity/work-06.jpg",
-        "w": 1200,
-        "h": 900
-      }
-    ]
-  },
-  {
-    "projekt": "Beatitude — Luxury Saree & Handcrafted Brand Architecture",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Luxury Fashion Identity & E-Commerce Direction",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 2.6,
-    "link": "projects/beatitude.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-02.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true,
-        "ki": true
-      }
-    ]
-  },
-  {
-    "projekt": "Coin Dhan — Next-Gen FinTech Trading Ecosystem & UI/UX",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "FinTech Brand Identity & Mobile App UX",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/coin-dhan.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-03.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-10.jpg",
-        "w": 1024,
-        "h": 1024
-      }
-    ]
-  },
-  {
-    "projekt": "Vilasa Ambrosia — Ultra-Luxury Villa Architecture & Real Estate Branding",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Real Estate Monograph & Spatial Identity",
+    "award": "Editorial Design & Architectural Monograph",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
     "link": "projects/studio-verra.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-08.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Annual Report 2023 — Sustainable Corporate Brand Narrative",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Corporate Communications & Editorial Design",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/enlight.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-01.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Sustainable Cities 2024 — Interactive Digital Experience & ESG Narrative",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Digital Experience & Sustainability Storytelling",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/ecoforest.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-02.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Green Energy & Impact Report — Infographics & Editorial Design",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Information Architecture & Data Visualization",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/enlight.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-03.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "SaaS Analytics & Cloud Ecosystem — Enterprise Dashboard UI/UX",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "FinTech UI/UX & Enterprise Product Design",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 2.6,
+    "link": "projects/coin-dhan.html",
     "bilder": [
       {
         "datei": "images/gravity/work-04.jpg",
@@ -80,129 +85,87 @@
     ]
   },
   {
-    "projekt": "Polka Tots — Organic Baby Care & Mindful Family Lifestyle",
+    "projekt": "Velvet Orbit — Generative 3D Visual Identity & Motion Design",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Sustainable D2C Packaging & Brand Architecture",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/polka-tots.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-05.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-01.jpg",
-        "w": 1200,
-        "h": 900
-      }
-    ]
-  },
-  {
-    "projekt": "Tastycrafts — Artisanal Baking Essentials & Confectionery Packaging",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Artisanal Food Packaging & Retail Merchandising",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/atlas-bloom.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-06.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-01.jpg",
-        "w": 1200,
-        "h": 900
-      }
-    ]
-  },
-  {
-    "projekt": "Senal Diamonds — Haute Joaillerie & Solitaire Brand Identity",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Haute Joaillerie Identity & Luxury Packaging",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/senal-diamonds.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-07.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true
-      }
-    ]
-  },
-  {
-    "projekt": "Parishram — Bespoke Corporate Executive Gifting & Luxury Hampers",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "B2B Luxury Gifting & Box Architecture",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/cinder-ash.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-08.jpg",
-        "w": 1200,
-        "h": 900,
-        "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-07.jpg",
-        "w": 1200,
-        "h": 900
-      }
-    ]
-  },
-  {
-    "projekt": "YMCA International — Sports, Recreation & Resort Brand Identity",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Hospitality Brand Narrative & Wayfinding Design",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/kindred-haus.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-09.jpg",
-        "w": 1024,
-        "h": 1024,
-        "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-04.jpg",
-        "w": 1376,
-        "h": 768
-      }
-    ]
-  },
-  {
-    "projekt": "Aegis Medical — Advanced Biotech & Healthcare Visual Ecosystem",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Healthcare Innovation & Medical Technology Identity",
+    "award": "Generative 3D Motion & Creative Technology",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
     "link": "projects/velvet-orbit.html",
     "bilder": [
       {
+        "datei": "images/gravity/work-05.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Crafted Precision 2024 — Artisanal Brand Identity & Custom Binding",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Luxury Print Production & Identity Design",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/cinder-ash.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-06.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Crafting Creative Futures — Omnichannel Digital Agency Platform",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Brand Strategy & Web Experience Design",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/grabz.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-07.jpg",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Spatial Architecture & Corporate Headquarters — Environmental Branding",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Spatial Branding & Architectural Wayfinding",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/studio-verra.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-09.jpg",
+        "w": 1024,
+        "h": 1024,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Modern Identity & Kinetic Guidelines — Enterprise Brand Architecture",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Brand Architecture & Identity Systems",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/beatitude.html",
+    "bilder": [
+      {
         "datei": "images/gravity/work-10.jpg",
         "w": 1024,
         "h": 1024,
         "orbit": true
-      },
-      {
-        "datei": "images/gravity/work-03.jpg",
-        "w": 1200,
-        "h": 900
       }
     ]
   }
