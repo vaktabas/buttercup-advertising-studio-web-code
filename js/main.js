@@ -1292,6 +1292,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showModal() {
+      // Suppress WhatsApp popup if user clicked Login, if Login modal is active, or if admin is authenticated
+      if (window.__btrWaSuppressed) return;
+      const loginOverlay = document.getElementById('btrHomeLoginOverlay');
+      if (loginOverlay && loginOverlay.classList.contains('is-active')) return;
+      const storedAuth = sessionStorage.getItem('btr_admin_auth') || localStorage.getItem('btr_admin_auth');
+      if (storedAuth === 'branding@gmail.com') return;
+
       if (isFooterInView()) return;
       overlay.classList.add('is-active');
       overlay.setAttribute('aria-hidden', 'false');
@@ -1308,7 +1315,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function hideModal() {
       overlay.classList.remove('is-active');
       overlay.setAttribute('aria-hidden', 'true');
+      if (autoHideTimer) clearTimeout(autoHideTimer);
     }
+
+    // Expose global dismiss function: clicking LOGIN or opening portal cancels & hides WhatsApp popup
+    window.__btrDismissWhatsAppPopup = function() {
+      window.__btrWaSuppressed = true;
+      hasTriggeredOnce = true;
+      if (waPopupTimeout) clearTimeout(waPopupTimeout);
+      hideModal();
+    };
 
     // Lead Capture & Instant WhatsApp Redirect (Permanent multi-channel persistence)
     function handleWaLeadSubmit(e) {
@@ -1435,12 +1451,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Trigger STRICTLY ONCE after 12 seconds of opening the website
     const loadTime = Date.now();
     let hasTriggeredOnce = false;
+    let waPopupTimeout = null;
 
     // Hide if scrolling into footer
     function checkFooter() {
       if (isFooterInView() && overlay.classList.contains('is-active')) {
         hideModal();
-      } else if (!hasTriggeredOnce && !isFooterInView() && (Date.now() - loadTime >= 12000)) {
+      } else if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView() && (Date.now() - loadTime >= 12000)) {
         hasTriggeredOnce = true;
         showModal();
       }
@@ -1448,8 +1465,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('scroll', checkFooter, { passive: true });
 
     // Single one-time timer: exactly 12 seconds after opening
-    setTimeout(() => {
-      if (!hasTriggeredOnce && !isFooterInView()) {
+    waPopupTimeout = setTimeout(() => {
+      if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView()) {
         hasTriggeredOnce = true;
         showModal();
       }
@@ -1511,6 +1528,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnText = document.getElementById('btrHomeLoginBtnText');
 
     function openModal() {
+      // Immediately suppress and dismiss WhatsApp popup when Login is activated
+      window.__btrWaSuppressed = true;
+      if (typeof window.__btrDismissWhatsAppPopup === 'function') {
+        window.__btrDismissWhatsAppPopup();
+      }
+
       const stored = sessionStorage.getItem('btr_admin_auth') || localStorage.getItem('btr_admin_auth');
       if (stored === 'branding@gmail.com') {
         window.location.href = 'admin/leads.html';
@@ -1532,8 +1555,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loginLink.addEventListener('click', (e) => {
       e.preventDefault();
+      window.__btrWaSuppressed = true;
+      if (typeof window.__btrDismissWhatsAppPopup === 'function') {
+        window.__btrDismissWhatsAppPopup();
+      }
       openModal();
     });
+
+    // Global listener: When anyone clicks/taps on Login (or any admin link/button), immediately suppress WhatsApp popup
+    document.addEventListener('click', (e) => {
+      const el = e.target && e.target.closest ? e.target.closest('#homeLoginBtn, [href*="admin-login"], [href*="admin/leads"], .om-nav-ai-link') : null;
+      if (el || (e.target && e.target.textContent && e.target.textContent.trim().toUpperCase() === 'LOGIN')) {
+        window.__btrWaSuppressed = true;
+        if (typeof window.__btrDismissWhatsAppPopup === 'function') {
+          window.__btrDismissWhatsAppPopup();
+        }
+      }
+    }, true);
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => {
