@@ -1526,7 +1526,7 @@
       }
     ]
   }
-]];
+];
 
   function projekteHolen(dann) {
     if (location.protocol === 'file:') {
