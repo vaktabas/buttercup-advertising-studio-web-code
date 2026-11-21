@@ -986,64 +986,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalCustomCursor();
 
   // =========================================================================
-  // 1. AUTOMATIC SILENT VISITOR TELEMETRY & CITY DETECTION
-  // Captures IP, City, Region, GPS, ISP, Device, Referrer, Page into /data/visitors-log.csv
+  // 1. LIVE VISITOR TELEMETRY & INSTANT SERVER PING (0-DELAY REAL-TIME CAPTURE)
+  // Captures IP, City, Region, Country, ISP, Device, Referrer, Page into /data/visitors-log.csv
   // =========================================================================
-  async function initVisitorTracking() {
+  function initVisitorTracking() {
     if (window.__btrTrackingInitialized) return;
     window.__btrTrackingInitialized = true;
-
-    let detectedCity = 'Detecting...';
-    let detectedRegion = 'Gujarat';
-    let detectedCountry = 'India';
-    let detectedLat = '';
-    let detectedLon = '';
-    let detectedIsp = '';
-
-    try {
-      // Fast IP Geolocation & ISP lookup
-      const res = await fetch('https://freeipapi.com/api/json', { signal: AbortSignal.timeout(4500) });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.cityName) {
-          detectedCity = data.cityName + (data.regionName ? ', ' + data.regionName : '');
-          detectedRegion = data.regionName || '';
-          detectedCountry = data.countryName || 'India';
-          detectedLat = data.latitude || '';
-          detectedLon = data.longitude || '';
-          detectedIsp = data.asnOrganization || '';
-
-          window.__btrDetectedCity = detectedCity;
-          window.__btrDetectedRegion = detectedRegion;
-          window.__btrDetectedCountry = detectedCountry;
-          window.__btrDetectedLat = detectedLat;
-          window.__btrDetectedLon = detectedLon;
-          window.__btrDetectedIsp = detectedIsp;
-        }
-      }
-    } catch (e) {
-      try {
-        const fbRes = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3500) });
-        if (fbRes.ok) {
-          const fbData = await fbRes.json();
-          if (fbData && fbData.city) {
-            detectedCity = fbData.city + (fbData.region ? ', ' + fbData.region : '');
-            detectedRegion = fbData.region || '';
-            detectedCountry = fbData.country_name || 'India';
-            detectedLat = fbData.latitude || '';
-            detectedLon = fbData.longitude || '';
-            detectedIsp = fbData.org || '';
-
-            window.__btrDetectedCity = detectedCity;
-            window.__btrDetectedRegion = detectedRegion;
-            window.__btrDetectedCountry = detectedCountry;
-            window.__btrDetectedLat = detectedLat;
-            window.__btrDetectedLon = detectedLon;
-            window.__btrDetectedIsp = detectedIsp;
-          }
-        }
-      } catch (err) {}
-    }
 
     function detectBrowserName() {
       const ua = navigator.userAgent || '';
@@ -1064,19 +1012,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return 'Unknown OS';
     }
 
-    try {
-      const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
-        ? window.location.origin + '/api/track-visitor.php'
-        : 'api/track-visitor.php';
+    const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
+      ? window.location.origin + '/api/track-visitor.php'
+      : 'api/track-visitor.php';
 
-      const payload = {
+    // STEP 1: FIRE INSTANT PING (0 millisecond delay) - Never miss any visitor!
+    try {
+      const instantPayload = {
         action: 'visit',
-        city: detectedCity,
-        region: detectedRegion,
-        country: detectedCountry,
-        latitude: detectedLat,
-        longitude: detectedLon,
-        isp: detectedIsp,
+        city: window.__btrDetectedCity || 'Detecting...',
+        region: window.__btrDetectedRegion || '',
+        country: window.__btrDetectedCountry || '',
+        latitude: window.__btrDetectedLat || '',
+        longitude: window.__btrDetectedLon || '',
+        isp: window.__btrDetectedIsp || '',
         connection: (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : '',
         page: window.location.pathname + window.location.search,
         referrer: document.referrer || 'Direct / Bookmark',
@@ -1088,16 +1037,34 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       if (navigator.sendBeacon) {
-        navigator.sendBeacon(apiUrl, new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+        navigator.sendBeacon(apiUrl, new Blob([JSON.stringify(instantPayload)], { type: 'application/json' }));
       }
-
       fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(instantPayload),
         keepalive: true
       }).catch(() => {});
-    } catch (err) {}
+    } catch (e) {}
+
+    // STEP 2: ASYNC CLIENT GEO ENRICHMENT (Enriches with City/ISP in background)
+    (async function enrichGeoTelemetry() {
+      try {
+        const res = await fetch('https://freeipapi.com/api/json', { signal: AbortSignal.timeout(3000) });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.cityName) {
+            window.__btrDetectedCity = data.cityName + (data.regionName ? ', ' + data.regionName : '');
+            window.__btrDetectedRegion = data.regionName || '';
+            window.__btrDetectedCountry = data.countryName || 'India';
+            window.__btrDetectedLat = data.latitude || '';
+            window.__btrDetectedLon = data.longitude || '';
+            window.__btrDetectedIsp = data.asnOrganization || '';
+          }
+        }
+      } catch (err) {}
+    })();
+  }
   }
 
   // =========================================================================

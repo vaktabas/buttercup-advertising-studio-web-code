@@ -644,11 +644,32 @@ if ($method === 'POST') {
             'JP' => 'Japan', 'NL' => 'Netherlands', 'SA' => 'Saudi Arabia', 'QA' => 'Qatar', 'KW' => 'Kuwait',
             'OM' => 'Oman', 'CH' => 'Switzerland', 'SE' => 'Sweden', 'NO' => 'Norway', 'IT' => 'Italy',
             'ES' => 'Spain', 'NZ' => 'New Zealand', 'BR' => 'Brazil', 'ZA' => 'South Africa', 'MY' => 'Malaysia',
-            'ID' => 'Indonesia', 'TH' => 'Thailand', 'IE' => 'Ireland'
+            'ID' => 'Indonesia', 'TH' => 'Thailand', 'IE' => 'Ireland', 'CN' => 'China'
         ];
         $finalCountry = !empty($clientCountry) && $clientCountry !== 'India'
             ? $clientCountry
             : ($cfCountryMap[$cfCode] ?? (!empty($clientCountry) ? $clientCountry : 'India'));
+
+        // Server-Side Fast Geolocation Fallback if Client has not yet resolved
+        if (empty($clientCity) || $clientCity === 'Detecting...' || empty($finalCountry) || $finalCountry === 'India') {
+            if ($ip && !in_array($ip, ['127.0.0.1', '::1']) && !preg_match('/^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/', $ip)) {
+                $ctx = stream_context_create(['http' => ['timeout' => 1.2]]);
+                $geoJson = @file_get_contents("http://ip-api.com/json/{$ip}?fields=status,country,regionName,city,lat,lon,isp", false, $ctx);
+                if ($geoJson) {
+                    $geoObj = json_decode($geoJson, true);
+                    if ($geoObj && ($geoObj['status'] ?? '') === 'success') {
+                        if (!empty($geoObj['country'])) $finalCountry = $geoObj['country'];
+                        if (!empty($geoObj['city'])) {
+                            $clientCity = $geoObj['city'] . (!empty($geoObj['regionName']) ? ', ' . $geoObj['regionName'] : '');
+                            $regionName = $geoObj['regionName'] ?? '';
+                        }
+                        if (!empty($geoObj['lat']) && empty($lat)) $lat = (string)$geoObj['lat'];
+                        if (!empty($geoObj['lon']) && empty($lon)) $lon = (string)$geoObj['lon'];
+                        if (!empty($geoObj['isp']) && empty($isp)) $isp = $geoObj['isp'];
+                    }
+                }
+            }
+        }
 
         $visitRecord = [
             'timestamp' => $timestamp,
