@@ -1267,13 +1267,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="btr-wa-square-tag">
           <span class="btr-wa-live-dot" aria-hidden="true"></span>
-          <span>Buttercup Creative Studio</span>
+          <span>Creative Director Online Now</span>
         </div>
 
-        <h3 class="btr-wa-square-title">Chat on WhatsApp</h3>
+        <h3 class="btr-wa-square-title">Get Free Brand Consultation</h3>
 
         <p class="btr-wa-square-desc">
-          Have a brand, design or campaign project? Enter your details to connect directly:
+          Planning a new brand, packaging, or rebranding in 2026? Connect directly with Sneha Vakta Shah (Founder) on WhatsApp:
         </p>
 
         <form class="btr-wa-form" id="btrWaForm">
@@ -1283,7 +1283,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <button type="submit" class="btr-wa-square-btn" id="btrWaSquareCta">
-            <span id="btrWaBtnText">Connect on WhatsApp</span>
+            <span id="btrWaBtnText">Get Pricing &amp; Consultation on WA</span>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -1292,7 +1292,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <a href="https://wa.me/919925034404?text=Hi%20Buttercup%20Studio%2C%20I%20saw%20your%20work%20on%20buttercup.in%20and%20I%20want%20to%20discuss%20a%20project!"
            target="_blank" rel="noopener noreferrer" class="btr-wa-skip-link" id="btrWaSkipLink">
-          Or skip and open WhatsApp directly &rarr;
+          Or open direct chat on WhatsApp &rarr;
         </a>
 
         <div class="btr-wa-square-footer">
@@ -1490,29 +1490,66 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Trigger STRICTLY ONCE after 12 seconds of opening the website
+    // High-Converting Multi-Trigger Lead Engine
+    // 1. Time Trigger: 6s (fast engagement before bounce)
+    // 2. Scroll Trigger: 28% scroll depth (engaged with portfolio)
+    // 3. Desktop Exit-Intent: user moves cursor to top of browser
     const loadTime = Date.now();
     let hasTriggeredOnce = false;
     let waPopupTimeout = null;
 
-    // Hide if scrolling into footer
-    function checkFooter() {
+    function triggerLeadModal(source) {
+      if (hasTriggeredOnce || window.__btrWaSuppressed || isFooterInView()) return;
+      hasTriggeredOnce = true;
+      if (waPopupTimeout) clearTimeout(waPopupTimeout);
+      showModal();
+    }
+
+    // A. Time Trigger (6 seconds)
+    waPopupTimeout = setTimeout(() => {
+      triggerLeadModal('timer');
+    }, 6000);
+
+    // B. Scroll Trigger (28% scroll depth)
+    function checkScrollTrigger() {
       if (isFooterInView() && overlay.classList.contains('is-active')) {
         hideModal();
-      } else if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView() && (Date.now() - loadTime >= 12000)) {
-        hasTriggeredOnce = true;
-        showModal();
+        return;
+      }
+      if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView()) {
+        const scrollPercent = (window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        if (scrollPercent >= 28) {
+          triggerLeadModal('scroll');
+        }
       }
     }
-    window.addEventListener('scroll', checkFooter, { passive: true });
+    window.addEventListener('scroll', checkScrollTrigger, { passive: true });
 
-    // Single one-time timer: exactly 12 seconds after opening
-    waPopupTimeout = setTimeout(() => {
-      if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView()) {
-        hasTriggeredOnce = true;
-        showModal();
+    // C. Desktop Exit-Intent Trigger
+    function checkExitIntent(e) {
+      if (!hasTriggeredOnce && !window.__btrWaSuppressed && e.clientY <= 10) {
+        triggerLeadModal('exit_intent');
       }
-    }, 12000);
+    }
+    document.addEventListener('mouseleave', checkExitIntent);
+
+    // Floating Luxury Quick-Trigger Pill (Bottom-Right)
+    if (!document.getElementById('btrFloatingWaPill')) {
+      const floatPill = document.createElement('div');
+      floatPill.id = 'btrFloatingWaPill';
+      floatPill.className = 'btr-floating-wa-pill';
+      floatPill.innerHTML = `
+        <span class="btr-pill-pulse" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.328.147.377.23.049.082.049.475-.095.88z"/>
+        </svg>
+        <span>Chat with Creative Director</span>
+      `;
+      floatPill.addEventListener('click', () => {
+        showModal();
+      });
+      document.body.appendChild(floatPill);
+    }
   }
 
   // =========================================================================
