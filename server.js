@@ -81,6 +81,38 @@ const server = http.createServer((req, res) => {
     pathname = pathname.replace(/^\/web(?:%20|\s)2\//, '/');
   }
 
+  // Hostinger Live Visitor Logging & Telemetry Engine
+  const isStaticAsset = /\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|avif|woff2|woff|ttf|mp4|xml|txt)$/i.test(pathname);
+  if (!isStaticAsset && req.method === 'GET') {
+    const clientIp = req.headers['cf-connecting-ip'] || 
+                     (req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0].trim() : null) || 
+                     req.socket.remoteAddress || 'unknown';
+    const visitEntry = {
+      timestamp: new Date().toISOString(),
+      ip: clientIp,
+      page: pathname,
+      referrer: req.headers['referer'] || req.headers['referrer'] || 'Direct',
+      userAgent: (req.headers['user-agent'] || 'Unknown').slice(0, 150)
+    };
+    
+    // 1. Output formatted log for Hostinger runtime logs API
+    console.log(`[HOSTINGER_VISIT] ${JSON.stringify(visitEntry)}`);
+
+    // 2. Persist to data/live-visits.json on server disk
+    try {
+      const visitsPath = path.join(ROOT, 'data', 'live-visits.json');
+      let visitsList = [];
+      if (fs.existsSync(visitsPath)) {
+        try { visitsList = JSON.parse(fs.readFileSync(visitsPath, 'utf8') || '[]'); } catch (e) { visitsList = []; }
+      }
+      visitsList.unshift(visitEntry);
+      if (visitsList.length > 500) visitsList = visitsList.slice(0, 500);
+      fs.writeFileSync(visitsPath, JSON.stringify(visitsList, null, 2), 'utf8');
+    } catch (err) {
+      // Non-blocking disk write
+    }
+  }
+
   // 1. Google SEO & Clean URL 301 Redirects
   if (REDIRECT_MAP[pathname]) {
     res.writeHead(301, {
