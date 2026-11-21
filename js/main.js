@@ -1065,7 +1065,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {}
     })();
   }
-  }
 
   // =========================================================================
   // 2. BROWSER LOCATION PERMISSION PROMPT ("Personalize for your city")
