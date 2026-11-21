@@ -317,6 +317,8 @@
         e.preventDefault();
         this.targetZoom += e.deltaY * 0.015;
         this.targetZoom = Math.max(8.5, Math.min(26, this.targetZoom));
+        // City-view overlay: when zoomed in closely (zoom < 10.5), show real city map
+        this._checkCityZoomOverlay();
       };
 
       el.addEventListener("mousedown", onPointerDown);
@@ -410,6 +412,149 @@
       this.renderer.setSize(width, height);
     }
 
+    // ── City-View Overlay (Zoom-to-Earth) ───────────────────────────────────
+    // When user zooms in past threshold, show a real OpenStreetMap city map
+    _checkCityZoomOverlay() {
+      const ZOOM_THRESHOLD = 10.0; // camera distance below this triggers city view
+      if (this.targetZoom < ZOOM_THRESHOLD) {
+        this._showCityOverlay();
+      } else {
+        this._hideCityOverlay();
+      }
+    }
+
+    _showCityOverlay() {
+      let overlay = document.getElementById("btrCityMapOverlay");
+      if (overlay && overlay.classList.contains("is-active")) return; // already open
+
+      // Determine which country to show — use focused country or India HQ as default
+      const focusedCountry = this._focusedCountry || { lat: 23.0225, lon: 72.5714, name: "Ahmedabad, India", zoom: 11 };
+
+      if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "btrCityMapOverlay";
+        overlay.style.cssText = `
+          position:absolute; inset:0; z-index:200; background:#0f172a;
+          display:flex; flex-direction:column; border-radius:inherit; overflow:hidden;
+        `;
+        overlay.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:rgba(15,23,42,0.95); border-bottom:1px solid rgba(255,255,255,0.1); flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:16px;">🌍</span>
+              <span id="btrCityOverlayTitle" style="font-weight:700; font-size:13.5px; color:#f1f5f9;">City Satellite View</span>
+              <span style="font-size:11px; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3); padding:1px 7px; border-radius:999px;">REAL MAP</span>
+            </div>
+            <button onclick="document.getElementById('btrCityMapOverlay').classList.remove('is-active'); window.worldMapInstance._hideCityOverlay();" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#ef4444; border-radius:6px; padding:4px 10px; cursor:pointer; font-size:12px; font-weight:600;">✕ Back to Globe</button>
+          </div>
+          <div id="btrLeafletMap" style="flex:1; min-height:400px;"></div>
+          <div style="padding:6px 14px; background:rgba(15,23,42,0.9); border-top:1px solid rgba(255,255,255,0.08); font-size:10.5px; color:#64748b; display:flex; align-items:center; gap:6px; flex-shrink:0;">
+            <span>🗺️ Map data © OpenStreetMap contributors</span>
+            <span style="margin-left:auto; color:#94a3b8;">Scroll to zoom • Drag to pan</span>
+          </div>
+        `;
+        // Insert into the globe stage container
+        const stage = document.getElementById("btrGlobeStage");
+        if (stage) stage.appendChild(overlay);
+        else if (this.container) this.container.appendChild(overlay);
+      }
+
+      // Update title
+      const titleEl = overlay.querySelector("#btrCityOverlayTitle");
+      if (titleEl) titleEl.textContent = `City View — ${focusedCountry.name}`;
+
+      overlay.classList.add("is-active");
+      overlay.style.display = "flex";
+
+      // Load Leaflet (OpenStreetMap — free, no API key) if not loaded
+      this._initLeafletMap(focusedCountry);
+    }
+
+    _hideCityOverlay() {
+      const overlay = document.getElementById("btrCityMapOverlay");
+      if (overlay) {
+        overlay.classList.remove("is-active");
+        overlay.style.display = "none";
+      }
+    }
+
+    _initLeafletMap(loc) {
+      // Load Leaflet CSS + JS once
+      if (!document.getElementById("leaflet-css")) {
+        const link = document.createElement("link");
+        link.id = "leaflet-css";
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        document.head.appendChild(link);
+      }
+
+      const initMap = () => {
+        const container = document.getElementById("btrLeafletMap");
+        if (!container) return;
+
+        // Destroy old map instance if exists
+        if (this._leafletMap) {
+          try { this._leafletMap.remove(); } catch (e) {}
+          this._leafletMap = null;
+        }
+
+        const lat = loc.lat || 23.0225;
+        const lon = loc.lon || 72.5714;
+        const zoomLevel = loc.zoom || 11;
+
+        const map = window.L.map(container, { zoomControl: true, attributionControl: true }).setView([lat, lon], zoomLevel);
+        this._leafletMap = map;
+
+        // Add OpenStreetMap tile layer (free, no API key)
+        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          maxZoom: 19
+        }).addTo(map);
+
+        // Add visitor pins from real visit data
+        const visits = window.rawVisitsData || [];
+        const pinGroups = {};
+        visits.forEach(v => {
+          const lt = parseFloat(v.latitude);
+          const ln = parseFloat(v.longitude);
+          if (!isNaN(lt) && !isNaN(ln) && Math.abs(lt) < 90 && Math.abs(ln) < 180) {
+            const key = lt.toFixed(2) + "," + ln.toFixed(2);
+            if (!pinGroups[key]) pinGroups[key] = { lat: lt, lon: ln, count: 0, city: v.city || "Visitor", visits: [] };
+            pinGroups[key].count++;
+            pinGroups[key].visits.push(v);
+          }
+        });
+
+        Object.values(pinGroups).forEach(pin => {
+          const radius = Math.min(6 + pin.count * 2, 22);
+          const circle = window.L.circleMarker([pin.lat, pin.lon], {
+            radius: radius,
+            fillColor: "#ef4444",
+            color: "#ffffff",
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.75
+          }).addTo(map);
+          circle.bindPopup(`<b>📍 ${pin.city}</b><br>${pin.count} visit${pin.count > 1 ? "s" : ""}<br><small>${pin.visits[0].ip || ""}</small>`);
+        });
+
+        // HQ marker
+        window.L.marker([23.0225, 72.5714]).addTo(map)
+          .bindPopup("<b>🏢 Buttercup Studio HQ</b><br>Ahmedabad, Gujarat, India").openPopup();
+
+        // Fix Leaflet layout after reveal
+        setTimeout(() => { try { map.invalidateSize(); } catch (e) {} }, 100);
+      };
+
+      if (window.L) {
+        initMap();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+        script.onload = initMap;
+        document.head.appendChild(script);
+      }
+    }
+
     // Process visits telemetry into geographic traffic data
     updateTrafficData(visits, leads, stats) {
       const countryCounts = {};
@@ -445,27 +590,15 @@
         }
       });
 
-      // India is the primary studio hub with highest traffic volume
-      if (!countryCounts["IN"] || countryCounts["IN"] < 12) {
-        countryCounts["IN"] = Math.max(countryCounts["IN"] || 0, 58);
-      }
+      // Always ensure HQ country India is listed (even if no India visitors yet logged)
       if (!countryCities["IN"]) countryCities["IN"] = new Set();
-      ["Bareja", "Ahmedabad (Studio HQ)", "Mumbai", "Surat", "Bengaluru", "Delhi"].forEach(c => countryCities["IN"].add(c));
+      countryCities["IN"].add("Ahmedabad (Studio HQ)");
+      if (!countryCounts["IN"]) countryCounts["IN"] = 1; // HQ always present as minimum
 
-      // Global visitor distribution (USA, UK, UAE, Canada, Australia, Singapore, Germany)
-      if (Object.keys(countryCounts).length < 4) {
-        countryCounts["AE"] = 18;
-        if (!countryCities["AE"]) countryCities["AE"] = new Set(["Dubai", "Abu Dhabi"]);
-        countryCounts["US"] = 12;
-        if (!countryCities["US"]) countryCities["US"] = new Set(["New York", "San Francisco"]);
-        countryCounts["GB"] = 8;
-        if (!countryCities["GB"]) countryCities["GB"] = new Set(["London", "Manchester"]);
-        countryCounts["CA"] = 5;
-        if (!countryCities["CA"]) countryCities["CA"] = new Set(["Toronto"]);
-        countryCounts["SG"] = 4;
-        if (!countryCities["SG"]) countryCities["SG"] = new Set(["Singapore"]);
-        countryCounts["AU"] = 3;
-        if (!countryCities["AU"]) countryCities["AU"] = new Set(["Sydney"]);
+      // If NO real visit data at all yet, add a subtle demo beacon so globe isn't empty
+      if (Object.keys(countryCounts).length <= 1 && countryCounts["IN"] <= 1) {
+        // Show only India HQ until real data arrives — no fake numbers
+        countryCounts["IN"] = 1;
       }
 
       let totalVisits = 0;
@@ -776,6 +909,16 @@
       this.targetRotation.x = rx;
       this.targetRotation.y = ry;
       this.targetZoom = 13.5;
+
+      // Track the focused country for city-view overlay
+      this._focusedCountry = {
+        lat: c.lat, lon: c.lon,
+        name: c.name || c.capital || code,
+        zoom: code === "SG" ? 12 : (code === "IN" ? 11 : 6)
+      };
+
+      // Hide city overlay when focusing a new country (let user zoom in again)
+      this._hideCityOverlay();
 
       // Scroll smoothly back up to the 3D globe so user sees the country in focus
       const box = document.querySelector(".btr-map-modal-box");

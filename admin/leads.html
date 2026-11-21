@@ -1272,18 +1272,40 @@
 
         rawLeadsData = data.leads || [];
 
-        // Fail-safe merge: ensure client-cached leads are permanently preserved
+        // ── AUTO-SYNC: Push any localStorage leads that are NOT yet on server ──
         try {
           const localLeads = JSON.parse(localStorage.getItem('btr_cached_leads') || '[]');
           if (Array.isArray(localLeads) && localLeads.length > 0) {
             const existingKeys = new Set(rawLeadsData.map(l => ((l.name || '') + '_' + (l.phone || '')).toLowerCase()));
-            localLeads.forEach(loc => {
+            const toSync = localLeads.filter(loc => {
               const key = ((loc.name || '') + '_' + (loc.phone || '')).toLowerCase();
-              if (!existingKeys.has(key)) {
-                rawLeadsData.unshift(loc);
-                existingKeys.add(key);
-              }
+              return !existingKeys.has(key) && (loc.name || loc.phone);
             });
+            if (toSync.length > 0) {
+              // Push each missing lead to server permanently
+              const apiUrl = window.location.origin + '/api/track-visitor.php';
+              for (const loc of toSync) {
+                try {
+                  await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      action: 'lead',
+                      name: loc.name || '',
+                      phone: loc.phone || '',
+                      city: loc.city || 'India',
+                      page: loc.page || '/',
+                      notes: (loc.notes || 'Recovered from client cache') + ' [auto-synced]'
+                    })
+                  });
+                } catch (syncErr) {}
+              }
+              // Re-fetch after sync so dashboard shows recovered leads
+              const res2 = await fetch("../api/track-visitor.php?v=" + Date.now());
+              const data2 = await res2.json();
+              if (data2 && data2.success) rawLeadsData = data2.leads || [];
+            }
+            // Keep localStorage as backup (do NOT clear — multi-device safety)
           }
         } catch (e) {}
 
@@ -1505,6 +1527,6 @@
     checkAuth();
   </script>
   <script src="../js/vendor/three.min.js"></script>
-  <script src="world-map.js?v=202611202255"></script>
+  <script src="world-map.js?v=202611211200"></script>
 </body>
 </html>
