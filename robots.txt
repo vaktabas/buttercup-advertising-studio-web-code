@@ -2,6 +2,19 @@ User-agent: *
 Allow: /
 Content-Signal: search=yes, ai-train=no
 
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
 # Generative Engine Optimization (GEO) & AI Search Crawlers
 User-agent: GPTBot
 Allow: /
@@ -30,4 +43,13 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Knowledge Graph & LLM Directives for AI Search
+# LLMs Summary: https://buttercup.in/llms.txt
+# LLMs Full Profile: https://buttercup.in/llms-full.txt
 Sitemap: https://buttercup.in/sitemap.xml
