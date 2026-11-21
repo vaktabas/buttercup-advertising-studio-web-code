@@ -1254,16 +1254,16 @@
 
   var FALLBACK_PROJEKTE = [
   {
-    "projekt": "Velvet Social — Omnichannel Social Commerce & Influencer Activation Engine",
+    "projekt": "Polka Tots — Mindful Organic Baby Care & D2C Packaging",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Social Media Commerce & Influencer Marketing",
+    "award": "Sustainable D2C Packaging & Brand Architecture",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/beatitude.html",
+    "link": "projects/polka-tots.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-08.jpg?v=20",
+        "datei": "images/gravity/work-08.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1271,33 +1271,16 @@
     ]
   },
   {
-    "projekt": "Obsidian Luxe — High-Impact Global Outdoor Billboard & Transit Campaign",
+    "projekt": "Grabz — FMCG Snack Packaging Design & Shelf Visibility",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Billboard Advertising & Global Campaign Launch",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/noir-supply-co.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-01.jpg?v=20",
-        "w": 1200,
-        "h": 896,
-        "orbit": true
-      }
-    ]
-  },
-  {
-    "projekt": "PureBotanica — Shelf-Conversion Packaging Design & FMCG Launch Campaign",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "FMCG Commercial Packaging & Visual Identity",
+    "award": "FMCG Commercial Packaging & Retail Design",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
     "link": "projects/grabz.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-02.jpg?v=20",
+        "datei": "images/gravity/work-01.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1305,16 +1288,16 @@
     ]
   },
   {
-    "projekt": "Apex Growth — High-ROAS Performance Marketing & Funnel Optimization Suite",
+    "projekt": "Senal Diamonds — Haute Joaillerie & Solitaire Brand Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Performance Marketing & Digital Funnel Strategy",
+    "award": "Haute Joaillerie Identity & Luxury Packaging",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/coin-dhan.html",
+    "link": "projects/senal-diamonds.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-03.jpg?v=20",
+        "datei": "images/gravity/work-02.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1322,16 +1305,33 @@
     ]
   },
   {
-    "projekt": "Kinetic Pulse — 3D Generative Motion Graphics & Commercial TVC Identity",
+    "projekt": "Aloevella — Organic Botanical Skincare & D2C Packaging",
     "rolle": "Buttercup Advertising Studio",
-    "award": "3D Brand Identity & Kinetic Commercial Production",
+    "award": "Cosmetics Packaging & Sustainable Identity",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/aloevella.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-03.jpg?v=25",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Titano LED — Architectural Lighting & Industrial Brand Identity",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Architectural Brand Identity & Industrial Design",
     "fotocredit": null,
     "heureka": false,
     "groesse": 2.6,
-    "link": "projects/velvet-orbit.html",
+    "link": "projects/titano-led.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-04.jpg?v=20",
+        "datei": "images/gravity/work-04.jpg?v=25",
         "w": 1376,
         "h": 768,
         "orbit": true
@@ -1339,16 +1339,16 @@
     ]
   },
   {
-    "projekt": "Aura Skincare — D2C E-Commerce Brand Launch & Social Video Campaign",
+    "projekt": "Beatitude — Handcrafted Luxury Apparel & Editorial Fashion",
     "rolle": "Buttercup Advertising Studio",
-    "award": "D2C Brand Strategy & Omnichannel Creative Direction",
+    "award": "Luxury Fashion Identity & Editorial Campaign",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/cinder-ash.html",
+    "link": "projects/beatitude.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-05.jpg?v=20",
+        "datei": "images/gravity/work-05.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1356,16 +1356,16 @@
     ]
   },
   {
-    "projekt": "Studio Genesis — Brand Architecture, Consumer Psychology & Identity Blueprint",
+    "projekt": "Crispo — Modern Confectionery & FMCG Snack Packaging",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Brand Positioning & Market Strategy War Room",
+    "award": "Retail Food Packaging & Brand Strategy",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "pages/services/brand-strategy/index.html",
+    "link": "projects/crispo.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-06.jpg?v=20",
+        "datei": "images/gravity/work-06.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1373,16 +1373,16 @@
     ]
   },
   {
-    "projekt": "Vardhman Heritage — Luxury High-Jewelry Editorial Advertising & Brand Book",
+    "projekt": "Jimmy — Bespoke Rigid Box Architecture & Luxury Confectionery",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Luxury Editorial Advertising & High-Ticket Print",
+    "award": "Luxury Box Architecture & Brand Identity",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/noir-supply-co.html",
+    "link": "projects/jimmy.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-07.jpg?v=20",
+        "datei": "images/gravity/work-07.jpg?v=25",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -1390,16 +1390,16 @@
     ]
   },
   {
-    "projekt": "Noir Cacao — Supermarket Shelf Overhaul & Gourmet Brand Repositioning",
+    "projekt": "Glogeous — Dermatological Skincare System & Clinical Packaging",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Retail Shelf Impact & Gourmet Packaging Rebrand",
+    "award": "Clinical Skincare Identity & Dispenser Packaging",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/grabz.html",
+    "link": "projects/glogeous.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-09.jpg?v=20",
+        "datei": "images/gravity/work-09.jpg?v=25",
         "w": 1024,
         "h": 1024,
         "orbit": true
@@ -1407,16 +1407,16 @@
     ]
   },
   {
-    "projekt": "Nexus AI — Global Product Keynote, Visual Identity & Commercial Launch",
+    "projekt": "Maruti Barrier Films — Industrial Packaging & Polymer Systems",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Commercial Product Keynote & Global Identity Launch",
+    "award": "Industrial Brand Identity & Technical Packaging",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/studio-verra.html",
+    "link": "projects/maruti-barrier-films.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-10.jpg?v=20",
+        "datei": "images/gravity/work-10.jpg?v=25",
         "w": 1024,
         "h": 1024,
         "orbit": true
@@ -1431,7 +1431,7 @@
       if (lokal.length) dann(lokal);
       return;
     }
-    fetch('images/gravity/projekte.json?v=20', { cache: 'no-cache' })
+    fetch('images/gravity/projekte.json?v=25', { cache: 'no-cache' })
       .then(function (a) {
         if (!a.ok) throw new Error('HTTP ' + a.status);
         return a.json();
