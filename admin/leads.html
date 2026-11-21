@@ -1429,6 +1429,7 @@
 
           const ispText = v.isp || '';
           const connText = v.connection ? v.connection.toUpperCase() : '';
+          const isHostingerBot = (v.isp && v.isp.toLowerCase().includes('hostinger')) || (v.page && v.page.includes('LSCWP_CTRL'));
 
           return `
             <tr>
@@ -1436,11 +1437,18 @@
               <td>
                 <span class="badge-ip">${escapeHtml(v.ip)}</span>
                 ${ispText ? `<div style="font-size:11px; color:#c084fc; margin-top:3px; font-weight:500;">📶 ${escapeHtml(ispText)}</div>` : ''}
+                ${isHostingerBot ? `
+                  <div style="margin-top:4px;">
+                    <span style="display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700; background:rgba(168,85,247,0.18); color:#d8b4fe; border:1px solid rgba(168,85,247,0.35); padding:2px 8px; border-radius:999px;">
+                      🤖 Hostinger Speed & Cache Bot (UK)
+                    </span>
+                  </div>
+                ` : ''}
               </td>
               <td>
                 ${(v.is_gps_allowed || (v.referrer && v.referrer.includes('GPS'))) ? `
                   <div style="margin-bottom: 4px;">
-                    <span style="display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:800; background:rgba(16,185,129,0.2); color:#10b981; border:1px solid #10b981; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.04em;">
+                    <span style="display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:800; background:rgba(160,185,129,0.2); color:#10b981; border:1px solid #10b981; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.04em;">
                       <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981; box-shadow:0 0 6px #10b981;"></span>
                       GPS Verified
                     </span>
@@ -1459,6 +1467,7 @@
               <td>
                 <strong style="color:#ffffff;">${escapeHtml(v.device || "Browser")}</strong>
                 ${v.os ? `<span style="color:#94a3b8; font-size:12px;">(${escapeHtml(v.os)})</span>` : ""}
+                ${isHostingerBot ? `<div style="font-size:10.5px; color:#a855f7; margin-top:3px; font-weight:600;">⚡ Server Cache Optimizer</div>` : ''}
               </td>
               <td>
                 <div>${escapeHtml(v.browser || "Chrome / Safari")}</div>

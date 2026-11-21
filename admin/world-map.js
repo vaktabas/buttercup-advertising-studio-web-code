@@ -390,6 +390,7 @@
           <div style="font-weight: 600; margin-top: 2px; color: #ffffff;">${data.cities.length > 0 ? escapeHtml(data.cities.slice(0, 3).join(", ")) : escapeHtml(data.capital)}</div>
         </div>
         ${isIndia ? '<div style="margin-top: 8px; font-size: 11px; color: #ef4444; font-weight: 700; display:flex; align-items:center; gap:5px;"><span>👑</span> Buttercup Studio Headquarters & Primary Hub</div>' : ''}
+        ${data.code === "GB" ? '<div style="margin-top: 8px; font-size: 11px; color: #c084fc; font-weight: 700; display:flex; align-items:center; gap:5px;"><span>🤖</span> Hostinger Cloud Data Center & Cache Pre-warm Bot</div>' : ''}
       `;
 
       this.tooltip.style.left = localX + "px";
@@ -526,7 +527,8 @@
 
         Object.values(pinGroups).forEach(pin => {
           const isGps = pin.visits.some(v => v.is_gps_allowed || (v.referrer && v.referrer.includes('GPS')));
-          const pinColor = isGps ? "#10b981" : "#ef4444";
+          const isHostingerBot = pin.visits.some(v => (v.isp && v.isp.toLowerCase().includes('hostinger')) || (v.page && v.page.includes('LSCWP_CTRL')));
+          const pinColor = isHostingerBot ? "#a855f7" : (isGps ? "#10b981" : "#ef4444");
           const radius = Math.min(7 + pin.count * 2, 24);
           const circle = window.L.circleMarker([pin.lat, pin.lon], {
             radius: radius,
@@ -538,7 +540,7 @@
           }).addTo(map);
           circle.bindPopup(`
             <div style="font-family:sans-serif; min-width:140px;">
-              ${isGps ? '<div style="color:#10b981; font-weight:800; font-size:11px; margin-bottom:3px;">🟢 LIVE GPS VERIFIED</div>' : ''}
+              ${isHostingerBot ? '<div style="color:#c084fc; font-weight:800; font-size:10px; margin-bottom:3px; background:rgba(168,85,247,0.15); padding:2px 6px; border-radius:4px; display:inline-block;">🤖 HOSTINGER UK BOT</div>' : (isGps ? '<div style="color:#10b981; font-weight:800; font-size:11px; margin-bottom:3px;">🟢 LIVE GPS VERIFIED</div>' : '')}
               <b>📍 ${escapeHtml(pin.city)}</b><br>
               <span style="font-size:12px; color:#475569;">${pin.count} visit${pin.count > 1 ? "s" : ""}</span><br>
               <small style="color:#64748b; font-family:monospace;">${pin.visits[0].ip || ""}</small>
