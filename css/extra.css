@@ -758,3 +758,329 @@ body.mubien-modal-open .btr-loc-prompt,
   }
 }
 
+
+
+/* ==========================================================================
+   INTERACTIVE BRAND ROI & VALUATION ESTIMATOR (VIRAL TRAFFIC & LEAD ENGINE)
+   ========================================================================== */
+.btr-roi-section {
+  padding: 90px 0;
+  position: relative;
+  background: #0d0d0d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btr-roi-card {
+  background: radial-gradient(circle at 80% 20%, rgba(230, 163, 62, 0.08), transparent 40%),
+              radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.06), transparent 40%),
+              #141414;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.btr-roi-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 44px;
+}
+
+.btr-roi-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(230, 163, 62, 0.12);
+  color: #e6a33e;
+  border: 1px solid rgba(230, 163, 62, 0.3);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.btr-roi-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e6a33e;
+  box-shadow: 0 0 8px #e6a33e;
+  animation: btrPillPulse 2s infinite;
+}
+
+.btr-roi-title {
+  font-size: clamp(26px, 3.4vw, 42px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.btr-roi-subtitle {
+  font-size: clamp(14px, 1.2vw, 16.5px);
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.btr-roi-body {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.btr-roi-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.btr-roi-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btr-roi-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btr-roi-num {
+  font-family: monospace;
+  font-size: 11px;
+  color: #e6a33e;
+  background: rgba(230, 163, 62, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btr-roi-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btr-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.btr-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btr-chip.active {
+  background: linear-gradient(135deg, rgba(230, 163, 62, 0.2), rgba(230, 163, 62, 0.08));
+  border-color: #e6a33e;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(230, 163, 62, 0.25);
+}
+
+.btr-results-box {
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 100px;
+}
+
+.btr-score-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btr-score-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btr-score-status {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 4px;
+}
+
+.btr-score-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 163, 62, 0.25), rgba(230, 163, 62, 0.05));
+  border: 2px solid #e6a33e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: #e6a33e;
+  box-shadow: 0 0 20px rgba(230, 163, 62, 0.35);
+  flex-shrink: 0;
+}
+
+.btr-score-circle small {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-left: 1px;
+}
+
+.btr-roi-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.btr-metric-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.btr-metric-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.btr-metric-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: #38bdf8;
+  margin: 6px 0 2px;
+}
+
+.btr-metric-sub {
+  font-size: 10px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.btr-metric-banner {
+  background: linear-gradient(135deg, rgba(230, 163, 62, 0.15), rgba(56, 189, 248, 0.1));
+  border: 1px solid rgba(230, 163, 62, 0.3);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+
+.btr-banner-label {
+  font-size: 11.5px;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.btr-banner-val {
+  font-size: 22px;
+  font-weight: 900;
+  color: #e6a33e;
+  margin-top: 4px;
+}
+
+.btr-roi-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btr-btn-roi-wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #25D366;
+  color: #0b2b16;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 14px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btr-btn-roi-wa:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+  color: #0b2b16;
+}
+
+.btr-btn-roi-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btr-btn-roi-share:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+@media screen and (max-width: 991px) {
+  .btr-roi-body {
+    grid-template-columns: 1fr;
+  }
+  .btr-roi-card {
+    padding: 32px 24px;
+  }
+  .btr-results-box {
+    position: static;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .btr-roi-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .btr-chip {
+    width: 100%;
+    text-align: left;
+  }
+}

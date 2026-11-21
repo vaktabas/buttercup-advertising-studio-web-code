@@ -2716,4 +2716,107 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(s);
   }
 
+  // =========================================================================
+  // BRAND ROI & VALUATION CALCULATOR (VIRAL TRAFFIC & LEAD CAPTURE ENGINE)
+  // =========================================================================
+  function initBrandRoiCalculator() {
+    const calcSection = document.getElementById('brand-calculator');
+    if (!calcSection) return;
+
+    let selectedIndustry = 'FMCG & Packaged Foods';
+    let baseScore = 94;
+    let liftVal = '+65% to +140%';
+    let marginVal = '+28% to +45%';
+    let selectedStage = 'New Product Launch (0 to 1)';
+    let selectedTurnover = '₹1 Crore – ₹10 Crores';
+    let revenueVal = '₹85 Lakhs – ₹2.4 Crores';
+
+    function updateCalculator() {
+      let finalScore = baseScore;
+      if (selectedTurnover.includes('100 Crores')) finalScore = Math.min(99, finalScore + 3);
+      else if (selectedTurnover.includes('Under')) finalScore = Math.max(82, finalScore - 5);
+
+      const scoreEl = document.getElementById('roiScoreVal');
+      const statusEl = document.getElementById('roiScoreStatus');
+      const liftEl = document.getElementById('roiLiftVal');
+      const marginEl = document.getElementById('roiMarginVal');
+      const revEl = document.getElementById('roiRevenueUpside');
+      const waBtn = document.getElementById('roiWhatsAppBtn');
+
+      if (scoreEl) scoreEl.textContent = finalScore;
+      if (statusEl) {
+        if (finalScore >= 95) statusEl.textContent = 'Global Benchmark Potential';
+        else if (finalScore >= 90) statusEl.textContent = 'Category Leader Potential';
+        else statusEl.textContent = 'High Growth Opportunity';
+      }
+      if (liftEl) liftEl.textContent = liftVal;
+      if (marginEl) marginEl.textContent = marginVal;
+      if (revEl) revEl.textContent = revenueVal;
+
+      if (waBtn) {
+        const text = encodeURIComponent(
+          `Hi Sneha & Buttercup Team! I just calculated my Brand Market Power Score (${finalScore}/100) on buttercup.in.\n\n` +
+          `• Industry: ${selectedIndustry}\n` +
+          `• Stage: ${selectedStage}\n` +
+          `• Turnover: ${selectedTurnover}\n` +
+          `• Estimated Upside: ${revenueVal}\n\n` +
+          `I would like to consult on my packaging & rebranding strategy with Buttercup Studio!`
+        );
+        waBtn.href = `https://api.whatsapp.com/send?phone=919925034404&text=${text}`;
+      }
+    }
+
+    const indChips = document.querySelectorAll('#roiIndustryChips .btr-chip');
+    indChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        indChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedIndustry = chip.getAttribute('data-industry') || chip.textContent.trim();
+        baseScore = parseInt(chip.getAttribute('data-score') || '94', 10);
+        liftVal = chip.getAttribute('data-lift') || '+65% to +140%';
+        marginVal = chip.getAttribute('data-margin') || '+28% to +45%';
+        updateCalculator();
+      });
+    });
+
+    const stageChips = document.querySelectorAll('#roiStageChips .btr-chip');
+    stageChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        stageChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedStage = chip.getAttribute('data-stage') || chip.textContent.trim();
+        updateCalculator();
+      });
+    });
+
+    const turnChips = document.querySelectorAll('#roiTurnoverChips .btr-chip');
+    turnChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        turnChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedTurnover = chip.getAttribute('data-turnover') || chip.textContent.trim();
+        revenueVal = chip.getAttribute('data-revenue') || '₹85 Lakhs – ₹2.4 Crores';
+        updateCalculator();
+      });
+    });
+
+    updateCalculator();
+  }
+
+  initBrandRoiCalculator();
+
+  window.shareCalculatorTool = function() {
+    const shareData = {
+      title: 'Buttercup Brand Power & Packaging ROI Calculator',
+      text: 'Calculate your brand market power score and packaging revenue upside in 60 seconds with Buttercup Studio Ahmedabad:',
+      url: 'https://buttercup.in/#brand-calculator'
+    };
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+    } else {
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareData.text + ' ' + shareData.url)}`;
+      window.open(waUrl, '_blank');
+    }
+  };
+
 });

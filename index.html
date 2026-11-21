@@ -1396,6 +1396,107 @@ a,
         </div>
       </div>
     </section>
+
+    <!-- INTERACTIVE BRAND ROI & VALUATION ESTIMATOR (VIRAL TRAFFIC & HIGH-TICKET LEAD ENGINE) -->
+    <section class="section is-full btr-roi-section" id="brand-calculator" aria-label="Brand ROI and Packaging Valuation Calculator">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="btr-roi-card">
+          <div class="btr-roi-header">
+            <div class="btr-roi-tag">
+              <span class="btr-roi-pulse"></span>
+              <span>Proprietary Brand Intelligence Engine</span>
+            </div>
+            <h2 class="btr-roi-title">Calculate Your Brand Market Power &amp; Packaging ROI</h2>
+            <p class="btr-roi-subtitle">
+              Discover your brand's competitive shelf score, estimated margin upside, and projected revenue growth from strategic rebranding in 60 seconds.
+            </p>
+          </div>
+
+          <div class="btr-roi-body">
+            <!-- Left Side: Interactive Input Controls -->
+            <div class="btr-roi-controls">
+              <!-- Question 1: Industry -->
+              <div class="btr-roi-group">
+                <label class="btr-roi-label"><span class="btr-roi-num">01</span> Select Your Industry Vertical</label>
+                <div class="btr-roi-chips" id="roiIndustryChips">
+                  <button type="button" class="btr-chip active" data-industry="FMCG &amp; Packaged Foods" data-score="94" data-lift="+65% to +140%" data-margin="+28% to +45%">🥫 FMCG &amp; Packaged Foods</button>
+                  <button type="button" class="btr-chip" data-industry="Luxury &amp; Fine Jewelry" data-score="96" data-lift="+45% to +90%" data-margin="+40% to +65%">💎 Luxury &amp; Fine Jewelry</button>
+                  <button type="button" class="btr-chip" data-industry="Real Estate &amp; Hospitality" data-score="91" data-lift="+35% to +75%" data-margin="+20% to +35%">🏢 Real Estate &amp; Hospitality</button>
+                  <button type="button" class="btr-chip" data-industry="Cosmetics &amp; Pharma" data-score="95" data-lift="+55% to +120%" data-margin="+35% to +50%">🌿 Cosmetics &amp; Pharma</button>
+                  <button type="button" class="btr-chip" data-industry="D2C &amp; Consumer Tech" data-score="93" data-lift="+50% to +110%" data-margin="+30% to +45%">⚡ D2C &amp; Consumer Tech</button>
+                </div>
+              </div>
+
+              <!-- Question 2: Current Stage -->
+              <div class="btr-roi-group">
+                <label class="btr-roi-label"><span class="btr-roi-num">02</span> Current Brand Evolution Stage</label>
+                <div class="btr-roi-chips" id="roiStageChips">
+                  <button type="button" class="btr-chip active" data-stage="New Product Launch (0 to 1)">🚀 New Product Launch (0 to 1)</button>
+                  <button type="button" class="btr-chip" data-stage="Scaling Brand (10x Growth)">🔄 Scale &amp; Rebrand (10x Growth)</button>
+                  <button type="button" class="btr-chip" data-stage="Supermarket Shelf Packaging Redesign">🛒 Supermarket Shelf Overhaul</button>
+                </div>
+              </div>
+
+              <!-- Question 3: Annual Turnover -->
+              <div class="btr-roi-group">
+                <label class="btr-roi-label"><span class="btr-roi-num">03</span> Target Annual Turnover</label>
+                <div class="btr-roi-chips" id="roiTurnoverChips">
+                  <button type="button" class="btr-chip" data-turnover="Under ₹1 Crore" data-revenue="₹25 Lakhs – ₹50 Lakhs">🌱 Under ₹1 Crore</button>
+                  <button type="button" class="btr-chip active" data-turnover="₹1 Crore – ₹10 Crores" data-revenue="₹85 Lakhs – ₹2.4 Crores">📈 ₹1 Crore – ₹10 Crores</button>
+                  <button type="button" class="btr-chip" data-turnover="₹10 Crores – ₹100 Crores+" data-revenue="₹3.5 Crores – ₹14 Crores">🏆 ₹10 Crores – ₹100 Crores+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Live Visual Results Gauge & Action Box -->
+            <div class="btr-roi-results">
+              <div class="btr-results-box">
+                <div class="btr-score-header">
+                  <div>
+                    <div class="btr-score-label">Brand Market Power Score</div>
+                    <div class="btr-score-status" id="roiScoreStatus">Category Leader Potential</div>
+                  </div>
+                  <div class="btr-score-circle">
+                    <span id="roiScoreVal">94</span><small>/100</small>
+                  </div>
+                </div>
+
+                <div class="btr-roi-metrics-grid">
+                  <div class="btr-metric-item">
+                    <div class="btr-metric-label">Estimated Shelf Conversion Lift</div>
+                    <div class="btr-metric-val" id="roiLiftVal">+65% to +140%</div>
+                    <div class="btr-metric-sub">Based on Buttercup FMCG benchmark data</div>
+                  </div>
+                  <div class="btr-metric-item">
+                    <div class="btr-metric-label">Pricing Margin Headroom</div>
+                    <div class="btr-metric-val" id="roiMarginVal">+28% to +45%</div>
+                    <div class="btr-metric-sub">Customer willingness-to-pay increase</div>
+                  </div>
+                </div>
+
+                <div class="btr-metric-banner">
+                  <div class="btr-banner-label">Projected Annual Revenue Upside from Packaging:</div>
+                  <div class="btr-banner-val" id="roiRevenueUpside">₹85 Lakhs – ₹2.4 Crores</div>
+                </div>
+
+                <!-- Action Buttons: WhatsApp Consultation + Share Tool -->
+                <div class="btr-roi-actions">
+                  <a href="https://api.whatsapp.com/send?phone=919925034404&amp;text=Hi%20Sneha%20%26%20Buttercup%20Team!%20I%20just%20calculated%20my%20Brand%20Power%20Score%20(94%2F100)%20for%20my%20FMCG%20brand%20on%20buttercup.in.%20I%20would%20like%20to%20consult%20on%20packaging%20%26%20brand%20strategy." id="roiWhatsAppBtn" target="_blank" rel="noopener" class="btr-btn-roi-wa">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.312.082.427-.049.115-.131.492-.574.623-.771.131-.197.262-.164.443-.098.18.066 1.148.541 1.345.64.197.098.328.147.377.23.049.082.049.475-.095.88z"/></svg>
+                    <span>Claim Custom Brand Strategy Blueprint on WhatsApp</span>
+                  </a>
+                  <button type="button" id="roiShareBtn" class="btr-btn-roi-share" onclick="shareCalculatorTool()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                    <span>Share Calculator with Co-Founder / Team</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section is-full review-section">
       <div class="w-layout-blockcontainer container is-full w-container">
         <div class="padding-base">
