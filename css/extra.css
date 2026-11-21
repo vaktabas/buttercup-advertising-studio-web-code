@@ -777,12 +777,18 @@ body.mubien-modal-open .btr-loc-prompt,
    INTERACTIVE BRAND ROI & VALUATION ESTIMATOR (LUXURY LIGHT-GREY ARCHITECTURAL THEME)
    ========================================================================== */
 .btr-roi-section {
-  padding: 56px 0 64px;
-  position: relative;
-  background: #ffffff;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  color: #0f172a;
+  padding-top: clamp(52px, 5.5vw, 72px) !important;
+  padding-bottom: clamp(52px, 5.5vw, 72px) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+  background: #ffffff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  color: #0f172a !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .btr-roi-section .container,

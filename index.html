@@ -407,7 +407,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700&display=swap">
   </noscript>
   <link rel="stylesheet" href="css/site.css?v=39">
-  <link rel="stylesheet" href="css/extra.css?v=231">
+  <link rel="stylesheet" href="css/extra.css?v=232">
   <link rel="stylesheet" href="css/loader.css?v=9">
   <link rel="stylesheet" href="css/gravity-home.css?v=32">
   <link rel="stylesheet" href="css/mubien-nav.css?v=161">
@@ -430,14 +430,26 @@
       transform: translateY(0) !important;
     }
 
-    /* Brand ROI Calculator: Full-Width Section & Light-Grey Card */
+    /* Brand ROI Calculator: Symmetrical Full-Width Section & Light-Grey Card */
     .btr-roi-section {
+      padding-top: clamp(52px, 5.5vw, 72px) !important;
+      padding-bottom: clamp(52px, 5.5vw, 72px) !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin: 0 !important;
       background: #ffffff !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+      position: relative !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     .btr-roi-section .container,
     .btr-roi-section .container.is-full {
       max-width: 1400px !important;
       width: 100% !important;
+      margin: 0 auto !important;
+      padding: 0 clamp(16px, 3.5vw, 48px) !important;
     }
     .btr-roi-card {
       background: #f1f4f8 !important;
@@ -1432,7 +1444,7 @@ a,
     </section>
 
     <!-- INTERACTIVE BRAND ROI & VALUATION ESTIMATOR (VIRAL TRAFFIC & HIGH-TICKET LEAD ENGINE) -->
-    <section class="section is-full btr-roi-section" id="brand-calculator" aria-label="Brand ROI and Packaging Valuation Calculator">
+    <section class="btr-roi-section" id="brand-calculator" aria-label="Brand ROI and Packaging Valuation Calculator">
       <div class="w-layout-blockcontainer container is-full w-container" style="max-width: 1400px; margin: 0 auto; padding: 0 clamp(16px, 3.5vw, 48px);">
         <div class="btr-roi-card">
           <div class="btr-roi-header">
@@ -2316,7 +2328,7 @@ a,
     </button>
   </nav>
 
-  <script src="js/main.js?v=231" defer></script>
+  <script src="js/main.js?v=232" defer></script>
   <script src="js/fluidbg.js?v=2" defer></script>
   <script src="js/ai-assistant.js?v=127" defer></script>
   <script src="js/loader.js?v=6" defer></script>
