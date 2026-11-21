@@ -1553,7 +1553,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Intelligent Scroll Visibility & Footer Avoidance
       function updateFloatingPillPosition() {
         const stageEl = document.getElementById('stage') || document.querySelector('.stage') || document.querySelector('header');
-        const heroHeight = stageEl ? (stageEl.offsetHeight || 500) : 450;
+        const heroHeight = Math.max(stageEl ? stageEl.offsetHeight : 0, window.innerHeight * 0.85, 550);
         const scrollY = window.scrollY || window.pageYOffset;
 
         // 1. Show ONLY after hero section (hidden on hero fold)

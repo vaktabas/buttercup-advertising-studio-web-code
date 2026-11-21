@@ -407,7 +407,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700&display=swap">
   </noscript>
   <link rel="stylesheet" href="css/site.css?v=39">
-  <link rel="stylesheet" href="css/extra.css?v=170">
+  <link rel="stylesheet" href="css/extra.css?v=210">
   <link rel="stylesheet" href="css/loader.css?v=9">
   <link rel="stylesheet" href="css/gravity-home.css?v=32">
   <link rel="stylesheet" href="css/mubien-nav.css?v=161">
@@ -416,6 +416,20 @@
   <link rel="stylesheet" href="css/ai-assistant.css?v=125" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/editor.css?v=7" media="print" onload="this.media='all'">
   <link rel="preload" as="image" href="images/gravity/portrait.jpg?v=p4" fetchpriority="high">
+
+  <style>
+    /* WhatsApp Floating Pill: Hidden on Hero Fold, Appears Only After Scroll */
+    .btr-floating-wa-pill {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(20px) !important;
+    }
+    .btr-floating-wa-pill.is-visible {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateY(0) !important;
+    }
+  </style>
 
   <!-- AI Agent Standards: RFC 8288 Link targets & WebMCP Tools -->
   <link rel="describedby" type="text/markdown" href="/llms.txt">
@@ -739,7 +753,7 @@ a,
 
             <h1 class="om-name">Sneha Vakta Shah</h1>
 
-            <p class="om-role">creative director &amp; <span class="om-rolle-zwei">founder</span></p>
+            <p class="om-role">Founder &amp; <span class="om-rolle-zwei">Brand Strategist</span></p>
           </div>
 
           <p class="om-claim" id="claim">Brand Strategy · Brand Identity · Brand Communication · Ahmedabad</p>
@@ -2284,7 +2298,7 @@ a,
     </button>
   </nav>
 
-  <script src="js/main.js?v=190" defer></script>
+  <script src="js/main.js?v=210" defer></script>
   <script src="js/fluidbg.js?v=2" defer></script>
   <script src="js/ai-assistant.js?v=127" defer></script>
   <script src="js/loader.js?v=6" defer></script>
