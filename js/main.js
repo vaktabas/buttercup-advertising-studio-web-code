@@ -1267,13 +1267,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="btr-wa-square-tag">
           <span class="btr-wa-live-dot" aria-hidden="true"></span>
-          <span>Creative Director Online Now</span>
+          <span>Brand Strategist Online Now</span>
         </div>
 
         <h3 class="btr-wa-square-title">Get Free Brand Consultation</h3>
 
         <p class="btr-wa-square-desc">
-          Planning a new brand, packaging, or rebranding in 2026? Connect directly with Sneha Vakta Shah (Founder) on WhatsApp:
+          Planning a new brand, packaging, or rebranding in 2026? Connect directly with Sneha Vakta Shah (Founder &amp; Strategy Lead) on WhatsApp:
         </p>
 
         <form class="btr-wa-form" id="btrWaForm">
@@ -1543,12 +1543,45 @@ document.addEventListener("DOMContentLoaded", () => {
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
           <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-2.18-.544-1.897-.788-3.123-2.73-3.218-2.855-.095-.125-.774-1.03-.774-1.963 0-.933.489-1.39.664-1.58.175-.19.382-.238.51-.238.127 0 .254.002.366.007.118.005.277-.045.433.329.162.389.553 1.348.602 1.446.049.098.082.213.017.342-.066.129-.098.21-.195.326-.098.116-.205.259-.293.348-.098.098-.201.206-.086.403.115.197.51 0.841 1.092 1.36 0.75 0.668 1.382.875 1.579.973.197.098.328.147.377.23.049.082.049.475-.095.88z"/>
         </svg>
-        <span>Chat with Creative Director</span>
+        <span>Discuss Your Project</span>
       `;
       floatPill.addEventListener('click', () => {
         showModal();
       });
       document.body.appendChild(floatPill);
+
+      // Intelligent Scroll Visibility & Footer Avoidance
+      function updateFloatingPillPosition() {
+        const stageEl = document.getElementById('stage') || document.querySelector('.stage') || document.querySelector('header');
+        const heroHeight = stageEl ? (stageEl.offsetHeight || 500) : 450;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        // 1. Show ONLY after hero section (hidden on hero fold)
+        if (scrollY > heroHeight * 0.75) {
+          floatPill.classList.add('is-visible');
+        } else {
+          floatPill.classList.remove('is-visible');
+        }
+
+        // 2. As footer enters viewport, push pill up with the page content
+        const footer = document.querySelector('footer.rwl-footer') || document.querySelector('footer#contact') || document.querySelector('footer:last-of-type');
+        if (footer) {
+          const footerRect = footer.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const baseBottom = window.innerWidth <= 767 ? 18 : 24;
+
+          if (footerRect.top < windowHeight) {
+            const overlap = windowHeight - footerRect.top;
+            floatPill.style.bottom = (baseBottom + overlap) + 'px';
+          } else {
+            floatPill.style.bottom = '';
+          }
+        }
+      }
+
+      window.addEventListener('scroll', updateFloatingPillPosition, { passive: true });
+      window.addEventListener('resize', updateFloatingPillPosition, { passive: true });
+      updateFloatingPillPosition();
     }
   }
 

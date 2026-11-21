@@ -710,7 +710,7 @@ body.mubien-modal-open .btr-loc-prompt,
   align-items: center;
   gap: 8px;
   padding: 10px 18px 10px 14px;
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -720,8 +720,21 @@ body.mubien-modal-open .btr-loc-prompt,
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(37, 211, 102, 0.25);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              bottom 0.12s ease-out;
   user-select: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.btr-floating-wa-pill.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .btr-floating-wa-pill:hover {
