@@ -6,6 +6,9 @@ Content-Signal: search=yes, ai-train=no
 User-agent: Googlebot
 Allow: /
 
+User-agent: Google-Favicon
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 
