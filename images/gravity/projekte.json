@@ -1,15 +1,15 @@
 [
   {
-    "projekt": "Structure & Soul — Architectural Monograph & Editorial Design",
+    "projekt": "Velvet Social — Omnichannel Social Commerce & Influencer Activation Engine",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Editorial Design & Architectural Monograph",
+    "award": "Social Media Commerce & Influencer Marketing",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/studio-verra.html",
+    "link": "projects/beatitude.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-08.jpg",
+        "datei": "images/gravity/work-08.jpg?v=20",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -17,16 +17,16 @@
     ]
   },
   {
-    "projekt": "Annual Report 2023 — Sustainable Corporate Brand Narrative",
+    "projekt": "Obsidian Luxe — High-Impact Global Outdoor Billboard & Transit Campaign",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Corporate Communications & Editorial Design",
+    "award": "Billboard Advertising & Global Campaign Launch",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/enlight.html",
+    "link": "projects/noir-supply-co.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-01.jpg",
+        "datei": "images/gravity/work-01.jpg?v=20",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -34,16 +34,16 @@
     ]
   },
   {
-    "projekt": "Sustainable Cities 2024 — Interactive Digital Experience & ESG Narrative",
+    "projekt": "PureBotanica — Shelf-Conversion Packaging Design & FMCG Launch Campaign",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Digital Experience & Sustainability Storytelling",
+    "award": "FMCG Commercial Packaging & Visual Identity",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/ecoforest.html",
+    "link": "projects/grabz.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-02.jpg",
+        "datei": "images/gravity/work-02.jpg?v=20",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -51,33 +51,33 @@
     ]
   },
   {
-    "projekt": "Green Energy & Impact Report — Infographics & Editorial Design",
+    "projekt": "Apex Growth — High-ROAS Performance Marketing & Funnel Optimization Suite",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Information Architecture & Data Visualization",
+    "award": "Performance Marketing & Digital Funnel Strategy",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/enlight.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-03.jpg",
-        "w": 1200,
-        "h": 896,
-        "orbit": true
-      }
-    ]
-  },
-  {
-    "projekt": "SaaS Analytics & Cloud Ecosystem — Enterprise Dashboard UI/UX",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "FinTech UI/UX & Enterprise Product Design",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 2.6,
     "link": "projects/coin-dhan.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-04.jpg",
+        "datei": "images/gravity/work-03.jpg?v=20",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Kinetic Pulse — 3D Generative Motion Graphics & Commercial TVC Identity",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "3D Brand Identity & Kinetic Commercial Production",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 2.6,
+    "link": "projects/velvet-orbit.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-04.jpg?v=20",
         "w": 1376,
         "h": 768,
         "orbit": true
@@ -85,33 +85,16 @@
     ]
   },
   {
-    "projekt": "Velvet Orbit — Generative 3D Visual Identity & Motion Design",
+    "projekt": "Aura Skincare — D2C E-Commerce Brand Launch & Social Video Campaign",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Generative 3D Motion & Creative Technology",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/velvet-orbit.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-05.jpg",
-        "w": 1200,
-        "h": 896,
-        "orbit": true
-      }
-    ]
-  },
-  {
-    "projekt": "Crafted Precision 2024 — Artisanal Brand Identity & Custom Binding",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Luxury Print Production & Identity Design",
+    "award": "D2C Brand Strategy & Omnichannel Creative Direction",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
     "link": "projects/cinder-ash.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-06.jpg",
+        "datei": "images/gravity/work-05.jpg?v=20",
         "w": 1200,
         "h": 896,
         "orbit": true
@@ -119,33 +102,50 @@
     ]
   },
   {
-    "projekt": "Crafting Creative Futures — Omnichannel Digital Agency Platform",
+    "projekt": "Studio Genesis — Brand Architecture, Consumer Psychology & Identity Blueprint",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Brand Strategy & Web Experience Design",
+    "award": "Brand Positioning & Market Strategy War Room",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "pages/services/brand-strategy/index.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-06.jpg?v=20",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Vardhman Heritage — Luxury High-Jewelry Editorial Advertising & Brand Book",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Luxury Editorial Advertising & High-Ticket Print",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 1.28,
+    "link": "projects/noir-supply-co.html",
+    "bilder": [
+      {
+        "datei": "images/gravity/work-07.jpg?v=20",
+        "w": 1200,
+        "h": 896,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Noir Cacao — Supermarket Shelf Overhaul & Gourmet Brand Repositioning",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Retail Shelf Impact & Gourmet Packaging Rebrand",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
     "link": "projects/grabz.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-07.jpg",
-        "w": 1200,
-        "h": 896,
-        "orbit": true
-      }
-    ]
-  },
-  {
-    "projekt": "Spatial Architecture & Corporate Headquarters — Environmental Branding",
-    "rolle": "Buttercup Advertising Studio",
-    "award": "Spatial Branding & Architectural Wayfinding",
-    "fotocredit": null,
-    "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/studio-verra.html",
-    "bilder": [
-      {
-        "datei": "images/gravity/work-09.jpg",
+        "datei": "images/gravity/work-09.jpg?v=20",
         "w": 1024,
         "h": 1024,
         "orbit": true
@@ -153,16 +153,16 @@
     ]
   },
   {
-    "projekt": "Modern Identity & Kinetic Guidelines — Enterprise Brand Architecture",
+    "projekt": "Nexus AI — Global Product Keynote, Visual Identity & Commercial Launch",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Brand Architecture & Identity Systems",
+    "award": "Commercial Product Keynote & Global Identity Launch",
     "fotocredit": null,
     "heureka": false,
     "groesse": 1.28,
-    "link": "projects/beatitude.html",
+    "link": "projects/studio-verra.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-10.jpg",
+        "datei": "images/gravity/work-10.jpg?v=20",
         "w": 1024,
         "h": 1024,
         "orbit": true
