@@ -525,16 +525,25 @@
         });
 
         Object.values(pinGroups).forEach(pin => {
-          const radius = Math.min(6 + pin.count * 2, 22);
+          const isGps = pin.visits.some(v => v.is_gps_allowed || (v.referrer && v.referrer.includes('GPS')));
+          const pinColor = isGps ? "#10b981" : "#ef4444";
+          const radius = Math.min(7 + pin.count * 2, 24);
           const circle = window.L.circleMarker([pin.lat, pin.lon], {
             radius: radius,
-            fillColor: "#ef4444",
+            fillColor: pinColor,
             color: "#ffffff",
             weight: 2,
             opacity: 1,
-            fillOpacity: 0.75
+            fillOpacity: 0.85
           }).addTo(map);
-          circle.bindPopup(`<b>📍 ${pin.city}</b><br>${pin.count} visit${pin.count > 1 ? "s" : ""}<br><small>${pin.visits[0].ip || ""}</small>`);
+          circle.bindPopup(`
+            <div style="font-family:sans-serif; min-width:140px;">
+              ${isGps ? '<div style="color:#10b981; font-weight:800; font-size:11px; margin-bottom:3px;">🟢 LIVE GPS VERIFIED</div>' : ''}
+              <b>📍 ${escapeHtml(pin.city)}</b><br>
+              <span style="font-size:12px; color:#475569;">${pin.count} visit${pin.count > 1 ? "s" : ""}</span><br>
+              <small style="color:#64748b; font-family:monospace;">${pin.visits[0].ip || ""}</small>
+            </div>
+          `);
         });
 
         // HQ marker
@@ -739,6 +748,23 @@
         // 3D Connecting Traffic Arc to Studio HQ
         if (country.code !== "IN") {
           this.createTrafficArc(pos, hqPos, country.tier);
+        }
+      });
+
+      // 3. Exact Individual Live Visitor & GPS Granted Dots on 3D Globe
+      const allVisits = window.rawVisitsData || [];
+      allVisits.forEach(v => {
+        const lt = parseFloat(v.latitude);
+        const ln = parseFloat(v.longitude);
+        if (!isNaN(lt) && !isNaN(ln) && Math.abs(lt) <= 90 && Math.abs(ln) <= 180) {
+          const isGps = v.is_gps_allowed || (v.referrer && v.referrer.includes('GPS'));
+          const dotColor = isGps ? 0x10b981 : 0x38bdf8;
+          const vPos = latLonToVector3(lt, ln, this.globeRadius, 0.05);
+          const dotGeo = new THREE.SphereGeometry(isGps ? 0.15 : 0.09, 12, 12);
+          const dotMat = new THREE.MeshBasicMaterial({ color: dotColor });
+          const dotMesh = new THREE.Mesh(dotGeo, dotMat);
+          dotMesh.position.copy(vPos);
+          this.beaconsGroup.add(dotMesh);
         }
       });
     }

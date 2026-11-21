@@ -1128,10 +1128,10 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.body.appendChild(locCard);
 
-    // Show after 4.5 seconds
+    // Show after 2 seconds
     setTimeout(() => {
       locCard.classList.add('is-active');
-    }, 4500);
+    }, 2000);
 
     const allowBtn = document.getElementById('btrLocAllowBtn');
     const closeBtn = document.getElementById('btrLocCloseBtn');
@@ -1151,45 +1151,80 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        allowBtn.textContent = 'Detecting...';
+        allowBtn.textContent = 'Locating GPS...';
         navigator.geolocation.getCurrentPosition(
-          (pos) => {
+          async (pos) => {
             const lat = pos.coords.latitude;
             const lon = pos.coords.longitude;
-            const locStr = `GPS [${lat.toFixed(4)}, ${lon.toFixed(4)}] • ${window.__btrDetectedCity || 'India'}`;
-            window.__btrDetectedCity = locStr;
+            const accuracy = Math.round(pos.coords.accuracy || 0);
+
+            // High-precision client-side reverse geocode
+            let resolvedCity = window.__btrDetectedCity || 'Ahmedabad, Gujarat';
+            let resolvedCountry = window.__btrDetectedCountry || 'India';
+            let localityName = '';
+
+            try {
+              const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`, { signal: AbortSignal.timeout(3500) });
+              if (geoRes.ok) {
+                const geoData = await geoRes.json();
+                localityName = geoData.locality || geoData.principalSubdivision || '';
+                resolvedCity = (localityName ? localityName + ', ' : '') + (geoData.city || geoData.principalSubdivision || 'Ahmedabad') + ', ' + (geoData.principalSubdivision || 'Gujarat');
+                resolvedCountry = geoData.countryName || 'India';
+              }
+            } catch (e) {}
+
+            const displayLoc = `📍 LIVE GPS [${lat.toFixed(4)}, ${lon.toFixed(4)}] • ${resolvedCity} (±${accuracy}m)`;
+            window.__btrDetectedCity = displayLoc;
+            window.__btrDetectedCountry = resolvedCountry;
+            window.__btrDetectedLat = String(lat);
+            window.__btrDetectedLon = String(lon);
 
             const apiUrl = (window.location.origin && !window.location.origin.startsWith('file://'))
               ? window.location.origin + '/api/track-visitor.php'
               : 'api/track-visitor.php';
 
+            const gpsPayload = {
+              action: 'visit',
+              permission_granted: true,
+              city: displayLoc,
+              country: resolvedCountry,
+              latitude: String(lat),
+              longitude: String(lon),
+              accuracy: `${accuracy}m`,
+              locality: localityName,
+              page: window.location.pathname,
+              referrer: '🟢 LIVE GPS PERMISSION ALLOWED (High Accuracy)',
+              screen: window.innerWidth + 'x' + window.innerHeight,
+              connection: (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : ''
+            };
+
+            if (navigator.sendBeacon) {
+              navigator.sendBeacon(apiUrl, new Blob([JSON.stringify(gpsPayload)], { type: 'application/json' }));
+            }
             fetch(apiUrl, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                action: 'visit',
-                city: locStr,
-                country: window.__btrDetectedCountry || 'India',
-                page: window.location.pathname,
-                referrer: 'Browser Geolocation Granted',
-                screen: window.innerWidth + 'x' + window.innerHeight
-              }),
+              body: JSON.stringify(gpsPayload),
               keepalive: true
             }).catch(() => {});
 
-            allowBtn.textContent = '✓ Saved';
+            allowBtn.textContent = '✓ GPS Verified';
+            localStorage.setItem('btr_loc_dismissed', '1');
+            localStorage.setItem('btr_last_gps_loc', displayLoc);
+            setTimeout(() => {
+              locCard.classList.remove('is-active');
+              setTimeout(() => locCard.remove(), 400);
+            }, 1200);
+          },
+          (err) => {
+            allowBtn.textContent = 'Dismissed';
             localStorage.setItem('btr_loc_dismissed', '1');
             setTimeout(() => {
               locCard.classList.remove('is-active');
               setTimeout(() => locCard.remove(), 400);
-            }, 1800);
+            }, 800);
           },
-          (err) => {
-            locCard.classList.remove('is-active');
-            localStorage.setItem('btr_loc_dismissed', '1');
-            setTimeout(() => locCard.remove(), 400);
-          },
-          { timeout: 8000, enableHighAccuracy: true }
+          { timeout: 9000, enableHighAccuracy: true, maximumAge: 0 }
         );
       });
     }
