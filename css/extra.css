@@ -1344,12 +1344,16 @@ html, body {
   #gravityHome .om-brand {
     top: 18px !important;
     left: 18px !important;
+    height: 28px !important;
+    max-width: 130px !important;
   }
 
   nav.om-nav {
     top: 18px !important;
     right: 18px !important;
     gap: 12px !important;
+    height: 28px !important;
+    line-height: 28px !important;
   }
 
   #gravityHome .om-brand,
@@ -1360,6 +1364,25 @@ html, body {
     visibility: visible !important;
   }
 }
+
+/* Enhanced Hero Brand Logo Sizing */
+#gravityHome .om-brand {
+  height: 36px !important;
+  max-width: 160px !important;
+  width: auto !important;
+}
+
+nav.om-nav {
+  height: 36px !important;
+  line-height: 36px !important;
+}
+
+@media (min-width: 641px) {
+  html.logo-gedockt #gravityHome .om-brand.is-da {
+    transform: translate3d(76px, 0, 0) !important;
+  }
+}
+
 
 
 

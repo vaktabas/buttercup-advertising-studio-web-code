@@ -806,7 +806,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         ty: ruhe.ty + dockScrollY
       };
     }
-    var targetH = 26;
+    var targetH = window.innerWidth <= 640 ? 28 : 36;
     var targetScale = targetH / logoH;
     var dockLeft = brandDockLinks();
     var dockTop = brandDockOben();
