@@ -1233,13 +1233,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="btr-wa-square-tag">
           <span class="btr-wa-live-dot" aria-hidden="true"></span>
-          <span>Brand Strategist Online Now</span>
+          <span>Creative Director Online Now</span>
         </div>
 
         <h3 class="btr-wa-square-title">Get Free Brand Consultation</h3>
 
         <p class="btr-wa-square-desc">
-          Planning a new brand, packaging, or rebranding in 2026? Connect directly with Sneha Vakta Shah (Founder &amp; Strategy Lead) on WhatsApp:
+          Planning a new brand, packaging, or rebranding in 2026? Connect directly with Sneha Vakta Shah (Founder &amp; Creative Director) on WhatsApp:
         </p>
 
         <form class="btr-wa-form" id="btrWaForm">
