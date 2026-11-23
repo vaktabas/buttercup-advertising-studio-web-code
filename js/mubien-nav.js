@@ -525,11 +525,12 @@
     // Project metadata mapping
     const projectMap = {
       'grabz': { name: 'Grabz', img: 'images/case-studies/grabz/01.jpeg?v=2', url: 'projects/eon-studio.html' },
-      'parishram': { name: 'Parishram', img: 'images/695e499a92e98299e150ee22_Woman-with-Mug-1-.avif?v=85', url: 'projects/cinder-ash.html' },
-      'vilasa-ambrosia': { name: 'Vilasa Ambrosia', img: 'images/6961242d2c0ccd5e3eed4dfa_Profile-with-Stylish-Cap-1.avif?v=85', url: 'projects/studio-verra.html' },
-      'tastycrafts': { name: 'Tastycrafts', img: 'images/696ebcc5e2d94872a67dd519_Stylish-Red-Sunglasses.avif?v=85', url: 'projects/atlas-bloom.html' },
-      'youra': { name: 'Youra', img: 'images/695e49e91636af5755512ee2_Close-up-of-Handbag-and-Hand-1-.avif?v=85', url: 'projects/form-theory.html' },
-      'ymca': { name: 'YMCA', img: 'images/695e4a0f4c389489ae730c54_Rhinestone-Hair-Art-1-.avif?v=85', url: 'projects/kindred-haus.html' },
+      'parishram': { name: 'Parishram', img: 'images/case-studies/parishram/Parishram-2.jpg?v=1', url: 'projects/cinder-ash.html' },
+      'vilasa-ambrosia': { name: 'Vilasa Ambrosia', img: 'images/case-studies/vilasa-ambrosia/Villasa-10.jpg?v=1', url: 'projects/studio-verra.html' },
+      'tastycrafts': { name: 'Tastycrafts', img: 'images/case-studies/tastycrafts/Tastycrafts-1.jpg?v=1', url: 'projects/atlas-bloom.html' },
+      'youra': { name: 'Youra', img: 'images/case-studies/youra/Youra-1.jpg?v=1', url: 'projects/form-theory.html' },
+      'niruplus': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=1', url: 'projects/niruplus.html' },
+      'ymca': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=1', url: 'projects/niruplus.html' },
       'vardhman': { name: 'Vardhman', img: 'images/695e4a26a5c9556e865cabb6_Portrait-with-Red-Background-1-.avif?v=85', url: 'projects/noir-supply-co.html' },
       'aegis': { name: 'Aegis', img: 'images/695e4a3687ebcd95e93aeff9_Green-Butterfly-Close-Up-1-.avif?v=85', url: 'projects/velvet-orbit.html' }
     };
