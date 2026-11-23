@@ -208,34 +208,17 @@
       document.body.appendChild(drawer);
     }
 
-    // 3. Floating Bottom Capsule Pill Bar
-    let pillBar = document.querySelector('.mubien-pill-bar');
-    if (!pillBar) {
-      pillBar = document.createElement('nav');
-      pillBar.className = 'mubien-pill-bar';
-      pillBar.setAttribute('aria-label', 'Floating Project Navigation');
-      pillBar.innerHTML = `
-        <div class="mubien-pill-badge" id="mubienPillBadge" title="Buttercup Studio">
-          <span class="badge-text" id="mubienBadgeText">BAS</span>
-        </div>
-        <a href="${resolvePath('pages/case-studies/index.html')}" class="mubien-pill-text-link" id="mubienPillLink">
-          <span class="mubien-pill-text" id="mubienPillText">Explore Selected Work</span>
-        </a>
-        <button class="mubien-menu-btn" id="mubienMenuBtn" aria-label="Toggle menu" aria-expanded="false">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </button>
-      `;
-      document.body.appendChild(pillBar);
+    // 3. Floating Bottom Capsule Pill Bar (Removed per user request)
+    const pillBar = document.querySelector('.mubien-pill-bar');
+    if (pillBar) {
+      pillBar.remove();
     }
-
-    // Elements
-    const menuBtn = pillBar.querySelector('#mubienMenuBtn');
+    const menuBtn = null;
     const closeBtn = drawer.querySelector('#mubienDrawerCloseBtn');
-    const pillBadge = pillBar.querySelector('#mubienPillBadge');
-    const pillText = pillBar.querySelector('#mubienPillText');
-    const pillLink = pillBar.querySelector('#mubienPillLink');
-    const badgeText = pillBar.querySelector('#mubienBadgeText');
+    const pillBadge = null;
+    const pillText = null;
+    const pillLink = null;
+    const badgeText = null;
     const aiCard = drawer.querySelector('#mubienAiCard');
     const playReelBtn = drawer.querySelector('#mubienPlayReelBtn');
 
@@ -246,7 +229,7 @@
       isOpen = true;
       const locPrompt = document.getElementById('btrLocPrompt');
       if (locPrompt) locPrompt.classList.remove('is-active');
-      pillBar.classList.add('is-open');
+      if (pillBar) pillBar.classList.add('is-open');
       drawer.classList.add('is-open');
       backdrop.classList.add('is-visible');
       document.documentElement.classList.add('mubien-modal-open');
@@ -254,12 +237,14 @@
       if (window.lenis && typeof window.lenis.stop === 'function') {
         window.lenis.stop();
       }
-      menuBtn.setAttribute('aria-expanded', 'true');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+      const headerBtn = document.getElementById('headerMenuBtn');
+      if (headerBtn) headerBtn.setAttribute('aria-expanded', 'true');
     }
 
     function closeMenu() {
       isOpen = false;
-      pillBar.classList.remove('is-open');
+      if (pillBar) pillBar.classList.remove('is-open');
       drawer.classList.remove('is-open');
       backdrop.classList.remove('is-visible');
       document.documentElement.classList.remove('mubien-modal-open');
@@ -267,7 +252,9 @@
       if (window.lenis && typeof window.lenis.start === 'function') {
         window.lenis.start();
       }
-      menuBtn.setAttribute('aria-expanded', 'false');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+      const headerBtn = document.getElementById('headerMenuBtn');
+      if (headerBtn) headerBtn.setAttribute('aria-expanded', 'false');
     }
 
     function toggleMenu() {
@@ -296,21 +283,35 @@
       e.stopPropagation();
     }, { passive: false });
 
-    menuBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      toggleMenu();
-    });
+    if (menuBtn) {
+      menuBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleMenu();
+      });
+    }
 
-    // Support top hero header menu button
-    document.addEventListener('click', e => {
-      const headerBtn = e.target && e.target.closest ? e.target.closest('#headerMenuBtn, [data-action="open-menu"]') : null;
-      if (headerBtn) {
+    // Direct and capture-phase listener for top hero header menu button
+    const headerBtn = document.getElementById('headerMenuBtn');
+    if (headerBtn) {
+      headerBtn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+      });
+    }
+
+    window.addEventListener('click', e => {
+      const targetMenu = e.target && e.target.closest ? e.target.closest('#headerMenuBtn, [data-action="open-menu"], [data-action="toggle-menu"]') : null;
+      if (targetMenu) {
         e.preventDefault();
         e.stopPropagation();
         toggleMenu();
       }
-    });
+    }, true);
 
+    window.openButtercupMenu = openMenu;
+    window.closeButtercupMenu = closeMenu;
+    window.toggleButtercupMenu = toggleMenu;
     window.mubienNav = {
       openMenu,
       closeMenu,

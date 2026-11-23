@@ -1183,4 +1183,44 @@ body.mubien-modal-open .btr-loc-prompt,
   vertical-align: middle !important;
 }
 
+/* Hide bottom capsule pill navigation completely per user request */
+.mubien-pill-bar,
+.mubien-pill-bar * {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* Ensure top header nav remains accessible and on top when scrolled */
+nav.om-nav {
+  z-index: 999990 !important;
+  pointer-events: auto !important;
+}
+
+button.om-nav-menu-link {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+html.in-web2-full #gravityHome nav.om-nav {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  z-index: 999990 !important;
+}
+
+html.in-web2-full #gravityHome .om-brand {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  z-index: 999990 !important;
+}
+
+
 

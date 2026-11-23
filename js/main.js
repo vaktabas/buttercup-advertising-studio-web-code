@@ -1645,11 +1645,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (menuTrigger) {
         e.preventDefault();
         e.stopPropagation();
-        if (window.mubienNav && typeof window.mubienNav.toggleMenu === 'function') {
+        if (typeof window.toggleButtercupMenu === 'function') {
+          window.toggleButtercupMenu(e);
+        } else if (window.mubienNav && typeof window.mubienNav.toggleMenu === 'function') {
           window.mubienNav.toggleMenu();
-        } else {
-          const btn = document.getElementById('mubienMenuBtn');
-          if (btn) btn.click();
         }
       }
     });
