@@ -1119,8 +1119,9 @@ body.mubien-modal-open .btr-loc-prompt,
    ========================================================================== */
 .om-nav-menu-link {
   display: inline-flex !important;
+  flex-direction: row !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 9px !important;
   font-size: 13.5px !important;
   letter-spacing: 0.08em !important;
   font-weight: 600 !important;
@@ -1130,7 +1131,8 @@ body.mubien-modal-open .btr-loc-prompt,
   cursor: pointer !important;
   height: 26px !important;
   line-height: 26px !important;
-  padding: 0 4px !important;
+  padding: 0 !important;
+  position: relative !important;
   transition: color 0.3s ease, opacity 0.25s ease, transform 0.2s ease !important;
 }
 
@@ -1139,26 +1141,46 @@ body.mubien-modal-open .btr-loc-prompt,
   transform: translateY(-1px) !important;
 }
 
+.om-nav-menu-link .om-menu-text {
+  display: inline-block !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+  color: inherit !important;
+  flex-shrink: 0 !important;
+}
+
 .om-nav-menu-link .om-menu-bars {
   display: inline-flex !important;
-  align-items: center !important;
+  flex-direction: column !important;
   justify-content: center !important;
+  align-items: center !important;
+  gap: 3.5px !important;
   width: 18px !important;
   height: 14px !important;
-  line-height: 1 !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
 }
 
-.om-nav-menu-link .om-menu-bars svg {
+.om-nav-menu-link .om-menu-bars .om-bar {
   display: block !important;
-  stroke: currentColor !important;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 18px !important;
+  height: 1.5px !important;
+  background-color: currentColor !important;
+  border-radius: 1px !important;
+  opacity: 0.9 !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
 }
 
-.om-nav-menu-link:hover .om-menu-bars svg {
-  transform: scale(1.12) !important;
+.om-nav-menu-link:hover .om-menu-bars .om-bar:nth-child(1) {
+  transform: translateY(-1px) !important;
+}
+
+.om-nav-menu-link:hover .om-menu-bars .om-bar:nth-child(3) {
+  transform: translateY(1px) !important;
 }
 
 .rwl-password-btn svg {
   vertical-align: middle !important;
 }
+
 
