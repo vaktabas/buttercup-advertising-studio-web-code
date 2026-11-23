@@ -1113,3 +1113,52 @@ body.mubien-modal-open .btr-loc-prompt,
     text-align: left;
   }
 }
+
+/* ==========================================================================
+   HERO HEADER MENU BUTTON & FOOTER LOGIN
+   ========================================================================== */
+.om-nav-menu-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13.5px !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  height: 26px !important;
+  line-height: 26px !important;
+  padding: 0 4px !important;
+  transition: color 0.3s ease, opacity 0.25s ease, transform 0.2s ease !important;
+}
+
+.om-nav-menu-link:hover {
+  opacity: 0.8 !important;
+  transform: translateY(-1px) !important;
+}
+
+.om-nav-menu-link .om-menu-bars {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 14px !important;
+  line-height: 1 !important;
+}
+
+.om-nav-menu-link .om-menu-bars svg {
+  display: block !important;
+  stroke: currentColor !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.om-nav-menu-link:hover .om-menu-bars svg {
+  transform: scale(1.12) !important;
+}
+
+.rwl-password-btn svg {
+  vertical-align: middle !important;
+}
+

@@ -1555,9 +1555,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4. HOME PAGE LOGIN MODAL (Password: branding@gmail.com -> admin/leads.html)
   // =========================================================================
   function initHomeLoginModal() {
-    const loginLink = document.getElementById('homeLoginBtn');
-    if (!loginLink) return;
-
     let modalOverlay = document.getElementById('btrHomeLoginOverlay');
     if (!modalOverlay) {
       modalOverlay = document.createElement('div');
@@ -1629,13 +1626,32 @@ document.addEventListener("DOMContentLoaded", () => {
       modalOverlay.setAttribute('aria-hidden', 'true');
     }
 
-    loginLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.__btrWaSuppressed = true;
-      if (typeof window.__btrDismissWhatsAppPopup === 'function') {
-        window.__btrDismissWhatsAppPopup();
+    // Direct and delegated listener for Home Login button (in footer or elsewhere)
+    document.addEventListener('click', (e) => {
+      const el = e.target && e.target.closest ? e.target.closest('#homeLoginBtn, [data-action="open-login"], [href*="admin-login"]') : null;
+      if (el) {
+        e.preventDefault();
+        window.__btrWaSuppressed = true;
+        if (typeof window.__btrDismissWhatsAppPopup === 'function') {
+          window.__btrDismissWhatsAppPopup();
+        }
+        openModal();
       }
-      openModal();
+    });
+
+    // Wire top hero menu button if clicked
+    document.addEventListener('click', (e) => {
+      const menuTrigger = e.target && e.target.closest ? e.target.closest('#headerMenuBtn, [data-action="open-menu"]') : null;
+      if (menuTrigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.mubienNav && typeof window.mubienNav.toggleMenu === 'function') {
+          window.mubienNav.toggleMenu();
+        } else {
+          const btn = document.getElementById('mubienMenuBtn');
+          if (btn) btn.click();
+        }
+      }
     });
 
     // Global listener: When anyone clicks/taps on Login (or any admin link/button), immediately suppress WhatsApp popup

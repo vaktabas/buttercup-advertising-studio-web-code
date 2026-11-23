@@ -301,6 +301,23 @@
       toggleMenu();
     });
 
+    // Support top hero header menu button
+    document.addEventListener('click', e => {
+      const headerBtn = e.target && e.target.closest ? e.target.closest('#headerMenuBtn, [data-action="open-menu"]') : null;
+      if (headerBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+      }
+    });
+
+    window.mubienNav = {
+      openMenu,
+      closeMenu,
+      toggleMenu,
+      isOpen: () => isOpen
+    };
+
     closeBtn.addEventListener('click', e => {
       e.stopPropagation();
       closeMenu();

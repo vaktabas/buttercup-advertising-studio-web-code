@@ -415,10 +415,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=TASA+Orbiter:wght@400;500;600;700&display=swap">
   </noscript>
   <link rel="stylesheet" href="css/site.css?v=39">
-  <link rel="stylesheet" href="css/extra.css?v=232">
+  <link rel="stylesheet" href="css/extra.css?v=233">
   <link rel="stylesheet" href="css/loader.css?v=9">
-  <link rel="stylesheet" href="css/gravity-home.css?v=32">
-  <link rel="stylesheet" href="css/mubien-nav.css?v=161">
+  <link rel="stylesheet" href="css/gravity-home.css?v=33">
+  <link rel="stylesheet" href="css/mubien-nav.css?v=162">
   <link rel="stylesheet" href="css/lenis.css">
   <link rel="stylesheet" href="css/swiper-bundle.min.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/ai-assistant.css?v=125" media="print" onload="this.media='all'">
@@ -858,7 +858,16 @@ a,
 
     <div class="mobile-header-blur" aria-hidden="true"></div>
     <nav class="om-nav" id="nav">
-      <a href="#admin-login" class="om-nav-ai-link" id="homeLoginBtn" aria-label="Portal Login">LOGIN</a>
+      <a href="#menu" class="om-nav-menu-link" id="headerMenuBtn" aria-label="Toggle Navigation Menu" role="button">
+        <span>MENU</span>
+        <span class="om-menu-bars" aria-hidden="true">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="1" y1="2" x2="17" y2="2"></line>
+            <line x1="1" y1="7" x2="17" y2="7"></line>
+            <line x1="1" y1="12" x2="17" y2="12"></line>
+          </svg>
+        </span>
+      </a>
     </nav>
 
     <svg class="om-bold-curve" id="boldCurve" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
@@ -2293,6 +2302,15 @@ a,
                 class="rwl-link" style="font-size:12px; display:inline;">Pricing</a></p>
           </div>
           <div class="rwl-bottom-right">
+            <button type="button" class="rwl-password-btn" id="homeLoginBtn" aria-label="Studio Master Portal Login">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              <span>Login</span>
+            </button>
             <button type="button" class="rwl-password-btn" id="rwlPasswordBtn" aria-label="Editor Access">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -2336,12 +2354,12 @@ a,
     </button>
   </nav>
 
-  <script src="js/main.js?v=236" defer></script>
+  <script src="js/main.js?v=237" defer></script>
   <script src="js/fluidbg.js?v=2" defer></script>
   <script src="js/ai-assistant.js?v=127" defer></script>
   <script src="js/loader.js?v=6" defer></script>
   <script src="js/editor.js?v=7" defer></script>
-  <script src="js/mubien-nav.js?v=161" defer></script>
+  <script src="js/mubien-nav.js?v=162" defer></script>
 </body>
 
 </html>
