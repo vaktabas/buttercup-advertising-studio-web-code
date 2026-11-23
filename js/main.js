@@ -1324,12 +1324,14 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.classList.remove('is-active');
       overlay.setAttribute('aria-hidden', 'true');
       if (autoHideTimer) clearTimeout(autoHideTimer);
+      markShownInSession();
     }
 
     // Expose global dismiss function: clicking LOGIN or opening portal cancels & hides WhatsApp popup
     window.__btrDismissWhatsAppPopup = function() {
       window.__btrWaSuppressed = true;
       hasTriggeredOnce = true;
+      markShownInSession();
       if (waPopupTimeout) clearTimeout(waPopupTimeout);
       hideModal();
     };
@@ -1456,48 +1458,41 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // High-Converting Multi-Trigger Lead Engine
-    // 1. Time Trigger: 6s (fast engagement before bounce)
-    // 2. Scroll Trigger: 28% scroll depth (engaged with portfolio)
-    // 3. Desktop Exit-Intent: user moves cursor to top of browser
-    const loadTime = Date.now();
-    let hasTriggeredOnce = false;
+    // User-Friendly Session-Capped Lead Engine:
+    // Only triggers ONCE per visitor session strictly after 12 seconds.
+    // If the visitor reloads or navigates, it will NOT irritate them again.
+    // If they close the browser tab and return later, a new session begins.
+    const WA_POPUP_SESSION_KEY = 'btr_wa_modal_shown_session';
+    function hasShownInSession() {
+      try {
+        return sessionStorage.getItem(WA_POPUP_SESSION_KEY) === '1';
+      } catch (e) {
+        return false;
+      }
+    }
+    function markShownInSession() {
+      try {
+        sessionStorage.setItem(WA_POPUP_SESSION_KEY, '1');
+      } catch (e) {}
+    }
+
+    let hasTriggeredOnce = hasShownInSession();
     let waPopupTimeout = null;
 
     function triggerLeadModal(source) {
-      if (hasTriggeredOnce || window.__btrWaSuppressed || isFooterInView()) return;
+      if (hasShownInSession() || hasTriggeredOnce || window.__btrWaSuppressed || isFooterInView()) return;
       hasTriggeredOnce = true;
+      markShownInSession();
       if (waPopupTimeout) clearTimeout(waPopupTimeout);
       showModal();
     }
 
-    // A. Time Trigger (6 seconds)
-    waPopupTimeout = setTimeout(() => {
-      triggerLeadModal('timer');
-    }, 6000);
-
-    // B. Scroll Trigger (28% scroll depth)
-    function checkScrollTrigger() {
-      if (isFooterInView() && overlay.classList.contains('is-active')) {
-        hideModal();
-        return;
-      }
-      if (!hasTriggeredOnce && !window.__btrWaSuppressed && !isFooterInView()) {
-        const scrollPercent = (window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        if (scrollPercent >= 28) {
-          triggerLeadModal('scroll');
-        }
-      }
+    // A. Time Trigger (strictly 12 seconds, once per session)
+    if (!hasShownInSession()) {
+      waPopupTimeout = setTimeout(() => {
+        triggerLeadModal('timer_12s');
+      }, 12000);
     }
-    window.addEventListener('scroll', checkScrollTrigger, { passive: true });
-
-    // C. Desktop Exit-Intent Trigger
-    function checkExitIntent(e) {
-      if (!hasTriggeredOnce && !window.__btrWaSuppressed && e.clientY <= 10) {
-        triggerLeadModal('exit_intent');
-      }
-    }
-    document.addEventListener('mouseleave', checkExitIntent);
 
     // Floating Luxury Quick-Trigger Pill (Bottom-Right)
     if (!document.getElementById('btrFloatingWaPill')) {
@@ -1512,6 +1507,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span>Discuss Your Project</span>
       `;
       floatPill.addEventListener('click', () => {
+        markShownInSession();
         showModal();
       });
       document.body.appendChild(floatPill);

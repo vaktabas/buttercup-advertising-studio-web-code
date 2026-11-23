@@ -65,7 +65,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   function ueberdeckung() {
     if (window.innerHeight <= window.innerWidth) return 1.12;
 
-    return window.innerWidth <= 640 ? 2.3 : 1.45;
+    return window.innerWidth <= 640 ? 1.55 : 1.45;
   }
   var scale = 1, offX = 0, offY = 0;
   var docked = false;

@@ -1273,5 +1273,94 @@ html.header-scrolled-away #gravityHome nav.om-nav {
   transform: translate3d(0, -220px, 0) !important;
 }
 
+/* ==========================================================================
+   Comprehensive Mobile Responsiveness & Overflow Protection
+   ========================================================================== */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+@media (max-width: 768px) {
+  /* Manifesto text: ensure legible line-height and no line collision */
+  .om-manifesto {
+    line-height: 1.18 !important;
+    font-size: clamp(24px, 6.8vw, 38px) !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Hero bottom bar: clean centered vertical stack on phones */
+  .om-fuss {
+    position: relative !important;
+    padding: 22px 0 18px !important;
+    background: var(--bg, #101010) !important;
+  }
+
+  .om-fuss-innen {
+    padding: 0 16px !important;
+  }
+
+  .om-fuss-zeile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+    padding: 12px 0 !important;
+    font-size: 12px !important;
+  }
+
+  .om-fuss-zeile > * {
+    justify-self: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .om-fuss-sozial {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Modal responsiveness on mobile screens */
+  .btr-wa-square-modal {
+    width: 92vw !important;
+    max-width: 380px !important;
+    padding: 24px 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --rand: 18px !important;
+    --nav-oben: 18px !important;
+    --brand-oben: 18px !important;
+  }
+
+  #gravityHome .om-brand {
+    top: 18px !important;
+    left: 18px !important;
+  }
+
+  nav.om-nav {
+    top: 18px !important;
+    right: 18px !important;
+    gap: 12px !important;
+  }
+
+  #gravityHome .om-brand,
+  #gravityHome .om-brand.is-da,
+  nav.om-nav,
+  nav.om-nav.is-da {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+
 
 
