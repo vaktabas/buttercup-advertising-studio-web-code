@@ -1208,78 +1208,7 @@ button.om-nav-menu-link {
   pointer-events: auto !important;
 }
 
-html.in-web2-full #gravityHome nav.om-nav {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-  z-index: 999990 !important;
-}
-
-html.in-web2-full #gravityHome .om-brand {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-  z-index: 999990 !important;
-}
-
-/* Persistent Header Logo & Menu across all content sections */
-html.logo-gedockt #stage,
-html.in-web2-full #stage {
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: none !important;
-  transform: translate3d(0, var(--header-shift, 0px), 0) !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease !important;
-  will-change: transform;
-}
-
-html.logo-gedockt #gravityHome .om-brand.is-da,
-html.in-web2-full #gravityHome .om-brand.is-da {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-  z-index: 999991 !important;
-}
-
-html.logo-gedockt #gravityHome #svg,
-html.in-web2-full #gravityHome #svg {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  z-index: 999991 !important;
-}
-
-html.logo-gedockt nav.om-nav.is-da,
-html.in-web2-full nav.om-nav.is-da,
-nav.om-nav.is-da {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-  z-index: 999992 !important;
-  transform: translate3d(0, var(--header-shift, 0px), 0) !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, color 0.4s ease !important;
-  will-change: transform;
-}
-
-/* Hide logo and menu when scrolled into footer */
-html.header-scrolled-away #stage,
-html.header-scrolled-away nav.om-nav,
-html.header-scrolled-away #gravityHome .om-brand,
-html.header-scrolled-away #gravityHome #svg,
-html.header-scrolled-away #gravityHome nav.om-nav {
-  visibility: hidden !important;
-  pointer-events: none !important;
-  opacity: 0 !important;
-  transform: translate3d(0, -220px, 0) !important;
-}
-
-/* ==========================================================================
-   Comprehensive Mobile Responsiveness & Overflow Protection
-   ========================================================================== */
-html, body {
-  overflow-x: hidden !important;
-  max-width: 100vw !important;
-}
+/* Natural scrolling: header logo and menu naturally scroll away as user enters content */
 
 @media (max-width: 768px) {
   /* Manifesto text: ensure legible line-height and no line collision */

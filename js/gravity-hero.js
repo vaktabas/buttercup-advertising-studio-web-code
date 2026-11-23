@@ -936,19 +936,12 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
   }
 
   function updateHeaderShift() {
-    var footerEl = document.querySelector('.rwl-footer') ||
-                   document.querySelector('.fy-footer') ||
-                   document.getElementById('contact');
-    if (!footerEl) {
-      document.documentElement.style.setProperty('--header-shift', '0px');
-      document.documentElement.classList.remove('header-scrolled-away');
-      return;
-    }
-    var fr = footerEl.getBoundingClientRect();
-    var H_START = 120;
-    var shift = fr.top < H_START ? Math.max(-260, Math.round(fr.top - H_START)) : 0;
+    if (!web2El) return;
+    var wr = web2El.getBoundingClientRect();
+    var H_START = 180;
+    var shift = wr.top < H_START ? Math.max(-260, Math.round(wr.top - H_START)) : 0;
     document.documentElement.style.setProperty('--header-shift', shift + 'px');
-    document.documentElement.classList.toggle('header-scrolled-away', shift <= -100 || fr.top <= 0);
+    document.documentElement.classList.toggle('header-scrolled-away', shift <= -220);
   }
 
   function checkScrollState() {
