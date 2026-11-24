@@ -5,6 +5,23 @@
  * selected work, archive, news, marquee) + cursor follower, tabs, video lightbox.
  */
 
+// Google Analytics 4 (GA4) Global Site-wide Tracking
+(function () {
+  if (window.__btr_ga_loaded) return;
+  window.__btr_ga_loaded = true;
+  if (!document.querySelector('script[src*="googletagmanager.com/gtag/js?id=G-B0TJGH67H7"]')) {
+    var gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-B0TJGH67H7';
+    document.head.appendChild(gaScript);
+  }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', 'G-B0TJGH67H7');
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // =========================================================================
