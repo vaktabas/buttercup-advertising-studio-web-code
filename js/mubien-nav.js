@@ -100,19 +100,6 @@
           </div>
         </a>
 
-        <!-- Card 3: Agency Reel (Full Width) -->
-        <div class="mubien-card is-full-width mubien-reel-card" id="mubienPlayReelBtn">
-          <img src="${resolvePath('images/695e462c6800fa6b436a7470_Women-Collaborating-1.avif')}" alt="Agency Reel" class="mubien-reel-video-thumb">
-          <div class="mubien-reel-overlay">
-            <div class="mubien-reel-label">Play Reel • 2026</div>
-            <div class="mubien-reel-play-btn" aria-label="Play Reel">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            </div>
-          </div>
-        </div>
-
         <!-- Card 4: Slide To Contact Us (Real Interactive Draggable Slider) -->
         <div class="mubien-contact-slider" id="mubienContactSlider" role="slider" aria-label="Slide to contact us" tabindex="0">
           <div class="mubien-contact-track-fill" id="mubienSliderFill"></div>
@@ -220,7 +207,6 @@
     const pillLink = null;
     const badgeText = null;
     const aiCard = drawer.querySelector('#mubienAiCard');
-    const playReelBtn = drawer.querySelector('#mubienPlayReelBtn');
 
     // Menu Open/Close Logic
     let isOpen = false;
@@ -347,19 +333,6 @@
         } else {
           const aiBtn = document.getElementById('openAiAssistantBtn') || document.querySelector('[data-action="open-ai"]');
           if (aiBtn) aiBtn.click();
-        }
-      });
-    }
-
-    // Play Reel trigger
-    if (playReelBtn) {
-      playReelBtn.addEventListener('click', () => {
-        closeMenu();
-        const videoBtn = document.querySelector('.play-button, .w-lightbox');
-        if (videoBtn) {
-          videoBtn.click();
-        } else {
-          window.scrollTo({ top: 300, behavior: 'smooth' });
         }
       });
     }
