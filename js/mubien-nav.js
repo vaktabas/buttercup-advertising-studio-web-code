@@ -515,13 +515,15 @@
 
     // Project metadata mapping
     const projectMap = {
+      'tastycrafts': { name: 'Tastycrafts', img: 'images/case-studies/tastycrafts/Tastycrafts-1.jpg?v=2', url: 'projects/atlas-bloom.html' },
+      'sunflex': { name: 'Sunflex', img: 'images/case-studies/sunflex/Sunflex-1.jpg?v=2', url: 'projects/sunflex.html' },
+      'niruplus': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=2', url: 'projects/niruplus.html' },
+      'r-pramodchand': { name: 'R Pramodchand', img: 'images/case-studies/r-pramodchand/RP-1.jpg?v=2', url: 'projects/r-pramodchand.html' },
       'grabz': { name: 'Grabz', img: 'images/case-studies/grabz/01.jpeg?v=2', url: 'projects/eon-studio.html' },
       'parishram': { name: 'Parishram', img: 'images/case-studies/parishram/Parishram-2.jpg?v=1', url: 'projects/cinder-ash.html' },
       'vilasa-ambrosia': { name: 'Vilasa Ambrosia', img: 'images/case-studies/vilasa-ambrosia/Villasa-10.jpg?v=1', url: 'projects/studio-verra.html' },
-      'tastycrafts': { name: 'Tastycrafts', img: 'images/case-studies/tastycrafts/Tastycrafts-1.jpg?v=1', url: 'projects/atlas-bloom.html' },
       'youra': { name: 'Youra', img: 'images/case-studies/youra/Youra-1.jpg?v=1', url: 'projects/form-theory.html' },
-      'niruplus': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=1', url: 'projects/niruplus.html' },
-      'ymca': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=1', url: 'projects/niruplus.html' },
+      'ymca': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=2', url: 'projects/niruplus.html' },
       'vardhman': { name: 'Vardhman', img: 'images/695e4a26a5c9556e865cabb6_Portrait-with-Red-Background-1-.avif?v=85', url: 'projects/noir-supply-co.html' },
       'aegis': { name: 'Aegis', img: 'images/695e4a3687ebcd95e93aeff9_Green-Butterfly-Close-Up-1-.avif?v=85', url: 'projects/velvet-orbit.html' }
     };
