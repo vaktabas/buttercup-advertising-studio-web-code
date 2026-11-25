@@ -520,7 +520,7 @@
       'niruplus': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=2', url: 'projects/niruplus.html' },
       'r-pramodchand': { name: 'R Pramodchand', img: 'images/case-studies/r-pramodchand/RP-1.jpg?v=2', url: 'projects/r-pramodchand.html' },
       'grabz': { name: 'Grabz', img: 'images/case-studies/grabz/01.jpeg?v=2', url: 'projects/eon-studio.html' },
-      'parishram': { name: 'Parishram', img: 'images/case-studies/parishram/Parishram-2.jpg?v=1', url: 'projects/cinder-ash.html' },
+      'parishram': { name: 'Parishram', img: 'images/case-studies/parishram/Parishram-1.jpg?v=2', url: 'projects/cinder-ash.html' },
       'vilasa-ambrosia': { name: 'Vilasa Ambrosia', img: 'images/case-studies/vilasa-ambrosia/Villasa-1.jpg?v=2', url: 'projects/studio-verra.html' },
       'youra': { name: 'Youra', img: 'images/case-studies/youra/Youra-1.jpg?v=1', url: 'projects/form-theory.html' },
       'ymca': { name: 'Niruplus', img: 'images/case-studies/niruplus/Niruplus-1.jpg?v=2', url: 'projects/niruplus.html' },
