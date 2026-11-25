@@ -1254,171 +1254,188 @@
 
   var FALLBACK_PROJEKTE = [
   {
-    "projekt": "Polka Tots — Mindful Organic Baby Care & D2C Packaging",
+    "projekt": "Grabz — FMCG Snack Packaging Design & Brand Creation",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Sustainable D2C Packaging & Brand Architecture",
+    "award": "FMCG · Food · Vegetable Wafers",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/polka-tots.html",
+    "groesse": 1.15,
+    "link": "projects/eon-studio.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-08.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/grabz/01.jpeg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Grabz — FMCG Snack Packaging Design & Shelf Visibility",
+    "projekt": "Parishram — B2B Luxury Corporate Gifting Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "FMCG Commercial Packaging & Retail Design",
+    "award": "B2B · Corporate Gifting · Luxury Packaging",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/grabz.html",
+    "groesse": 0.78,
+    "link": "projects/cinder-ash.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-01.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/parishram/Parishram-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Senal Diamonds — Haute Joaillerie & Solitaire Brand Identity",
+    "projekt": "Vilasa Ambrosia — Ultra-Luxury Indian Tea Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Haute Joaillerie Identity & Luxury Packaging",
+    "award": "Luxury Living · Bespoke Crest & Packaging",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/senal-diamonds.html",
+    "groesse": 0.78,
+    "link": "projects/studio-verra.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-02.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/vilasa-ambrosia/Villasa-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Aloevella — Organic Botanical Skincare & D2C Packaging",
+    "projekt": "Tastycrafts — B2B Edible Decorations & Brand System",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Cosmetics Packaging & Sustainable Identity",
+    "award": "B2B Bakery · Edible Decorations",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/aloevella.html",
+    "groesse": 0.78,
+    "link": "projects/atlas-bloom.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-03.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/tastycrafts/Tastycrafts-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Titano LED — Architectural Lighting & Industrial Brand Identity",
+    "projekt": "Sunflex — Ballistic Rubber Products & Industrial Branding",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Architectural Brand Identity & Industrial Design",
+    "award": "Manufacturing · Ballistic Rubber Systems",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 2.6,
-    "link": "projects/titano-led.html",
+    "groesse": 0.78,
+    "link": "projects/sunflex.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-04.jpg?v=25",
-        "w": 1376,
-        "h": 768,
+        "datei": "images/case-studies/sunflex/Sunflex-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Beatitude — Handcrafted Luxury Apparel & Editorial Fashion",
+    "projekt": "Youra — Wellness Rituals & Mindful Brand Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Luxury Fashion Identity & Editorial Campaign",
+    "award": "Wellness · Mindful Consumer Identity",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/beatitude.html",
+    "groesse": 0.78,
+    "link": "projects/form-theory.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-05.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/youra/Youra-1.jpg?v=1",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Crispo — Modern Confectionery & FMCG Snack Packaging",
+    "projekt": "Niruplus — Agritech Piping Brand & Mascot Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Retail Food Packaging & Brand Strategy",
+    "award": "Agritech · Piping & Agricultural Identity",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/crispo.html",
+    "groesse": 0.78,
+    "link": "projects/niruplus.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-06.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/niruplus/Niruplus-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Jimmy — Bespoke Rigid Box Architecture & Luxury Confectionery",
+    "projekt": "R Pramodchand — Heritage Wealth Management Rebrand",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Luxury Box Architecture & Brand Identity",
+    "award": "Wealth Management · Financial Brand Architecture",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/jimmy.html",
+    "groesse": 0.78,
+    "link": "projects/r-pramodchand.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-07.jpg?v=25",
-        "w": 1200,
-        "h": 896,
+        "datei": "images/case-studies/r-pramodchand/RP-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Glogeous — Dermatological Skincare System & Clinical Packaging",
+    "projekt": "Cynosa — Bespoke Lifestyle Stationery Brand Identity",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Clinical Skincare Identity & Dispenser Packaging",
+    "award": "Stationery & Lifestyle · Craft Identity",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/glogeous.html",
+    "groesse": 0.78,
+    "link": "projects/cynosa.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-09.jpg?v=25",
-        "w": 1024,
-        "h": 1024,
+        "datei": "images/case-studies/cynosa/Cynosa-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
   },
   {
-    "projekt": "Maruti Barrier Films — Industrial Packaging & Polymer Systems",
+    "projekt": "Food & Faith — Mindful Nutrition FMCG Packaging",
     "rolle": "Buttercup Advertising Studio",
-    "award": "Industrial Brand Identity & Technical Packaging",
+    "award": "FMCG · Mindful Nutrition Packaging",
     "fotocredit": null,
     "heureka": false,
-    "groesse": 1.28,
-    "link": "projects/maruti-barrier-films.html",
+    "groesse": 0.78,
+    "link": "projects/food-and-faith.html",
     "bilder": [
       {
-        "datei": "images/gravity/work-10.jpg?v=25",
-        "w": 1024,
-        "h": 1024,
+        "datei": "images/case-studies/food-and-faith/FF-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
+        "orbit": true
+      }
+    ]
+  },
+  {
+    "projekt": "Spont — Creative Stationery Tools & Identity Design",
+    "rolle": "Buttercup Advertising Studio",
+    "award": "Stationery & Tools · Expressive Brand System",
+    "fotocredit": null,
+    "heureka": false,
+    "groesse": 0.78,
+    "link": "projects/spont.html",
+    "bilder": [
+      {
+        "datei": "images/case-studies/spont/Spont-1.jpg?v=2",
+        "w": 2400,
+        "h": 1601,
         "orbit": true
       }
     ]
@@ -1431,7 +1448,7 @@
       if (lokal.length) dann(lokal);
       return;
     }
-    fetch('images/gravity/projekte.json?v=25', { cache: 'no-cache' })
+    fetch('images/gravity/projekte.json?v=26', { cache: 'no-cache' })
       .then(function (a) {
         if (!a.ok) throw new Error('HTTP ' + a.status);
         return a.json();
