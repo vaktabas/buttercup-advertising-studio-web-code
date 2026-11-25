@@ -2490,7 +2490,7 @@
     var SPHERE_TARGET_R = 420, PERSPECTIVE = 1850;
     function updateSpokeSizing() {
 
-      SPHERE_TARGET_R = Math.max(380, Math.min(780, window.innerWidth * 0.42));
+      SPHERE_TARGET_R = window.innerWidth <= 640 ? Math.max(150, window.innerWidth * 0.36) : Math.max(380, Math.min(780, window.innerWidth * 0.42));
 
       PERSPECTIVE = SPHERE_TARGET_R * 3.0;
       var stages = document.querySelectorAll('#orbitBack .orbit-stage, #orbitFront .orbit-stage');

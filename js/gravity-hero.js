@@ -331,10 +331,12 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     boldSection.style.setProperty('--ring-s', (Math.pow(ringU, 1.3) * wachsen).toFixed(4));
     boldSection.style.setProperty('--punkt-s', (Math.pow(punktU, 1.3) * wachsen).toFixed(4));
 
+    var isMobileWidth = window.innerWidth <= 640;
+    var effMinR = (OHNE_KUGEL || isMobileWidth) ? 0 : MASK_MIN_R;
     var maxR = Math.hypot(window.innerWidth, vh) / 2 * 1.05;
-    var r = maxR + (MASK_MIN_R - maxR) * progress;
+    var r = maxR + (effMinR - maxR) * progress;
 
-    var col = collapseAmount(rawProgress);
+    var col = isMobileWidth ? 0 : collapseAmount(rawProgress);
     if (col > 0) {
       if (col < FLASH_PEAK) {
 
@@ -532,7 +534,7 @@ if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         document.documentElement.style.setProperty('--rein',
           clamp01(-rect.bottom / (vh * 0.8)).toFixed(3));
       }
-      var sicht = (ein * aus).toFixed(3);
+      var sicht = (window.innerWidth <= 640) ? '1' : (ein * aus).toFixed(3);
       constellation.style.opacity = sicht;
 
       if (kastenText) kastenText.style.setProperty('--kreis-sicht', sicht);
