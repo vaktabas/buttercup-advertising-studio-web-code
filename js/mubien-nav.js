@@ -38,7 +38,7 @@
   if (!document.querySelector('link[href*="mubien-nav.css"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = resolvePath('css/mubien-nav.css?v=161');
+    link.href = resolvePath('css/mubien-nav.css?v=164');
     document.head.appendChild(link);
   }
 
@@ -82,7 +82,7 @@
           </div>
           <div>
             <h3 class="mubien-card-title">Case Studies</h3>
-            <p class="mubien-card-subtitle">Selected Work (9 Projects)</p>
+            <p class="mubien-card-subtitle">Selected Work (11 Projects)</p>
           </div>
         </a>
 
