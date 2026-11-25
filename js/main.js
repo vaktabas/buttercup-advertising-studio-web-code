@@ -2342,26 +2342,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, true);
 
-    // 5. If user directly visits a /projects/*.html page, inject a top banner (skip for unlocked Grabz)
-    const isInsideProjectsFolder = window.location.pathname.includes('/projects/');
-    if (isInsideProjectsFolder) {
-      const isGrabz = window.location.pathname.includes('eon-studio.html') || window.location.pathname.includes('grabz');
-      if (!isGrabz) {
-        const existingBanner = document.querySelector(".project-cs-status-banner");
-        if (!existingBanner) {
-          const banner = document.createElement("div");
-          banner.className = "project-cs-status-banner";
-          const pageHeading = (document.querySelector("h1")?.textContent || "This Case Study").trim();
-          const pageCat = (document.querySelector(".project-header p, .project-detail-row p")?.textContent || "Case Study").trim();
-          banner.innerHTML = `
-            <span class="cs-banner-badge">Coming Soon</span>
-            <span>We are actively curating and mastering the strategic assets for <strong>${pageHeading}</strong>. Full case study will be published soon.</span>
-            <a href="../pages/case-studies/index.html">← Explore All Work</a>
-          `;
-          document.body.prepend(banner);
-        }
-      }
-    }
+    // 5. No "Coming Soon" banner needed — all 11 case studies are published and unlocked.
   }
 
   initCaseStudyComingSoon();
