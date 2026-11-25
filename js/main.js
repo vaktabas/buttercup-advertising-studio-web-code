@@ -2129,10 +2129,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const href = (pLink.getAttribute ? pLink.getAttribute('href') : '') || '';
         const pId = pLink.getAttribute ? pLink.getAttribute('data-project-id') : '';
         const text = (pLink.textContent || '').toLowerCase();
-        const isGrabz = href.includes('eon-studio.html') || href.includes('grabz') || pId === 'grabz' || text.includes('grabz');
+        const isUnlocked = href.includes('eon-studio.html') || href.includes('grabz') || pId === 'grabz' || text.includes('grabz') ||
+          href.includes('parishram') || href.includes('cinder-ash') || pId === 'parishram' ||
+          href.includes('vilasa') || href.includes('studio-verra') || pId === 'vilasa-ambrosia' ||
+          href.includes('tastycrafts') || href.includes('atlas-bloom') || pId === 'tastycrafts' ||
+          href.includes('sunflex') || pId === 'sunflex' ||
+          href.includes('niruplus') || pId === 'niruplus' ||
+          href.includes('r-pramodchand') || pId === 'r-pramodchand' ||
+          href.includes('youra') || href.includes('form-theory') || pId === 'youra' ||
+          href.includes('cynosa') || pId === 'cynosa' ||
+          href.includes('food-and-faith') || pId === 'food-and-faith' ||
+          href.includes('spont') || pId === 'spont' ||
+          (pLink.getAttribute && pLink.getAttribute('data-locked') === 'false');
         const cursors = document.querySelectorAll(".view-project-cursor");
         cursors.forEach((cur) => {
-          cur.innerHTML = isGrabz ? "<div>view<br/>case</div>" : "<div>coming<br/>soon</div>";
+          cur.innerHTML = isUnlocked ? "<div>view<br/>case</div>" : "<div>coming<br/>soon</div>";
         });
       }
     }, { passive: true });
