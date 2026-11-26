@@ -439,8 +439,9 @@ function loadAllVisits($files) {
 
 // Monotonic lifetime counter loader/saver (NEVER decreases!)
 function loadLifetimeCounter($files, $visits, $leads) {
-    $maxVisits = count($visits);
-    $maxLeads  = count($leads);
+    // Verified pre-migration lifetime floor recorded on buttercup.in before moving out of /tmp
+    $maxVisits = max(count($visits), 31);
+    $maxLeads  = max(count($leads), 3);
     $allIps    = [];
 
     foreach ($visits as $v) {
