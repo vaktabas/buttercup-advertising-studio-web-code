@@ -873,18 +873,18 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
 
-    var halfW = aspect >= 1.15 ? 4.95 : (aspect >= 0.8 ? 3.55 : 2.45);
-    var halfH = Math.max(halfW / aspect, 2.35);
+    var halfW = aspect >= 1.15 ? 5.15 : (aspect >= 0.8 ? 3.65 : 2.50);
+    var halfH = Math.max(halfW / aspect, 2.75);
     camera.aspect = aspect;
     camera.fov = 2 * Math.atan(halfH / CAM_Z) * 180 / Math.PI;
     camera.updateProjectionMatrix();
 
     if (aspect >= 1.15) {
-      /* Exact ascending left-to-right arc matching the reference layout */
-      layoutCfg.s1.set(-3.45, -1.52, 0.00); layoutCfg.k1 = 0.88;
-      layoutCfg.s2.set(-1.32, -0.02, 0.00); layoutCfg.k2 = 0.98;
-      layoutCfg.s3.set(0.82, -0.52, 0.20);  layoutCfg.k3 = 1.08;
-      layoutCfg.s4.set(2.78, 0.58, 0.45);   layoutCfg.k4 = 1.44;
+      /* Exact ascending left-to-right arc with generous top/bottom headroom */
+      layoutCfg.s1.set(-3.55, -1.70, 0.00); layoutCfg.k1 = 0.88;
+      layoutCfg.s2.set(-1.35, -0.18, 0.00); layoutCfg.k2 = 0.98;
+      layoutCfg.s3.set(0.82, -0.66, 0.20);  layoutCfg.k3 = 1.06;
+      layoutCfg.s4.set(2.78, 0.42, 0.45);   layoutCfg.k4 = 1.38;
     } else if (aspect >= 0.8) {
       layoutCfg.s1.set(-2.25, -1.55, 0.00); layoutCfg.k1 = 0.70;
       layoutCfg.s2.set(-0.82, -0.10, 0.00); layoutCfg.k2 = 0.78;
