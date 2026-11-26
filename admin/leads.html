@@ -842,6 +842,10 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Export Visitors Log
         </a>
+        <button class="btn btn-glass" onclick="syncPastTotal()" title="Sync historical total visits from Google Analytics / Hostinger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+          Sync Past Total
+        </button>
         <button class="btn btn-glass" onclick="fetchLiveData()" id="refreshBtn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           Refresh
@@ -1550,6 +1554,53 @@
       } else if (tab === "analytics") {
         document.getElementById("tabAnalyticsBtn").classList.add("active");
         document.getElementById("panelAnalytics").classList.add("active");
+      }
+    }
+
+    async function syncPastTotal() {
+      const currentTotal = document.getElementById("kpiVisits").innerText || "0";
+      const currentUnique = document.getElementById("kpiUnique").innerText || "0";
+      const totalInput = prompt(
+        "Google Analytics (G-B0TJGH67H7) ya Hostinger Analytics se abhi tak ke Total Site Visits dalein (Current: " + currentTotal + "):",
+        currentTotal
+      );
+      if (totalInput === null) return;
+      const parsedTotal = parseInt(totalInput.replace(/[^0-9]/g, ""), 10);
+      if (!parsedTotal || parsedTotal <= 0) {
+        alert("Please enter a valid number.");
+        return;
+      }
+      const uniqueInput = prompt(
+        "Abhi tak ke Total Unique Visitors dalein (Optional — blank chhod sakte hain, Current: " + currentUnique + "):",
+        currentUnique
+      );
+      const parsedUnique = uniqueInput ? parseInt(uniqueInput.replace(/[^0-9]/g, ""), 10) : 0;
+
+      try {
+        const res = await fetch("../api/track-visitor.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "set_baseline",
+            key: MASTER_PASSWORD,
+            total_visits: parsedTotal,
+            unique_visitors: parsedUnique || 0
+          })
+        });
+        const data = await res.json();
+        if (data && data.success) {
+          await fetchLiveData();
+          const toast = document.getElementById("toast");
+          if (toast) {
+            toast.innerText = "Permanent lifetime total synced: " + data.total_visits_logged + " visits!";
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3500);
+          }
+        } else {
+          alert("Sync failed: " + (data.error || "Unknown error"));
+        }
+      } catch (err) {
+        alert("Network error while syncing total.");
       }
     }
 

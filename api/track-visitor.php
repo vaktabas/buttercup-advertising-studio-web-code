@@ -442,6 +442,7 @@ function loadLifetimeCounter($files, $visits, $leads) {
     // Verified pre-migration lifetime floor recorded on buttercup.in before moving out of /tmp
     $maxVisits = max(count($visits), 31);
     $maxLeads  = max(count($leads), 3);
+    $minUnique = 0;
     $allIps    = [];
 
     foreach ($visits as $v) {
@@ -456,6 +457,9 @@ function loadLifetimeCounter($files, $visits, $leads) {
         if (!empty($c['total_leads_ever']) && is_numeric($c['total_leads_ever'])) {
             $maxLeads = max($maxLeads, (int)$c['total_leads_ever']);
         }
+        if (!empty($c['unique_visitors_floor']) && is_numeric($c['unique_visitors_floor'])) {
+            $minUnique = max($minUnique, (int)$c['unique_visitors_floor']);
+        }
         if (!empty($c['unique_ips']) && is_array($c['unique_ips'])) {
             foreach ($c['unique_ips'] as $ipStr) {
                 if ($ipStr) $allIps[$ipStr] = true;
@@ -464,10 +468,11 @@ function loadLifetimeCounter($files, $visits, $leads) {
     }
 
     return [
-        'total_visits_ever' => $maxVisits,
-        'total_leads_ever'  => $maxLeads,
-        'unique_ips'        => array_keys($allIps),
-        'updated_at'        => date('c')
+        'total_visits_ever'     => $maxVisits,
+        'total_leads_ever'      => $maxLeads,
+        'unique_visitors_floor' => max($minUnique, count($allIps)),
+        'unique_ips'            => array_keys($allIps),
+        'updated_at'            => date('c')
     ];
 }
 
@@ -562,212 +567,6 @@ if ($method === 'GET') {
             ]);
         }
         fclose($out);
-        exit;
-    }
-
-    // Admin-only historical server access log recovery (imports pre-vault visits from Hostinger logs)
-    if ($action === 'sync_access_logs') {
-        $providedKey = $_GET['key'] ?? '';
-        if (!hash_equals('branding@gmail.com', $providedKey)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
-            exit;
-        }
-
-        $docRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : realpath(__DIR__ . '/..');
-        $homeDir = getenv('HOME') ?: ($_SERVER['HOME'] ?? '');
-        $candidateLogDirs = [];
-        if ($docRoot) {
-            $d1 = dirname($docRoot);           // /home/uXXXX/domains/buttercup.in
-            $d2 = dirname($d1);                // /home/uXXXX/domains
-            $d3 = dirname($d2);                // /home/uXXXX
-            $candidateLogDirs[] = $d1 . '/logs';
-            $candidateLogDirs[] = $d1 . '/.logs';
-            $candidateLogDirs[] = $d3 . '/.logs';
-            $candidateLogDirs[] = $d3 . '/logs';
-            $candidateLogDirs[] = $d3 . '/access-logs';
-        }
-        if ($homeDir) {
-            $candidateLogDirs[] = rtrim($homeDir, '/') . '/.logs';
-            $candidateLogDirs[] = rtrim($homeDir, '/') . '/logs';
-        }
-        $candidateLogDirs = array_values(array_unique($candidateLogDirs));
-
-        $foundFiles = [];
-        $checkedDirs = [];
-        $discoveredEntries = [];
-        foreach ($candidateLogDirs as $ld) {
-            $readable = @is_dir($ld) && @is_readable($ld);
-            $checkedDirs[] = ['dir_exists' => @is_dir($ld), 'readable' => $readable, 'base' => basename($ld)];
-            if ($readable) {
-                $entries = @scandir($ld);
-                if (is_array($entries)) {
-                    foreach ($entries as $e) {
-                        if ($e === '.' || $e === '..') continue;
-                        $full = $ld . '/' . $e;
-                        if (@is_dir($full) && @is_readable($full)) {
-                            $subEntries = @scandir($full);
-                            $discoveredEntries[] = ['entry' => $e . '/', 'type' => 'dir', 'count' => is_array($subEntries) ? max(0, count($subEntries) - 2) : 0];
-                            if (is_array($subEntries)) {
-                                foreach ($subEntries as $se) {
-                                    if ($se === '.' || $se === '..') continue;
-                                    $subFull = $full . '/' . $se;
-                                    if (@is_file($subFull) && @is_readable($subFull)) {
-                                        $discoveredEntries[] = ['entry' => $e . '/' . $se, 'size' => @filesize($subFull)];
-                                        if (stripos($se, 'error') === false && stripos($e, 'error') === false) {
-                                            $foundFiles[] = $subFull;
-                                        }
-                                    }
-                                }
-                            }
-                        } elseif (@is_file($full) && @is_readable($full)) {
-                            $discoveredEntries[] = ['entry' => $e, 'size' => @filesize($full)];
-                            if (stripos($e, 'error') === false) {
-                                $foundFiles[] = $full;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        $botRegex = '/(bot|crawl|spider|slurp|mediapartners|facebookexternalhit|whatsapp|telegrambot|twitterbot|linkedinbot|discordbot|bingpreview|ahrefs|semrush|mj12|dotbot|petalbot|bytespider|gptbot|claudebot|yandex|baidu|duckduck|applebot|curl|wget|python|go-http|java\/|axios|node-fetch|headless|lighthouse|gtmetrix|pingdom|uptimerobot|statuscake|zgrab|censys|nmap|masscan|lscache|hostinger|before_optm)/i';
-        $assetRegex = '/\.(css|js|jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|otf|map|json|xml|txt|mp4|webm|mp3|pdf|zip|gz|php)(\?.*)?$/i';
-
-        $recoveredVisits = [];
-        $seenBucket = [];
-        $dailyCounts = [];
-        $trackerHits = 0;
-        $htmlHits = 0;
-        $totalLinesScanned = 0;
-
-        foreach ($foundFiles as $lf) {
-            $isGz = substr($lf, -3) === '.gz';
-            $fh = $isGz ? @gzopen($lf, 'rb') : @fopen($lf, 'rb');
-            if (!$fh) continue;
-            while (!($isGz ? gzeof($fh) : feof($fh))) {
-                $line = $isGz ? gzgets($fh, 8192) : fgets($fh, 8192);
-                if (!$line) continue;
-                $totalLinesScanned++;
-                // Apache/LiteSpeed Combined Log Format
-                if (!preg_match('/^(\S+)\s+\S+\s+\S+\s+\[([^\]]+)\]\s+"(GET|POST)\s+([^"\s]+)[^"]*"\s+(\d{3})\s+\S+(?:\s+"([^"]*)"\s+"([^"]*)")?/', $line, $m)) {
-                    continue;
-                }
-                $ip = $m[1];
-                $rawTime = $m[2];
-                $httpMethod = $m[3];
-                $reqPath = $m[4];
-                $status = (int)$m[5];
-                $ref = $m[6] ?? 'Direct / Bookmark';
-                $ua = $m[7] ?? '';
-
-                if ($status < 200 || $status >= 400) continue;
-                if ($ua && preg_match($botRegex, $ua)) continue;
-                if (stripos($reqPath, 'before_optm') !== false) continue;
-                if (stripos($reqPath, '/admin/') !== false) continue;
-
-                $isTrackerPost = ($httpMethod === 'POST' && stripos($reqPath, '/api/track-visitor.php') !== false);
-                $cleanPath = strtok($reqPath, '?');
-                $isHtmlGet = ($httpMethod === 'GET' && ($cleanPath === '/' || preg_match('/(\/|\.html)$/i', $cleanPath)) && !preg_match($assetRegex, $cleanPath));
-
-                if (!$isTrackerPost && !$isHtmlGet) continue;
-
-                $tsObj = DateTime::createFromFormat('d/M/Y:H:i:s O', $rawTime);
-                if (!$tsObj) continue;
-                $tsObj->setTimezone(new DateTimeZone('Asia/Kolkata'));
-                $tsStr = $tsObj->format('Y-m-d H:i:s');
-                $dayStr = $tsObj->format('Y-m-d');
-                $minStr = $tsObj->format('Y-m-d H:i');
-
-                $pagePath = $cleanPath ?: '/';
-                if ($isTrackerPost && $ref && $ref !== '-' && preg_match('#https?://[^/]+(/[^?]*)#', $ref, $rm)) {
-                    $pagePath = $rm[1] ?: '/';
-                }
-                if (stripos($pagePath, '/admin/') !== false) continue;
-
-                // Deduplicate same IP + same page within the same minute (merges GET + POST for same page load)
-                $bucketKey = $ip . '|' . $minStr . '|' . $pagePath;
-                if (isset($seenBucket[$bucketKey])) continue;
-                $seenBucket[$bucketKey] = true;
-
-                if ($isTrackerPost) $trackerHits++; else $htmlHits++;
-                $dailyCounts[$dayStr] = ($dailyCounts[$dayStr] ?? 0) + 1;
-
-                $recoveredVisits[] = [
-                    'timestamp' => $tsStr,
-                    'ip' => $ip,
-                    'city' => 'India',
-                    'region' => '',
-                    'country' => 'India',
-                    'latitude' => '',
-                    'longitude' => '',
-                    'accuracy' => '',
-                    'is_gps_allowed' => false,
-                    'isp' => 'Server Access Log',
-                    'connection' => '',
-                    'page' => $pagePath,
-                    'referrer' => ($ref && $ref !== '-' && stripos($ref, 'buttercup.in') === false) ? $ref : 'Direct / Bookmark',
-                    'screen' => '',
-                    'device' => parseDevice($ua),
-                    'browser' => '',
-                    'os' => '',
-                    'language' => '',
-                    'timezone' => 'Asia/Kolkata'
-                ];
-            }
-            if ($isGz) gzclose($fh); else fclose($fh);
-        }
-
-        ksort($dailyCounts);
-        $importedCount = 0;
-        $doImport = !empty($_GET['import']) && $_GET['import'] === '1';
-
-        if ($doImport && count($recoveredVisits) > 0) {
-            $lockFp = acquireVaultLock($permVaultDir, $dataDir);
-            $existingLeads  = loadAllLeads($files);
-            $existingVisits = loadAllVisits($files);
-            $counter        = loadLifetimeCounter($files, $existingVisits, $existingLeads);
-
-            $existingBuckets = [];
-            foreach ($existingVisits as $ev) {
-                $bMin = substr($ev['timestamp'] ?? '', 0, 16);
-                $existingBuckets[($ev['ip'] ?? '') . '|' . $bMin . '|' . ($ev['page'] ?? '')] = true;
-            }
-
-            foreach ($recoveredVisits as $rv) {
-                $bMin = substr($rv['timestamp'], 0, 16);
-                $bKey = $rv['ip'] . '|' . $bMin . '|' . $rv['page'];
-                if (!isset($existingBuckets[$bKey])) {
-                    $existingBuckets[$bKey] = true;
-                    $existingVisits[] = $rv;
-                    $importedCount++;
-                    if ($rv['ip'] && !in_array($rv['ip'], $counter['unique_ips'], true)) {
-                        $counter['unique_ips'][] = $rv['ip'];
-                    }
-                }
-            }
-
-            usort($existingVisits, function($a, $b) {
-                return strcmp($b['timestamp'] ?? '', $a['timestamp'] ?? '');
-            });
-
-            $counter['total_visits_ever'] = max($counter['total_visits_ever'], count($existingVisits));
-            $counter['updated_at'] = date('c');
-            syncAllVaults($files, $existingLeads, $existingVisits, $counter);
-            releaseVaultLock($lockFp);
-        }
-
-        echo json_encode([
-            'success' => true,
-            'log_files_found' => count($foundFiles),
-            'discovered_entries' => array_slice($discoveredEntries, 0, 50),
-            'lines_scanned' => $totalLinesScanned,
-            'tracker_post_hits' => $trackerHits,
-            'html_get_hits' => $htmlHits,
-            'recovered_unique_pageviews' => count($recoveredVisits),
-            'imported_new_records' => $importedCount,
-            'daily_breakdown' => $dailyCounts
-        ], JSON_PRETTY_PRINT);
         exit;
     }
 
@@ -872,7 +671,7 @@ if ($method === 'GET') {
         'stats' => [
             'total_leads' => max($counter['total_leads_ever'], count($leads)),
             'total_visits_logged' => max($counter['total_visits_ever'], count($visits)),
-            'unique_visitors' => count($counter['unique_ips']),
+            'unique_visitors' => max((int)($counter['unique_visitors_floor'] ?? 0), count($counter['unique_ips'])),
             'today_visits' => $todayVisits,
             'today_leads' => $todayLeads,
             'mobile_visits' => $mobileCount,
@@ -1063,6 +862,7 @@ if ($method === 'POST') {
         $counter['total_visits_ever'] = max($counter['total_visits_ever'] + 1, count($existingVisits));
         if ($ip && !in_array($ip, $counter['unique_ips'], true)) {
             $counter['unique_ips'][] = $ip;
+            $counter['unique_visitors_floor'] = max((int)($counter['unique_visitors_floor'] ?? 0) + 1, count($counter['unique_ips']));
         }
         $counter['updated_at'] = date('c');
 
@@ -1094,6 +894,42 @@ if ($method === 'POST') {
             'ip' => $ip,
             'timestamp' => $timestamp,
             'total_visits_ever' => $counter['total_visits_ever']
+        ]);
+        exit;
+    }
+
+    // ---------------------------------------------------------------------
+    // CASE C: ADMIN HISTORICAL BASELINE SYNC (e.g. from GA4 / Hostinger)
+    // ---------------------------------------------------------------------
+    if ($reqAction === 'set_baseline') {
+        $providedKey = $payload['key'] ?? '';
+        if (!hash_equals('branding@gmail.com', $providedKey)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+            exit;
+        }
+        $newTotalVisits = isset($payload['total_visits']) && is_numeric($payload['total_visits']) ? (int)$payload['total_visits'] : 0;
+        $newUnique      = isset($payload['unique_visitors']) && is_numeric($payload['unique_visitors']) ? (int)$payload['unique_visitors'] : 0;
+
+        $lockFp         = acquireVaultLock($permVaultDir, $dataDir);
+        $existingLeads  = loadAllLeads($files);
+        $existingVisits = loadAllVisits($files);
+        $counter        = loadLifetimeCounter($files, $existingVisits, $existingLeads);
+
+        if ($newTotalVisits > 0) {
+            $counter['total_visits_ever'] = max($counter['total_visits_ever'], $newTotalVisits);
+        }
+        if ($newUnique > 0) {
+            $counter['unique_visitors_floor'] = max((int)($counter['unique_visitors_floor'] ?? 0), $newUnique, count($counter['unique_ips']));
+        }
+        $counter['updated_at'] = date('c');
+        syncAllVaults($files, $existingLeads, $existingVisits, $counter);
+        releaseVaultLock($lockFp);
+
+        echo json_encode([
+            'success' => true,
+            'total_visits_logged' => $counter['total_visits_ever'],
+            'unique_visitors' => $counter['unique_visitors_floor']
         ]);
         exit;
     }
