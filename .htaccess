@@ -6,42 +6,54 @@
   RewriteEngine On
   RewriteBase /
 
-  # 1. Google SEO: /blog and /blog/ MUST go directly to Home Page
-  RewriteRule ^blog/?$ https://buttercup.in/ [R=301,L]
+  # 0a. Legacy Home / Index variations
+  RewriteRule ^home/?$ / [R=301,L,NC]
+  RewriteRule ^index\.php/?$ / [R=301,L,NC]
 
-  # 2. Individual articles /blog/xyz.html -> /blogs/xyz.html (only if 1 or more chars after blog/)
-  RewriteRule ^blog/(.+)$ /blogs/$1 [R=301,L]
+  # 1. Google SEO: /blog and /blog/ go to Home Page (or Blogs)
+  RewriteRule ^blog/?$ https://buttercup.in/ [R=301,L,NC]
 
-  # 3. Blogs listing page
-  RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L]
+  # 2. Individual articles /blog/xyz -> /blogs/xyz ONLY if target file exists, else /pages/blogs/
+  RewriteCond %{DOCUMENT_ROOT}/blogs/$1 -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/blogs/$1.html -f
+  RewriteRule ^blog/(.+)$ /blogs/$1 [R=301,L,NC]
+  RewriteRule ^blog/.+$ /pages/blogs/ [R=301,L,NC]
 
-  # 4. Case Studies variations (legacy Google indexed URLs)
-  RewriteRule ^casestudies/?$ /pages/case-studies/ [R=301,L]
-  RewriteRule ^casestudies/(.*)$ /pages/case-studies/ [R=301,L]
-  RewriteRule ^case-studies/?$ /pages/case-studies/ [R=301,L]
-  RewriteRule ^case-study/?$ /pages/case-studies/ [R=301,L]
-  RewriteRule ^casestudy/?$ /pages/case-studies/ [R=301,L]
+  # 3. Blogs listing & missing blog slugs / WordPress archive slugs -> /pages/blogs/
+  RewriteRule ^blogs/?$ /pages/blogs/ [R=301,L,NC]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html !-f
+  RewriteRule ^blogs/.+$ /pages/blogs/ [R=301,L,NC]
+  RewriteRule ^(insights|articles|journal|news|category|tag|author)(/.*)?$ /pages/blogs/ [R=301,L,NC]
 
-  # 5. About & Contact legacy variations
-  RewriteRule ^about/?$ /pages/about/ [R=301,L]
-  RewriteRule ^about-us/?$ /pages/about/ [R=301,L]
-  RewriteRule ^contact/?$ /pages/contact/ [R=301,L]
-  RewriteRule ^contact-us/?$ /pages/contact/ [R=301,L]
+  # 4. Case Studies, Projects, Work & Portfolio variations (including removed/legacy slugs)
+  RewriteRule ^(casestudies|case-studies|case-study|casestudy|our-work|clients)(/.*)?$ /pages/case-studies/ [R=301,L,NC]
+  RewriteRule ^(work|works|portfolio|project)/?$ /pages/work/ [R=301,L,NC]
+  RewriteRule ^(work|works|portfolio|project)/.+$ /pages/case-studies/ [R=301,L,NC]
+  RewriteRule ^projects/?$ /pages/case-studies/ [R=301,L,NC]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html !-f
+  RewriteRule ^projects/.+$ /pages/case-studies/ [R=301,L,NC]
 
-  # 6. Work & Portfolio legacy variations
-  RewriteRule ^work/?$ /pages/work/ [R=301,L]
-  RewriteRule ^works/?$ /pages/work/ [R=301,L]
-  RewriteRule ^portfolio/?$ /pages/work/ [R=301,L]
+  # 5. About, Studio, Team & Contact legacy variations
+  RewriteRule ^(about|about-us|who-we-are|studio|agency|team|careers|career)(/.*)?$ /pages/about/ [R=301,L,NC]
+  RewriteRule ^(contact|contact-us|get-in-touch|quote|get-a-quote|inquiry|enquiry)(/.*)?$ /pages/contact/ [R=301,L,NC]
 
-  # 7. Services & Industries
-  RewriteRule ^services/?$ /pages/services/brand-strategy/ [R=301,L]
-  RewriteRule ^service/?$ /pages/services/brand-strategy/ [R=301,L]
-  RewriteRule ^industries/?$ /pages/industries/service-base/ [R=301,L]
+  # 6. Services legacy variations (mapped to exact pillar page)
+  RewriteRule ^(services/)?(visual-identity|packaging|packaging-design|logo-design|logo|graphic-design|brochure|brochure-design|catalogue|brand-identity|identity)(/.*)?$ /pages/services/visual-identity/ [R=301,L,NC]
+  RewriteRule ^(services/)?(marketing-communication|marketing|advertising|digital-marketing|social-media|campaigns|paid-campaigns|brand-shoots|photography|copywriting)(/.*)?$ /pages/services/marketing-communication/ [R=301,L,NC]
+  RewriteRule ^(services|service|our-services|brand-strategy|branding|rebranding|naming|positioning|brand-architecture)(/.*)?$ /pages/services/brand-strategy/ [R=301,L,NC]
+
+  # 7. Industries legacy variations
+  RewriteRule ^(industries/)?(product-base|products|fmcg|food-and-beverages)(/.*)?$ /pages/industries/product-base/ [R=301,L,NC]
+  RewriteRule ^(industries|industry|sectors|service-base)(/.*)?$ /pages/industries/service-base/ [R=301,L,NC]
 
   # 8. Pricing & Legal pages
-  RewriteRule ^pricing/?$ /pages/pricing/ [R=301,L]
-  RewriteRule ^terms/?$ /pages/terms/ [R=301,L]
-  RewriteRule ^privacy/?$ /utilities/licenses.html [R=301,L]
+  RewriteRule ^pricing(/.*)?$ /pages/pricing/ [R=301,L,NC]
+  RewriteRule ^(terms|terms-and-conditions|terms-of-service)(/.*)?$ /pages/terms/ [R=301,L,NC]
+  RewriteRule ^(privacy|privacy-policy|licenses)(/.*)?$ /utilities/licenses.html [R=301,L,NC]
 
   # 9. Agent Content Negotiation: Serve Markdown when Accept header requests text/markdown
   RewriteCond %{HTTP:Accept} text/markdown [NC]
