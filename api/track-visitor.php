@@ -595,6 +595,7 @@ if ($method === 'GET') {
 
         $foundFiles = [];
         $checkedDirs = [];
+        $discoveredEntries = [];
         foreach ($candidateLogDirs as $ld) {
             $readable = @is_dir($ld) && @is_readable($ld);
             $checkedDirs[] = ['dir_exists' => @is_dir($ld), 'readable' => $readable, 'base' => basename($ld)];
@@ -603,9 +604,25 @@ if ($method === 'GET') {
                 if (is_array($entries)) {
                     foreach ($entries as $e) {
                         if ($e === '.' || $e === '..') continue;
-                        if (stripos($e, 'access') !== false || stripos($e, 'buttercup') !== false) {
-                            $full = $ld . '/' . $e;
-                            if (@is_file($full) && @is_readable($full)) {
+                        $full = $ld . '/' . $e;
+                        if (@is_dir($full) && @is_readable($full)) {
+                            $subEntries = @scandir($full);
+                            $discoveredEntries[] = ['entry' => $e . '/', 'type' => 'dir', 'count' => is_array($subEntries) ? max(0, count($subEntries) - 2) : 0];
+                            if (is_array($subEntries)) {
+                                foreach ($subEntries as $se) {
+                                    if ($se === '.' || $se === '..') continue;
+                                    $subFull = $full . '/' . $se;
+                                    if (@is_file($subFull) && @is_readable($subFull)) {
+                                        $discoveredEntries[] = ['entry' => $e . '/' . $se, 'size' => @filesize($subFull)];
+                                        if (stripos($se, 'error') === false && stripos($e, 'error') === false) {
+                                            $foundFiles[] = $subFull;
+                                        }
+                                    }
+                                }
+                            }
+                        } elseif (@is_file($full) && @is_readable($full)) {
+                            $discoveredEntries[] = ['entry' => $e, 'size' => @filesize($full)];
+                            if (stripos($e, 'error') === false) {
                                 $foundFiles[] = $full;
                             }
                         }
@@ -743,7 +760,7 @@ if ($method === 'GET') {
         echo json_encode([
             'success' => true,
             'log_files_found' => count($foundFiles),
-            'checked_dirs' => $checkedDirs,
+            'discovered_entries' => array_slice($discoveredEntries, 0, 50),
             'lines_scanned' => $totalLinesScanned,
             'tracker_post_hits' => $trackerHits,
             'html_get_hits' => $htmlHits,
