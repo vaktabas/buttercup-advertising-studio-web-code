@@ -520,6 +520,7 @@
   </style>
   <link rel="stylesheet" href="../../css/loader.css?v=8">
   <link rel="stylesheet" href="../../css/ai-assistant.css?v=125">
+  <link rel="stylesheet" href="../../css/butterfly-journey.css?v=1">
 </head>
 
 <body data-page="about">
@@ -1657,6 +1658,45 @@ a,
         </div>
       </div>
     </section>
+
+    <!-- 3D BUTTERFLY METAMORPHOSIS JOURNEY (Above Footer) -->
+    <section id="butterflyJourney" class="bfj-section" aria-label="Brand Transformation — The Butterfly Journey">
+      <div class="bfj-header">
+        <div>
+          <p class="bfj-eyebrow">The Metamorphosis</p>
+          <h2 class="bfj-title">How every great brand takes flight.</h2>
+        </div>
+        <p class="bfj-subtitle">From raw potential to quiet strategic incubation, first emergence, and unmistakable category leadership.</p>
+      </div>
+
+      <div class="bfj-stage-wrap" id="bfjStageWrap">
+        <canvas id="bfjCanvas" class="bfj-canvas" aria-label="Interactive 3D Butterfly Metamorphosis: Caterpillar, Chrysalis, Emerging Butterfly, and Full-Grown Butterfly"></canvas>
+      </div>
+
+      <div class="bfj-stages-bar">
+        <div class="bfj-stage-pill" data-stage="0">
+          <div class="bfj-stage-num">01 · Origin</div>
+          <h3 class="bfj-stage-name">Raw Potential</h3>
+          <p class="bfj-stage-desc">Grounded ambition, gathering insight and nourishment before the shift.</p>
+        </div>
+        <div class="bfj-stage-pill" data-stage="1">
+          <div class="bfj-stage-num">02 · Chrysalis</div>
+          <h3 class="bfj-stage-name">Strategic Incubation</h3>
+          <p class="bfj-stage-desc">Positioning, architecture, and craft quietly reshaping the core.</p>
+        </div>
+        <div class="bfj-stage-pill" data-stage="2">
+          <div class="bfj-stage-num">03 · Emergence</div>
+          <h3 class="bfj-stage-name">Unfolding Identity</h3>
+          <p class="bfj-stage-desc">Breaking out of the category mold — wings opening with clarity.</p>
+        </div>
+        <div class="bfj-stage-pill" data-stage="3">
+          <div class="bfj-stage-num">04 · Flight</div>
+          <h3 class="bfj-stage-name">Full-Scale Presence</h3>
+          <p class="bfj-stage-desc">Unmistakable, iconic, and built to soar above every competitor.</p>
+        </div>
+      </div>
+    </section>
+
     <footer id="contact" class="section is-footer fy-footer rwl-footer" aria-label="Footer">
       <!-- Ambient Moving Light Video Background -->
       <div class="rwl-bg-light-wrap" aria-hidden="true">
@@ -2212,6 +2252,8 @@ a,
       }
     })();
   </script>
+  <script src="../../js/vendor/three.min.js"></script>
+  <script src="../../js/butterfly-journey.js?v=1"></script>
   <script src="../../js/ai-assistant.js?v=126"></script>
   <script src="../../js/loader.js?v=6"></script>
   <script src="../../js/rocket-footer.js?v=4"></script>

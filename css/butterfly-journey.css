@@ -1,0 +1,175 @@
+/* ==========================================================================
+   BUTTERCUP — 3D Butterfly Metamorphosis Section (About Us, above Footer)
+   Pure white studio backdrop (#ffffff) with real-time 3D WebGL canvas.
+   ========================================================================== */
+
+.bfj-section {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  color: #111113;
+  overflow-x: clip;
+  padding: clamp(56px, 7vw, 96px) 0 clamp(40px, 5vw, 72px);
+  border-top: 1px solid rgba(17, 17, 19, 0.08);
+  isolation: isolate;
+}
+
+.bfj-header {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  position: relative;
+  z-index: 3;
+}
+
+.bfj-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7c3aed;
+  margin: 0 0 10px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bfj-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7c3aed;
+  display: inline-block;
+}
+
+.bfj-title {
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #0e0e11;
+  margin: 0;
+  max-width: 18ch;
+}
+
+.bfj-subtitle {
+  font-size: clamp(14px, 1.15vw, 16.5px);
+  line-height: 1.55;
+  color: #52525b;
+  max-width: 40ch;
+  margin: 0;
+}
+
+/* 3D Stage */
+.bfj-stage-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1520px;
+  margin: clamp(12px, 2vw, 24px) auto 0;
+  height: clamp(460px, 64vh, 680px);
+  background: #ffffff;
+}
+
+.bfj-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  touch-action: pan-y;
+}
+
+/* Subtle bottom stage legend */
+.bfj-stages-bar {
+  max-width: 1380px;
+  margin: clamp(8px, 1.5vw, 16px) auto 0;
+  padding: 0 clamp(20px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+  z-index: 3;
+}
+
+.bfj-stage-pill {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(17, 17, 19, 0.12);
+  transition: border-color 0.35s ease, opacity 0.45s ease, transform 0.45s ease;
+  opacity: 0.42;
+  transform: translateY(6px);
+  cursor: pointer;
+}
+
+.bfj-stage-pill.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  border-top-color: #111113;
+}
+
+.bfj-stage-pill:hover {
+  border-top-color: #7c3aed;
+}
+
+.bfj-stage-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7c3aed;
+  margin-bottom: 4px;
+}
+
+.bfj-stage-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111113;
+  letter-spacing: -0.01em;
+  margin: 0 0 3px 0;
+}
+
+.bfj-stage-desc {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #63636b;
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .bfj-stage-wrap {
+    height: clamp(420px, 56vh, 560px);
+  }
+  .bfj-stages-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .bfj-section {
+    padding: 48px 0 36px;
+  }
+  .bfj-stage-wrap {
+    height: clamp(460px, 68vh, 560px);
+    margin-top: 8px;
+  }
+  .bfj-stages-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 14px;
+  }
+  .bfj-stage-pill {
+    padding: 10px 4px;
+  }
+  .bfj-stage-name {
+    font-size: 14px;
+  }
+  .bfj-stage-desc {
+    font-size: 12px;
+  }
+}
+
