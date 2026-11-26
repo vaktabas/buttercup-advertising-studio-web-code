@@ -427,8 +427,8 @@ body.mubien-modal-open .btr-loc-prompt,
    3. SLEEK & COMPACT REFINED TOP NAVBAR (All Inner & Standard Pages)
    ========================================================================= */
 .navbar {
-  padding-top: 0.65rem !important;
-  padding-bottom: 0.65rem !important;
+  padding-top: 1.05rem !important;
+  padding-bottom: 1.05rem !important;
   min-height: auto !important;
 }
 
@@ -438,53 +438,55 @@ body.mubien-modal-open .btr-loc-prompt,
 
 .navbar .navbar-brand,
 .navbar .navbar-brand div {
-  font-size: 1.12rem !important;
+  font-size: 1.32rem !important;
   font-weight: 600 !important;
   letter-spacing: -0.02em !important;
   line-height: 1.15 !important;
 }
 
 .navbar .nav-links,
-.navbar .nav-links div {
-  font-size: 0.86rem !important;
+.navbar .nav-links div,
+.navbar .main-btn,
+.navbar .main-btn div {
+  font-size: 1.02rem !important;
   font-weight: 500 !important;
-  letter-spacing: 0.012em !important;
+  letter-spacing: 0.01em !important;
 }
 
 .navbar .nav-link-group {
-  grid-column-gap: 1.35rem !important;
-  column-gap: 1.35rem !important;
-  row-gap: 0.4rem !important;
+  grid-column-gap: 1.85rem !important;
+  column-gap: 1.85rem !important;
+  row-gap: 0.45rem !important;
   align-items: center !important;
 }
 
 .navbar .dropdown-chevron {
-  margin-left: 3px !important;
+  margin-left: 5px !important;
 }
 
 .navbar .dropdown-chevron svg {
-  width: 8px !important;
-  height: 5px !important;
+  width: 10px !important;
+  height: 6px !important;
 }
 
 .navbar .button-arrow_wrapper {
-  width: 13px !important;
-  height: 13px !important;
+  width: 15px !important;
+  height: 15px !important;
 }
 
 .navbar .button-arrow {
-  width: 13px !important;
-  height: 13px !important;
+  width: 15px !important;
+  height: 15px !important;
 }
 
 @media screen and (max-width: 991px) {
   .navbar {
-    padding-top: 0.55rem !important;
-    padding-bottom: 0.55rem !important;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
   }
   .navbar .navbar-brand,
   .navbar .navbar-brand div {
-    font-size: 1.05rem !important;
+    font-size: 1.2rem !important;
   }
 }
 
