@@ -565,6 +565,195 @@ if ($method === 'GET') {
         exit;
     }
 
+    // Admin-only historical server access log recovery (imports pre-vault visits from Hostinger logs)
+    if ($action === 'sync_access_logs') {
+        $providedKey = $_GET['key'] ?? '';
+        if (!hash_equals('branding@gmail.com', $providedKey)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+            exit;
+        }
+
+        $docRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : realpath(__DIR__ . '/..');
+        $homeDir = getenv('HOME') ?: ($_SERVER['HOME'] ?? '');
+        $candidateLogDirs = [];
+        if ($docRoot) {
+            $d1 = dirname($docRoot);           // /home/uXXXX/domains/buttercup.in
+            $d2 = dirname($d1);                // /home/uXXXX/domains
+            $d3 = dirname($d2);                // /home/uXXXX
+            $candidateLogDirs[] = $d1 . '/logs';
+            $candidateLogDirs[] = $d1 . '/.logs';
+            $candidateLogDirs[] = $d3 . '/.logs';
+            $candidateLogDirs[] = $d3 . '/logs';
+            $candidateLogDirs[] = $d3 . '/access-logs';
+        }
+        if ($homeDir) {
+            $candidateLogDirs[] = rtrim($homeDir, '/') . '/.logs';
+            $candidateLogDirs[] = rtrim($homeDir, '/') . '/logs';
+        }
+        $candidateLogDirs = array_values(array_unique($candidateLogDirs));
+
+        $foundFiles = [];
+        $checkedDirs = [];
+        foreach ($candidateLogDirs as $ld) {
+            $readable = @is_dir($ld) && @is_readable($ld);
+            $checkedDirs[] = ['dir_exists' => @is_dir($ld), 'readable' => $readable, 'base' => basename($ld)];
+            if ($readable) {
+                $entries = @scandir($ld);
+                if (is_array($entries)) {
+                    foreach ($entries as $e) {
+                        if ($e === '.' || $e === '..') continue;
+                        if (stripos($e, 'access') !== false || stripos($e, 'buttercup') !== false) {
+                            $full = $ld . '/' . $e;
+                            if (@is_file($full) && @is_readable($full)) {
+                                $foundFiles[] = $full;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $botRegex = '/(bot|crawl|spider|slurp|mediapartners|facebookexternalhit|whatsapp|telegrambot|twitterbot|linkedinbot|discordbot|bingpreview|ahrefs|semrush|mj12|dotbot|petalbot|bytespider|gptbot|claudebot|yandex|baidu|duckduck|applebot|curl|wget|python|go-http|java\/|axios|node-fetch|headless|lighthouse|gtmetrix|pingdom|uptimerobot|statuscake|zgrab|censys|nmap|masscan|lscache|hostinger|before_optm)/i';
+        $assetRegex = '/\.(css|js|jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|otf|map|json|xml|txt|mp4|webm|mp3|pdf|zip|gz|php)(\?.*)?$/i';
+
+        $recoveredVisits = [];
+        $seenBucket = [];
+        $dailyCounts = [];
+        $trackerHits = 0;
+        $htmlHits = 0;
+        $totalLinesScanned = 0;
+
+        foreach ($foundFiles as $lf) {
+            $isGz = substr($lf, -3) === '.gz';
+            $fh = $isGz ? @gzopen($lf, 'rb') : @fopen($lf, 'rb');
+            if (!$fh) continue;
+            while (!($isGz ? gzeof($fh) : feof($fh))) {
+                $line = $isGz ? gzgets($fh, 8192) : fgets($fh, 8192);
+                if (!$line) continue;
+                $totalLinesScanned++;
+                // Apache/LiteSpeed Combined Log Format
+                if (!preg_match('/^(\S+)\s+\S+\s+\S+\s+\[([^\]]+)\]\s+"(GET|POST)\s+([^"\s]+)[^"]*"\s+(\d{3})\s+\S+(?:\s+"([^"]*)"\s+"([^"]*)")?/', $line, $m)) {
+                    continue;
+                }
+                $ip = $m[1];
+                $rawTime = $m[2];
+                $httpMethod = $m[3];
+                $reqPath = $m[4];
+                $status = (int)$m[5];
+                $ref = $m[6] ?? 'Direct / Bookmark';
+                $ua = $m[7] ?? '';
+
+                if ($status < 200 || $status >= 400) continue;
+                if ($ua && preg_match($botRegex, $ua)) continue;
+                if (stripos($reqPath, 'before_optm') !== false) continue;
+                if (stripos($reqPath, '/admin/') !== false) continue;
+
+                $isTrackerPost = ($httpMethod === 'POST' && stripos($reqPath, '/api/track-visitor.php') !== false);
+                $cleanPath = strtok($reqPath, '?');
+                $isHtmlGet = ($httpMethod === 'GET' && ($cleanPath === '/' || preg_match('/(\/|\.html)$/i', $cleanPath)) && !preg_match($assetRegex, $cleanPath));
+
+                if (!$isTrackerPost && !$isHtmlGet) continue;
+
+                $tsObj = DateTime::createFromFormat('d/M/Y:H:i:s O', $rawTime);
+                if (!$tsObj) continue;
+                $tsObj->setTimezone(new DateTimeZone('Asia/Kolkata'));
+                $tsStr = $tsObj->format('Y-m-d H:i:s');
+                $dayStr = $tsObj->format('Y-m-d');
+                $minStr = $tsObj->format('Y-m-d H:i');
+
+                $pagePath = $cleanPath ?: '/';
+                if ($isTrackerPost && $ref && $ref !== '-' && preg_match('#https?://[^/]+(/[^?]*)#', $ref, $rm)) {
+                    $pagePath = $rm[1] ?: '/';
+                }
+                if (stripos($pagePath, '/admin/') !== false) continue;
+
+                // Deduplicate same IP + same page within the same minute (merges GET + POST for same page load)
+                $bucketKey = $ip . '|' . $minStr . '|' . $pagePath;
+                if (isset($seenBucket[$bucketKey])) continue;
+                $seenBucket[$bucketKey] = true;
+
+                if ($isTrackerPost) $trackerHits++; else $htmlHits++;
+                $dailyCounts[$dayStr] = ($dailyCounts[$dayStr] ?? 0) + 1;
+
+                $recoveredVisits[] = [
+                    'timestamp' => $tsStr,
+                    'ip' => $ip,
+                    'city' => 'India',
+                    'region' => '',
+                    'country' => 'India',
+                    'latitude' => '',
+                    'longitude' => '',
+                    'accuracy' => '',
+                    'is_gps_allowed' => false,
+                    'isp' => 'Server Access Log',
+                    'connection' => '',
+                    'page' => $pagePath,
+                    'referrer' => ($ref && $ref !== '-' && stripos($ref, 'buttercup.in') === false) ? $ref : 'Direct / Bookmark',
+                    'screen' => '',
+                    'device' => parseDevice($ua),
+                    'browser' => '',
+                    'os' => '',
+                    'language' => '',
+                    'timezone' => 'Asia/Kolkata'
+                ];
+            }
+            if ($isGz) gzclose($fh); else fclose($fh);
+        }
+
+        ksort($dailyCounts);
+        $importedCount = 0;
+        $doImport = !empty($_GET['import']) && $_GET['import'] === '1';
+
+        if ($doImport && count($recoveredVisits) > 0) {
+            $lockFp = acquireVaultLock($permVaultDir, $dataDir);
+            $existingLeads  = loadAllLeads($files);
+            $existingVisits = loadAllVisits($files);
+            $counter        = loadLifetimeCounter($files, $existingVisits, $existingLeads);
+
+            $existingBuckets = [];
+            foreach ($existingVisits as $ev) {
+                $bMin = substr($ev['timestamp'] ?? '', 0, 16);
+                $existingBuckets[($ev['ip'] ?? '') . '|' . $bMin . '|' . ($ev['page'] ?? '')] = true;
+            }
+
+            foreach ($recoveredVisits as $rv) {
+                $bMin = substr($rv['timestamp'], 0, 16);
+                $bKey = $rv['ip'] . '|' . $bMin . '|' . $rv['page'];
+                if (!isset($existingBuckets[$bKey])) {
+                    $existingBuckets[$bKey] = true;
+                    $existingVisits[] = $rv;
+                    $importedCount++;
+                    if ($rv['ip'] && !in_array($rv['ip'], $counter['unique_ips'], true)) {
+                        $counter['unique_ips'][] = $rv['ip'];
+                    }
+                }
+            }
+
+            usort($existingVisits, function($a, $b) {
+                return strcmp($b['timestamp'] ?? '', $a['timestamp'] ?? '');
+            });
+
+            $counter['total_visits_ever'] = max($counter['total_visits_ever'], count($existingVisits));
+            $counter['updated_at'] = date('c');
+            syncAllVaults($files, $existingLeads, $existingVisits, $counter);
+            releaseVaultLock($lockFp);
+        }
+
+        echo json_encode([
+            'success' => true,
+            'log_files_found' => count($foundFiles),
+            'checked_dirs' => $checkedDirs,
+            'lines_scanned' => $totalLinesScanned,
+            'tracker_post_hits' => $trackerHits,
+            'html_get_hits' => $htmlHits,
+            'recovered_unique_pageviews' => count($recoveredVisits),
+            'imported_new_records' => $importedCount,
+            'daily_breakdown' => $dailyCounts
+        ], JSON_PRETTY_PRINT);
+        exit;
+    }
+
     // Load and permanently sync all vaults under lock (auto-migrates legacy /tmp or data/ records into Home Vault)
     $lockFp  = acquireVaultLock($permVaultDir, $dataDir);
     $leads   = loadAllLeads($files);
